@@ -60,6 +60,7 @@
     <Compile Include="RoleBLL.cs" />
     <Compile Include="SchoolBLL.cs" />
     <Compile Include="TrackingBLL.cs" />
+    <Compile Include="UnitAssociationBLL.cs" />
     <Compile Include="UnitBLL.cs" />
     <Compile Include="UserBLL.cs" />
   </ItemGroup>
