@@ -38,11 +38,11 @@ public class CatbertWebService : System.Web.Services.WebService
     /// </summary>
     /// <returns>list of users, or an empty list if none found</returns>
     [WebMethod]
-    public List<ServiceUser> SearchNewUser(string eid, string firstName, string lastName, string login)
+    public List<ServiceUser> SearchNewUser(string eid, string firstName, string lastName, string login, string email)
     {
         List<ServiceUser> users = new List<ServiceUser>();
 
-        foreach (var person in DirectoryServices.SearchUsers(eid, firstName, lastName, login))
+        foreach (var person in DirectoryServices.SearchUsers(eid, firstName, lastName, login, email))
         {
             users.Add(new ServiceUser()
             {
@@ -56,6 +56,29 @@ public class CatbertWebService : System.Web.Services.WebService
         }
 
         return users;
+    }
+    
+    /// <summary>
+    /// We are going to search for the user with the given term, currently can be email or loginID
+    /// </summary>
+    [WebMethod]
+    public ServiceUser FindUser(string searchTerm)
+    {
+        var foundUser = DirectoryServices.FindUser(searchTerm);
+                
+        if (foundUser == null) return null;
+
+        var serviceUser = new ServiceUser()
+        {
+            EmployeeID = foundUser.EmployeeID,
+            FirstName = foundUser.FirstName,
+            LastName = foundUser.LastName,
+            Login = foundUser.LoginID,
+            Email = foundUser.EmailAddress,
+            Phone = foundUser.PhoneNumber
+        };
+
+        return serviceUser;
     }
 
     [WebMethod]

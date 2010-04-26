@@ -105,10 +105,12 @@ $(document).ready(function() {
         $("#spanSearchProgress").show(0); //Show the loading dialog
         $("#divSearchResultsSuccess").hide(0); //Hide the content
 
-        var data = { eid: null, firstName: null, lastName: null, login: $("#txtLoginID").val() };
-
+        //var data = { eid: null, firstName: null, lastName: null, email: null, login: $("#txtLoginID").val() };
+        var data = { searchTerm : $("#txtLoginID").val() };
+        
         //Call the search service
-        AjaxCall(baseURL + "SearchNewUser", data, SearchNewUserSuccess, null);
+        AjaxCall(baseURL + "FindUser", data, SearchNewUserSuccess, null);
+        //AjaxCall(baseURL + "SearchNewUser", data, SearchNewUserSuccess, null);
     });
 
     $("#btnAddUser").click(function() {
@@ -382,11 +384,11 @@ function SearchNewUserSuccess(data) {
     var divSearchResults = $("#divSearchResultsSuccess"); //Get the search results div
     $("#spanSearchProgress").hide(0); //Hide the loading dialog
 
-    if (data.length == 0) {
+    if (data == null) {
         return alert("No Users Found");
     }
     else {
-        var user = data[0];
+        var user = data;
         $("#spanNewUserFirstName").html(user.FirstName);
         $("#spanNewUserLastName").html(user.LastName);
         $("#spanNewUserLogin").html(user.Login);

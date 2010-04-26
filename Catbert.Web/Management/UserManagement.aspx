@@ -161,7 +161,7 @@
     
     <div id="dialogFindUser" title="Add a User" style="display: none;">
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        Kerberos LoginID: <input type="text" id="txtLoginID" /><input type="button" id="btnSearchUser" value="Search" />
+        Kerberos or Email: <input type="text" id="txtLoginID" /><input type="button" id="btnSearchUser" value="Search" />
         <span id="spanSearchProgress" style="display:none;">Searching...</span>
         <div id="divSearchResultsSuccess" style="display:none;">
             <span id="spanNewUserFirstName"></span> <span id="spanNewUserLastName"></span> (<span id="spanNewUserLogin"></span>)<br />

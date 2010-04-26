@@ -8,6 +8,7 @@ namespace CAESDO.Catbert.BLL
 {
     public class DirectoryServices
     {
+        private const string STR_SearchBase = "ou=People,dc=ucdavis,dc=edu";
         static readonly string LDAPUser = System.Web.Configuration.WebConfigurationManager.AppSettings["LDAPUser"];
         static readonly string LDAPPassword = System.Web.Configuration.WebConfigurationManager.AppSettings["LDAPPassword"];
 
@@ -23,12 +24,8 @@ namespace CAESDO.Catbert.BLL
         const string STR_GivenName = "givenName";
         const string STR_Telephone = "telephoneNumber";
 
-        public static List<DirectoryUser> LDAPSearchUsers(string employeeID, string firstName, string lastName, string loginID)
+        public static SearchResponse GetSearchResponse(string searchFilter, string searchBase)
         {
-            if (employeeID == null && firstName == null && lastName == null && loginID == null) return new List<DirectoryUser>();
-
-            List<DirectoryUser> users = new List<DirectoryUser>();
-
             //Establishing a Connection to the LDAP Server
             LdapDirectoryIdentifier ldapident = new LdapDirectoryIdentifier(STR_LDAPURL, STR_LDAPPort);
             //LdapConnection lc = new LdapConnection(ldapident, null, AuthType.Basic);
@@ -40,38 +37,17 @@ namespace CAESDO.Catbert.BLL
             //Configure the Search Request to Query the UCD OpenLDAP Server's People Search Base for a Specific User ID or Mail ID and Return the Requested Attributes 
             string[] attributesToReturn = new string[] { STR_UID, STR_EmployeeNumber, STR_Mail, STR_Telephone, STR_DisplayName, STR_CN, STR_SN, STR_GivenName };
 
-            StringBuilder searchFilter = new StringBuilder("(&");
+            SearchRequest sRequest = new SearchRequest(searchBase, searchFilter, SearchScope.Subtree, attributesToReturn);
 
-            //loginID = "postit";
-
-            if (employeeID != null)
-            {
-                searchFilter.AppendFormat("({0}={1})", STR_EmployeeNumber, employeeID);
-            }
-
-            if (firstName != null)
-            {
-                searchFilter.AppendFormat("({0}={1})", STR_GivenName, firstName);
-            }
-
-            if (lastName != null)
-            {
-                searchFilter.AppendFormat("({0}={1})", STR_SN, lastName);
-            }
-
-            if (loginID != null)
-            {
-                searchFilter.AppendFormat("({0}={1})", STR_UID, loginID);
-            }
-
-            searchFilter.Append(")");
-
-            string strSearchFilter = searchFilter.ToString(); //"(&(uid=" + (loginID ?? string.Empty) + ")(sn=" + (lastName ?? "Kirkland") + "))";
-            string strSearchBase = "ou=People,dc=ucdavis,dc=edu";
-
-            SearchRequest sRequest = new SearchRequest(strSearchBase, strSearchFilter, SearchScope.Subtree, attributesToReturn);
             //Send the Request and Load the Response
             SearchResponse sResponse = (SearchResponse)lc.SendRequest(sRequest);
+
+            return sResponse;
+        }
+
+        public static List<DirectoryUser> GetUsersFromResponse(SearchResponse sResponse)
+        {
+            var users = new List<DirectoryUser>();
 
             foreach (SearchResultEntry result in sResponse.Entries)
             {
@@ -115,32 +91,92 @@ namespace CAESDO.Catbert.BLL
             return users;
         }
 
+        public static List<DirectoryUser> LDAPSearchUsers(string employeeID, string firstName, string lastName, string loginID, string email)
+        {
+            if (employeeID == null && firstName == null && lastName == null && loginID == null) return new List<DirectoryUser>();
+
+            StringBuilder searchFilter = new StringBuilder("(&");
+
+            if (!string.IsNullOrEmpty(employeeID))
+            {
+                searchFilter.AppendFormat("({0}={1})", STR_EmployeeNumber, employeeID);
+            }
+
+            if (!string.IsNullOrEmpty(firstName))
+            {
+                searchFilter.AppendFormat("({0}={1})", STR_GivenName, firstName);
+            }
+
+            if (!string.IsNullOrEmpty(lastName))
+            {
+                searchFilter.AppendFormat("({0}={1})", STR_SN, lastName);
+            }
+
+            if (!string.IsNullOrEmpty(loginID))
+            {
+                searchFilter.AppendFormat("({0}={1})", STR_UID, loginID);
+            }
+
+            if (!string.IsNullOrEmpty(email))
+            {
+                searchFilter.AppendFormat("({0}={1})", STR_Mail, email);
+            }
+
+            searchFilter.Append(")");
+
+            string strSearchFilter = searchFilter.ToString(); //"(&(uid=" + (loginID ?? string.Empty) + ")(sn=" + (lastName ?? "Kirkland") + "))";
+            string strSearchBase = STR_SearchBase;
+
+            var sResponse = GetSearchResponse(strSearchFilter, strSearchBase);
+
+            return GetUsersFromResponse(sResponse);
+        }
+
+        /// <summary>
+        /// Builds the ldap search filter and then gets out the first returned user
+        /// </summary>
+        public static DirectoryUser LDAPFindUser(string searchTerm)
+        {
+            if (string.IsNullOrEmpty(searchTerm)) return null;
+
+            StringBuilder searchFilter = new StringBuilder("(|");
+
+            //Append the login search
+            searchFilter.AppendFormat("({0}={1})", STR_UID, searchTerm);
+
+            //Append the email search
+            searchFilter.AppendFormat("({0}={1})", STR_Mail, searchTerm);
+
+            searchFilter.Append(")");
+
+            var sResponse = GetSearchResponse(searchFilter.ToString(), STR_SearchBase);
+
+            var foundUsers = GetUsersFromResponse(sResponse);
+
+            if (foundUsers.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                return foundUsers.First(); //Get the first returned user
+            }
+        }
+
         /// <summary>
         /// Prepare the 
         /// </summary>
-        public static List<DirectoryUser> SearchUsers(string employeeID, string firstName, string lastName, string loginID)
+        public static List<DirectoryUser> SearchUsers(string employeeID, string firstName, string lastName, string loginID, string email)
         {
-            if (string.IsNullOrEmpty(employeeID))
-            {
-                employeeID = null;
-            }
+            return LDAPSearchUsers(employeeID, firstName, lastName, loginID, email);
+        }
 
-            if (string.IsNullOrEmpty(firstName))
-            {
-                firstName = null;
-            }
-
-            if (string.IsNullOrEmpty(lastName))
-            {
-                lastName = null;
-            }
-
-            if (string.IsNullOrEmpty(loginID))
-            {
-                loginID = null;
-            }
-                
-            return LDAPSearchUsers(employeeID, firstName, lastName, loginID);
+        /// <summary>
+        /// Returns the single user that matches the search term -- either loginID or email
+        /// </summary>
+        public static DirectoryUser FindUser(string searchTerm)
+        {
+            return LDAPFindUser(searchTerm);
         }
     }
 
