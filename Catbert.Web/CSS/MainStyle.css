@@ -18,6 +18,30 @@ h2 {margin-bottom: 0px;}
 #adduserbtn {float: left; margin: .75em 1em 0 0;}
 #search, #filter {}
 
+
+/* =menu */
+
+.menu {width: 860px; position: absolute; bottom: 0px; left: 20%; margin: 0 auto; background: url(../Images/menu-left.jpg) bottom left no-repeat; height: 600px;}
+.menu p {font-family: monospace; font-size: 2.3em; font-weight: bold; float: left; width: 255px; height: 119px; margin: 85px 0 0 20px;}
+.menu p span, .menu p a {color: #df070b; text-decoration: none;}
+.menu p a:hover {border-bottom: 3px #df070b dashed;}
+.menu ul {width: 420px; float: right; margin: 335px 0 0;}
+.menu ul li {margin: 0 0 15px; list-style: none;}
+.menu ul li a {background: url(../Images/menu-nav.jpg) no-repeat; position: relative; text-indent: -99999px; overflow: hidden; display: block; width: 420px; height: 27px;}
+
+    .menu ul li.m1 a {z-index: 5;}
+    .menu ul li.m2 a {z-index: 4; height: 35px; background-position: 0px -27px;}
+    .menu ul li.m3 a {z-index: 3; height: 63px; background-position: 0px -62px; margin-top: -31px;}
+    .menu ul li.m4 a {z-index: 2; height: 93px; background-position: 0px -125px; margin-top: -60px;}
+    .menu ul li.m5 a {z-index: 1; height: 104px; background-position: 0px -218px; margin-top: -71px;}
+
+    .menu ul li.m1 a:hover {z-index: 10; background-position: -420px 0px;}
+    .menu ul li.m2 a:hover {z-index: 10; background-position: -420px -27px;}
+    .menu ul li.m3 a:hover {z-index: 10; background-position: -420px -62px;}
+    .menu ul li.m4 a:hover {z-index: 10; background-position: -420px -125px;}
+    .menu ul li.m5 a:hover {z-index: 10; background-position: -420px -218px;}
+
+
 /* =tables */
 
 table.tablesorter {
