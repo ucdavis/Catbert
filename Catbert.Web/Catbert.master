@@ -14,7 +14,7 @@
     <script type="text/javascript" src="<%= Request.ApplicationPath + @"/JS/jquery.tablesorter.min.js" %>"></script>--%>
     <script type="text/javascript" src="<%= Request.ApplicationPath + @"/JS/jquery.ui.all.js" %>"></script>
     <script type="text/javascript" src="<%= Request.ApplicationPath + @"/JS/json2.min.js" %>"></script>
-    <script type="text/javascript" src="<%= Request.ApplicationPath + @"/JS/flexigrid.js" %>"></script>
+    <%--<script type="text/javascript" src="<%= Request.ApplicationPath + @"/JS/flexigrid.js" %>"></script>--%>
 </head>
 <body>
     <form id="form1" runat="server">

@@ -10,7 +10,7 @@
     <link href="CSS/flexigrid.css" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" Runat="Server">
-
+    <script src="JS/flexigrid.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function() {
 

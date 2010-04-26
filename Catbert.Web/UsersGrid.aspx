@@ -7,67 +7,65 @@
 		#dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
 		#dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
 	</style>
-    <link href="CSS/flexigrid.css" rel="stylesheet" type="text/css" />
+    <link href="CSS/grid.css" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" Runat="Server">
-
+    <script src="JS/jquery.jqGrid.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function() {
+            $("#tblUsers").jqGrid({
+                url: 'Services/CatbertWebService.asmx/GetUsersByApplication',
+                dataType: 'xml',
+                mtype: 'POST',
+                colNames: ['Login', 'First Name', 'Last Name', 'Email'],
+                colModel: [
+                    { name: 'Login', index: 'Login', width: 90 },
+                    { name: 'FirstName', index: 'FirstName', width: 100 },
+                    { name: 'LastName', index: 'LastName', width: 80 },
+                    { name: 'Email', index: 'Email', width: 130 }
+                    ],
+                postData: { login: "postit", application: "Catbert" },
+                xmlReader: {
+                    root: 'ArrayOfCatbertUser',
+                    row: 'CatbertUser',
+                    repeatitems: false,
+                    id: 'UserID'
+                }
+            });
 
+            /*
             var json = { login: "postit", application: "Catbert" };
             var test = JSON2.stringify(json);
             //debugger;
             $("#tblUsers").flexigrid({
-                url: "Services/CatbertWebService.asmx/DataGetUsersByApplication",
-                dataType: 'json',
-                method: 'POST',
-                params: json,
-                colModel: [
-				    { display: 'Login', name: 'login', width: 40, sortable: true, align: 'center' },
-				    { display: 'FirstName', name: 'firstname', width: 180, sortable: true, align: 'left' },
-				    { display: 'LastName', name: 'lastname', width: 120, sortable: true, align: 'left' },
-				    { display: 'Email', name: 'email', width: 130, sortable: true, align: 'left', hide: false },
-				    ],
-				searchitems: [
-				    { display: 'Any', name: 'any', isdefault: true },
-				    { display: 'FirstName', name: 'firstname' },
-				    { display: 'LastName', name: 'lastname' }
-				    ],
-                sortname: "lastname",
-                sortorder: "asc",
-                usepager: true,
-                title: 'Users',
-                useRp: true,
-                rp: 20,
-                showTableToggleBtn: false, //Seems to show anyway
-                width: 700,
-                height: 200,
-                onToggleCol: function() {
-                    alert("Toggle Just Occurred");
-                }
-
-                //args: json
-            });
-
-            /*
-            //Try to make an AJAX call to the webservice
-            $.ajax({
-
-            url: "Services/CatbertWebService.asmx/GetRolesByUser",
-            data: JSON2.stringify(json),
-            type: "POST",
-            processData: false,
-            contentType: "application/json",
-            timeout: 10000,
-            dataType: "text",  // not "json" we'll parse
-            success:
-            function(res) {
-            var result = JSON2.parse(res);
-
-                        var first = result.d[0];
-            //debugger;
-            //alert(result);
+            url: "Services/CatbertWebService.asmx/DataGetUsersByApplication",
+            dataType: 'json',
+            method: 'POST',
+            params: json,
+            colModel: [
+            { display: 'Login', name: 'login', width: 40, sortable: true, align: 'center' },
+            { display: 'FirstName', name: 'firstname', width: 180, sortable: true, align: 'left' },
+            { display: 'LastName', name: 'lastname', width: 120, sortable: true, align: 'left' },
+            { display: 'Email', name: 'email', width: 130, sortable: true, align: 'left', hide: false },
+            ],
+            searchitems: [
+            { display: 'Any', name: 'any', isdefault: true },
+            { display: 'FirstName', name: 'firstname' },
+            { display: 'LastName', name: 'lastname' }
+            ],
+            sortname: "lastname",
+            sortorder: "asc",
+            usepager: true,
+            title: 'Users',
+            useRp: true,
+            rp: 20,
+            showTableToggleBtn: false, //Seems to show anyway
+            width: 700,
+            height: 200,
+            onToggleCol: function() {
+            alert("Toggle Just Occurred");
             }
+                
             });
             */
         });
@@ -87,7 +85,7 @@
         }
     </script>
     
-    <table id="tblUsers"></table>
+    <table id="tblUsers" class="scroll"></table>
     
     <br /><br />
 
