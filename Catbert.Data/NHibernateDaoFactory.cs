@@ -59,7 +59,8 @@ namespace CAESDO.Catbert.Data
                         Subqueries.PropertyIn("id", userRoles),
                         Subqueries.PropertyIn("id", lowerApplicationRoles)
                         )
-                    );
+                    )
+                    .AddOrder(Order.Asc("Name"));
 
                 return roles.List<Role>() as List<Role>;
             }
