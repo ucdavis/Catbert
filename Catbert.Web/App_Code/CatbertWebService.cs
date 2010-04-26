@@ -352,18 +352,21 @@ public class CatbertWebService : System.Web.Services.WebService
         int totalUsers = 0;
 
         //var users = ConvertFromUserList(UserBLL.GetByApplication(application), application);
-        var users = ConvertFromUserList(UserBLL.GetByApplication(application, page, pagesize, ref totalUsers), application);
-
-        search = search == null ? null : search.ToLower();
+        var users = ConvertFromUserList(UserBLL.GetByApplication(application, search, page, pagesize, ref totalUsers), application);
 
         RecordSet grid = new RecordSet() { page = page, total = totalUsers/pagesize, records = users.Count };
 
         foreach (var user in users)
         {
-            var badSearch = user.Email + user.FirstName + user.LastName + user.Login + user.EmployeeID;
-
-            if ( search == null || badSearch.ToLower().Contains(search) ) grid.rows.Add(user);
+            grid.rows.Add(user);
         }
+
+        //foreach (var user in users)
+        //{
+        //    var badSearch = user.Email + user.FirstName + user.LastName + user.Login + user.EmployeeID;
+
+        //    if ( search == null || badSearch.ToLower().Contains(search) ) grid.rows.Add(user);
+        //}
 
         return grid;
     }

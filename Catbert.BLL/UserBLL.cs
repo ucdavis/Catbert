@@ -158,21 +158,31 @@ namespace CAESDO.Catbert.BLL
         
         public static List<User> GetByApplication(string application)
         {
-            return GetUserQueryableByApplication(application).ToList();
+            return GetUserQueryableByApplication(application, null).ToList();
         }
 
-        private static IEnumerable<User> GetUserQueryableByApplication(string application)
+        private static IEnumerable<User> GetUserQueryableByApplication(string application, string searchToken)
         {
             //Grab all permissions in this application
             var permissions = PermissionBLL.Queryable.Where(perm => perm.Application.Name == application && perm.Inactive == false).ToList();
 
             //Now get all users among these permissions
-            return permissions.Select(perm => perm.User).Distinct();
+            var users = permissions.Select(perm => perm.User).Distinct();
+
+            if (string.IsNullOrEmpty(searchToken) == false)
+            {
+                searchToken = searchToken.ToLower(); //search should be lowercase
+
+                users = users.Where(u => u.Email.ToLower().Contains(searchToken) || u.FirstName.ToLower().Contains(searchToken)
+                    || u.LastName.ToLower().Contains(searchToken) || u.LoginID.ToLower().Contains(searchToken));
+            }
+
+            return users;
         }
 
-        public static List<User> GetByApplication(string application, int page, int pageSize, ref int totalUsers)
+        public static List<User> GetByApplication(string application, string searchToken, int page, int pageSize, ref int totalUsers)
         {
-            IEnumerable<User> users = GetUserQueryableByApplication(application);
+            IEnumerable<User> users = GetUserQueryableByApplication(application, searchToken);
 
             totalUsers = users.Count();
 
