@@ -266,30 +266,33 @@ function AddUserRole() {
     var existingRoleMatch = existingRoles.find("tbody tr:visible").filter(
                 function() {
                     var appMatch = $(this).find("td:contains(" + app + ")").size();
-                    var roleMatch = $(this).find("td:contains(" + newrole + ")").size();
+                    var roleMatchingTds = $(this).find("td:contains(" + newrole + ")");
+
+                    var roleMatch = 0;
+                    if (roleMatchingTds.text() == newrole) roleMatch = 1;
 
                     if (appMatch === 1 && roleMatch === 1) //Did we find an application and role match in the same row?
                         return true;
                     else
                         return false;
                 }
-            );        
-    
+            );
+
     if (existingRoleMatch.size() == 0) {
-                    return;
+
         //Add this role
-        var newrow = CreateRoleRow(newrole, login, application);
-        roles.append(newrow);
+        var newrow = CreateRoleRow(newrole, login, app);
+        existingRoles.append(newrow);
 
         $(newrow).effect("highlight", {color: "#555555"}, 3000);
 
+        /*
         AjaxCall(baseURL + "AssociateRole",
                     { login: login, role: newrole, application: application },
                     null,
                     null
                 );
-
-        userTableDirty = true; //Users have been modified
+*/
     }
     else {
         alert("User already has the role " + $.trim(newrole) + ' in ' + $.trim(app));

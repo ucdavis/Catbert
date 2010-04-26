@@ -154,6 +154,7 @@
                                 <asp:ListView ID="lviewApplicationPermissions" runat="server">
                                     <LayoutTemplate>
                                         <select id="applicationsPermissions">
+                                            <option value="">-- Select An Application --</option>
                                             <option id="itemPlaceholder" runat="server"></option>
                                         </select>
                                     </LayoutTemplate>
