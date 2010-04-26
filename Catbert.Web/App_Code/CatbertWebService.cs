@@ -80,6 +80,8 @@ public class CatbertWebService : System.Web.Services.WebService
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
     public CatbertUser GetUser(string login, string application)
     {
+        EnsureCredentials(secureCTX);
+
         User user = UserBLL.GetUser(login);
 
         if (user == null) return null; //make sure we have a real user
@@ -106,7 +108,7 @@ public class CatbertWebService : System.Web.Services.WebService
         EnsureCredentials(secureCTX);
 
         //If the credentials don't validate or the caller doesn't have access to this application, return false
-        if (!this.ValidateApplicationPermission(secureCTX, GetApplicationID(application))) return false;
+        if (!this.ValidateApplicationPermission(secureCTX, application)) return false;
 
         Permission result = PermissionBLL.InsertPermission(application, role, login, secureCTX.UserID);
         
@@ -118,7 +120,7 @@ public class CatbertWebService : System.Web.Services.WebService
     {
         EnsureCredentials(secureCTX);
 
-        if (!this.ValidateApplicationPermission(secureCTX, GetApplicationID(application))) return false;
+        if (!this.ValidateApplicationPermission(secureCTX, application)) return false;
 
         return PermissionBLL.DeletePermission(application, role, login, secureCTX.UserID);
     }
@@ -130,6 +132,8 @@ public class CatbertWebService : System.Web.Services.WebService
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
     public bool PermissionExists(string login, string application, string role)
     {
+        EnsureCredentials(secureCTX);
+
         return PermissionBLL.PermissionExists(application, role, login, false);
     }
 
@@ -297,12 +301,16 @@ public class CatbertWebService : System.Web.Services.WebService
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
     public bool SetEmail(string login, string emailAddress)
     {
+        EnsureCredentials(secureCTX);
+
         return UserBLL.SetEmail(login, emailAddress, secureCTX.UserID);
     }
 
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
     public bool SetPhoneNumber(string login, string phoneNumber)
     {
+        EnsureCredentials(secureCTX);
+
         return UserBLL.SetPhone(login, phoneNumber, secureCTX.UserID);
     }
 
@@ -312,8 +320,24 @@ public class CatbertWebService : System.Web.Services.WebService
 
     private bool ValidateCredentials(SecurityContext secureCTX)
     {
-        return true; //TODO: TESTING ONLY
-        //throw new NotImplementedException();
+        if (secureCTX == null) return false; //Make sure we have a real context
+
+        string login = secureCTX.UserID;
+
+        User user = UserBLL.GetUser(login);
+
+        if (user == null || user.UserKey == null) return false; //Make sure we have a valid user and key
+
+        //Secure context is valid iff this user's key matched the one in the secureCTX [password]
+
+        if (user.UserKey.ToString().Equals(secureCTX.Password, StringComparison.CurrentCultureIgnoreCase))
+        {
+            return true; //The keys match, and the credentials are valid
+        }
+        else
+        {
+            return false;
+        }
     }
 
     private void EnsureCredentials(SecurityContext secureCTX)
@@ -321,7 +345,7 @@ public class CatbertWebService : System.Web.Services.WebService
         if (!ValidateCredentials(secureCTX)) throw new ApplicationException("Authorization Failed");
     }
 
-    private bool ValidateApplicationPermission(SecurityContext secureCTX, int applicationID)
+    private bool ValidateApplicationPermission(SecurityContext secureCTX, string application)
     {
         return true; //TODO: TESTING ONLY!!!
         //throw new NotImplementedException();

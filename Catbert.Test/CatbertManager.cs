@@ -258,7 +258,7 @@ namespace CAESDO.Catbert.Test
         public SetCabertSecurityContextAttribute(CatbertService.SecurityContext service)
         {
             service.UserID = "postit";
-            service.Password = "CA0C898E-0287-40FE-AE76-554039B932FD";
+            service.Password = "ca0c898e-0287-40fe-ae76-554039b932fd";
 
             /*
             CatbertService.SecurityContext sc = new CatbertService.SecurityContext();
