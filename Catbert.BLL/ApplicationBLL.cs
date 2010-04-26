@@ -106,8 +106,8 @@ namespace CAESDO.Catbert.BLL
 
             using (TransactionScope ts = new TransactionScope())
             {
-                ApplicationBLL.EnsurePersistent(ref application); //Persist the application
-                TrackingBLL.EnsurePersistent(ref tracking);
+                ApplicationBLL.EnsurePersistent( application); //Persist the application
+                TrackingBLL.EnsurePersistent( tracking);
 
                 ts.CommittTransaction();
             }
@@ -122,10 +122,10 @@ namespace CAESDO.Catbert.BLL
             
             using (TransactionScope ts = new TransactionScope())
             {
-                ApplicationBLL.EnsurePersistent(ref application); //Persist the application
+                ApplicationBLL.EnsurePersistent( application); //Persist the application
 
                 tracking.Comments = string.Format("Application {0} created", application.ID);
-                TrackingBLL.EnsurePersistent(ref tracking);
+                TrackingBLL.EnsurePersistent( tracking);
 
                 ts.CommittTransaction();
             }
@@ -159,8 +159,8 @@ namespace CAESDO.Catbert.BLL
 
             using (TransactionScope ts = new TransactionScope())
             {
-                ApplicationBLL.EnsurePersistent(ref application);
-                TrackingBLL.EnsurePersistent(ref tracking);
+                ApplicationBLL.EnsurePersistent( application);
+                TrackingBLL.EnsurePersistent( tracking);
 
                 ts.CommittTransaction();
             }

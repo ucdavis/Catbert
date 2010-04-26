@@ -28,12 +28,16 @@ public partial class Units : System.Web.UI.Page
 
         using (var ts = new Transaction())
         {
-            success = UnitBLL.MakePersistent(ref unit);
-
-            if (success)
+            try
+            {
+                success = UnitBLL.MakePersistent(unit);
                 ts.CommittTransaction();
-            else
+            }
+            catch
+            {
+                success = false;
                 ts.RollBackTransaction();
+            }
         }
 
         lviewUnits.DataBind();

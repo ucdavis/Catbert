@@ -26,8 +26,8 @@ namespace CAESDO.Catbert.BLL
 
                 using (var ts = new TransactionScope())
                 {
-                    RoleBLL.MakePersistent(ref role);
-                    TrackingBLL.MakePersistent(ref tracking);
+                    RoleBLL.MakePersistent(role);
+                    TrackingBLL.MakePersistent(tracking);
 
                     ts.CommittTransaction();
                 }

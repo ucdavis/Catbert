@@ -49,8 +49,8 @@ namespace CAESDO.Catbert.BLL
 
             using (var ts = new TransactionScope())
             {
-                EnsurePersistent(ref user);
-                TrackingBLL.EnsurePersistent(ref tracking);
+                EnsurePersistent( user);
+                TrackingBLL.EnsurePersistent( tracking);
 
                 ts.CommittTransaction();
             }
@@ -115,8 +115,8 @@ namespace CAESDO.Catbert.BLL
 
             using (var ts = new TransactionScope())
             {
-                EnsurePersistent(ref user);
-                TrackingBLL.EnsurePersistent(ref tracking);
+                EnsurePersistent( user);
+                TrackingBLL.EnsurePersistent( tracking);
 
                 ts.CommittTransaction();
             }
@@ -147,8 +147,8 @@ namespace CAESDO.Catbert.BLL
 
             using (var ts = new TransactionScope())
             {
-                EnsurePersistent(ref user);
-                TrackingBLL.EnsurePersistent(ref tracking);
+                EnsurePersistent( user);
+                TrackingBLL.EnsurePersistent( tracking);
 
                 ts.CommittTransaction();
             }

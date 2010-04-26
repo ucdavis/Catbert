@@ -57,8 +57,8 @@ namespace CAESDO.Catbert.BLL
 
             using (var ts = new TransactionScope())
             {
-                EnsurePersistent(ref unitAssociation);  //persist the unitAssociation
-                TrackingBLL.EnsurePersistent(ref tracking);
+                EnsurePersistent( unitAssociation);  //persist the unitAssociation
+                TrackingBLL.EnsurePersistent( tracking);
 
                 ts.CommittTransaction();
             }
@@ -99,8 +99,8 @@ namespace CAESDO.Catbert.BLL
 
             using (var ts = new TransactionScope())
             {
-                EnsurePersistent(ref unitAssociation);
-                TrackingBLL.EnsurePersistent(ref tracking);
+                EnsurePersistent(unitAssociation);
+                TrackingBLL.EnsurePersistent(tracking);
 
                 ts.CommittTransaction();
             }

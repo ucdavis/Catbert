@@ -83,13 +83,13 @@ namespace CAESDO.Catbert.BLL
             return daoFactory.GetGenericDao<T, IdT>().GetByInclusionExample(exampleInstance, sortPropertyName, ascending, propertiesToInclude);
         }
 
-        public static bool MakePersistent(ref T entity)
+        public static bool MakePersistent(T entity)
         {
             //Don't force a save
-            return MakePersistent(ref entity, false);
+            return MakePersistent(entity, false);
         }
 
-        public static bool MakePersistent(ref T entity, bool forceSave)
+        public static bool MakePersistent(T entity, bool forceSave)
         {
             //If the entity is of type domainObject, call validation prior to persisting
             if (entity is DomainObject<T, IdT>)
@@ -103,21 +103,14 @@ namespace CAESDO.Catbert.BLL
                 }
             }
 
-            try
+            //Perform the requested operation
+            if (forceSave)
             {
-                //Perform the requested operation
-                if (forceSave)
-                {
-                    entity = daoFactory.GetGenericDao<T, IdT>().Save(entity);
-                }
-                else
-                {
-                    entity = daoFactory.GetGenericDao<T, IdT>().SaveOrUpdate(entity);
-                }
+                entity = daoFactory.GetGenericDao<T, IdT>().Save(entity);
             }
-            catch
+            else
             {
-                return false; //Save didn't complete
+                entity = daoFactory.GetGenericDao<T, IdT>().SaveOrUpdate(entity);
             }
 
             return true;
@@ -126,14 +119,14 @@ namespace CAESDO.Catbert.BLL
         /// <summary>
         /// Like MakePersistent, but throws an application exception on persistance failure
         /// </summary>
-        public static void EnsurePersistent(ref T entity)
+        public static void EnsurePersistent( T entity)
         {
-            EnsurePersistent(ref entity, false);
+            EnsurePersistent( entity, false);
         }
 
-        public static void EnsurePersistent(ref T entity, bool forceSave)
+        public static void EnsurePersistent( T entity, bool forceSave)
         {
-            bool success = MakePersistent(ref entity, forceSave);
+            bool success = MakePersistent( entity, forceSave);
 
             if (!success)
             {
