@@ -42,7 +42,6 @@ table.tablesorter thead tr .header {
 }
 
 table.tablesorter thead tr .header.Login {
-	background-image: url(../Images/arrow-both.png);
 	background-repeat: no-repeat;
 	background-position: 10px center;
 	padding: 0px 0px 0px 22px;
