@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Services;
@@ -32,13 +31,13 @@ public class CatbertAdminService : WebService
 
         string orderBy = string.IsNullOrEmpty(sortname) ? "LastName DESC" : string.Format("{0} {1}", sortname, sortorder);
 
-        int totalUsers = 0;
+        int totalUsers;
 
         var users = UserBLL.GetAllByCriteria(application, search, page, pagesize, orderBy, out totalUsers);
 
         var serviceUsers = ConvertFromUserList(users);
 
-        var grid = new RecordSet() { page = page, total = (int)Math.Ceiling((double)totalUsers / pagesize), records = serviceUsers.Count };
+        var grid = new RecordSet { page = page, total = (int)Math.Ceiling((double)totalUsers / pagesize), records = serviceUsers.Count };
 
         foreach (var user in serviceUsers)
         {
@@ -61,8 +60,8 @@ public class CatbertAdminService : WebService
                 new
                 {
                     Name = string.Format("{0} {1}", user.FirstName, user.LastName),
-                    Login = user.LoginID,
-                    Email = user.Email
+                    Login = user.LoginID, 
+                    user.Email
                 }
             ));
         }
@@ -80,7 +79,7 @@ public class CatbertAdminService : WebService
 
         if (foundUser == null) return null;
 
-        var serviceUser = new ServiceUser()
+        var serviceUser = new ServiceUser
         {
             EmployeeID = foundUser.EmployeeID,
             FirstName = foundUser.FirstName,
@@ -98,6 +97,22 @@ public class CatbertAdminService : WebService
     {
         return UserInformationServiceBLL.GetInformationByLoginId(loginId);
     }
+
+    #region Disassociate
+
+    [WebMethod]
+    public bool DissociateUnit(string login, string application, string unitFIS)
+    {
+        return UserBLL.UnassociateUnit(login, application, unitFIS, CurrentServiceUser);
+    }
+
+    [WebMethod]
+    public void DissociateRole(string login, string application, string role)
+    {
+        PermissionBLL.DeletePermission(application, role, login, CurrentServiceUser);
+    }
+
+    #endregion
 
     /// <summary>
     /// Creates a list of service users with only the top level user information filled out.

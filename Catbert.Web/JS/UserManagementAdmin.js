@@ -322,8 +322,8 @@ function CreateRoleRow(role, login, application) {
     var newrow = $('<tr></tr>');
 
     var deleteLink = $('<input type="button" value="X" />');
-    deleteLink.click(function() { alert('Not Implemented'); }); //TODO
-    //deleteLink.click(function() { DeleteRole(login, role, application, newrow); });
+    //deleteLink.click(function() { alert('Not Implemented'); }); //TODO
+    deleteLink.click(function() { DeleteRole(login, role, application, newrow); });
 
     newrow.append('<td>' + application + '</td>');
     newrow.append('<td>' + role + '</td>');
@@ -338,8 +338,8 @@ function CreateUnitRow(unit, login, application) {
     var newrow = $('<tr></tr>');
 
     var deleteLink = $('<input type="button" value="X" />');
-    deleteLink.click(function() { alert('Not Implemented'); }); //TODO
-    //deleteLink.click(function() { DeleteUnit(login, unitFIS, application, newrow); });
+    //deleteLink.click(function() { alert('Not Implemented'); }); //TODO
+    deleteLink.click(function() { DeleteUnit(login, unit, application, newrow); });
 
     newrow.append('<td>' + application + '</td>');
     newrow.append('<td>' + unit + '</td>');
@@ -353,13 +353,11 @@ function CreateUnitRow(unit, login, application) {
 function DeleteUnit(login, unit, application, rowToDelete) {
     $(rowToDelete).fadeOut('slow');
 
-    AjaxCall(baseURL + "DeleteUnit",
+    AjaxCall(baseURL + "DissociateUnit",
                 { login: login, application: application, unitFIS: unit },
                 null,
                 null
             );
-
-    userTableDirty = true; //Users have been modified
 }
 
 function DeleteRole(login, role, application, rowToDelete) {
@@ -370,8 +368,6 @@ function DeleteRole(login, role, application, rowToDelete) {
                 null,
                 null
             );
-
-    userTableDirty = true; //Users have been modified
 }
 
 function AddUserSuccess(application, search) {
