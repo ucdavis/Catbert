@@ -35,12 +35,40 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CAESArch.BLL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=667f3cb07abadf4b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Catbert.Web\Bin\CAESArch.BLL.dll</HintPath>
+    </Reference>
+    <Reference Include="CAESArch.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=667f3cb07abadf4b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Catbert.Web\Bin\CAESArch.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="CAESArch.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=667f3cb07abadf4b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Catbert.Web\Bin\CAESArch.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.DynamicProxy2, Version=2.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Catbert.Web\Bin\Castle.DynamicProxy2.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="NHibernate, Version=2.1.0.1001, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Catbert.Web\Bin\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.ProxyGenerators.CastleDynamicProxy, Version=2.1.0.1001, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Catbert.Web\Bin\NHibernate.ProxyGenerators.CastleDynamicProxy.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite, Version=1.0.61.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Catbert.Web\Bin\System.Data.SQLite.DLL</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -51,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationTests.cs" />
+    <Compile Include="BLLTests\UserTests.cs" />
     <Compile Include="CatbertManager.cs" />
     <Compile Include="PermissionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -95,6 +124,16 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\CatbertService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Catbert.BLL\Catbert.BLL.csproj">
+      <Project>{08264AE9-DFB6-4961-B704-3C3BB9E52904}</Project>
+      <Name>Catbert.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Catbert.Core\Catbert.Core.csproj">
+      <Project>{A7B433EA-F2D1-4BF3-93FB-0787C99F9870}</Project>
+      <Name>Catbert.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
