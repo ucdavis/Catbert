@@ -139,12 +139,16 @@ $(document).ready(function() {
     });
 
     $("#filterRoles").change(function() {
+        page = 1; //Reset the paging
+        
         role = $(this).val();
 
         PopulateUserTableDefault(application);
     });
 
     $("#filterUnits").change(function() {
+        page = 1; //Reset the paging    
+        
         unit = $(this).val();
 
         PopulateUserTableDefault(application);
