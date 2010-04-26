@@ -11,12 +11,13 @@
     <script type="text/javascript">
         var baseURL = '../Services/CatbertWebService.asmx/';
         var autocompleteUnitsURL = '../Services/AutocompleteService.asmx/GetUsers';
-
+        
+        var search = null, unit = null, role = null; //start with no search, unit, or role filters
+        var sortname = "LastName";
+        var sortorder = "ASC";
+        
         $(document).ready(function() {
             var application = $("#app").val();
-            var search = null, unit = null, role = null; //start with no search, unit, or role filters
-            var sortname = "LastName";
-            var sortorder = "ASC";
 
             PopulateUserTable(application, search, unit, role, sortname, sortorder); //Populate the user table
 
@@ -200,31 +201,8 @@
                 }
             }
 
-            OpenDialog(dialogUserInfo, buttons, "User Information");
+            OpenDialog(dialogUserInfo, buttons, "User Information", function() { PopulateUserTableDefault(applicationName); });
 
-            /*
-            var row = $(this).parents("tr");
-            var applicationID = row.attr('id');
-            var applicationName = row.attr('title');
-
-            var buttons = {
-                "Close": function() {
-                    $(this).dialog("close");
-                },
-                "Update": function() {
-                    UpdateApplication(applicationID, applicationName);
-                    $(this).dialog("close");
-                }
-            }
-
-            OpenDialog(buttons, applicationName);
-
-            ShowApplicationInformation(false);  //Don't show the information until it loads
-
-            //Clear out the roles list checked options
-            $(":checked", roleList).attr('checked', false);
-            */
-            //TODO: TESTING
             var baseUrl = baseURL;
             
             AjaxCall(
@@ -338,9 +316,13 @@
             divSearchResults.show();
         }
 
+        function PopulateUserTableDefault(application) {
+            PopulateUserTable(application, search, null, null, sortname, sortorder);
+        }
+
         function PopulateUserTable(application, search, unit, role, sortname, sortorder) {
             ShowLoadingIndicator(true);
-            
+
             //Setup the parameters
             var data = { application: application, search: search, unit: unit, role: role, sortname: sortname, sortorder: sortorder };
             
@@ -415,15 +397,18 @@
             return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
         }
 
-        function OpenDialog(dialog /*The dialog DIV JQuery object*/, buttons /*Button collection */, title) {
+        function OpenDialog(dialog /*The dialog DIV JQuery object*/, buttons /*Button collection */, title, onClose) {
 
             dialog.dialog("destroy"); //Reset the dialog to its initial state
             dialog.dialog({
                 autoOpen: true,
+                closeOnEscape: false,
                 width: 600,
                 modal: true,
                 title: title,
-                buttons: buttons
+                buttons: buttons,
+                //show: 'fold',
+                close: onClose
             });
         }
     </script>
