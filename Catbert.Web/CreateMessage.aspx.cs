@@ -15,8 +15,6 @@ public partial class CreateMessage : System.Web.UI.Page
         if(!Page.IsPostBack)
         {
             tbBeginDisplayDate.Text = DateTime.Now.ToShortDateString();
-
-
         }
     
     }
@@ -29,19 +27,14 @@ public partial class CreateMessage : System.Web.UI.Page
 
         DateTime.TryParse(tbBeginDisplayDate.Text, out start);
         
-        if (string.IsNullOrEmpty(tbEndDisplayDate.Text))
-        {
+        if (string.IsNullOrEmpty(tbEndDisplayDate.Text)){
             end = null;
         }
-        else
-        {
-            //end = (DateTime?)DateTime.Parse(tbEndDisplayDate.Text);
+        else{
             DateTime.TryParse(tbEndDisplayDate.Text, out endNotNull);
             end = (DateTime?) endNotNull;
         }
-
-        Response.Write(start.ToString());
-
+        //Response.Write(start.ToString());
        
         //If = -1: Apply to all apps and leave app null in message table
         app = ddApplications.SelectedValue == "-1" ? null : ApplicationBLL.GetByID(Convert.ToInt32(ddApplications.SelectedValue));
@@ -49,7 +42,6 @@ public partial class CreateMessage : System.Web.UI.Page
         
         var messageRecord = new Message()
         {
-            
             Application = app,
             MessageText = tbMessage.Text,
             BeginDisplayDate = start,

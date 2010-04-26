@@ -49,12 +49,12 @@
         </EmptyDataTemplate>
         <ItemTemplate>
             <tr id ="<%# Eval("ID") %>" style="">
-                <td><%# Eval("MessageText")%> </td>
+                <td><a href='<%# "MessageEdit.aspx?mid=" + Eval("id") %>'><%# Eval("MessageText") %></a></td>
                 <td><%# Eval("Application.Name") %></td>
                 <td><%#Eval("BeginDisplayDateString")%></td>
                 <td><%#Eval("EndDisplayDateString") %></td>
                  
-                <td><asp:Button ID="btnDeactivate" OnCommand="BtnDeactivateClick" CommandArgument='<%# Eval("ID") %>' runat="server" Text="Button" BackColor="Silver" BorderColor="Gray" /></td>
+                <td><asp:Button ID="btnDeactivate" OnCommand="BtnDeactivateClick" CommandArgument='<%# Eval("ID") %>' runat="server" Text="Deactivate" BackColor="Silver" BorderColor="Gray" /></td>
             </tr>
        </ItemTemplate>
    

@@ -22,18 +22,21 @@ namespace CAESDO.Catbert.Core.Domain
         public virtual string BeginDisplayDateString
         {
             get{
-                return BeginDisplayDate.ToShortDateString();
+                return String.Format("{0:MM/dd/yyyy}", BeginDisplayDate).ToString();
+
+                
             }
         }
 
         public virtual string EndDisplayDateString
         {
             get {
-                return EndDisplayDate.HasValue ? EndDisplayDate.Value.ToShortDateString() : "N/A";
+                return EndDisplayDate.HasValue ? String.Format("{0:MM/dd/yyyy}", EndDisplayDate.Value).ToString() : "N/A";
             }
         }
 
 
+   
    
 
     }
