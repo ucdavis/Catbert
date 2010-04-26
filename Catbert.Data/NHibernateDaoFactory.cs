@@ -35,9 +35,8 @@ namespace CAESDO.Catbert.Data
         public class UserDao : AbstractNHibernateDao<User, int>, IUserDao
         {
             public List<User> GetByApplication(string application, string role, string unit, string searchToken, int page, int pageSize, string orderBy, out int totalUsers)
-            {
-                User u = new User();
-                //u.Permissions[0].Role.Name
+            {                
+                //Now filter out all of the users in this list by the search criteria 
                 ICriteria criteria = NHibernateSessionManager.Instance.GetSession().CreateCriteria(typeof(User))
                     .Add(
                         Expression.Disjunction()
@@ -46,32 +45,76 @@ namespace CAESDO.Catbert.Data
                             .Add(Expression.Like("LastName", searchToken, MatchMode.Anywhere))
                             .Add(Expression.Like("LoginID", searchToken, MatchMode.Anywhere))
                         )
-                    .CreateAlias("Permissions", "Perms")
-                    .CreateAlias("Perms.Application", "Application")
-                    .CreateAlias("Perms.Role", "Role")
-                    .Add(
-                        Expression.Conjunction()
-                            .Add(Expression.Eq("Perms.Inactive", false))
-                            .Add(Expression.Eq("Application.Name", application))
-                        );
+                    .Add(Expression.InG<int>("id", GetUsersByApplicationRoleAndUnit(application, role, unit) ));
 
-                if (!string.IsNullOrEmpty(role))
-                    criteria = criteria.Add(Expression.Eq("Role.Name", role));
+                //ICriteria rowCount = criteria;
+                //totalUsers = rowCount.SetProjection(Projections.RowCount()).UniqueResult<int>();
 
                 //TODO: Have to figure out how to find the total number of users
                 totalUsers = 7; // criteria.SetProjection(Projections.RowCount()).UniqueResult<int>();
-                
-                /*
+             
                 criteria = criteria
                             .SetFirstResult(page * pageSize)
                             .SetMaxResults(pageSize);
-                */
-
+                
                 criteria = criteria
-                            //.SetProjection(Projections.Distinct(Projections.Id()))
                             .AddOrder(GetOrder(orderBy));
 
                 return criteria.List<User>() as List<User>;
+            }
+
+            private HashSet<int> GetUsersByApplicationRoleAndUnit(string application, string role, string unit)
+            {
+                //First get the users by application role
+                var userIdsByPermission = GetUsersByApplicationRole(application, role).GetExecutableCriteria(NHibernateSessionManager.Instance.GetSession()).List<int>();
+
+                //Now we have all the userIDs that have permission to this application
+                HashSet<int> userIds = new HashSet<int>(userIdsByPermission);
+
+                //If we have a unit, lets get those IDs
+                if (!string.IsNullOrEmpty(unit))
+                {
+                    var userIdsByUnit = GetUsersByApplicationUnit(application, unit).GetExecutableCriteria(NHibernateSessionManager.Instance.GetSession()).List<int>();
+
+                    //Now create a hashed set with only the ids that are common
+                    userIds.IntersectWith(userIdsByUnit);
+                }
+
+                return userIds;
+            }
+
+            private DetachedCriteria GetUsersByApplicationUnit(string application, string unit)
+            {
+                DetachedCriteria unitAssociations = DetachedCriteria.For(typeof(UnitAssociation))
+                    .Add(Expression.Eq("Inactive", false))
+                    .CreateAlias("Application", "Application")
+                    .CreateAlias("Unit", "Unit")
+                    .CreateAlias("User", "User")
+                    .Add(Expression.Eq("Application.Name", application));
+
+                if (!string.IsNullOrEmpty(unit))
+                {
+                    unitAssociations = unitAssociations.Add(Expression.Eq("Unit.FISCode", unit));
+                }
+
+                return unitAssociations.SetProjection(Projections.Distinct(Projections.Property("User.id")));
+            }
+
+            private DetachedCriteria GetUsersByApplicationRole(string application, string role)
+            {
+                DetachedCriteria permissions = DetachedCriteria.For(typeof(Permission))
+                    .Add(Expression.Eq("Inactive", false))
+                    .CreateAlias("Application", "Application")
+                    .CreateAlias("Role", "Role")
+                    .CreateAlias("User", "User")
+                    .Add(Expression.Eq("Application.Name", application));
+
+                if (!string.IsNullOrEmpty(role))
+                {
+                    permissions = permissions.Add(Expression.Eq("Role.Name", role));
+                }
+
+                return permissions.SetProjection(Projections.Distinct(Projections.Property("User.id")));
             }
 
             private Order GetOrder(string orderBy)

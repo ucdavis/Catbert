@@ -161,8 +161,6 @@ namespace CAESDO.Catbert.BLL
         {
             int totalUsers;
 
-            throw new NotImplementedException(); //still working on the implementation
-            
             return UserBLL.daoFactory.GetUserDao().GetByApplication(application, null, null, searchToken, page, pageSize, "LastName ASC", out totalUsers);
         }
 
