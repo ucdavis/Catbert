@@ -472,12 +472,6 @@ function RenderRow(index, row) {
     // newrow.append('<td class="Login">' + row.Login + '</td>');
     newrow.append('<td class="Email">' + row.Email + '</td>');
 
-    var units = CreateDomFromUserInfoArray(row.Units);
-    var roles = CreateDomFromUserInfoArray(row.Roles);
-
-    newrow.append('<td class="Units">' + units + '</td>');
-    newrow.append('<td class="Roles">' + roles + '</td>');
-
     $("#tblUsersBody").append(newrow);
 }
 

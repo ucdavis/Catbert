@@ -64,12 +64,10 @@
     <table id="tblUsers" class="tablesorter">
         <thead>
             <tr>
-                <th style="width: 10%" class="header Login" title="LoginID">Login</th>
-                <th style="width: 10%" class="header" title="FirstName">First Name</th>
-                <th style="width: 10%" class="header headerSortUp" title="LastName">Last Name</th>
-                <th style="width: 20%" class="header" title="Email">Email</th>
-                <th style="width: 23%" >Departments</th>
-                <th style="width: 27%">Roles</th>
+                <th style="width: 20%" class="header Login" title="LoginID">Login</th>
+                <th style="width: 20%" class="header" title="FirstName">First Name</th>
+                <th style="width: 20%" class="header headerSortUp" title="LastName">Last Name</th>
+                <th style="width: 40%" class="header" title="Email">Email</th>
             </tr>
         </thead>
         <tbody id="tblUsersBody">
