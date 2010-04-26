@@ -67,16 +67,28 @@ public class CatbertWebService : System.Web.Services.WebService
             LastName = serviceUser.LastName,
             Email = serviceUser.Email,
             LoginID = serviceUser.Login,
-            EmployeeID = serviceUser.EmployeeID
+            EmployeeID = serviceUser.EmployeeID,
+            Phone = serviceUser.Phone
         };
 
-        return UserBLL.InsertNewUser(user, CurrentServiceUser);
+        var insertedUser = UserBLL.InsertNewUser(user, CurrentServiceUser);
+        return insertedUser.ID;
     }
 
     [WebMethod]
-    public void InsertUserWithRoleAndUnit(ServiceUser serviceUser, string role, string unit)
+    public void InsertUserWithRoleAndUnit(ServiceUser serviceUser, string role, string unit, string application)
     {
-        throw new NotImplementedException();
+        User user = new User()
+        {
+            FirstName = serviceUser.FirstName,
+            LastName = serviceUser.LastName,
+            Email = serviceUser.Email,
+            LoginID = serviceUser.Login,
+            EmployeeID = serviceUser.EmployeeID,
+            Phone = serviceUser.Phone
+        };
+
+        UserBLL.InsertNewUserWithRoleAndUnit(user, role, unit, application, CurrentServiceUser);
     }
 
     /// <summary>

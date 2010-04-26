@@ -30,7 +30,7 @@ namespace CAESDO.Catbert.BLL
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public static int InsertNewUser(User user, string trackingUserName)
+        public static User InsertNewUser(User user, string trackingUserName)
         {
             //Make sure the user given in valid according to enlib validation
             if (!ValidateBO<User>.isValid(user)) throw new ApplicationException(string.Format("User not valid: {0}", ValidateBO<User>.GetValidationResultsAsString(user)));
@@ -53,7 +53,33 @@ namespace CAESDO.Catbert.BLL
                 ts.CommittTransaction();
             }
 
-            return user.ID; //return the newly created user's ID
+            return user; //return the newly created user's ID
+        }
+
+        /// <summary>
+        /// Ensures that the user given has the desired role and unit.
+        /// If the user doesn't exist, it is created, and the role and units are associated if they were not already.
+        /// </summary>
+        /// <returns>the ID of the user</returns>
+        public static User InsertNewUserWithRoleAndUnit(User userInformation, string role, string unit, string application, string trackingUserName)
+        {
+            if (userInformation == null || string.IsNullOrEmpty(role) || string.IsNullOrEmpty(unit) || string.IsNullOrEmpty(application) ) throw new ArgumentException();
+
+            User user = new User();
+
+            if (VerifyUserExists(userInformation.LoginID)) //Either get the existing user or create a new one
+            {
+                user = GetUser(userInformation.LoginID);
+            }
+            else
+            {
+                user = InsertNewUser(userInformation, trackingUserName); 
+            }
+
+            PermissionBLL.InsertPermission(application, role, user.LoginID, trackingUserName); //Insert the permission
+            AssociateUnit(user.LoginID, unit, trackingUserName); //Associate the unit
+
+            return user;
         }
 
         /// <summary>

@@ -73,6 +73,8 @@
             });
 
             $("#btnAddUser").click(function() {
+                $("#spanAddUserProgress").show(0); //First show the loading dialog
+                
                 //First fill in the user information
                 var user = new Object();
                 user.FirstName = $("#spanNewUserFirstName").html();
@@ -90,13 +92,16 @@
                 AjaxCall(baseURL + "InsertUserWithRoleAndUnit", {
                     serviceUser: user,
                     role: role,
-                    unit: unit
+                    unit: unit,
+                    application: application
                 },
-                null, 
+                function() {
+                    $("#dialogFindUser").dialog("close");
+                    $("#divNewUserNotification").show("slow");
+                    $("#spanAddUserProgress").hide(0); //First hide the progress since we are done
+                    PopulateUserTable(application, null, null, null, null, null);
+                },
                 null);
-
-                $("#dialogFindUser").dialog("close");
-                $("#divNewUserNotification").show("slow");
             });
         });
 
@@ -294,7 +299,7 @@
                 </SelectParameters>
             </asp:ObjectDataSource>
             <br /><br />
-            <input type="button" id="btnAddUser" value="Add" />
+            <input type="button" id="btnAddUser" value="Add" /><span id="spanAddUserProgress" style="display:none;">Processing...</span>
         </div>
     </div>
         
