@@ -1,232 +1,211 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/CatbertMaster.master" AutoEventWireup="true" CodeFile="UserManagement.aspx.cs" Inherits="Admin_UserManagement" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/CatbertMaster.master" AutoEventWireup="true" EnableViewState="false" CodeFile="UserManagement.aspx.cs" Inherits="Management_UserManagement" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+    <link href="../CSS/jquery.autocomplete.css" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" Runat="Server">
-
-<script type="text/javascript">
-    var tabs;
-    var baseURL = '../Admin/UserInformationService.asmx/';
-    
-    $(document).ready(function() {
-        
-        tabs = $('#tabs').tabs();
-        
-        $('a.ShowUserLink').click(ShowUserInfo);
-    });
-
-    function ShowUserInfo() {
-        var loginId = $(this).html();
-
-        console.info(loginId);
-        //alert(loginId);
-
-        var dialogUserInfo = $("#dialogUserInfo");
-
-        var buttons = {
-            "Close": function() {
-                //$("#divUserInfo").hide(0);
-                $(this).dialog("close");
-            }
-        }
-
-        tabs.tabs('select', 0); //select the first tab by default when viewing a new user
-
-        OpenDialog(dialogUserInfo, buttons, "User Information", null);
-
-        var url = baseURL + 'GetUserInfo';
-        
-        AjaxCall(
-                url,
-                { loginId: loginId },
-                function(data) { PopulateUserInfo(data); },
-                null //TODO: Error method
-            );
-    }
-
-    function PopulateUserInfo(data) {
-    
-        var loginId = data.LoginId;
-        var roles = $("#tblPermissions tbody");
-        var units = $("#tblUnits tbody");
-
-        //Clear out the old roles and units
-        roles.empty();
-        units.empty();
-
-        $(data.PermissionAssociations).each(function() {
-            var newRoleRow = CreateRoleRow(this.RoleName, loginId, this.ApplicationName);
-
-            roles.append(newRoleRow);
-        });
-
-        $(data.UnitAssociations).each(function() {
-            var newUnitRow = CreateUnitRow(this.UnitFIS, loginId, this.ApplicationName);
-
-            units.append(newUnitRow);
-        });
-    }
-
-    function CreateRoleRow(role, login, application) {
-        var newrow = $('<tr></tr>');
-
-        var deleteLink = $('<input type="button" value="X" />');
-        deleteLink.click(function() { alert('Not Implemented'); }); //TODO
-        //deleteLink.click(function() { DeleteRole(login, role, application, newrow); });
-
-        newrow.append('<td>' + application + '</td>');
-        newrow.append('<td>' + role + '</td>');
-
-        var deleteCol = $('<td>').append(deleteLink);
-        newrow.append(deleteCol);
-
-        return newrow;
-    }
-
-    function CreateUnitRow(unit, login, application) {
-        var newrow = $('<tr></tr>');
-
-        var deleteLink = $('<input type="button" value="X" />');
-        deleteLink.click(function() { alert('Not Implemented'); }); //TODO
-        //deleteLink.click(function() { DeleteUnit(login, unitFIS, application, newrow); });
-
-        newrow.append('<td>' + application + '</td>');
-        newrow.append('<td>' + unit + '</td>');
-
-        var deleteCol = $('<td>').append(deleteLink);
-        newrow.append(deleteCol);
-
-        return newrow;
-    }
-
-    function OpenDialog(dialog /*The dialog DIV JQuery object*/, buttons /*Button collection */, title, onClose) {
-
-        dialog.dialog("destroy"); //Reset the dialog to its initial state
-        dialog.dialog({
-            autoOpen: true,
-            closeOnEscape: false,
-            width: 600,
-            height: 600,
-            modal: true,
-            title: title,
-            buttons: buttons,
-            //show: 'fold',
-            close: onClose
-        });
-    }
-</script>
-
-<asp:ListView ID="lviewUser" runat="server" DataSourceID="odsActiveUsers">
-    <LayoutTemplate>
-        <table>
-            <thead>
-                <tr>
-                    <th style="width: 10%" class="header Login" title="LoginID">
-                        Login
-                    </th>
-                    <th style="width: 10%" class="header" title="FirstName">
-                        First Name
-                    </th>
-                    <th style="width: 10%" class="header headerSortUp" title="LastName">
-                        Last Name
-                    </th>
-                    <th style="width: 20%" class="header" title="Email">
-                        Email
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr id="itemPlaceholder" runat="server"></tr>
-            </tbody>
-        </table>
-    </LayoutTemplate>
-    <ItemTemplate>
-        <tr>
-            <td>
-                <a class="ShowUserLink" href="javascript:;"><%# Eval("LoginID") %></a>
-            </td>
-            <td><%# Eval("FirstName") %></td>
-            <td><%# Eval("LastName") %></td>
-            <td><%# Eval("Email") %></td>
-        </tr>
-    </ItemTemplate>
-</asp:ListView>
-
-    <asp:ObjectDataSource ID="odsActiveUsers" runat="server" 
-        OldValuesParameterFormatString="original_{0}" SelectMethod="GetAllActive" 
-        TypeName="CAESDO.Catbert.BLL.UserBLL"></asp:ObjectDataSource>
-    
-    <div id="dialogUserInfo" title="User Information" style="display: none;">
-        <div id="tabs">
-            <ul>
-                <li><a href="#tabPermissions">Permissions</a></li>
-                <li><a href="#tabUnits">Units</a></li>
-                <li><a href="#tabInfo">Info</a></li>
-            </ul>
-            <div id="tabPermissions">
-                <table id="tblPermissions">
-                    <thead>
-                        <tr>
-                            <th>Application</th>
-                            <th>Role</th>
-                            <th>Remove</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            
-                <p>
-                    Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec
-                    arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante.
-                    Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper
-                    leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales
-                    tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel
-                    pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum.
-                    Nunc tristique tempus lectus.</p>
-            </div>
-            <div id="tabUnits">
-                <table id="tblUnits">
-                    <thead>
-                        <tr>
-                            <th>Application</th>
-                            <th>Role</th>
-                            <th>Remove</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-                <p>
-                    Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra
-                    massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget
-                    luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean
-                    aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent
-                    in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat
-                    nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque
-                    convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod
-                    felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
-            </div>
-            <div id="tabInfo">
-                <p>
-                    Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate,
-                    pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem.
-                    Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia
-                    nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo
-                    pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem
-                    enim, pretium nec, feugiat nec, luctus a, lacus.</p>
-                <p>
-                    Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam
-                    ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing
-                    velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula
-                    faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero
-                    sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor
-                    ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas
-                    commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit
-                    hendrerit.</p>
-            </div>
+    <script src="../JS/jquery.ajaxQueue.js" type="text/javascript"></script>
+    <script src="../JS/jquery.autocomplete.js" type="text/javascript"></script>
+    <%--<script src="../JS/jquery.tablesorter.min.js" type="text/javascript"></script>--%>
+    <script src="../JS/UserManagement.js" type="text/javascript"></script>
+       
+    <a href="javascript:;" id="addUser" class="dialog_link ui-state-default ui-corner-all">
+        <span class="ui-icon ui-icon-newwin"></span>Add User
+    </a>
+    <div class="ui-widget" id="divNewUserNotification" style="display:none;">
+        <br />
+        <div class="ui-state-highlight ui-corner-all" >
+            <p>
+                <span class="ui-icon ui-icon-info" style="float:left;"></span>
+                User Added Successfully
+            </p>
         </div>
     </div>
+<br /><br />
 
+    <div id="divHeader">
+        <span id="search" style="float:left;">
+            <label>Search Users:</label> <input type="text" id="txtSearch" /><input type="image" id="imgSearch" title="Clear Search" alt="Clear Search" src="../Images/clear-left.png" style="height: 15px;" />
+        </span>
+        
+        <span id="filter" style="float:right;">
+            <asp:ListView ID="lviewFilterRoles" runat="server">
+                <LayoutTemplate>
+                    <select id="filterRoles">
+                        <option value="">-- Filter By Role --</option>
+                        <option id="itemPlaceholder" runat="server"></option>
+                    </select>
+                </LayoutTemplate>
+                <ItemTemplate>
+                    <option>
+                        <%# Eval("Name") %>
+                    </option>
+                </ItemTemplate>
+            </asp:ListView>
+            
+            <asp:ListView ID="lviewFilterUnits" runat="server">
+                <LayoutTemplate>
+                    <select id="filterUnits">
+                        <option value="">-- Filter By Unit --</option>
+                        <option id="itemPlaceholder" runat="server"></option>
+                    </select>
+                </LayoutTemplate>
+                <ItemTemplate>
+                    <option value='<%# Eval("FISCode") %>'>
+                        <%# Eval("ShortName")%>
+                    </option>
+                </ItemTemplate>
+            </asp:ListView>
+        </span>
+    </div>
+    <div id="divLoading" style="display:none; clear: left;">
+        Loading...
+    </div>
+    <table id="tblUsers" class="tablesorter">
+        <thead>
+            <tr>
+                <th style="width: 10%" class="header Login" title="LoginID">Login</th>
+                <th style="width: 10%" class="header" title="FirstName">First Name</th>
+                <th style="width: 10%" class="header headerSortUp" title="LastName">Last Name</th>
+                <th style="width: 20%" class="header" title="Email">Email</th>
+                <th style="width: 23%" >Departments</th>
+                <th style="width: 27%">Roles</th>
+            </tr>
+        </thead>
+        <tbody id="tblUsersBody">
+            <%--Each row is a new person--%>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6" align="center">
+                    <input id="btnFirst" class="pager" name="First" type="button" value="First" title="First" />
+                    <input id="btnPrevious" class="pager" name="Previous" type="button" value="Previous" title="Previous" />
+                    <span id="spanPageInfo"></span>
+                    <input id="btnNext" class="pager" name="Next" type="button" value="Next" title="Next" />
+                    <input id="btnLast" class="pager" name="Last" type="button" value="Last" title="Last" />
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    
+    <div id="dialogUserInfo" title="User Information" style="display: none;">
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <div id="divUserInfo" style="display:none;">
+            <h2><span id="UserInfoName"></span> (<span id="UserInfoLogin"></span>)</h2>
+            <br /><br />
+            <table id="UserInfoRoles">
+                <thead>
+                    <tr>
+                        <th>Role</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <br />
+            <asp:ListView ID="lviewUserRoles" runat="server">
+                <LayoutTemplate>
+                    <select id="UserRoles">
+                        <option id="itemPlaceholder" runat="server"></option>
+                    </select>
+                </LayoutTemplate>
+                <ItemTemplate>
+                    <option>
+                        <%# Eval("Name") %>
+                    </option>
+                </ItemTemplate>
+            </asp:ListView>
+            <input type="button" id="btnAddUserRole" value="Add Role" />
+            <br /><br /><br /><br />
+            <table id="UserInfoUnits">
+                <thead>
+                    <tr>
+                        <th>
+                            Unit
+                        </th>
+                        <th>
+                            FISCode
+                        </th>
+                        <th>
+                            Remove
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <br />
+            <asp:ListView ID="lviewUserUnits" runat="server">
+                <LayoutTemplate>
+                    <select id="UserUnits">
+                        <option id="itemPlaceholder" runat="server"></option>
+                    </select>
+                </LayoutTemplate>
+                <ItemTemplate>
+                    <option value='<%# Eval("FISCode") %>'>
+                        <%# Eval("ShortName") %>
+                    </option>
+                </ItemTemplate>
+            </asp:ListView>
+            <input type="button" id="btnAddUserUnit" value="Add Unit" />
+        </div>
+    </div>
+    
+    <div id="dialogFindUser" title="Add a User" style="display: none;">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        Kerberos or Email: <input type="text" id="txtLoginID" /><input type="button" id="btnSearchUser" value="Search" />
+        <span id="spanSearchProgress" style="display:none;">Searching...</span>
+        <div id="divSearchResultsSuccess" style="display:none;">
+            <h2><span id="spanNewUserFirstName"></span> <span id="spanNewUserLastName"></span> (<span id="spanNewUserLogin"></span>)</h2>
+            <label>Email:</label> <input type="text" id="txtNewUserEmail" /><br />
+            <label>Phone:</label> <input type="text" id="txtNewUserPhone" /><br />
+            <label>Role:</label>
+            <asp:ListView ID="lviewRoles" runat="server">
+                <LayoutTemplate>
+                    <select id="applicationRoles">
+                        <option id="itemPlaceholder" runat="server"></option>
+                    </select>
+                </LayoutTemplate>
+                <ItemTemplate>
+                    <option>
+                        <%# Eval("Name") %>
+                    </option>
+                </ItemTemplate>
+            </asp:ListView>
+<%--            <asp:ObjectDataSource ID="odsRoles" runat="server" OldValuesParameterFormatString="original_{0}"
+                SelectMethod="GetVisibleByUser" TypeName="CAESDO.Catbert.BLL.RoleBLL">
+                <SelectParameters>
+                    <asp:QueryStringParameter QueryStringField="app" Name="application" DefaultValue="Catbert" />
+                </SelectParameters>
+            </asp:ObjectDataSource>--%>
+            <br />
+            <label>Unit:</label>
+            <asp:ListView ID="lviewUnits" runat="server">
+                <LayoutTemplate>
+                    <select id="units">
+                        <option id="itemPlaceholder" runat="server"></option>
+                    </select>
+                </LayoutTemplate>
+                <ItemTemplate>
+                    <option value='<%# Eval("FISCode") %>'>
+                        <%# Eval("ShortName")%>
+                    </option>
+                </ItemTemplate>
+            </asp:ListView>
+<%--            <asp:ObjectDataSource ID="odsUnits" runat="server" OldValuesParameterFormatString="original_{0}"
+                SelectMethod="GetVisibleByUser" TypeName="CAESDO.Catbert.BLL.UnitBLL">
+                <SelectParameters>
+                    <asp:QueryStringParameter QueryStringField="app" Name="application" DefaultValue="Catbert" />
+                </SelectParameters>
+            </asp:ObjectDataSource>--%>
+            <br />
+            <input type="button" id="btnAddUser" value="Add User" /><span id="spanAddUserProgress" style="display: none;">Processing...</span>
+        </div>
+    </div>
+        
 </asp:Content>
 
