@@ -102,8 +102,8 @@ $(document).ready(function() {
 
     $("#btnAddUserRole").click(function() { AddUserRole(application); });
 
-    $("#btnAddUserUnit").click(function() { AddUserUnit(application); });
-
+    $("#btnAddUnits").click(AddUserUnit);
+    
     $("#btnSearchUser").click(function() {
         $("#spanSearchProgress").show(0); //Show the loading dialog
         $("#divSearchResultsSuccess").hide(0); //Hide the content
@@ -271,16 +271,22 @@ function AddUserRole(application) {
     }
 }
 
-function AddUserUnit(application) {
+function AddUserUnit() {
     var login = $("#UserInfoLogin").html();
-    var units = $("#UserInfoUnits");
-    var newunit = $("#UserUnits").val();
-    var newunitname = $("#UserUnits option:selected").text();
+    var units = $("#tblUnits");
+    
+    var newunit = $("#unitsForAssociation").val();
+    var newunitname = $("#unitsForAssociation option:selected").text();
+
+    var app = $("#applicationsUnits").val();
 
     //Find out if the unitFIS is already in the unit table
-    var existingUnitMatch = units.find("tbody tr:visible td:contains(" + newunit + ")").filter(
+    var existingUnitMatch = units.find("tbody tr:visible").filter(
                 function() {
-                    if ($(this).text() == newunit)
+                    var appMatch = $(this).find("td:contains(" + app + ")").size();
+                    var unitMatch = $(this).find("td:contains(" + newunit + ")").size();
+                    
+                    if (appMatch === 1 && unitMatch === 1) //Did we find an application and unit match in the same row?
                         return true;
                     else
                         return false;
@@ -288,6 +294,8 @@ function AddUserUnit(application) {
             );
 
     if (existingUnitMatch.size() == 0) {
+        return; ///TODO
+    
         //Add the unit
         var newrow = CreateUnitRow(newunitname, newunit, login, application);
         units.append(newrow);
