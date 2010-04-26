@@ -24,5 +24,10 @@
       <many-to-many column="UnitID" class="CAESDO.Catbert.Core.Domain.Unit, CAESDO.Catbert.Core" />
     </bag>
 
+    <bag name="Permissions" table="Permissions" inverse="false" cascade="none">
+      <key column="UserID" />
+      <many-to-many column="PermissionID" class="CAESDO.Catbert.Core.Domain.Permission, CAESDO.Catbert.Core" />
+    </bag>
+    
   </class>
 </hibernate-mapping>

@@ -18,12 +18,23 @@ namespace CAESDO.Catbert.BLL
 
         public static List<User> GetByApplicationRole(int applicationID, int roleID)
         {
+            //Can't implement through LINQ because of restrictions on joins.
+            throw new NotImplementedException();
+
+            /*
+            var query = from perm in PermissionBLL.Queryable
+                        where perm.Application.ID == applicationID && perm.Role.ID == roleID
+                        select perm.User;
+            */
+
+            /*
             var query = from user in Queryable
                         join perm in PermissionBLL.Queryable on user.ID equals perm.ID
                         where perm.Application.ID == applicationID && perm.Role.ID == roleID
                         select user;
 
             return query.ToList();
+             */
         }
     }
 }

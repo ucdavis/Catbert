@@ -15,7 +15,7 @@ public partial class _Default : System.Web.UI.Page
 
         //Response.Write(schools.Count);
 
-        var q = GenericBLL<TrackingType, int>.GetAll();
-
+        //var q = GenericBLL<TrackingType, int>.GetAll();
+        var q = UserBLL.GetByApplicationRole(1, 1);
     }
 }

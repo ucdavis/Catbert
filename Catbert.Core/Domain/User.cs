@@ -40,6 +40,8 @@ namespace CAESDO.Catbert.Core.Domain
 
         public virtual IList<Unit> Units { get; set; }
 
+        public virtual IList<Permission> Permissions { get; set; }
+
         public User()
         {
 
