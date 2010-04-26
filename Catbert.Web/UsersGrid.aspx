@@ -14,8 +14,8 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $("#tblUsers").jqGrid({
-                url: 'Services/CatbertWebService.asmx/GetUsersByApplication',
-                dataType: 'xml',
+                url: 'Services/CatbertWebService.asmx/jqGetUsersByApplication',
+                datatype: 'json',
                 mtype: 'POST',
                 colNames: ['Login', 'First Name', 'Last Name', 'Email'],
                 colModel: [
@@ -25,11 +25,10 @@
                     { name: 'Email', index: 'Email', width: 130 }
                     ],
                 postData: { login: "postit", application: "Catbert" },
-                xmlReader: {
-                    root: 'ArrayOfCatbertUser',
-                    row: 'CatbertUser',
-                    repeatitems: false,
-                    id: 'UserID'
+                jsonReader: {
+                    records: 'rows',
+                    repeatitems: false, 
+                    id: "0" 
                 }
             });
 

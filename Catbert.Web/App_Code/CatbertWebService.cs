@@ -256,6 +256,21 @@ public class CatbertWebService : System.Web.Services.WebService
     }
 
     [WebMethod]
+    public jqGridData jqGetUsersByApplication(string application)
+    {
+        var users = ConvertFromUserList(UserBLL.GetByApplication(application), application);
+
+        jqGridData grid = new jqGridData() { page = 1, total = 20 };
+
+        foreach (var user in users)
+        {
+            grid.rows.Add(user);
+        }
+
+        return grid;
+    }
+
+    [WebMethod]
     public List<CatbertUser> GetUsersByApplicationRole(string application, string role)
     {
         List<CatbertUser> users = ConvertFromUserList(UserBLL.GetByApplicationRole(application, role), application);

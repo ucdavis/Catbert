@@ -26,6 +26,19 @@ namespace Catbert.Services
         }
     }
 
+    public class jqGridData
+    {
+        public int page { get; set; }
+        public int total { get; set; }
+
+        public List<object> rows { get; set; }
+
+        public jqGridData()
+        {
+            rows = new List<object>();
+        }
+    }
+
     public class GridDataRow
     {
         public int id { get; set; }
