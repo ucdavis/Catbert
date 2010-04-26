@@ -230,6 +230,32 @@ public class CatbertWebService : System.Web.Services.WebService
     }
 
     [WebMethod]
+    public GridData DataGetUsersByApplication(string application)
+    {
+        var users = UserBLL.GetByApplication(application);
+
+        GridData grid = new GridData() { page = 1, total = 20 };
+
+        foreach (var user in users)
+        {
+            grid.rows.Add(new GridDataRow()
+            {
+                id = user.ID,
+                cell = new List<string> 
+                {
+                    user.LoginID, 
+                    user.FirstName, 
+                    user.LastName, 
+                    user.EmployeeID, 
+                    user.Email
+                }
+            });
+        }
+
+        return grid;
+    }
+
+    [WebMethod]
     public List<CatbertUser> GetUsersByApplicationRole(string application, string role)
     {
         List<CatbertUser> users = ConvertFromUserList(UserBLL.GetByApplicationRole(application, role), application);

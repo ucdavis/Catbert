@@ -605,9 +605,8 @@
                     processData: true,
                     success: function(data) {
                         //var result = JSON2.parse(data.d);
-                        //var result = data.d;
-                        //debugger;
-                        g.addData(data);
+                        var result = data.d;
+                        g.addData(result);
                     },
                     error: function(data) { try { if (p.onError) p.onError(data); } catch (e) { } }
                 });

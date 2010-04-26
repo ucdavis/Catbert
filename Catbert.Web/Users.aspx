@@ -17,10 +17,26 @@
         var test = JSON2.stringify(json);
             //debugger;
             $("#tblUsers").flexigrid({
-                url: "Services/CatbertWebService.asmx/GetRolesByUser",
+                url: "Services/CatbertWebService.asmx/DataGetUsersByApplication",
                 dataType: 'json',
                 method: 'POST',
-                params: json
+                params: json,
+                colModel : [
+				    {display: 'Login', name : 'login', width : 40, sortable : true, align: 'center'},
+				    {display: 'FirstName', name : 'firstname', width : 180, sortable : true, align: 'left'},
+				    { display: 'LastName', name: 'lastname', width: 120, sortable: true, align: 'left' },
+				    {display: 'Email', name : 'email', width : 130, sortable : true, align: 'left', hide: false},
+				    ],
+				sortname: "lastname",
+				sortorder: "asc",
+				usepager: true,
+				title: 'Users',
+				useRp: true,
+				rp: 15,
+				showTableToggleBtn: true,
+				width: 700,
+				height: 200
+
                 //args: json
             });
 

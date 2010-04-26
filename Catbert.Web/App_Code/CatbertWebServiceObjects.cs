@@ -13,6 +13,25 @@ using System.Collections.Generic;
 
 namespace Catbert.Services
 {
+    public class GridData
+    {
+        public int page { get; set; }
+        public int total { get; set; }
+
+        public List<GridDataRow> rows { get; set; }
+
+        public GridData()
+        {
+            rows = new List<GridDataRow>();
+        }
+    }
+
+    public class GridDataRow
+    {
+        public int id { get; set; }
+        public List<string> cell { get; set; }
+    }
+
     public class ServiceUser
     {
         public ServiceUser()
