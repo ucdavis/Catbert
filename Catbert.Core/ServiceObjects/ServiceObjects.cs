@@ -20,7 +20,7 @@ namespace CAESDO.Catbert.Core.ServiceObjects
     public class UnitAssociation
     {
         public string ApplicationName { get; set; }
-        public string UnitName { get; set; }
+        public string UnitFIS { get; set; }
     }
 
     /// <summary>

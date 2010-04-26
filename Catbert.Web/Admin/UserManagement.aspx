@@ -57,7 +57,7 @@
         });
 
         $(data.UnitAssociations).each(function() {
-            var newUnitRow = CreateUnitRow(this.UnitName, loginId, this.ApplicationName);
+            var newUnitRow = CreateUnitRow(this.UnitFIS, loginId, this.ApplicationName);
 
             units.append(newUnitRow);
         });

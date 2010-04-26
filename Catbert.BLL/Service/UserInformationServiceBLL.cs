@@ -37,7 +37,7 @@ namespace CAESDO.Catbert.BLL.Service
                                       new UnitAssociation
                                           {
                                               ApplicationName = association.Application.Name,
-                                              UnitName = association.Unit.ShortName
+                                              UnitFIS = association.Unit.FISCode
                                           };
 
             return unitAssociations.ToList();
