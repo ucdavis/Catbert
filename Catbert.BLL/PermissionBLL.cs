@@ -110,5 +110,13 @@ namespace CAESDO.Catbert.BLL
         {
             return Queryable.Any(perm => perm.Application.ID == applicationID && perm.Role.ID == roleID && perm.User.ID == userID && perm.Inactive == inactive);
         }
+
+        public static List<Role> GetRolesForUser(string application, string login)
+        {
+            var permissions = Queryable.Where(perm => perm.Application.Name == application && perm.User.LoginID == login && perm.Inactive == false).ToList();
+            var roles = permissions.Select(perm => perm.Role);
+
+            return roles.ToList();
+        }
     }
 }

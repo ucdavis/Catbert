@@ -173,13 +173,34 @@ public class CatbertWebService : System.Web.Services.WebService
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
     public List<ServiceRole> GetRoles(string application)
     {
-        throw new NotImplementedException();
+        EnsureCredentials(secureCTX);
+
+        List<ServiceRole> roles = new List<ServiceRole>();
+
+        foreach (var role in RoleBLL.GetRolesByApplication(application))
+        {
+            if (!role.Inactive) //only return active roles
+            {
+                roles.Add(new ServiceRole() { ID = role.ID, Name = role.Name });
+            }
+        }
+
+        return roles;
     }
 
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
     public List<ServiceRole> GetRolesByUser(string application, string login)
     {
-        throw new NotImplementedException();
+        EnsureCredentials(secureCTX);
+
+        List<ServiceRole> roles = new List<ServiceRole>();
+
+        foreach (var role in PermissionBLL.GetRolesForUser(application, login))
+        {
+            roles.Add(new ServiceRole() { ID = role.ID, Name = role.Name });
+        }
+
+        return roles;
     }
 
     #endregion

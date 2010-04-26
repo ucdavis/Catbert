@@ -109,6 +109,20 @@ namespace CAESDO.Catbert.Test
         }
          */
 
+        public static ServiceRole[] GetRoles()
+        {
+            var sc = GetSecurityContext();
+
+            return catops.GetRoles(ref sc, AppName);
+        }
+
+        public static ServiceRole[] GetRolesByUser(string login)
+        {
+            var sc = GetSecurityContext();
+
+            return catops.GetRolesByUser(ref sc, AppName, login);
+        }
+
         public static bool AddUserToUnit(string login, string unitFIS)
         {
             var sc = GetSecurityContext();
