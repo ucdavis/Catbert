@@ -14,7 +14,9 @@ public partial class CreateMessage : System.Web.UI.Page
     {
         if(!Page.IsPostBack)
         {
-            tbBeginDisplayDate.Text = DateTime.Now.ToShortDateString();
+            tbBeginDisplayDate.Text = String.Format("{0:MM/dd/yyyy}", DateTime.Now).ToString();
+
+            
         }
     
     }
