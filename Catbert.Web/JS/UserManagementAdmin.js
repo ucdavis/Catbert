@@ -100,7 +100,7 @@ $(document).ready(function() {
         OpenDialog(findUserDialog, buttons, "Add a User");
     });
 
-    $("#btnAddUserRole").click(function() { AddUserRole(application); });
+    $("#btnAddPermission").click(AddUserRole);
 
     $("#btnAddUnits").click(AddUserUnit);
 
@@ -244,22 +244,39 @@ function ChangeSortOrder() {
     PopulateUserTableDefault(application);
 }
 
-function AddUserRole(application) {
+function AddUserRole() {
     var login = $("#UserInfoLogin").html();
-    var roles = $("#UserInfoRoles");
-    var newrole = $("#UserRoles").val();
 
-    //Find out if the role is already in the roles table
-    var existingRoleMatch = roles.find("tbody tr:visible td:contains(" + newrole + ")").filter(
+    var existingRoles = $("#tblPermissions");
+    
+    var newrole = $("#rolesPermissions").val();
+    var app = $("#applicationsPermissions").val();
+    
+    if (app == '') app = null;
+    if (newrole == '') newrole = null;
+
+    if (app === null || newrole === null) {
+        alert("You must select an application and a role to associate a new permission");
+        return;
+    }
+
+    console.info(app + "  " + newrole);
+
+    //Find out if the role is already in associated
+    var existingRoleMatch = existingRoles.find("tbody tr:visible").filter(
                 function() {
-                    if ($(this).text() == newrole)
+                    var appMatch = $(this).find("td:contains(" + app + ")").size();
+                    var roleMatch = $(this).find("td:contains(" + newrole + ")").size();
+
+                    if (appMatch === 1 && roleMatch === 1) //Did we find an application and role match in the same row?
                         return true;
                     else
                         return false;
                 }
-            );
-
+            );        
+    
     if (existingRoleMatch.size() == 0) {
+                    return;
         //Add this role
         var newrow = CreateRoleRow(newrole, login, application);
         roles.append(newrow);
@@ -275,7 +292,7 @@ function AddUserRole(application) {
         userTableDirty = true; //Users have been modified
     }
     else {
-        alert("User already has the role " + newrole);
+        alert("User already has the role " + $.trim(newrole) + ' in ' + $.trim(app));
     }
 }
 
