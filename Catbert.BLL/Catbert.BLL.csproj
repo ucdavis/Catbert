@@ -49,7 +49,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GenericBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Catbert.Core\Catbert.Core.csproj">
+      <Project>{A7B433EA-F2D1-4BF3-93FB-0787C99F9870}</Project>
+      <Name>Catbert.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Catbert.Data\Catbert.Data.csproj">
+      <Project>{55DA8BF5-C31F-4C3B-AEE3-07FDF47DA6F0}</Project>
+      <Name>Catbert.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
