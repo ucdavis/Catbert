@@ -15,46 +15,25 @@ public partial class Messages : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
     }
-
-    protected void BtnDeactivateClick(object sender, EventArgs e)
+    
+   protected void BtnDeactivateClick(object sender, CommandEventArgs e)
    {
-       
+       int id = Convert.ToInt16(e.CommandArgument);
+       DeactivateMsg(id);
    }
 
-    /// <summary>
-    /// Message Update function.  Get Message obj to update
-    /// </summary>
-    /// <param name="objId", "property", "value", "objType">
-    /// </param>
-    public string SaveProperty(int objId, string property, string value, string objType)
+    protected  void DeactivateMsg(int id)
     {
-        try
-        {
-           SaveProperty(MessageBLL.GetByID(objId), property, value); 
+        var m = MessageBLL.GetByID(id);
+        if (m == null) throw new NotImplementedException();
+        m.IsActive = false;
 
-        //I don't understand what is being thrown below --below? LD
-           return string.Empty;
-        }
-        catch (Exception ex)
+        using (var ts = new TransactionScope())
         {
-            throw ex;
+            MessageBLL.Update(m);
+            ts.CommitTransaction();
         }
     }
-
-    //update message 
-    protected void SaveProperty(Message message, string property, string value)
-    {
-
-        switch (property)
-        {
-            case "IsActive":
-                message.IsActive = Convert.ToBoolean(value);
-                break;
-        };
-
-        MessageBLL.Update(message);
-    }
-
-
+   
 
 }

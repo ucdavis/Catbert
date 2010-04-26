@@ -3,14 +3,24 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 
   <script type="text/javascript" src="http://jqueryui.com/latest/ui/ui.tabs.js"></script>
+  <script type="text/javascript" src="../JS/jquery.tablesorter.js"></script>
+  <script type="text/javascript" src="../JS/jquery-latest.js"></script> 
 
 
     <script type="text/javascript">
 
-     $(document).ready(function() {
-      $("#tabs").tabs();          
-      
-      });
+        $(document).ready(function() {
+            $("#tabs").tabs();
+            //$("odsMessages").tablesorter(); 
+            
+            //Setup the sorting for the table with the first column initially sorted ascending
+            //and the rows striped using the zebra widget
+            $("#ListView1").tablesorter({ sortList: [[0, 0]], widgets: ['zebra'] });
+
+
+            console.log("HI");
+        });
+  
   </script>
     
     
@@ -19,8 +29,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="body" Runat="Server">
   <a href="CreateMessage.aspx">[Add New Message]</a><br /><br />
-  
-    <div id="tabs">
+   <div id="tabs">
     <ul>
         <li><a href="#tab-1"><span>All Messages</span></a></li>
         <%--<li><a href="#tab-2"><span>Expired Messages</span></a></li>--%>
@@ -44,34 +53,26 @@
                 <td><%# Eval("Application.Name") %></td>
                 <td><%#Eval("BeginDisplayDateString")%></td>
                 <td><%#Eval("EndDisplayDateString") %></td>
-                
-                <%--
-                 <td><asp:Button ID="btnDeactivate" runat="server" Text="" 
-                  />
-                 </td>
-                --%>
-                <%--onclick='SaveProperty("<%= Request.QueryString["mid"] %>","IsActive","0","Project");'--%>
-                
-                
-                
-                
+                 
+                <td><asp:Button ID="btnDeactivate" OnCommand="BtnDeactivateClick" CommandArgument='<%# Eval("ID") %>' runat="server" Text="Button" BackColor="Silver" BorderColor="Gray" /></td>
             </tr>
-      </ItemTemplate>
-
-  
+       </ItemTemplate>
+   
       <LayoutTemplate>
          <table width="100%" id="odsMessages">
                 <thead>
                     <tr>
                         <th>Message</th>
-                        <th>Application ID</th>
-                        <td>Begin Display</td>
-                        <td>End Display</td>
-                        <td>Deactivate</td>
+                        <th>Application</th>
+                        <th>Begin Display</th>
+                        <th>End Display</th>
+                        <th>Deactivate</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr runat='server' id="ItemPlaceHolder"></tr>
+                    
+                    
                 </tbody>
                 <tfoot>
                     
@@ -84,7 +85,7 @@
         </LayoutTemplate>
         </asp:ListView>
   
-  </div>
+ </div>
 <%----Expired Messages------------------------------------------------------------%>
  <%-- <div id="tab-2">
    <asp:ObjectDataSource ID="odsExpiredMessages" runat="server" 
@@ -132,6 +133,7 @@
   </div>--%>
 
 <%--------------------------------------------------------------%>
+
 </div>
 </asp:Content>
 
