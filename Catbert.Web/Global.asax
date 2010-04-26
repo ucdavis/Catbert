@@ -6,7 +6,7 @@
     {
         // Code that runs on application startup
 #if DEBUG
-        HibernatingRhinos.NHibernate.Profiler.Appender.NHibernateProfiler.Initialize();
+        //HibernatingRhinos.NHibernate.Profiler.Appender.NHibernateProfiler.Initialize();
 #endif
     }
     

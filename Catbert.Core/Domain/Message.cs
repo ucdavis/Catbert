@@ -19,17 +19,13 @@ namespace CAESDO.Catbert.Core.Domain
         public virtual Application Application { get; set; }
 
 
-        public virtual string BeginDisplayDateString
-        {
+        public virtual string BeginDisplayDateString{
             get{
                 return String.Format("{0:MM/dd/yyyy}", BeginDisplayDate).ToString();
-
-                
             }
         }
 
-        public virtual string EndDisplayDateString
-        {
+        public virtual string EndDisplayDateString{
             get {
                 return EndDisplayDate.HasValue ? String.Format("{0:MM/dd/yyyy}", EndDisplayDate.Value).ToString() : "N/A";
             }

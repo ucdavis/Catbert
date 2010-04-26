@@ -35,14 +35,14 @@
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="body" Runat="Server">
-<a href="Messages.aspx">[Messages]</a><br /><br />
+<a href="Messages.aspx">[Messages]</a><br /><br /><br />
     <table>
     <tbody>
         <tr>
             <td class="style1">Message:</td>
             <td class="style2">
                 <asp:TextBox ID="tbMessage" runat="server" Height="44px" Width="277px" ></asp:TextBox>
-                <asp:RequiredFieldValidator ID="valMessage" ControlToValidate="tbMessage" runat="server" ErrorMessage="Required Field"></asp:RequiredFieldValidator>
+                <asp:RequiredFieldValidator ID="valMessage" ControlToValidate="tbMessage" runat="server" ErrorMessage="*Required Field"></asp:RequiredFieldValidator>
             </td>
             <td></td>
             <td></td>
@@ -52,15 +52,27 @@
             <td class="style1">Begin Display Date:</td>
             <td class="style2">
                 <asp:TextBox ID="tbBeginDisplayDate" runat="server" ></asp:TextBox>
-                <asp:RequiredFieldValidator ID="valBeginDisplayDate" ControlToValidate="tbBeginDisplayDate" runat="server" ErrorMessage="Required Field"></asp:RequiredFieldValidator>
+                <asp:RequiredFieldValidator ID="valBeginDisplayDate" ControlToValidate="tbBeginDisplayDate" runat="server" ErrorMessage="*Required Field"></asp:RequiredFieldValidator>
+                <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" 
+                    ErrorMessage="Invalid Date (format: mm/dd/yy)" 
+                    ControlToValidate="tbBeginDisplayDate"
+                    ValidationExpression="((0?[1-9])|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])[- /.](19|20)?\d\d">
+                        <%--Format (mm or m) /(dd or d) /(yy or YYYY)--%>
+                </asp:RegularExpressionValidator>
             </td>
             
             
             <td>End Display Date:</td>
             <td>
                 <asp:TextBox ID="tbEndDisplayDate" runat="server" ></asp:TextBox>
-                <asp:CompareValidator ID="valEndDisplyDate" runat="server" ErrorMessage="End Date must be greater than Start Date" ControlToCompare="tbBeginDisplayDate" ControlToValidate="tbEndDisplayDate" Operator="GreaterThan" ></asp:CompareValidator>
-            
+                <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" 
+                    ErrorMessage="Invalid Date (format: mm/dd/yy)" 
+                    ControlToValidate="tbEndDisplayDate"
+                    ValidationExpression="((0?[1-9])|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])[- /.](19|20)?\d\d">
+                        <%--Format (mm or m) /(dd or d) /(yy or YYYY)--%>
+                </asp:RegularExpressionValidator>
+                <%--compare doesn't work. compares string, custom validation?--%>
+                <%--<asp:CompareValidator ID="valEndDisplyDate" runat="server" ErrorMessage="*End Date must be greater than Start Date" ControlToCompare="tbBeginDisplayDate" ControlToValidate="tbEndDisplayDate" Operator="GreaterThan" ></asp:CompareValidator>--%>
             </td>
             </tr>
         <tr>
