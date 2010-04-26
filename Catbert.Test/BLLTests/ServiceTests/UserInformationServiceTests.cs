@@ -9,6 +9,8 @@ namespace CAESDO.Catbert.Test.BLLTests.ServiceTests
     [TestClass]
     public class UserInformationServiceTests : DatabaseTestBase
     {
+        private const string ValidLoginId = "login0";
+
         [TestMethod]
         [ExpectedException(typeof(PreconditionException))]
         public void GettingUserInformationShouldThrowPreconditionExceptionIfNoLoginIdGiven()
@@ -35,17 +37,31 @@ namespace CAESDO.Catbert.Test.BLLTests.ServiceTests
         [TestMethod]
         public void GettingUserInformationForValidUserSetsUserIdProperty()
         {
-            const string validUserId = "login0";
+            var userinfo = UserInformationServiceBLL.GetInformationByLoginId(ValidLoginId);
 
-            var userinfo = UserInformationServiceBLL.GetInformationByLoginId(validUserId);
+            Assert.AreEqual(ValidLoginId, userinfo.LoginId);
+        }
 
-            Assert.AreEqual(validUserId, userinfo.LoginId);
+        [TestMethod]
+        public void GettingUserInformationPopulatesPermissionAssociationsList()
+        {
+            var userinfo = UserInformationServiceBLL.GetInformationByLoginId(ValidLoginId);
+
+            Assert.AreEqual(4, userinfo.PermissionAssociations.Count);
+        }
+
+        [TestMethod]
+        public void GettingUserInformationPopulatesUnitAssociationsList()
+        {
+            var userinfo = UserInformationServiceBLL.GetInformationByLoginId(ValidLoginId);
+
+            Assert.AreEqual(3, userinfo.UnitAssociations.Count);
         }
 
         [TestInitialize]
         public void AddUnitAndPermissionAssociations()
         {
-            var user = UserBLL.GetByID(1);
+            var user = UserBLL.GetUser(ValidLoginId);
             const string appName = "App0";
 
             //Associate with two units in app0
@@ -56,11 +72,13 @@ namespace CAESDO.Catbert.Test.BLLTests.ServiceTests
             PermissionBLL.InsertPermission(appName, "Role0", user.LoginID, user.LoginID);
             PermissionBLL.InsertPermission(appName, "Role1", user.LoginID, user.LoginID);
 
-            //Now associate with a unit and role in another app
+            //Now associate with a unit and 2 roles in another app
             const string appName2 = "App1";
 
             UnitAssociationBLL.AssociateUnit(user.LoginID, appName2, "Uni0", user.LoginID);
+            
             PermissionBLL.InsertPermission(appName2, "Role1", user.LoginID, user.LoginID);
+            PermissionBLL.InsertPermission(appName2, "Role2", user.LoginID, user.LoginID);
         }
     }
 }
