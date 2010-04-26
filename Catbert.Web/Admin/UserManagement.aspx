@@ -7,7 +7,7 @@
     <script src="../JS/jquery.ajaxQueue.js" type="text/javascript"></script>
     <script src="../JS/jquery.autocomplete.js" type="text/javascript"></script>
     <%--<script src="../JS/jquery.tablesorter.min.js" type="text/javascript"></script>--%>
-    <script src="../JS/UserManagement.js" type="text/javascript"></script>
+    <script src="../JS/UserManagementAdmin.js" type="text/javascript"></script>
        
     <a href="javascript:;" id="addUser" class="dialog_link ui-state-default ui-corner-all">
         <span class="ui-icon ui-icon-newwin"></span>Add User

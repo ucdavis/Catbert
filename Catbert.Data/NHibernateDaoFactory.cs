@@ -109,6 +109,30 @@ namespace CAESDO.Catbert.Data
 
         public class UserDao : IUserDao
         {
+            public List<User> GetByCriteria(string application, string searchToken, int page, int pageSize, string orderBy, out int totalUsers)
+            {
+                //Now filter out all of the users in this list by the search criteria 
+                ICriteria criteria = NHibernateSessionManager.Instance.GetSession().CreateCriteria(typeof(User))
+                    .Add(Expression.Eq("Inactive", false))
+                    .Add(
+                        Expression.Disjunction()
+                            .Add(Expression.Like("Email", searchToken, MatchMode.Anywhere))
+                            .Add(Expression.Like("FirstName", searchToken, MatchMode.Anywhere))
+                            .Add(Expression.Like("LastName", searchToken, MatchMode.Anywhere))
+                            .Add(Expression.Like("LoginID", searchToken, MatchMode.Anywhere))
+                        )
+                    .Add(Subqueries.PropertyIn("id", GetUsersInAnyRoleInApplication(application))); //Include just users within an application
+
+                totalUsers = CriteriaTransformer.TransformToRowCount(criteria).UniqueResult<int>();
+
+                criteria = criteria
+                    .SetFirstResult((page - 1)*pageSize)
+                    .SetMaxResults(pageSize)
+                    .AddOrder(GetOrder(orderBy));
+
+                return criteria.List<User>() as List<User>;
+            }
+
             public List<User> GetByApplication(string application, string currentLogin, string role, string unit, string searchToken, int page, int pageSize, string orderBy, out int totalUsers)
             {   
                 //Now filter out all of the users in this list by the role search criteria 
@@ -143,6 +167,20 @@ namespace CAESDO.Catbert.Data
                             .AddOrder(GetOrder(orderBy));
 
                 return criteria.List<User>() as List<User>;
+            }
+
+            private static DetachedCriteria GetUsersInAnyRoleInApplication(string application)
+            {
+                Permission p = new Permission();
+
+                DetachedCriteria usersInApplication = DetachedCriteria.For(typeof (Permission))
+                    .Add(Expression.Eq("Inactive", false))
+                    .CreateAlias("Application", "Application")
+                    .CreateAlias("User", "User")
+                    .Add(Expression.Eq("Application.Name", application))
+                    .SetProjection(Projections.Distinct(Projections.Property("User.id")));
+
+                return usersInApplication;
             }
 
             /// <summary>

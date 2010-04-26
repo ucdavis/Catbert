@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using CAESArch.BLL;
 using CAESArch.Core.Utils;
 using CAESDO.Catbert.Core.Domain;
@@ -250,6 +251,13 @@ namespace CAESDO.Catbert.BLL
         public static IQueryable<User> GetAllActive()
         {
             return UserBLL.Queryable.Where(user => user.Inactive == false);
+        }
+
+        public static List<User> GetAllByCriteria(string application, string search, int page, int pagesize, string orderBy, out int users)
+        {
+            Check.Require(Roles.IsUserInRole("Admin"), "User Must Be An Administrator To View The List Of All Users");
+
+            return DaoFactory.GetUserDao().GetByCriteria(application, search, page, pagesize, orderBy, out users);
         }
     }
 }

@@ -22,8 +22,7 @@ public class CatbertWebService : System.Web.Services.WebService
     {
         get
         {
-            return "postit"; //Testing Only
-            //return HttpContext.Current.User.Identity.Name;
+            return HttpContext.Current.User.Identity.Name;
         }
     }
 
