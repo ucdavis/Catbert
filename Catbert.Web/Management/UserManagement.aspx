@@ -11,6 +11,7 @@
     <script type="text/javascript">
         var baseURL = '../Services/CatbertWebService.asmx/';
         var autocompleteUnitsURL = '../Services/AutocompleteService.asmx/GetUsers';
+
         $(document).ready(function() {
             var application = $("#app").val();
             var search = null, unit = null, role = null; //start with no search, unit, or role filters
@@ -42,7 +43,7 @@
             $("#imgSearch").click(function() {
                 search = "";
                 $("#txtSearch").val(search); //clear out the text
-                
+
                 PopulateUserTable(application, search, unit, role, sortname, sortorder);
                 $(".ac_results").hide(); //Hide the results whenever you hit enter
 
@@ -62,6 +63,8 @@
                 cssHeader: 'header',
                 widgets: ['zebra']
             });
+
+            $("#modifyUserTEST").click(function() { ShowUserInfo(application); });
 
             $("#addUser").click(function() {
                 var findUserDialog = $("#dialogFindUser");
@@ -115,6 +118,85 @@
                 null);
             });
         });
+
+        function ShowUserInfo(applicationName) {
+            var dialogUserInfo = $("#dialogUserInfo");
+
+            var buttons = {
+                "Close": function() {
+                    $("#divUserInfo").hide(0);
+                    $(this).dialog("close");
+                }
+            }
+
+            OpenDialog(dialogUserInfo, buttons, "User Information");
+
+            /*
+            var row = $(this).parents("tr");
+            var applicationID = row.attr('id');
+            var applicationName = row.attr('title');
+
+            var buttons = {
+                "Close": function() {
+                    $(this).dialog("close");
+                },
+                "Update": function() {
+                    UpdateApplication(applicationID, applicationName);
+                    $(this).dialog("close");
+                }
+            }
+
+            OpenDialog(buttons, applicationName);
+
+            ShowApplicationInformation(false);  //Don't show the information until it loads
+
+            //Clear out the roles list checked options
+            $(":checked", roleList).attr('checked', false);
+            */
+            //TODO: TESTING
+            var baseUrl = baseURL;
+            
+            AjaxCall(
+                baseUrl + 'GetUser',
+                { login: "postit", application: applicationName },
+                function(data) { PopulateUserInfo(data); },
+                null //TODO: Error method
+            );
+        }
+
+        function PopulateUserInfo(data) {
+            //debugger;
+
+            $("#UserInfoName").html(data.FirstName + " " + data.LastName);
+            $("#UserInfoLogin").html(data.Login);
+
+            var roles = $("#UserInfoRoles tbody");
+            var units = $("#UserInfoUnits tbody");
+
+            roles.empty();
+            units.empty();
+
+            $(data.Roles).each(function(index, row) {
+                var newrow = $('<tr></tr>');
+
+                newrow.append('<td>' + row.Name + '</td>');
+                newrow.append('<td>' + row.ID + '</td>');
+
+                roles.append(newrow);
+            });
+
+            $(data.Units).each(function(index, row) {
+                var newrow = $('<tr></tr>');
+
+                newrow.append('<td>' + row.Name + '</td>');
+                newrow.append('<td>' + row.UnitFIS + '</td>');
+                newrow.append('<td>' + row.ID + '</td>');
+
+                units.append(newrow);
+            });
+
+            $("#divUserInfo").show(0); //Show the user information            
+        }
 
         function AddUserSuccess(application, search) {
             PopulateUserTable(application, search, null, null, null, null); //Repopulate the table
@@ -235,6 +317,8 @@
         }
     </script>
     
+    <a href="javascript:;" id="modifyUserTEST">Modify postit</a><br /><br />
+    
     <a href="javascript:;" id="addUser" class="dialog_link ui-state-default ui-corner-all">
         <span class="ui-icon ui-icon-newwin"></span>Add User
     </a>
@@ -272,6 +356,76 @@
             <%--Each row is a new person--%>
         </tbody>
     </table>
+    
+    <div id="dialogUserInfo" title="User Information" style="display: none;">
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <div id="divUserInfo" style="display:none;">
+            <span id="UserInfoName"></span> (<span id="UserInfoLogin"></span>)<br />
+            <table id="UserInfoRoles">
+                <thead>
+                    <tr>
+                        <th>
+                            Role
+                        </th>
+                        <th>
+                            Remove
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <br />
+            <asp:ListView ID="lviewUserRoles" runat="server" DataSourceID="odsRoles">
+                <LayoutTemplate>
+                    <select id="UserRoles">
+                        <option id="itemPlaceholder" runat="server"></option>
+                    </select>
+                </LayoutTemplate>
+                <ItemTemplate>
+                    <option>
+                        <%# Eval("Name") %>
+                    </option>
+                </ItemTemplate>
+            </asp:ListView>
+            <input type="button" id="btnAddUserRole" value="Add Role" />
+            <br /><br />
+            <table id="UserInfoUnits">
+                <thead>
+                    <tr>
+                        <th>
+                            Unit
+                        </th>
+                        <th>
+                            FISCode
+                        </th>
+                        <th>
+                            Remove
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <br />
+            <asp:ListView ID="lviewUserUnits" runat="server" DataSourceID="odsUnits">
+                <LayoutTemplate>
+                    <select id="UserUnits">
+                        <option id="itemPlaceholder" runat="server"></option>
+                    </select>
+                </LayoutTemplate>
+                <ItemTemplate>
+                    <option>
+                        <%# Eval("ShortName") %>
+                    </option>
+                </ItemTemplate>
+            </asp:ListView>
+            <input type="button" id="btnAddUserUnit" value="Add Unit" />
+        </div>
+    </div>
     
     <div id="dialogFindUser" title="Add a User" style="display: none;">
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
