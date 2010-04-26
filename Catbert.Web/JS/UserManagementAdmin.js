@@ -434,11 +434,19 @@ function UpdateUserInfo() {
     }
 
     var url = baseURL + 'UpdateUserInfo';
-    
+
     AjaxCall(
         url,
         { serviceUser: user },
-        function(data) { userTableDirty = true; }, //set the usertable to dirty on success
+        function(data) {
+
+            var usernfoMessage = $("#UserInfoMessage");
+            usernfoMessage.html("The Update Was Successfull");
+            usernfoMessage.show();
+            usernfoMessage.fadeOut(5000);
+
+            userTableDirty = true; //set the usertable to dirty on success
+        },
         null
     );
 }

@@ -266,6 +266,11 @@
                             <td></td>
                             <td><input type="button" id="btnUpdateUserInfo" value="Update Information" /></td>
                         </tr>
+                        <tr>
+                            <td colspan="2">
+                                <span id="UserInfoMessage"></span>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
