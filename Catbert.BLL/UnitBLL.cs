@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Web;
 using System.Web.Caching;
 using System.Web.Security;
+using CAESDO.Catbert.Data;
 
 namespace CAESDO.Catbert.BLL
 {
@@ -61,7 +62,14 @@ namespace CAESDO.Catbert.BLL
         /// </summary>
         public static List<Unit> GetVisibleByUser(string login, string application)
         {
-            return daoFactory.GetUnitDao().GetVisibleByUser(login, application);
+            using (var ts = new TransactionScope())
+            {
+                var result = daoFactory.GetUnitDao().GetVisibleByUser(login, application);
+
+                ts.CommittTransaction();
+
+                return result;
+            }
         }
 
         /// <summary>
