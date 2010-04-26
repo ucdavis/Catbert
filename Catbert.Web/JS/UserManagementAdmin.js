@@ -424,8 +424,6 @@ function PopulateUserTable(application, search, unit, role, sortname, sortorder)
         sortname: sortname,
         sortorder: sortorder
     };
-
-    console.dir(data);
     
     //Call the webservice
     AjaxCall(baseURL + 'GetUsers', data, PopulateUserTableSuccess, null);
