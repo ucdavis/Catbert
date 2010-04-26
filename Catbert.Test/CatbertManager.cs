@@ -130,6 +130,13 @@ namespace CAESDO.Catbert.Test
             return catops.DeletePermissions(ref sc, login, AppName, role);
         }
 
+        public static bool IsUserInRole(string login, string role)
+        {
+            var sc = GetSecurityContext();
+
+            return catops.PermissionExists(ref sc, login, AppName, role);
+        }
+
         public static ServiceUser[] SearchNewUsers(string EmployeeID, string FirstName, string LastName, string Login)
         {
             var sc = GetSecurityContext();

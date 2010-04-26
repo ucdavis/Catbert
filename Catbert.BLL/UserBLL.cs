@@ -18,6 +18,14 @@ namespace CAESDO.Catbert.BLL
         }
 
         /// <summary>
+        /// Returns a user's ID given their login
+        /// </summary>
+        public static int GetID(string login)
+        {
+            return Queryable.Where(user => user.LoginID == login).Select(user => user.ID).Single();
+        }
+
+        /// <summary>
         /// Insert a new user into the database
         /// </summary>
         /// <param name="user"></param>

@@ -37,7 +37,7 @@ namespace CAESDO.Catbert.Test
             }
         }
 
-        string role = "Admin";
+        string role = "Reader";
         string user = "postit";
 
         #region Additional test attributes
@@ -79,5 +79,19 @@ namespace CAESDO.Catbert.Test
             Assert.IsFalse(result); //that shouldn't work
         }
 
+        [TestMethod]
+        public void EnsureReaderPermission()
+        {
+            bool result = CatbertManager.IsUserInRole(user, role);
+
+            Assert.IsTrue(result);
+        }
+
+        public void FailFakePermission()
+        {
+            bool result = CatbertManager.IsUserInRole(user, "FAKE");
+
+            Assert.IsFalse(result);
+        }
     }
 }

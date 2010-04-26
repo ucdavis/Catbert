@@ -40,6 +40,11 @@ namespace CAESDO.Catbert.Test.CatbertService {
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         CAESDO.Catbert.Test.CatbertService.DeletePermissionsResponse DeletePermissions(CAESDO.Catbert.Test.CatbertService.DeletePermissionsRequest request);
         
+        // CODEGEN: Generating message contract since message PermissionExistsRequest has headers
+        [System.ServiceModel.OperationContractAttribute(Action="CAESDO.Services/PermissionExists", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute()]
+        CAESDO.Catbert.Test.CatbertService.PermissionExistsResponse PermissionExists(CAESDO.Catbert.Test.CatbertService.PermissionExistsRequest request);
+        
         // CODEGEN: Generating message contract since message AddUnitRequest has headers
         [System.ServiceModel.OperationContractAttribute(Action="CAESDO.Services/AddUnit", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
@@ -641,6 +646,54 @@ namespace CAESDO.Catbert.Test.CatbertService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="PermissionExists", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    public partial class PermissionExistsRequest {
+        
+        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
+        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
+        public string login;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=1)]
+        public string application;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=2)]
+        public string role;
+        
+        public PermissionExistsRequest() {
+        }
+        
+        public PermissionExistsRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string application, string role) {
+            this.SecurityContext = SecurityContext;
+            this.login = login;
+            this.application = application;
+            this.role = role;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="PermissionExistsResponse", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    public partial class PermissionExistsResponse {
+        
+        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
+        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
+        public bool PermissionExistsResult;
+        
+        public PermissionExistsResponse() {
+        }
+        
+        public PermissionExistsResponse(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, bool PermissionExistsResult) {
+            this.SecurityContext = SecurityContext;
+            this.PermissionExistsResult = PermissionExistsResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
     [System.ServiceModel.MessageContractAttribute(WrapperName="AddUnit", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
     public partial class AddUnitRequest {
         
@@ -1169,6 +1222,22 @@ namespace CAESDO.Catbert.Test.CatbertService {
             CAESDO.Catbert.Test.CatbertService.DeletePermissionsResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).DeletePermissions(inValue);
             SecurityContext = retVal.SecurityContext;
             return retVal.DeletePermissionsResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        CAESDO.Catbert.Test.CatbertService.PermissionExistsResponse CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap.PermissionExists(CAESDO.Catbert.Test.CatbertService.PermissionExistsRequest request) {
+            return base.Channel.PermissionExists(request);
+        }
+        
+        public bool PermissionExists(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string application, string role) {
+            CAESDO.Catbert.Test.CatbertService.PermissionExistsRequest inValue = new CAESDO.Catbert.Test.CatbertService.PermissionExistsRequest();
+            inValue.SecurityContext = SecurityContext;
+            inValue.login = login;
+            inValue.application = application;
+            inValue.role = role;
+            CAESDO.Catbert.Test.CatbertService.PermissionExistsResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).PermissionExists(inValue);
+            SecurityContext = retVal.SecurityContext;
+            return retVal.PermissionExistsResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]

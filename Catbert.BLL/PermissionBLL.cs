@@ -14,11 +14,7 @@ namespace CAESDO.Catbert.BLL
         /// </summary>
         public static Permission InsertPermission(string application, string role, string login, string trackingUserName)
         {
-            int applicationID = ApplicationBLL.GetByName(application).ID;
-            int userID = UserBLL.GetUser(login).ID;
-            int roleID = RoleBLL.GetByName(role).ID;
-
-            return InsertPermission(applicationID, roleID, userID, trackingUserName);
+            return InsertPermission(ApplicationBLL.GetID(application), RoleBLL.GetID(role), UserBLL.GetID(login), trackingUserName);
         }
 
         /// <summary>
@@ -100,6 +96,14 @@ namespace CAESDO.Catbert.BLL
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Checks to see if the given permission exists in the system.
+        /// </summary>
+        public static bool PermissionExists(string application, string role, string login, bool inactive)
+        {
+            return PermissionExists(ApplicationBLL.GetID(application), RoleBLL.GetID(role), UserBLL.GetID(login), inactive);
         }
 
         public static bool PermissionExists(int applicationID, int roleID, int userID, bool inactive)

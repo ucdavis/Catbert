@@ -106,6 +106,16 @@ public class CatbertWebService : System.Web.Services.WebService
         return PermissionBLL.DeletePermission(application, role, login, secureCTX.UserID);
     }
 
+    /// <summary>
+    /// Check to see if a permission exists and is active (works like is user in role)
+    /// </summary>
+    /// <returns>True if login has the correct active role in this application </returns>
+    [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
+    public bool PermissionExists(string login, string application, string role)
+    {
+        return PermissionBLL.PermissionExists(application, role, login, false);
+    }
+
     #endregion
 
     #region Units
