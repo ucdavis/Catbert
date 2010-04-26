@@ -109,6 +109,22 @@ public class CatbertAdminService : WebService
         return appRoles.OrderBy(role => role.Role.Name).Select(role => role.Role.Name).ToList();
     }
 
+    [WebMethod]
+    public void InsertUserWithRoleAndUnit(ServiceUser serviceUser, string role, string unit, string application)
+    {
+        var user = new User
+        {
+            FirstName = serviceUser.FirstName,
+            LastName = serviceUser.LastName,
+            Email = serviceUser.Email,
+            LoginID = serviceUser.Login,
+            EmployeeID = serviceUser.EmployeeID,
+            Phone = serviceUser.Phone
+        };
+
+        UserBLL.InsertNewUserWithRoleAndUnit(user, role, unit, application, CurrentServiceUser);
+    }
+
     #region Disassociate
 
     [WebMethod]

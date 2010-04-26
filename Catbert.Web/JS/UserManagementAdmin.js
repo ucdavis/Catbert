@@ -116,32 +116,7 @@ $(document).ready(function() {
         //AjaxCall(baseURL + "SearchNewUser", data, SearchNewUserSuccess, null);
     });
 
-    $("#btnAddUser").click(function() {
-        $("#spanAddUserProgress").show(0); //First show the loading dialog
-
-        //First fill in the user information
-        var user = new Object();
-        user.FirstName = $("#spanNewUserFirstName").html();
-        user.LastName = $("#spanNewUserLastName").html();
-        user.Login = $("#spanNewUserLogin").html();
-        user.Email = $("#txtNewUserEmail").val();
-        user.Phone = $("#txtNewUserPhone").val();
-
-        //Now get the role
-        var role = $("#applicationRoles").val();
-
-        //Now the unit FIS code
-        var unit = $("#units").val();
-
-        AjaxCall(baseURL + "InsertUserWithRoleAndUnit", {
-            serviceUser: user,
-            role: role,
-            unit: unit,
-            application: application
-        },
-                function() { AddUserSuccess(application, search); },
-                null);
-    });
+    $("#btnAddUser").click(AddUser);
 
     $("#filterApplications").change(function() {
         page = 1; //Reset the paging
@@ -200,6 +175,48 @@ function SearchUsers() {
     }, 250);
 
     return false; //Don't post back
+}
+
+function AddUser() {
+    var applicationName = $("#applications").val();
+    var applicationRole = $("#applicationRoles").val();
+
+    if (applicationName == "") applicationName = null;
+    if (applicationRole == "") applicationRole = null;
+
+    console.info(applicationName);
+    console.info(applicationRole);
+
+    if (applicationName == null || applicationRole == null) {
+        alert("Select an Application and Role");
+        return;
+    }
+    
+    $("#spanAddUserProgress").show(0); //First show the loading dialog
+
+    //First fill in the user information
+    var user = new Object();
+    user.FirstName = $("#spanNewUserFirstName").html();
+    user.LastName = $("#spanNewUserLastName").html();
+    user.Login = $("#spanNewUserLogin").html();
+    user.Email = $("#txtNewUserEmail").val();
+    user.Phone = $("#txtNewUserPhone").val();
+
+    //Now get the role
+    var role = applicationRole
+
+    //Now the unit FIS code
+    var unit = $("#units").val();
+
+    AjaxCall(baseURL + "InsertUserWithRoleAndUnit", 
+        {
+            serviceUser: user,
+            role: role,
+            unit: unit,
+            application: applicationName
+        },
+        function() { AddUserSuccess(application, search); },
+        null);
 }
 
 function ChangeSortOrder() {

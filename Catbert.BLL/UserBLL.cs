@@ -74,7 +74,7 @@ namespace CAESDO.Catbert.BLL
             if (userInformation == null || string.IsNullOrEmpty(role) || string.IsNullOrEmpty(unit) ||
                 string.IsNullOrEmpty(application)) throw new ArgumentException();
 
-            var user = new User();
+            User user;
 
             if (VerifyUserExists(userInformation.LoginID)) //Either get the existing user or create a new one
             {
@@ -87,6 +87,17 @@ namespace CAESDO.Catbert.BLL
 
             PermissionBLL.InsertPermission(application, role, user.LoginID, trackingUserName); //Insert the permission
             AssociateUnit(user.LoginID, application, unit, trackingUserName); //Associate the unit
+
+            if (user.Inactive)
+            {
+                using (var ts = new TransactionScope())
+                {
+                    user.Inactive = false; //If we are inserting new assoc. for this user, make them active
+
+                    EnsurePersistent(user);
+                    ts.CommitTransaction();
+                }
+            }
 
             return user;
         }
