@@ -146,6 +146,33 @@
                     <tbody>
                     </tbody>
                 </table>
+                <br />
+                <table id="tblAddPermission">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <asp:ListView ID="lviewApplicationPermissions" runat="server">
+                                    <LayoutTemplate>
+                                        <select id="applicationsPermissions">
+                                            <option id="itemPlaceholder" runat="server"></option>
+                                        </select>
+                                    </LayoutTemplate>
+                                    <ItemTemplate>
+                                        <option>
+                                            <%# Eval("Name") %>
+                                        </option>
+                                    </ItemTemplate>
+                                </asp:ListView>
+                            </td>
+                            <td>
+                                <select id="rolesPermissions"></select>
+                            </td>
+                            <td>
+                                <input id="btnAddPermission" type="button" value="+" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             <div id="tabUnits">
                 <table id="tblUnits">
@@ -157,6 +184,44 @@
                         </tr>
                     </thead>
                     <tbody>
+                    </tbody>
+                </table>
+                <br />
+                <table id="tblAddUnitAssociation">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <asp:ListView ID="lviewApplicationUnits" runat="server">
+                                    <LayoutTemplate>
+                                        <select id="applicationsUnits">
+                                            <option id="itemPlaceholder" runat="server"></option>
+                                        </select>
+                                    </LayoutTemplate>
+                                    <ItemTemplate>
+                                        <option>
+                                            <%# Eval("Name") %>
+                                        </option>
+                                    </ItemTemplate>
+                                </asp:ListView>
+                            </td>
+                            <td>
+                                <asp:ListView ID="lviewUnitsForAssociation" runat="server">
+                                    <LayoutTemplate>
+                                        <select id="unitsForAssociation">
+                                            <option id="itemPlaceholder" runat="server"></option>
+                                        </select>
+                                    </LayoutTemplate>
+                                    <ItemTemplate>
+                                        <option value='<%# Eval("FISCode") %>'>
+                                            <%# Eval("ShortName")%>
+                                        </option>
+                                    </ItemTemplate>
+                                </asp:ListView>
+                            </td>
+                            <td>
+                                <input id="btnAddUnits" type="button" value="+" />
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

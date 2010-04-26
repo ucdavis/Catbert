@@ -30,7 +30,6 @@ public partial class Management_UserManagement : System.Web.UI.Page
         using (var ts = new TransactionScope())
         {
             Units = UnitBLL.GetAllUnits();
-            Roles = RoleBLL.GetAll();
             Applications = ApplicationBLL.GetAll("Name", true);
             
             ts.CommitTransaction();
@@ -40,14 +39,20 @@ public partial class Management_UserManagement : System.Web.UI.Page
         
         //Units
         lviewUnits.DataSource = Units;
+        lviewUnitsForAssociation.DataSource = Units;
 
         lviewUnits.DataBind();
-        
+        lviewUnitsForAssociation.DataBind();
+
         //Applications
         lviewFilterApplications.DataSource = Applications;
         lviewApplications.DataSource = Applications;
+        lviewApplicationPermissions.DataSource = Applications;
+        lviewApplicationUnits.DataSource = Applications;
 
         lviewFilterApplications.DataBind();
         lviewApplications.DataBind();
+        lviewApplicationPermissions.DataBind();
+        lviewApplicationUnits.DataBind();
     }
 }
