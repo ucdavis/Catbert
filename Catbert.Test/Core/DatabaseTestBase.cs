@@ -27,8 +27,19 @@ namespace CAESDO.Catbert.Test.Core
                 LoadUsers();
                 LoadApplications();
                 LoadUnits();
+                LoadRoles();
 
                 ts.CommitTransaction();
+            }
+        }
+
+        private static void LoadRoles()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                var role = new Role {Name = "Role" + i};
+
+                RoleBLL.EnsurePersistent(role);
             }
         }
 
