@@ -47,17 +47,12 @@ namespace CAESDO.Catbert.Data
                         )
                     .Add(Expression.InG<int>("id", GetUsersByApplicationRoleAndUnit(application, role, unit) ));
 
-                //ICriteria rowCount = criteria;
-                //totalUsers = rowCount.SetProjection(Projections.RowCount()).UniqueResult<int>();
-
-                //TODO: Have to figure out how to find the total number of users
-                totalUsers = 7; // criteria.SetProjection(Projections.RowCount()).UniqueResult<int>();
+                //Get the total rows returned from this query using a row count transformer
+                totalUsers = CriteriaTransformer.TransformToRowCount(criteria).UniqueResult<int>(); // criteria.SetProjection(Projections.RowCount()).UniqueResult<int>();
              
                 criteria = criteria
                             .SetFirstResult(page * pageSize)
-                            .SetMaxResults(pageSize);
-                
-                criteria = criteria
+                            .SetMaxResults(pageSize)
                             .AddOrder(GetOrder(orderBy));
 
                 return criteria.List<User>() as List<User>;
