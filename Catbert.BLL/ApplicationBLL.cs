@@ -20,6 +20,45 @@ namespace CAESDO.Catbert.BLL
         }
 
         /// <summary>
+        /// Set the roles in this application to be the roles
+        /// </summary>
+        public static void SetRoles(Application application, List<string> roles)
+        {
+            List<Role> rolesToRemove = new List<Role>();
+
+            //Go through all of the active roles in the current application
+            foreach (var role in application.Roles.Where(r => r.Inactive == false))
+            {
+                //If this role is in the roles list, it stays
+                if (roles.Contains(role.Name))
+                {
+                    //Get rid of it in the roles list since we've already seen it
+                    roles.Remove(role.Name);
+                }
+                else
+                {
+                    //This role doesn't exist in the roles list, so remove it
+                    rolesToRemove.Add(role);
+                }
+            }
+
+            //Remove from the current application all of the roles that didn't exist in the roles list
+            foreach (var role in rolesToRemove)
+            {
+                application.Roles.Remove(role);
+            }
+
+            //Now we go through the roles that weren't matched and add them
+            foreach (var role in roles)
+            {
+                var newRole = RoleBLL.Queryable.Where(r => r.Name == role).Single();
+                application.Roles.Add(newRole);
+            }
+
+            //Now we should have an application with reconciled roles
+        }
+
+        /// <summary>
         /// Updates an existing application
         /// </summary>
         public static void Update(Application application, string trackingUserName)

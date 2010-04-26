@@ -66,7 +66,7 @@
                 baseUrl + 'GetApplication',
                 { application: name },
                 function(data) { PopulateApplication(data); },
-                null //TODO: Error method
+                OnError //TODO: Error method
             );
                         
             dialog.dialog('open'); //show
@@ -91,12 +91,40 @@
 
         ///Update the given application, which resides in the row identified by the ID
         function UpdateApplication(ID, name) {
-            
-            
-        
-            var row = $("#row" + ID); //The changed row
-            var nameCell = $("td[title=Name]", row);
+            var appName = $("#txtApplicationName").val();
+            var appAbbr = $("#txtApplicationAbbr").val();
+            var appLocation = $("#txtApplicationLocation").val();
 
+            var roles = new Array();
+            $(":checked", roleList).each(function() {
+                roles.push($(this).val());
+            });
+
+            //Now we have the update information, send it to the web service
+            AjaxCall(baseUrl + 'UpdateApplication', {
+                application: name,
+                newName: appName,
+                newAbbr: appAbbr,
+                newLocation: appLocation,
+                roles: roles
+            },
+            function() {
+                UpdateApplicationComplete(ID, appName, appLocation);
+            },
+            OnError);
+            
+            //UpdateApplicationComplete(ID, appName, appLocation);   
+        }
+
+        function UpdateApplicationComplete(ID, appName, appLocation) {
+            var row = $("#row" + ID); //The changed row
+            
+            var nameCell = $("td[title=Name]", row);
+            var locationCell = $("td[title=Location]", row);
+
+            nameCell.html(appName);
+            locationCell.html(appLocation);
+            
             $("td", row).effect("highlight", {}, 3000); //highlight the whole row that was changed
         }
 
@@ -112,7 +140,10 @@
             $("#spanLoading").fadeTo('fast', loadingOpacity);
             
         }
-        
+
+        function OnError() {
+            alert("Danger Will Robinson!");
+        }
     </script>
     
     <asp:ListView ID="lviewApplications" runat="server" DataSourceID="odsApplications">

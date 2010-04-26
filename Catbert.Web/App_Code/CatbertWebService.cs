@@ -252,9 +252,29 @@ public class CatbertWebService : System.Web.Services.WebService
     [WebMethod]
     public ServiceApplication GetApplication(string application)
     {
+        //TODO: FOR TESTING ONLY
+        System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
         Application app = ApplicationBLL.GetByName(application);
 
         return new ServiceApplication(app);        
+    }
+
+    [WebMethod]
+    public void UpdateApplication(string application, string newName, string newAbbr, string newLocation, List<string> roles)
+    {
+        //First get the application
+        Application app = ApplicationBLL.GetByName(application);
+        
+        //Change the properties
+        app.Name = newName;
+        app.Abbr = newAbbr;
+        app.Location = newLocation;
+
+        //Reconcile the roles
+        ApplicationBLL.SetRoles(app, roles);
+
+        //Now save the updated application
+        ApplicationBLL.Update(app, CurrentServiceUser);
     }
 
     [WebMethod]
