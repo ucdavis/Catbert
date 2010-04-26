@@ -18,7 +18,8 @@ BEGIN
     -- Insert statements for procedure here
 SELECT     Roles.Role
 FROM         Applications INNER JOIN
-                      Permissions ON Applications.ApplicationID = Permissions.ApplicationID INNER JOIN
-                      Roles ON Permissions.RoleID = Roles.RoleID
-WHERE     (Applications.Name = @AppName) AND (Applications.Inactive = 0) AND (Permissions.Inactive = 0) AND (Roles.Inactive = 0)
+                      ApplicationRoles ON Applications.ApplicationID = ApplicationRoles.ApplicationID INNER JOIN
+                      Roles ON ApplicationRoles.RoleID = Roles.RoleID
+WHERE     (Applications.Name = @AppName) AND (Roles.Inactive = 0) AND (Applications.Inactive = 0)
+
 END
