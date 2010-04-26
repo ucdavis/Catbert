@@ -260,7 +260,7 @@ public class CatbertWebService : System.Web.Services.WebService
     {
         var users = ConvertFromUserList(UserBLL.GetByApplication(application), application);
 
-        jqGridData grid = new jqGridData() { page = 2, total = 2, records = 20 };
+        jqGridData grid = new jqGridData() { page = 1, total = 2, records = 20 };
 
         foreach (var user in users)
         {

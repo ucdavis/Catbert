@@ -31,8 +31,9 @@
                 imgpath: 'CSS/images',
                 caption: "JSON Mapping",
                 height: '100%',
+                viewrecords: true,
                 jsonReader: {
-                    records: 'rows',
+                    //records: 'rows',
                     repeatitems: false,
                     id: 'UserID'
                 }
