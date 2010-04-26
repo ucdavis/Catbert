@@ -385,9 +385,8 @@ function PopulateUserInfo(data) {
     roles.empty();
     units.empty();
 
-    //Insert the loginId
-    $("#UserInfoLogin").html(loginId);
-
+    PopulateUserInformation(data);
+    
     $(data.PermissionAssociations).each(function() {
         var newRoleRow = CreateRoleRow(this.RoleName, loginId, this.ApplicationName);
 
@@ -399,6 +398,14 @@ function PopulateUserInfo(data) {
 
         units.append(newUnitRow);
     });
+}
+
+function PopulateUserInformation(data) {
+    //Insert the userInfo
+    $("#UserInfoLogin").html(data.LoginId);
+    $("#UserInfoName").html(data.FirstName + " " + data.LastName);
+    $("#UserInfoEmail").html(data.Email);
+    $("#UserInfoPhone").html(data.Phone);
 }
 
 function CreateRoleRow(role, login, application) {

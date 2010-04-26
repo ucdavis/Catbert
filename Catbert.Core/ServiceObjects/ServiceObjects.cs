@@ -31,6 +31,10 @@ namespace CAESDO.Catbert.Core.ServiceObjects
     public class UserInformation
     {
         public string LoginId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
 
         public List<PermissionAssociation> PermissionAssociations { get; set; }
         public List<UnitAssociation> UnitAssociations { get; set; }

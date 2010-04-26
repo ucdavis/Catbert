@@ -16,6 +16,10 @@ namespace CAESDO.Catbert.BLL.Service
             var userInformation = new UserInformation
                                       {
                                           LoginId = user.LoginID,
+                                          FirstName = user.FirstName,
+                                          LastName = user.LastName,
+                                          Email = user.Email,
+                                          Phone = user.Phone,
                                           UnitAssociations = GetUnitAssociationsByLoginId(loginId),
                                           PermissionAssociations = GetPermissionAssociationsByLoginId(loginId)
                                       };
