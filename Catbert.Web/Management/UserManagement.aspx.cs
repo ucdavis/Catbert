@@ -22,6 +22,7 @@ public partial class Management_UserManagement : System.Web.UI.Page
         CurrentApplication = Request.QueryString["app"] ?? "Catbert";
 
         ClientScript.RegisterHiddenField("app", CurrentApplication); //Register a hidden field with the application name in it for use from JS
+        ClientScript.RegisterHiddenField("user", User.Identity.Name); //Also a hidden field with the user's name in it for use from JS
 
         //Check permissions for the current user to the application Application
         ///TODOL Implement check

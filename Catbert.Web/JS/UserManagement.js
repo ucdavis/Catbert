@@ -4,6 +4,7 @@ var baseURL = '../Services/CatbertWebService.asmx/';
 var autocompleteUnitsURL = '../Services/AutocompleteService.asmx/GetUsers';
 
 var application = null;
+var user = null;
 
 var search = null, unit = null, role = null; //start with no search, unit, or role filters
 
@@ -19,6 +20,7 @@ var rowEven = true;
 
 $(document).ready(function() {
     application = $("#app").val();
+    user = $("#user").val();
 
     PopulateUserTable(application, search, unit, role, sortname, sortorder); //Populate the user table
 
@@ -54,15 +56,6 @@ $(document).ready(function() {
             $("#btnSearchUser").click();
         }
     });
-    /*
-    $("#tblUsers").tablesorter({
-    headers: { 4: { sorter: false }, 5: { sorter: false} },
-    cssAsc: 'headerSortUp',
-    cssDesc: 'headerSortDown',
-    cssHeader: 'header',
-    widgets: ['zebra']
-    });
-    */
 
     $(".pager").click(function() {
         var pagerType = $(this).attr("name");
