@@ -130,9 +130,9 @@
     <div id="dialogUserInfo" title="User Information" style="display: none;">
         <div id="tabs">
             <ul>
+                <li><a href="#tabInfo">Info</a></li>
                 <li><a href="#tabPermissions">Permissions</a></li>
                 <li><a href="#tabUnits">Units</a></li>
-                <li><a href="#tabInfo">Info</a></li>
             </ul>
             <div id="tabPermissions">
                 <table id="tblPermissions">
