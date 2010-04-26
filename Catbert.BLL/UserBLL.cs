@@ -268,5 +268,10 @@ namespace CAESDO.Catbert.BLL
 
             return DaoFactory.GetUserDao().GetByCriteria(application, search, page, pagesize, orderBy, out users);
         }
+
+        public static bool CanUserManageGivenLogin(string application, string currentUserLogin, string loginToManage)
+        {
+            return DaoFactory.GetUserDao().CanUserManageGivenLogin(application, currentUserLogin, loginToManage);
+        }
     }
 }

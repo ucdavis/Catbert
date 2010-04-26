@@ -174,6 +174,32 @@ namespace CAESDO.Catbert.Data
                 return criteria.List<User>() as List<User>;
             }
 
+            /// <summary>
+            /// Returns true if the given current user has the proper permissions to be managing the loginToManage.
+            /// </summary>
+            public bool CanUserManageGivenLogin(string application, string currentUserLogin, string loginToManage)
+            {
+                var unitsCurrentUserCanManage = 
+                    new UnitDao().GetVisibleByUserCriteria(currentUserLogin, application)
+                        .SetProjection(Projections.Id());
+                
+                //Now create a query to find the loginToManage's units in this app
+                ICriteria unitsForLoginToManageIntersectWithUnitsCurrentUserCanManage = NHibernateSessionManager.Instance.GetSession().CreateCriteria(
+                    typeof(UnitAssociation))
+                    .CreateAlias("User", "User")
+                    .CreateAlias("Unit", "Unit")
+                    .CreateAlias("Application", "Application")
+                    .Add(Expression.Eq("Application.Name", application))
+                    .Add(Expression.Eq("User.LoginID", loginToManage))
+                    .Add(Expression.Eq("Inactive", false))
+                    .SetProjection(Projections.Property("Unit.id"))
+                    .Add(Subqueries.PropertyIn("Unit.id", unitsCurrentUserCanManage));
+
+                var matchedUnits = unitsForLoginToManageIntersectWithUnitsCurrentUserCanManage.List().Count;
+
+                return matchedUnits > 0; //true if there are any matched units
+            }
+
             private static DetachedCriteria GetUsersInAnyRoleInApplication(string application)
             {
                 Permission p = new Permission();
@@ -256,7 +282,7 @@ namespace CAESDO.Catbert.Data
                     return Order.Desc(orderTerm);
             }
 
-            internal List<string> GetManagementRolesForUserInApplication(string login, string application)
+            public List<string> GetManagementRolesForUserInApplication(string login, string application)
             {
                 //First we need to find out what kind of user management permissions the given user has in the application
                 ICriteria permissionsCriteria = NHibernateSessionManager.Instance.GetSession().CreateCriteria(typeof(Permission))
