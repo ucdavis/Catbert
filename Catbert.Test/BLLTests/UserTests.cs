@@ -26,7 +26,7 @@ namespace CAESDO.Catbert.Test.BLLTests
             LoadUsers();
             LoadRolesAndUnits();
             LoadApplications();
-
+            LoadTracking();
         }
 
         [TestMethod]
@@ -86,6 +86,22 @@ namespace CAESDO.Catbert.Test.BLLTests
                 RoleBLL.EnsurePersistent(role);
                 SchoolBLL.EnsurePersistent(school, true);
                 UnitBLL.EnsurePersistent(unit);
+
+                ts.CommitTransaction();
+            }
+        }
+
+        private static void LoadTracking()
+        {
+            var userType = new TrackingType() { Name = "User" };
+            var permType = new TrackingType() { Name = "Permission" };
+            var action = new TrackingAction() { Name = "Add" };
+
+            using (var ts = new TransactionScope())
+            {
+                GenericBLL<TrackingType, int>.EnsurePersistent(userType);
+                GenericBLL<TrackingType, int>.EnsurePersistent(permType);
+                GenericBLL<TrackingAction, int>.EnsurePersistent(action);
 
                 ts.CommitTransaction();
             }

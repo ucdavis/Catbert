@@ -9,8 +9,8 @@ namespace CAESDO.Catbert.BLL
         {
             var tracking = new Tracking() {UserName = username, ActionDate = DateTime.Now};
 
-            tracking.Action = GetTrackingAction(TrackingActions.Change);
-            tracking.Type = GetTrackingType(TrackingTypes.Application);
+            tracking.Action = GetTrackingAction(action);
+            tracking.Type = GetTrackingType(type);
 
             return tracking;
         }
