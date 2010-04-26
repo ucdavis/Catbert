@@ -33,5 +33,13 @@ namespace CAESDO.Catbert.Test.BLLTests
             Assert.IsNotNull(student);
             Assert.AreEqual("anlai", student.LoginID);
         }
+
+        [TestMethod]
+        public void FakeStudentIdReturnsNull()
+        {
+            var student = DirectoryServices.FindStudent("999999999");
+
+            Assert.IsNull(student);
+        }
     }
 }
