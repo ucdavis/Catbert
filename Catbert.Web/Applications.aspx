@@ -28,6 +28,9 @@
                 widgets: ['zebra']
             });
 
+            //Bind the ShowApplicationInfo method to the select links
+            $("#tblApplications tbody tr td[title=Select] a").click(ShowApplicationInfo);
+
             //Create a live binding to images with the activeIndicator class' click event
             $(":image.activeIndicator").live("click", (function() {
                 //Swap the images
@@ -75,27 +78,28 @@
 
                 //Make sure the application info div is visible, and the loading span is hidden
                 $("#divApplicationInfo").css('visibility', 'visible');
-                $("#spanLoading").fadeTo(0,0);
+                $("#spanLoading").fadeTo(0, 0);
 
                 OpenDialog(buttons, "Create New Application");
             });
         });
 
-        function ShowUserInfo(applicationID, name) {
+        function ShowApplicationInfo() {
+            var row = $(this).parents("tr");
+            var applicationID = row.attr('id');
+            var applicationName = row.attr('title');
+        
             var buttons = {
                 "Close": function() {
                     $(this).dialog("close");
                 },
                 "Update": function() {
-                    UpdateApplication(applicationID, name);
+                    UpdateApplication(applicationID, applicationName);
                     $(this).dialog("close");
                 }
             }
             
-            OpenDialog(buttons, name);
-                        
-            //var buttons = $(dialog.dialog('option', 'buttons').Update).attr('disabled', true);
-            //debugger;
+            OpenDialog(buttons, applicationName);
 
             ShowApplicationInformation(false);  //Don't show the information until it loads
             
@@ -105,7 +109,7 @@
             
             AjaxCall(
                 baseUrl + 'GetApplication',
-                { application: name },
+                { application: applicationName },
                 function(data) { PopulateApplication(data); },
                 OnError //TODO: Error method
             );
@@ -154,18 +158,21 @@
                 roles: application.roles
             },
             function() {
-                UpdateApplicationComplete(ID, application.appName, application.appLocation);
+                UpdateApplicationComplete(ID, application.appName, application.appAbbr, application.appLocation);
             },
             OnError); 
         }
 
-        function UpdateApplicationComplete(ID, appName, appLocation) {
-            var row = $("#row" + ID); //The changed row
+        function UpdateApplicationComplete(ID, appName, appAbbr, appLocation) {
+            var row = $("#" + ID); //The changed row
             
             var nameCell = $("td[title=Name]", row);
+            var abbrCell = $("td[title=Abbr]", row);
             var locationCell = $("td[title=Location] a", row);
 
             nameCell.html(appName);
+            abbrCell.html(appAbbr);
+            
             locationCell.html(appLocation);
             locationCell.attr('href', appLocation);
             
@@ -259,9 +266,9 @@
             </table>
         </LayoutTemplate>
         <ItemTemplate>
-            <tr id='row<%# Eval("ID") %>'>
-                <td>
-                    <a href="javascript:;" class="dialog_link ui-state-default ui-corner-all" onclick='ShowUserInfo(<%# Eval("ID") %>, "<%# Eval("Name") %>");'>
+            <tr id='<%# Eval("ID") %>' title='<%# Eval("Name") %>'>
+                <td title="Select">
+                    <a href="javascript:;" class="dialog_link ui-state-default ui-corner-all" title="Select Application">
                         <span class="ui-icon ui-icon-newwin"></span>
                         Select 
                     </a>
