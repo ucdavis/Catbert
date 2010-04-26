@@ -66,7 +66,7 @@ namespace CAESDO.Catbert.Data
                 return roles.List<Role>() as List<Role>;
             }
 
-            private DetachedCriteria GetApplicationRolesUnderLevel(DetachedCriteria minLevel, string application)
+            private static DetachedCriteria GetApplicationRolesUnderLevel(DetachedCriteria minLevel, string application)
             {
                 DetachedCriteria criteria = DetachedCriteria.For<ApplicationRole>()
                     .Add(Expression.IsNotNull("Level"))
@@ -79,7 +79,7 @@ namespace CAESDO.Catbert.Data
                 return criteria;
             }
 
-            private DetachedCriteria GetMinApplicationRole(DetachedCriteria roles, string application)
+            private static DetachedCriteria GetMinApplicationRole(DetachedCriteria roles, string application)
             {
                 DetachedCriteria criteria = DetachedCriteria.For<ApplicationRole>()
                     .Add(Expression.IsNotNull("Level"))
@@ -92,7 +92,7 @@ namespace CAESDO.Catbert.Data
                 return criteria; //Returns the minimum level of these application roles
             }
 
-            private DetachedCriteria GetRolesForUser(string application, string login)
+            private static DetachedCriteria GetRolesForUser(string application, string login)
             {
                 DetachedCriteria criteria = DetachedCriteria.For<Permission>()
                     .Add(Expression.Eq("Inactive", false))
@@ -191,7 +191,7 @@ namespace CAESDO.Catbert.Data
             /// <summary>
             /// Returns a detached criteria which queries for all of the userIDs that are associated with the units given
             /// </summary>
-            private DetachedCriteria GetUsersInUnits(DetachedCriteria units, string application)
+            private static DetachedCriteria GetUsersInUnits(DetachedCriteria units, string application)
             {
                 DetachedCriteria unitAssociations = DetachedCriteria.For(typeof(UnitAssociation))
                     .Add(Expression.Eq("Inactive", false))
@@ -210,7 +210,7 @@ namespace CAESDO.Catbert.Data
                 return unitAssociations;
             }
 
-            private DetachedCriteria GetUsersByApplicationUnit(string application, string unit)
+            private static DetachedCriteria GetUsersByApplicationUnit(string application, string unit)
             {
                 DetachedCriteria unitAssociations = DetachedCriteria.For(typeof(UnitAssociation))
                     .Add(Expression.Eq("Inactive", false))
@@ -227,7 +227,7 @@ namespace CAESDO.Catbert.Data
                 return unitAssociations.SetProjection(Projections.Distinct(Projections.Property("User.id")));
             }
 
-            private DetachedCriteria GetUsersByApplicationRole(string application, string role)
+            private static DetachedCriteria GetUsersByApplicationRole(string application, string role)
             {
                 DetachedCriteria permissions = DetachedCriteria.For(typeof(Permission))
                     .Add(Expression.Eq("Inactive", false))
@@ -244,7 +244,7 @@ namespace CAESDO.Catbert.Data
                 return permissions.SetProjection(Projections.Distinct(Projections.Property("User.id")));
             }
 
-            private Order GetOrder(string orderBy)
+            private static Order GetOrder(string orderBy)
             {
                 string[] orderTokens = orderBy.Split(' ');
                 string orderTerm = orderTokens[0];
@@ -256,7 +256,7 @@ namespace CAESDO.Catbert.Data
                     return Order.Desc(orderTerm);
             }
 
-            internal List<string> GetRolesForUserInApplication(string login, string application)
+            internal List<string> GetManagementRolesForUserInApplication(string login, string application)
             {
                 //First we need to find out what kind of user management permissions the given user has in the application
                 ICriteria permissionsCriteria = NHibernateSessionManager.Instance.GetSession().CreateCriteria(typeof(Permission))
@@ -299,7 +299,7 @@ namespace CAESDO.Catbert.Data
             internal DetachedCriteria GetVisibleByUserCriteria(string login, string application)
             {
                 //First we need to find out what kind of user management permissions the given user has in the application                
-                var roles = new UserDao().GetRolesForUserInApplication(login, application);
+                var roles = new UserDao().GetManagementRolesForUserInApplication(login, application);
                 Order defaultUnitOrder = Order.Asc("ShortName");
 
                 if (roles.Contains("ManageAll"))
