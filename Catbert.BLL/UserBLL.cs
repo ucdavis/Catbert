@@ -246,5 +246,10 @@ namespace CAESDO.Catbert.BLL
         }
 
         #endregion
+
+        public static IQueryable<User> GetAllActive()
+        {
+            return UserBLL.Queryable.Where(user => user.Inactive == false);
+        }
     }
 }
