@@ -14,7 +14,7 @@
     <property name="Salt" column="Salt"></property>
     <property name="Inactive" column="Inactive"></property>
 
-    <bag name="Roles" table="ApplicationRoles" inverse="true">
+    <bag name="Roles" table="ApplicationRoles" inverse="false">
       <key column="ApplicationID" />
       <many-to-many column="RoleID" class="CAESDO.Catbert.Core.Domain.Role, CAESDO.Catbert.Core" />
     </bag>
