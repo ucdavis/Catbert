@@ -149,6 +149,21 @@
             <h2><span id="spanNewUserFirstName"></span> <span id="spanNewUserLastName"></span> (<span id="spanNewUserLogin"></span>)</h2>
             <label>Email:</label> <input type="text" id="txtNewUserEmail" /><br />
             <label>Phone:</label> <input type="text" id="txtNewUserPhone" /><br />
+            <br />
+            <label>Application:</label>
+            <asp:ListView ID="lviewApplications" runat="server">
+                <LayoutTemplate>
+                    <select id="applications">
+                        <option id="itemPlaceholder" runat="server"></option>
+                    </select>
+                </LayoutTemplate>
+                <ItemTemplate>
+                    <option>
+                        <%# Eval("Name") %>
+                    </option>
+                </ItemTemplate>
+            </asp:ListView>
+            <br />
             <label>Role:</label>
             <asp:ListView ID="lviewRoles" runat="server">
                 <LayoutTemplate>
@@ -162,12 +177,6 @@
                     </option>
                 </ItemTemplate>
             </asp:ListView>
-<%--            <asp:ObjectDataSource ID="odsRoles" runat="server" OldValuesParameterFormatString="original_{0}"
-                SelectMethod="GetVisibleByUser" TypeName="CAESDO.Catbert.BLL.RoleBLL">
-                <SelectParameters>
-                    <asp:QueryStringParameter QueryStringField="app" Name="application" DefaultValue="Catbert" />
-                </SelectParameters>
-            </asp:ObjectDataSource>--%>
             <br />
             <label>Unit:</label>
             <asp:ListView ID="lviewUnits" runat="server">

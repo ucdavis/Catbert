@@ -54,7 +54,9 @@ public partial class Management_UserManagement : System.Web.UI.Page
         
         //Applications
         lviewFilterApplications.DataSource = Applications;
+        lviewApplications.DataSource = Applications;
 
         lviewFilterApplications.DataBind();
+        lviewApplications.DataBind();
     }
 }
