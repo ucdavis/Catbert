@@ -17,12 +17,13 @@
                 url: 'Services/CatbertWebService.asmx/jqGetUsersByApplication',
                 datatype: 'json',
                 mtype: 'POST',
-                colNames: ['Login', 'First Name', 'Last Name', 'Email'],
+                colNames: ['', 'Login', 'First Name', 'Last Name', 'Email'],
                 colModel: [
-                    { name: 'Login', index: 'Login'},
-                    { name: 'FirstName', index: 'FirstName'},
-                    { name: 'LastName', index: 'LastName'},
-                    { name: 'Email', index: 'Email'}
+                    { name: 'Select', index: 'Select' },
+                    { name: 'Login', index: 'Login' },
+                    { name: 'FirstName', index: 'FirstName' },
+                    { name: 'LastName', index: 'LastName' },
+                    { name: 'Email', index: 'Email' }
                     ],
                 postData: { login: "postit", application: "Catbert" },
                 pager: $('#pjmap'),
@@ -32,10 +33,19 @@
                 caption: "JSON Mapping",
                 height: '100%',
                 viewrecords: true,
+                //multiselect: true,
                 jsonReader: {
                     //records: 'rows',
                     repeatitems: false,
                     id: 'UserID'
+                },
+                loadComplete: function() {
+                    var ids = $("#tblUsers").getDataIDs(); //Get all of the rowIDs
+                    for (var i = 0; i < ids.length; i++) { //For each rowID
+                        var cl = ids[i];
+                        var be = "<input type='button' value='Select' onclick=alert(" + cl + "); ></ids>"; //Create the button
+                        $("#tblUsers").setRowData(cl, { Select: be }); //Add it to the row with the currentID
+                    }
                 }
             });
         });
