@@ -40,7 +40,7 @@ namespace CAESDO.Catbert.Core.Domain
 
         public virtual bool Inactive { get; set; }
 
-        //public virtual IList<Unit> Units { get; set; }
+        public virtual IList<UnitAssociation> UnitAssociations { get; set; }
 
         public virtual IList<Permission> Permissions { get; set; }
 
