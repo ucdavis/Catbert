@@ -591,20 +591,14 @@
 
                 var contentType = isJSON ? "application/json" : "application/x-www-form-urlencoded";
 
-                //if (isJSON)
-                //  param = JSON2.stringify(param);
-                var json = { login: "postit", application: "Catbert" };
-                var test = JSON2.stringify(json);
-
                 $.ajax({
                     type: p.method,
                     url: p.url,
-                    data: test,
+                    data: JSON2.stringify(param),
                     contentType: contentType,
                     dataType: p.dataType,
                     processData: true,
                     success: function(data) {
-                        //var result = JSON2.parse(data.d);
                         var result = data.d;
                         g.addData(result);
                     },

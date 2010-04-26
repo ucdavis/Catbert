@@ -7,6 +7,7 @@
 		#dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
 		#dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
 	</style>
+    <link href="CSS/flexigrid.css" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" Runat="Server">
 
@@ -25,7 +26,7 @@
 				    {display: 'Login', name : 'login', width : 40, sortable : true, align: 'center'},
 				    {display: 'FirstName', name : 'firstname', width : 180, sortable : true, align: 'left'},
 				    { display: 'LastName', name: 'lastname', width: 120, sortable: true, align: 'left' },
-				    {display: 'Email', name : 'email', width : 130, sortable : true, align: 'left', hide: false},
+				    {display: 'Email', name : 'emai22l', width : 130, sortable : true, align: 'left', hide: false},
 				    ],
 				sortname: "lastname",
 				sortorder: "asc",
