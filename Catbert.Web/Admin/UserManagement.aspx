@@ -226,6 +226,17 @@
                 </table>
             </div>
             <div id="tabInfo">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Login</td>
+                            <td>
+                                <span id="UserInfoLogin"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            
                 <p>
                     Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate,
                     pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem.

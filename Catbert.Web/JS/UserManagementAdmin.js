@@ -294,24 +294,24 @@ function AddUserUnit() {
             );
 
     if (existingUnitMatch.size() == 0) {
-        return; ///TODO
-    
+        
         //Add the unit
-        var newrow = CreateUnitRow(newunitname, newunit, login, application);
+        var newrow = CreateUnitRow(newunit, login, app);
+        
         units.append(newrow);
 
         $(newrow).effect("highlight", {color: "#555555"}, 3000);
 
+        /*
         AjaxCall(baseURL + "AddUnit",
                     { login: login, application: application, unitFIS: newunit },
                     null,
                     null
                 );
-
-        userTableDirty = true; //Users have been modified
+        */
     }
     else {
-        alert("User already has the unit " + $.trim(newunitname));
+        alert("User already has the unit " + $.trim(newunitname) + 'in ' + $.trim(app));
     }
 }
 
@@ -361,6 +361,9 @@ function PopulateUserInfo(data) {
     roles.empty();
     units.empty();
 
+    //Insert the loginId
+    $("#UserInfoLogin").html(loginId);
+
     $(data.PermissionAssociations).each(function() {
         var newRoleRow = CreateRoleRow(this.RoleName, loginId, this.ApplicationName);
 
@@ -378,7 +381,6 @@ function CreateRoleRow(role, login, application) {
     var newrow = $('<tr></tr>');
 
     var deleteLink = $('<input type="button" value="X" />');
-    //deleteLink.click(function() { alert('Not Implemented'); }); //TODO
     deleteLink.click(function() { DeleteRole(login, role, application, newrow); });
 
     newrow.append('<td>' + application + '</td>');
@@ -394,7 +396,6 @@ function CreateUnitRow(unit, login, application) {
     var newrow = $('<tr></tr>');
 
     var deleteLink = $('<input type="button" value="X" />');
-    //deleteLink.click(function() { alert('Not Implemented'); }); //TODO
     deleteLink.click(function() { DeleteUnit(login, unit, application, newrow); });
 
     newrow.append('<td>' + application + '</td>');
