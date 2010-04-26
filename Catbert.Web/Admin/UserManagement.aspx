@@ -9,9 +9,8 @@
     <%--<script src="../JS/jquery.tablesorter.min.js" type="text/javascript"></script>--%>
     <script src="../JS/UserManagementAdmin.js" type="text/javascript"></script>
        
-    <a href="javascript:;" id="addUser" class="dialog_link ui-state-default ui-corner-all">
-        <span class="ui-icon ui-icon-newwin"></span>Add User
-    </a>
+    <div id="divHeader">
+    
     <div class="ui-widget" id="divNewUserNotification" style="display:none;">
         <br />
         <div class="ui-state-highlight ui-corner-all" >
@@ -21,9 +20,11 @@
             </p>
         </div>
     </div>
-<br /><br />
-
-    <div id="divHeader">
+    <span id="adduserbtn">
+        <a href="javascript:;" id="addUser" class="dialog_link ui-state-default ui-corner-all">
+        <span class="ui-icon ui-icon-newwin"></span>Add User
+        </a>
+    </span>
         <span id="search" style="float:left;">
             <label>Search Users:</label> <input type="text" id="txtSearch" /><input type="image" id="imgSearch" title="Clear Search" alt="Clear Search" src="../Images/clear-left.png" style="height: 15px;" />
         </span>
@@ -46,6 +47,7 @@
             
         </span>
     </div>
+    <span class="clear">&nbsp;</span>
     <div id="divLoading" style="display:none; clear: left;">
         Loading...
     </div>
@@ -75,7 +77,7 @@
     </table>
         
     <div id="dialogFindUser" title="Add a User" style="display: none;">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <p>&nbsp;</p>
         Kerberos or Email: <input type="text" id="txtLoginID" /><input type="button" id="btnSearchUser" value="Search" />
         <span id="spanSearchProgress" style="display:none;">Searching...</span>
         <div id="divSearchResultsSuccess" style="display:none;">
