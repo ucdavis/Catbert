@@ -53,6 +53,7 @@
     <Compile Include="DataInterfaces\IDao.cs" />
     <Compile Include="DataInterfaces\IDaoFactory.cs" />
     <Compile Include="Domain\Application.cs" />
+    <Compile Include="Domain\ApplicationRole.cs" />
     <Compile Include="Domain\DomainObject.cs" />
     <Compile Include="Domain\ITrackable.cs" />
     <Compile Include="Domain\Permission.cs" />
@@ -89,6 +90,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Domain\UnitAssociation.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Domain\ApplicationRole.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

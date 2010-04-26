@@ -38,7 +38,7 @@
                 </LayoutTemplate>
                 <ItemTemplate>
                     <option>
-                        <%# Eval("Name") %>
+                        <%# Eval("Role.Name") %>
                     </option>
                 </ItemTemplate>
             </asp:ListView>
@@ -119,7 +119,7 @@
                 </LayoutTemplate>
                 <ItemTemplate>
                     <option>
-                        <%# Eval("Name") %>
+                        <%# Eval("Role.Name") %>
                     </option>
                 </ItemTemplate>
             </asp:ListView>
@@ -176,7 +176,7 @@
                 </LayoutTemplate>
                 <ItemTemplate>
                     <option>
-                        <%# Eval("Name") %>
+                        <%# Eval("Role.Name") %>
                     </option>
                 </ItemTemplate>
             </asp:ListView>

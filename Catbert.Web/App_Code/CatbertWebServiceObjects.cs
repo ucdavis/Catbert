@@ -123,10 +123,10 @@ namespace Catbert.Services
 
             Roles = new List<ServiceRole>();
 
-            foreach (var role in application.Roles)
+            foreach (var appRole in application.ApplicationRoles)
             {
-                if ( role.Inactive == false )
-                    Roles.Add(new ServiceRole(role.ID, role.Name));
+                if ( appRole.Role.Inactive == false )
+                    Roles.Add(new ServiceRole(appRole.Role.ID, appRole.Role.Name));
             }
         }
     }

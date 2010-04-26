@@ -260,9 +260,9 @@ public class CatbertWebService : System.Web.Services.WebService
 
         foreach (var role in RoleBLL.GetRolesByApplication(application))
         {
-            if (!role.Inactive) //only return active roles
+            if (!role.Role.Inactive) //only return active roles
             {
-                roles.Add(new ServiceRole() { ID = role.ID, Name = role.Name });
+                roles.Add(new ServiceRole() { ID = role.Role.ID, Name = role.Role.Name });
             }
         }
 

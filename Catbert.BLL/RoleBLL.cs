@@ -38,13 +38,14 @@ namespace CAESDO.Catbert.BLL
         /// </summary>
         /// <param name="application"></param>
         /// <returns></returns>
-        public static List<Role> GetRolesByApplication(string application)
+        public static List<ApplicationRole> GetRolesByApplication(string application)
         {
-            //First get the application
-            Application app = ApplicationBLL.GetByName(application);
+            var query = from role in ApplicationRoleBLL.Queryable
+                        where role.Application.Name == application
+                                && role.Role.Inactive == false
+                        select role;
 
-            //return the roles
-            return app.Roles.ToList();
+            return query.ToList();
         }
 
         /// <summary>

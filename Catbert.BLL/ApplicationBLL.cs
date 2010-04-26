@@ -24,6 +24,8 @@ namespace CAESDO.Catbert.BLL
         /// </summary>
         public static void SetRoles(Application application, List<string> roles)
         {
+            throw new NotImplementedException();
+            /*
             List<Role> rolesToRemove = new List<Role>();
 
             //Go through all of the active roles in the current application
@@ -56,6 +58,7 @@ namespace CAESDO.Catbert.BLL
             }
 
             //Now we should have an application with reconciled roles
+             */
         }
 
         /// <summary>

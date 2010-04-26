@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationBLL.cs" />
+    <Compile Include="ApplicationRoleBLL.cs" />
     <Compile Include="DirectoryServices.cs" />
     <Compile Include="Dynamic.cs" />
     <Compile Include="GenericBLL.cs" />

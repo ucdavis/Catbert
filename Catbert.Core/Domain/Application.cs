@@ -29,11 +29,13 @@ namespace CAESDO.Catbert.Core.Domain
 
         public virtual bool Inactive { get; set; }
 
-        public virtual IList<Role> Roles { get; set; }
+        //public virtual IList<Role> Roles { get; set; }
+        public virtual IList<ApplicationRole> ApplicationRoles { get; set; }
 
         public Application()
         {
-            Roles = new List<Role>();
+            ApplicationRoles = new List<ApplicationRole>();
+            //Roles = new List<Role>();
         }
     }
 }
