@@ -50,7 +50,7 @@
             var data = { application: application, search: search, unit: unit, role: role, sortname: sortname, sortorder: sortorder };
             
             //Call the webservice
-            AjaxCall('jqGetUsers', data, PopulateUserTableSuccess, null);
+            AjaxCall(baseURL + 'jqGetUsers', data, PopulateUserTableSuccess, null);
         }
 
         function PopulateUserTableSuccess(data) {
