@@ -57,7 +57,13 @@ namespace CAESDO.Catbert.Data
                 //If the unit is specified, also filter by unit
                 if (!string.IsNullOrEmpty(unit))
                     criteria = criteria.Add(Subqueries.PropertyIn("id", GetUsersByApplicationUnit(application, unit)));
-                
+
+                //Also only allow those users who intersect with the currentLogin's unit list
+                DetachedCriteria usersInUnits = new UnitDao().GetVisibleByUserCriteria(currentLogin, application);
+
+                criteria = criteria
+                    .Add(Subqueries.PropertyIn("id", GetUsersInUnits(usersInUnits, application)));
+
                 //Get the total rows returned from this query using a row count transformer
                 totalUsers = CriteriaTransformer.TransformToRowCount(criteria).UniqueResult<int>(); // criteria.SetProjection(Projections.RowCount()).UniqueResult<int>();
              
@@ -67,6 +73,28 @@ namespace CAESDO.Catbert.Data
                             .AddOrder(GetOrder(orderBy));
 
                 return criteria.List<User>() as List<User>;
+            }
+
+            /// <summary>
+            /// Returns a detached criteria which queries for all of the userIDs that are associated with the units given
+            /// </summary>
+            private DetachedCriteria GetUsersInUnits(DetachedCriteria units, string application)
+            {
+                DetachedCriteria unitAssociations = DetachedCriteria.For(typeof(UnitAssociation))
+                    .Add(Expression.Eq("Inactive", false))
+                    .CreateAlias("Application", "Application")
+                    .CreateAlias("Unit", "Unit")
+                    .CreateAlias("User", "User")
+                    .Add(Expression.Eq("Application.Name", application))
+                    .Add(
+                            Subqueries.PropertyIn(
+                                "Unit.FISCode",
+                                units.SetProjection(Projections.Property("FISCode"))
+                                )
+                        )
+                    .SetProjection(Projections.Distinct(Projections.Property("User.id")));
+
+                return unitAssociations;
             }
 
             private DetachedCriteria GetUsersByApplicationUnit(string application, string unit)
@@ -144,6 +172,7 @@ namespace CAESDO.Catbert.Data
             public List<Unit> GetVisibleByUser(string login, string application)
             {
                 return GetVisibleByUserCriteria(login, application)
+                    .AddOrder(Order.Asc("ShortName"))
                     .GetExecutableCriteria(NHibernateSessionManager.Instance.GetSession())
                     .List<Unit>() as List<Unit>;
             }
@@ -162,8 +191,7 @@ namespace CAESDO.Catbert.Data
 
                 if (roles.Contains("ManageAll"))
                 {
-                    return DetachedCriteria.For<Unit>()
-                        .AddOrder(defaultUnitOrder);
+                    return DetachedCriteria.For<Unit>();
                 }
                 else if (roles.Contains("ManageSchool"))
                 {
@@ -181,8 +209,7 @@ namespace CAESDO.Catbert.Data
                     //Now get all units that are associated with these schools
                     DetachedCriteria units = DetachedCriteria.For<Unit>()
                         .CreateAlias("School", "School")
-                        .Add(Subqueries.PropertyIn("School.id", schools))
-                        .AddOrder(Order.Asc("ShortName"));
+                        .Add(Subqueries.PropertyIn("School.id", schools));
 
                     return units;
                 }
@@ -199,10 +226,9 @@ namespace CAESDO.Catbert.Data
                         .SetProjection(Projections.Property("Unit.id"));
 
                     DetachedCriteria units = DetachedCriteria.For<Unit>()
-                        .Add(Subqueries.PropertyIn("id", associatedUnitIds))
-                        .AddOrder(Order.Asc("ShortName"));
+                        .Add(Subqueries.PropertyIn("id", associatedUnitIds));
                     
-                    return units;       
+                    return units;
                 }
                 else //no roles
                 {
