@@ -118,7 +118,7 @@ $(document).ready(function() {
 
     $("#btnAddUser").click(AddUser);
 
-    $("#btnUpdateUserInfo").click(function() { alert("test"); });
+    $("#btnUpdateUserInfo").click(UpdateUserInfo);
 
     $("#filterApplications").change(function() {
         page = 1; //Reset the paging
@@ -354,7 +354,11 @@ function ShowUserInfo() {
 
     tabs.tabs('select', 0); //select the first tab by default when viewing a new user
 
-    OpenDialog(dialogUserInfo, buttons, "User Information", null);
+    OpenDialog(dialogUserInfo, buttons, "User Information", function() {
+        if (userTableDirty) {
+            PopulateUserTableDefault(application);
+        }
+    });
 
     var url = baseURL + 'GetUserInfo';
 
@@ -398,6 +402,21 @@ function PopulateUserInformation(data) {
     $("#UserInfoLastName").val(data.LastName);
     $("#UserInfoEmail").val(data.Email);
     $("#UserInfoPhone").val(data.Phone);
+}
+
+function UpdateUserInfo() {
+    //Grab the userInfo
+    var fname = $("#UserInfoFirstName").val();
+    var lname = $("#UserInfoLastName").val();
+    var email = $("#UserInfoEmail").val();
+    var phone = $("#UserInfoPhone").val();
+
+    if (lname == '' || email == '') {
+        alert("Last Name and Email Required");        
+        return;
+    }
+
+    userTableDirty = true;
 }
 
 function CreateRoleRow(role, login, application) {
