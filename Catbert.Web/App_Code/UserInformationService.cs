@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Services;
+﻿using System.Web.Services;
+using CAESDO.Catbert.BLL.Service;
+using CAESDO.Catbert.Core.ServiceObjects;
 
 /// <summary>
 /// Summary description for UserInformationService
@@ -10,12 +8,12 @@ using System.Web.Services;
 [WebService(Namespace = "http://tempuri.org/")]
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 [System.Web.Script.Services.ScriptService]
-public class UserInformationService : System.Web.Services.WebService
+public class UserInformationService : WebService
 {
     [WebMethod]
-    public string HelloWorld()
+    public UserInformation GetUserInfo(string loginId)
     {
-        return "Hello World";
+        return UserInformationServiceBLL.GetInformationByLoginId(loginId);
     }
 }
 
