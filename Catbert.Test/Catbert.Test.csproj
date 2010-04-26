@@ -80,6 +80,7 @@
   <ItemGroup>
     <Compile Include="ApplicationTests.cs" />
     <Compile Include="BLLTests\DirectoryServicesTests.cs" />
+    <Compile Include="BLLTests\ServiceTests\UserInformationServiceTests.cs" />
     <Compile Include="BLLTests\UserManagementTests.cs" />
     <Compile Include="BLLTests\UserTests.cs" />
     <Compile Include="CatbertManager.cs" />

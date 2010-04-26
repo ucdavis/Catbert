@@ -6,7 +6,7 @@ namespace CAESDO.Catbert.BLL.Service
 {
     public class UserInformationServiceBLL
     {
-        public UserInformation GetInformationByLoginId(string loginId)
+        public static UserInformation GetInformationByLoginId(string loginId)
         {
             Check.Require(!string.IsNullOrEmpty(loginId));
 
