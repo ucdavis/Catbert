@@ -4,8 +4,8 @@
     <style type="text/css">
 		body{ font: 62.5% Verdana, sans-serif; margin: 50px;}
 		/*demo page css*/
-		#dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
-		#dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
+		.dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
+		.dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
 	</style>
     <link href="CSS/fcbklistselection.css" rel="stylesheet" type="text/css" />
 </asp:Content>
@@ -53,28 +53,47 @@
                 return false;
             }));
 
-        });
-
-        function ShowUserInfo(applicationID, name) {
-            var dialog = $("#dialogUserInfo"); //the dialog div
-
-            dialog.dialog("destroy"); //Reset the dialog to its initial state
-            dialog.dialog({
-                autoOpen: true,
-                width: 600,
-                modal: true,
-                title: name,
-                buttons: {
+            //Bind the click method of the add user button
+            $("#addApplication").click(function() {
+                var buttons = {
                     "Close": function() {
                         $(this).dialog("close");
                     },
-                    "Update": function() {
-                        UpdateApplication(applicationID, name);
+                    "Create": function() {
+                        CreateApplication(this);
                         $(this).dialog("close");
                     }
                 }
-            });
 
+                //Clear out the input boxes
+                $("#dialogUserInfo :text").val('');
+
+                //Clear out the checkboxes
+                $("#dialogUserInfo :checked").each(function() {
+                    $(this).attr('checked', false);
+                });
+
+                //Make sure the application info div is visible, and the loading span is hidden
+                $("#divApplicationInfo").css('visibility', 'visible');
+                $("#spanLoading").fadeTo(0,0);
+
+                OpenDialog(buttons, "Create New Application");
+            });
+        });
+
+        function ShowUserInfo(applicationID, name) {
+            var buttons = {
+                "Close": function() {
+                    $(this).dialog("close");
+                },
+                "Update": function() {
+                    UpdateApplication(applicationID, name);
+                    $(this).dialog("close");
+                }
+            }
+            
+            OpenDialog(buttons, name);
+                        
             //var buttons = $(dialog.dialog('option', 'buttons').Update).attr('disabled', true);
             //debugger;
 
@@ -90,8 +109,19 @@
                 function(data) { PopulateApplication(data); },
                 OnError //TODO: Error method
             );
-                        
-            dialog.dialog('open'); //show
+        }
+
+        function OpenDialog(buttons, title) {
+            var dialog = $("#dialogUserInfo"); //the dialog div
+
+            dialog.dialog("destroy"); //Reset the dialog to its initial state
+            dialog.dialog({
+                autoOpen: true,
+                width: 600,
+                modal: true,
+                title: title,
+                buttons: buttons
+            });
         }
 
         function PopulateApplication(app) {
@@ -113,29 +143,20 @@
 
         ///Update the given application, which resides in the row identified by the ID
         function UpdateApplication(ID, name) {
-            var appName = $("#txtApplicationName").val();
-            var appAbbr = $("#txtApplicationAbbr").val();
-            var appLocation = $("#txtApplicationLocation").val();
-
-            var roles = new Array();
-            $(":checked", roleList).each(function() {
-                roles.push($(this).val());
-            });
+            var application = CollectApplicationInformation();
 
             //Now we have the update information, send it to the web service
             AjaxCall(baseUrl + 'UpdateApplication', {
                 application: name,
-                newName: appName,
-                newAbbr: appAbbr,
-                newLocation: appLocation,
-                roles: roles
+                newName: application.appName,
+                newAbbr: application.appAbbr,
+                newLocation: application.appLocation,
+                roles: application.roles
             },
             function() {
-                UpdateApplicationComplete(ID, appName, appLocation);
+                UpdateApplicationComplete(ID, application.appName, application.appLocation);
             },
-            OnError);
-            
-            //UpdateApplicationComplete(ID, appName, appLocation);   
+            OnError); 
         }
 
         function UpdateApplicationComplete(ID, appName, appLocation) {
@@ -149,6 +170,43 @@
             locationCell.attr('href', appLocation);
             
             $("td", row).effect("highlight", {}, 3000); //highlight the whole row that was changed
+        }
+
+        //Create the new application
+        function CreateApplication(el) {
+            var application = CollectApplicationInformation();
+
+            AjaxCall(
+                baseUrl + 'CreateApplication',
+                {
+                    application: application.appName,
+                    abbr: application.appAbbr,
+                    location: application.appLocation,
+                    roles: application.roles
+                },
+                //OnCreateApplicationComplete,
+                function() { $("form").submit(); },
+                OnError
+            );
+        }
+
+        function OnCreateApplicationComplete(applicationName, abbr, location) {
+            //Create a new row in the application table with this application information
+        }
+        
+        //Gets all of the information out of the application popup
+        function CollectApplicationInformation() {
+            var application = new Object();  
+            application.appName = $("#txtApplicationName").val();
+            application.appAbbr = $("#txtApplicationAbbr").val();
+            application.appLocation = $("#txtApplicationLocation").val();
+
+            application.roles = new Array();
+            $(":checked", roleList).each(function() {
+                application.roles.push($(this).val());
+            });
+
+            return application;
         }
 
         function ShowApplicationInformation(loaded) {
@@ -168,7 +226,11 @@
             alert("Danger Will Robinson!");
         }
     </script>
-    
+
+    <a href="javascript:;" id="addApplication" class="dialog_link ui-state-default ui-corner-all">
+        <span class="ui-icon ui-icon-newwin"></span>Add Application
+    </a>
+    <br /><br />
     <asp:ListView ID="lviewApplications" runat="server" DataSourceID="odsApplications">
         <LayoutTemplate>
             <table id="tblApplications" class="tablesorter">
@@ -199,7 +261,7 @@
         <ItemTemplate>
             <tr id='row<%# Eval("ID") %>'>
                 <td>
-                    <a href="javascript:;" id="dialog_link" class="ui-state-default ui-corner-all" onclick='ShowUserInfo(<%# Eval("ID") %>, "<%# Eval("Name") %>");'>
+                    <a href="javascript:;" class="dialog_link ui-state-default ui-corner-all" onclick='ShowUserInfo(<%# Eval("ID") %>, "<%# Eval("Name") %>");'>
                         <span class="ui-icon ui-icon-newwin"></span>
                         Select 
                     </a>

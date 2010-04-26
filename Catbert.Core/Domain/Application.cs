@@ -33,7 +33,7 @@ namespace CAESDO.Catbert.Core.Domain
 
         public Application()
         {
-
+            Roles = new List<Role>();
         }
     }
 }

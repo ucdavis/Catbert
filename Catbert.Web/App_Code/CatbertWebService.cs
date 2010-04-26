@@ -278,6 +278,19 @@ public class CatbertWebService : System.Web.Services.WebService
     }
 
     [WebMethod]
+    public void CreateApplication(string application, string abbr, string location, List<string> roles)
+    {
+        //Create the new application
+        Application app = new Application() { Name = application, Abbr = abbr, Location = location, Inactive = false };
+
+        //Reconcile the roles
+        ApplicationBLL.SetRoles(app, roles);
+
+        //Create the application
+        ApplicationBLL.Create(app, CurrentServiceUser);
+    }
+
+    [WebMethod]
     public void ChangeApplicationActiveStatus(string application)
     {
         ApplicationBLL.SetActiveStatus(application, null, CurrentServiceUser);
