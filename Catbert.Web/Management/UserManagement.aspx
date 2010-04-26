@@ -52,10 +52,13 @@
 
                 var buttons = {
                     "Close": function() {
+                        $("#divSearchResultsSuccess").hide(0);
                         $(this).dialog("close");
                     }
                 }
 
+                $("#divNewUserNotification").hide(0); //If there was a previous user added, hide the notification
+                
                 OpenDialog(findUserDialog, buttons, "Add a User");
             });
 
@@ -68,6 +71,11 @@
                 //Call the search service
                 AjaxCall(baseURL + "SearchNewUser", data, SearchNewUserSuccess, null);
             });
+
+            $("#btnAddUser").click(function() {
+                $("#dialogFindUser").dialog("close");
+                $("#divNewUserNotification").show("slow");
+            });
         });
 
         function SearchNewUserSuccess(data) {
@@ -76,11 +84,12 @@
             $("#spanSearchProgress").hide(0); //Hide the loading dialog
             
             if (data.length == 0) {                
-                return alert("No Users Found");                
+                return alert("No Users Found");
             }
             else {
                 var user = data[0];
                 $("#spanNewUserName").html(user.FirstName + " " + user.LastName);
+                $("#spanNewUserLogin").html(user.Login);
                 $("#txtNewUserEmail").val(user.Email);
                 $("#txtNewUserPhone").val(user.Phone);
             }
@@ -178,6 +187,15 @@
     <a href="javascript:;" id="addUser" class="dialog_link ui-state-default ui-corner-all">
         <span class="ui-icon ui-icon-newwin"></span>Add User
     </a>
+    <div class="ui-widget" id="divNewUserNotification" style="display:none;">
+        <br />
+        <div class="ui-state-highlight ui-corner-all" >
+            <p>
+                <span class="ui-icon ui-icon-info" style="float:left;"></span>
+                User Added Successfully
+            </p>
+        </div>
+    </div>
 <br /><br />
 
     <div id="divHeader">
@@ -209,7 +227,7 @@
         Kerberos LoginID: <input type="text" id="txtLoginID" /><input type="button" id="btnSearchUser" value="Search" />
         <span id="spanSearchProgress" style="display:none;">Searching...</span>
         <div id="divSearchResultsSuccess" style="display:none;">
-            <span id="spanNewUserName"></span><br />
+            <span id="spanNewUserName"></span> (<span id="spanNewUserLogin"></span>)<br />
             Email: <input type="text" id="txtNewUserEmail" /><br />
             Phone: <input type="text" id="txtNewUserPhone" /><br />
             Role:
@@ -252,6 +270,8 @@
                     <asp:Parameter DefaultValue="true" Name="ascending" Type="Boolean" />
                 </SelectParameters>
             </asp:ObjectDataSource>
+            <br /><br />
+            <input type="button" id="btnAddUser" value="Add" />
         </div>
     </div>
         
