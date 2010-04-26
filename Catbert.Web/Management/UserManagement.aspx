@@ -66,7 +66,8 @@
         function RenderRow(index, row) {
             var newrow = $('<tr></tr>');
 
-            newrow.append('<td class="Name">' + row.FirstName + " " + row.LastName + '</td>');
+            newrow.append('<td class="FirstName">' + row.FirstName + '</td>');
+            newrow.append('<td class="LastName">' + row.LastName + '</td>');
             newrow.append('<td class="Login">' + row.Login + '</td>');
             newrow.append('<td class="Email">' + row.Email + '</td>');
 
@@ -129,7 +130,17 @@
             </select>
         </span>
     </div>
-    <table id="tblUsers">
+    <table id="tblUsers" class="tablesorter">
+        <thead>
+            <tr>
+                <th class="header">First Name</th>
+                <th class="header">Last Name</th>
+                <th class="header">Login</th>
+                <th class="header">Email</th>
+                <th class="header">Departments</th>
+                <th class="header">Roles</th>
+            </tr>
+        </thead>
         <tbody id="tblUsersBody">
             <%--Each row is a new person--%>
         </tbody>
