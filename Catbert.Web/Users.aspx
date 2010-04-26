@@ -14,9 +14,19 @@
         $(document).ready(function() {
 
         var json = { login: "postit", application: "Catbert" };
+        var test = JSON2.stringify(json);
+            //debugger;
+            $("#tblUsers").flexigrid({
+                url: "Services/CatbertWebService.asmx/GetRolesByUser",
+                dataType: 'json',
+                method: 'POST',
+                params: json
+                //args: json
+            });
 
-        //Try to make an AJAX call to the webservice
-        $.ajax({
+            /*
+            //Try to make an AJAX call to the webservice
+            $.ajax({
 
             url: "Services/CatbertWebService.asmx/GetRolesByUser",
             data: JSON2.stringify(json),
@@ -26,15 +36,16 @@
             timeout: 10000,
             dataType: "text",  // not "json" we'll parse
             success:
-                    function(res) {
-                        var result = JSON2.parse(res);
+            function(res) {
+            var result = JSON2.parse(res);
 
                         var first = result.d[0];
-                        debugger;
-                        //alert(result);
-                    }
+            //debugger;
+            //alert(result);
+            }
+            });
+            */
         });
-    });
     
         function ShowUserInfo(login, name) {
             $("#dialogUserInfo").dialog({
@@ -50,6 +61,10 @@
             $("#dialogUserInfo").dialog('open');
         }
     </script>
+    
+    <table id="tblUsers"></table>
+    
+    <br /><br />
 
 	<div class="ui-widget">
 		<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"> 
