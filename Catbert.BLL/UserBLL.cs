@@ -159,16 +159,19 @@ namespace CAESDO.Catbert.BLL
         
         public static List<User> GetByApplication(string application)
         {
-            return GetUserQueryableByApplication(application, null).ToList();
+            return GetUserQueryableByApplication(application, null, null, null).ToList();
         }
 
-        private static IQueryable<User> GetUserQueryableByApplication(string application, string searchToken)
+        private static IQueryable<User> GetUserQueryableByApplication(string application, string role, string unit, string searchToken)
         {
             //Grab all permissions in this application
-            var permissions = PermissionBLL.Queryable.Where(perm => perm.Application.Name == application && perm.Inactive == false).ToList();
+            var permissions = PermissionBLL.Queryable.Where(perm => perm.Application.Name == application && perm.Inactive == false);
+
+            if (!string.IsNullOrEmpty(role))
+                permissions = permissions.Where(perm => perm.Role.Name == role && perm.Role.Inactive == false);
 
             //Now get all users among these permissions
-            var users = permissions.Select(perm => perm.User).Distinct();
+            var users = permissions.ToList().Select(perm => perm.User).Distinct();
             
             if (string.IsNullOrEmpty(searchToken) == false)
             {
@@ -181,9 +184,9 @@ namespace CAESDO.Catbert.BLL
             return users.AsQueryable<User>();
         }
 
-        public static List<User> GetByApplication(string application, string searchToken, int page, int pageSize, string orderBy, ref int totalUsers)
+        public static List<User> GetByApplication(string application, string role, string unit, string searchToken, int page, int pageSize, string orderBy, ref int totalUsers)
         {
-            IQueryable<User> users = GetUserQueryableByApplication(application, searchToken).OrderBy(orderBy);
+            IQueryable<User> users = GetUserQueryableByApplication(application, role, unit, searchToken).OrderBy(orderBy);
 
             totalUsers = users.Count();
 

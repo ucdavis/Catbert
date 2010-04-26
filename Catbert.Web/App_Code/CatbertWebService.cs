@@ -351,12 +351,12 @@ public class CatbertWebService : System.Web.Services.WebService
 
         int totalUsers = 0;
 
-        //var users = ConvertFromUserList(UserBLL.GetByApplication(application), application);
-        var users = ConvertFromUserList(UserBLL.GetByApplication(application, search, page, pagesize, orderBy, ref totalUsers), application);
+        var users = UserBLL.GetByApplication(application, role, unit, search, page, pagesize, orderBy, ref totalUsers);
+        var serviceUsers = ConvertFromUserList(users, application);
 
-        RecordSet grid = new RecordSet() { page = page, total = (int)Math.Ceiling((double)totalUsers/pagesize), records = users.Count };
+        RecordSet grid = new RecordSet() { page = page, total = (int)Math.Ceiling((double)totalUsers/pagesize), records = serviceUsers.Count };
 
-        foreach (var user in users)
+        foreach (var user in serviceUsers)
         {
             grid.rows.Add(user);
         }
