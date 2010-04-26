@@ -45,6 +45,7 @@ $(document).ready(function() {
         search = "";
         $("#txtSearch").val(search); //clear out the text
         page = 1; //Go back to the first page
+
         PopulateUserTable(application, search, unit, role, sortname, sortorder);
         $(".ac_results").hide(); //Hide the results whenever you hit enter
 
@@ -106,8 +107,8 @@ $(document).ready(function() {
         $("#divSearchResultsSuccess").hide(0); //Hide the content
 
         //var data = { eid: null, firstName: null, lastName: null, email: null, login: $("#txtLoginID").val() };
-        var data = { searchTerm : $("#txtLoginID").val() };
-        
+        var data = { searchTerm: $("#txtLoginID").val() };
+
         //Call the search service
         AjaxCall(baseURL + "FindUser", data, SearchNewUserSuccess, null);
         //AjaxCall(baseURL + "SearchNewUser", data, SearchNewUserSuccess, null);
@@ -142,7 +143,7 @@ $(document).ready(function() {
 
     $("#filterRoles").change(function() {
         page = 1; //Reset the paging
-        
+
         role = $(this).val();
 
         PopulateUserTableDefault(application);
@@ -150,7 +151,7 @@ $(document).ready(function() {
 
     $("#filterUnits").change(function() {
         page = 1; //Reset the paging    
-        
+
         unit = $(this).val();
 
         PopulateUserTableDefault(application);
@@ -160,6 +161,14 @@ $(document).ready(function() {
 function SearchUsers() {
     search = $("#txtSearch").val() /*textbox value*/;
     page = 1; //Change the page when a new search is executed
+
+    //Clear unit and role filters
+    $("#filterRoles option:nth(0)").attr("selected", true);
+    $("#filterUnits option:nth(0)").attr("selected", true);
+
+    role = null;
+    unit = null;
+    
     PopulateUserTable(application, search, unit, role, sortname, sortorder);
 
     setTimeout(function() {
