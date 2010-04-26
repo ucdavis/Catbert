@@ -29,10 +29,11 @@
         </span>
         
         <span id="filter" style="float:right;">
-            <asp:ListView ID="lviewFilterRoles" runat="server">
+            
+            <asp:ListView ID="lviewFilterApplications" runat="server">
                 <LayoutTemplate>
-                    <select id="filterRoles">
-                        <option value="">-- Filter By Role --</option>
+                    <select id="filterApplications">
+                        <option value="">-- Filter By Application --</option>
                         <option id="itemPlaceholder" runat="server"></option>
                     </select>
                 </LayoutTemplate>
@@ -43,19 +44,6 @@
                 </ItemTemplate>
             </asp:ListView>
             
-            <asp:ListView ID="lviewFilterUnits" runat="server">
-                <LayoutTemplate>
-                    <select id="filterUnits">
-                        <option value="">-- Filter By Unit --</option>
-                        <option id="itemPlaceholder" runat="server"></option>
-                    </select>
-                </LayoutTemplate>
-                <ItemTemplate>
-                    <option value='<%# Eval("FISCode") %>'>
-                        <%# Eval("ShortName")%>
-                    </option>
-                </ItemTemplate>
-            </asp:ListView>
         </span>
     </div>
     <div id="divLoading" style="display:none; clear: left;">

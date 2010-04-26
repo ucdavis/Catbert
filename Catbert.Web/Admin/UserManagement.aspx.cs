@@ -12,6 +12,7 @@ public partial class Management_UserManagement : System.Web.UI.Page
 {
     public List<Unit> Units { get; set; }
     public List<Role> Roles { get; set; }
+    public List<Application> Applications { get; set; }
 
     /// <summary>
     /// Do the permission checks necessary to ensure that the current user has access to this application,
@@ -30,6 +31,7 @@ public partial class Management_UserManagement : System.Web.UI.Page
         {
             Units = UnitBLL.GetAllUnits();
             Roles = RoleBLL.GetAll();
+            Applications = ApplicationBLL.GetAll("Name", true);
             
             ts.CommitTransaction();
         }
@@ -38,20 +40,21 @@ public partial class Management_UserManagement : System.Web.UI.Page
         
         //Units
         lviewUnits.DataSource = Units;
-        lviewFilterUnits.DataSource = Units;
         lviewUserUnits.DataSource = Units;
 
         lviewUnits.DataBind();
-        lviewFilterUnits.DataBind();
         lviewUserUnits.DataBind();
 
         //Roles
         lviewRoles.DataSource = Roles;
-        lviewFilterRoles.DataSource = Roles;
         lviewUserRoles.DataSource = Roles;
 
         lviewRoles.DataBind();
-        lviewFilterRoles.DataBind();
         lviewUserRoles.DataBind();
+        
+        //Applications
+        lviewFilterApplications.DataSource = Applications;
+
+        lviewFilterApplications.DataBind();
     }
 }

@@ -139,18 +139,10 @@ $(document).ready(function() {
                 null);
     });
 
-    $("#filterRoles").change(function() {
+    $("#filterApplications").change(function() {
         page = 1; //Reset the paging
 
-        role = $(this).val();
-
-        PopulateUserTableDefault(application);
-    });
-
-    $("#filterUnits").change(function() {
-        page = 1; //Reset the paging    
-
-        unit = $(this).val();
+        application = $(this).val();
 
         PopulateUserTableDefault(application);
     });
