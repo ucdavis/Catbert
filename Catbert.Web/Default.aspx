@@ -15,6 +15,7 @@ Logged in as: <asp:Label ID="lblLoginID" runat="server" EnableViewState="false">
         <li><a href="Admin/Units.aspx">Units</a></li>
         <li><a href="Admin/Emulation.aspx">Emulation (Testing Only)</a></li>
         <li><a href="Admin/UserAdministration.aspx">User Management (for all apps)</a></li>
+        <li><a href="Admin/UserManagement.aspx">Admin User Management</a></li>
     </ul>
 
 </asp:Content>
