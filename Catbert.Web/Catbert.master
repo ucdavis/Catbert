@@ -19,6 +19,23 @@
 </head>
 <body>
     <form id="form1" runat="server">
+    <script type="text/javascript">
+        function AjaxCall(method, data, onSuccess, onError) {
+            //Serialize the data to json format
+            data = JSON2.stringify(data);
+            //debugger;
+            $.ajax({
+                type: 'POST',
+                url: method,
+                data: data,
+                dataType: 'json', //JSON
+                contentType: 'application/json',
+                processData: true,
+                success: function(data) { return onSuccess(data.d); },
+                error: onError
+            });
+        }
+    </script>
 <%--    <AjaxControlToolkit:ToolkitScriptManager ID="scriptManager" runat="server">
         <Scripts>
             <asp:ScriptReference Path="~/JS/jquery-1.3.1.min.js" />

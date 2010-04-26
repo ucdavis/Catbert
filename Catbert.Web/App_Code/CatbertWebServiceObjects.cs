@@ -11,6 +11,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using CAESDO.Catbert.Core.Domain;
 
 namespace Catbert.Services
 {
@@ -123,4 +124,27 @@ namespace Catbert.Services
         public string Name { get; set; }
     }
 
+    public class ServiceApplication
+    {
+        public string Name { get; set; }
+        public string Abbr { get; set; }
+        public string Location { get; set; }
+
+        public List<ServiceRole> Roles { get; set; }
+
+        public ServiceApplication(Application application)
+        {
+            Name = application.Name;
+            Abbr = application.Abbr;
+            Location = application.Location;
+
+            Roles = new List<ServiceRole>();
+
+            foreach (var role in application.Roles)
+            {
+                if ( role.Inactive == false )
+                    Roles.Add(new ServiceRole(role.ID, role.Name));
+            }
+        }
+    }
 }

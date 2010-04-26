@@ -250,6 +250,14 @@ public class CatbertWebService : System.Web.Services.WebService
     #region Applications
 
     [WebMethod]
+    public ServiceApplication GetApplication(string application)
+    {
+        Application app = ApplicationBLL.GetByName(application);
+
+        return new ServiceApplication(app);        
+    }
+
+    [WebMethod]
     public List<CatbertUser> GetUsersByApplication(string application)
     {
         List<CatbertUser> users = ConvertFromUserList(UserBLL.GetByApplication(application), application);

@@ -14,7 +14,11 @@
     <%--<script src="JS/fcbklistselection.js" type="text/javascript"></script>--%>
     <script src="JS/multiselection.js" type="text/javascript"></script>
     <script type="text/javascript">
+        var baseUrl = 'Services/CatbertWebService.asmx/';
+        var roleList;
+
         $(document).ready(function() {
+             roleList = $('#ulRoles');
             //Sort table
             $("#tblApplications").tablesorter({
                 headers: { 0: { sorter: false} },
@@ -47,6 +51,16 @@
 
             dialog.dialog('option', 'title', name); //Set the title
             
+            //TODO: The loading options
+            //Clear out the roles list checked options
+            
+            AjaxCall(
+                baseUrl + 'GetApplication',
+                { application: name },
+                function(data) { PopulateApplication(data); },
+                null //TODO: Error method
+            );
+            
             /*
             var inner = $('<li><input type="checkbox" checked="checked" value="RoleName" /></li>').append('Admin Role');
             var inner2 = $('<li><input type="checkbox" checked="checked" value="RoleName" /></li>').append('Admin Role');
@@ -68,6 +82,16 @@
             */
             
             dialog.dialog('open'); //show
+        }
+        
+        function PopulateApplication(app) {
+            //Go through each role and check the corresonding box
+            
+            for (var i in app.Roles) {
+                var roleName = app.Roles[i].Name;
+                var roleBox = $("input[value=" + roleName + "]", roleList); //Find the one role with the value of roleName                
+                roleBox.attr('checked', 'checked');//Check it
+            }
         }
         
     </script>
@@ -136,14 +160,32 @@
     </asp:ObjectDataSource>
     
     <!-- ui-dialog -->
-	<div id="dialogUserInfo" title="Application Information" style="display:none;">
+	<div id="dialogUserInfo" title="Application Information" style="display: none;">
 		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 		<br />
 
         <div id="Roles">
             Roles:
-            <ul id="ulRoles">
-            </ul>
+            <asp:ListView ID="lviewRoles" runat="server" DataSourceID="odsRoles">
+                <LayoutTemplate>
+                    <ul id="ulRoles">
+                        <li id="itemPlaceholder" runat="server"></li>
+                    </ul>
+                </LayoutTemplate>
+                <ItemTemplate>
+                    <li>
+                        <input type="checkbox" value="<%# Eval("Name") %>" /><%# Eval("Name") %>
+                    </li>
+                </ItemTemplate>
+            </asp:ListView>
+            <asp:ObjectDataSource ID="odsRoles" runat="server" 
+                OldValuesParameterFormatString="original_{0}" SelectMethod="GetAll" 
+                TypeName="CAESDO.Catbert.BLL.RoleBLL">
+                <SelectParameters>
+                    <asp:Parameter DefaultValue="Name" Name="propertyName" Type="String" />
+                    <asp:Parameter DefaultValue="true" Name="ascending" Type="Boolean" />
+                </SelectParameters>
+            </asp:ObjectDataSource>
         </div>
 	</div>
 </asp:Content>

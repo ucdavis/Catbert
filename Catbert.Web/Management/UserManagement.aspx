@@ -96,22 +96,6 @@
         function Trim(str) {
             return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
         }
-
-        function AjaxCall(method, data, onSuccess, onError) {
-            //Serialize the data to json format
-            data = JSON2.stringify(data);
-            //debugger;
-            $.ajax({
-                type: 'POST',
-                url: baseURL + method,
-                data: data,
-                dataType: 'json', //JSON
-                contentType: 'application/json',
-                processData: true,
-                success: function(data) { return onSuccess(data.d); },
-                error: onError
-            });
-        }
     </script>
     
 <br /><br />
