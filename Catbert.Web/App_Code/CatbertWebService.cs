@@ -20,10 +20,7 @@ public class CatbertWebService : System.Web.Services.WebService
 {
     public string CurrentServiceUser
     {
-        get
-        {
-            return HttpContext.Current.User.Identity.Name;
-        }
+        get { return HttpContext.Current.User.Identity.Name; }
     }
 
     public CatbertWebService()
@@ -32,31 +29,8 @@ public class CatbertWebService : System.Web.Services.WebService
         //InitializeComponent(); 
     }
 
-    /// <summary>
-    /// Finds all uses that meet the given criteri
-    /// </summary>
-    /// <returns>list of users, or an empty list if none found</returns>
-    [WebMethod]
-    public List<ServiceUser> SearchNewUser(string eid, string firstName, string lastName, string login, string email)
-    {
-        List<ServiceUser> users = new List<ServiceUser>();
+    #region ServiceMethods
 
-        foreach (var person in DirectoryServices.SearchUsers(eid, firstName, lastName, login, email))
-        {
-            users.Add(new ServiceUser()
-            {
-                EmployeeID = person.EmployeeID,
-                FirstName = person.FirstName,
-                LastName = person.LastName,
-                Login = person.LoginID,
-                Email = person.EmailAddress,
-                Phone = person.PhoneNumber
-            });
-        }
-
-        return users;
-    }
-    
     /// <summary>
     /// We are going to search for the user with the given term, currently can be email or loginID
     /// </summary>
@@ -64,62 +38,36 @@ public class CatbertWebService : System.Web.Services.WebService
     public ServiceUser FindUser(string searchTerm)
     {
         var foundUser = DirectoryServices.FindUser(searchTerm);
-                
+
         if (foundUser == null) return null;
 
         var serviceUser = new ServiceUser()
-        {
-            EmployeeID = foundUser.EmployeeID,
-            FirstName = foundUser.FirstName,
-            LastName = foundUser.LastName,
-            Login = foundUser.LoginID,
-            Email = foundUser.EmailAddress,
-            Phone = foundUser.PhoneNumber
-        };
+                              {
+                                  EmployeeID = foundUser.EmployeeID,
+                                  FirstName = foundUser.FirstName,
+                                  LastName = foundUser.LastName,
+                                  Login = foundUser.LoginID,
+                                  Email = foundUser.EmailAddress,
+                                  Phone = foundUser.PhoneNumber
+                              };
 
         return serviceUser;
-    }
-
-    [WebMethod]
-    public int InsertNewUser(ServiceUser serviceUser)
-    {
-        User user = new User()
-        {
-            FirstName = serviceUser.FirstName,
-            LastName = serviceUser.LastName,
-            Email = serviceUser.Email,
-            LoginID = serviceUser.Login,
-            EmployeeID = serviceUser.EmployeeID,
-            Phone = serviceUser.Phone
-        };
-
-        var insertedUser = UserBLL.InsertNewUser(user, CurrentServiceUser);
-        return insertedUser.ID;
     }
 
     [WebMethod]
     public void InsertUserWithRoleAndUnit(ServiceUser serviceUser, string role, string unit, string application)
     {
         User user = new User()
-        {
-            FirstName = serviceUser.FirstName,
-            LastName = serviceUser.LastName,
-            Email = serviceUser.Email,
-            LoginID = serviceUser.Login,
-            EmployeeID = serviceUser.EmployeeID,
-            Phone = serviceUser.Phone
-        };
+                        {
+                            FirstName = serviceUser.FirstName,
+                            LastName = serviceUser.LastName,
+                            Email = serviceUser.Email,
+                            LoginID = serviceUser.Login,
+                            EmployeeID = serviceUser.EmployeeID,
+                            Phone = serviceUser.Phone
+                        };
 
         UserBLL.InsertNewUserWithRoleAndUnit(user, role, unit, application, CurrentServiceUser);
-    }
-
-    /// <summary>
-    /// Verify that the given login exists in the database
-    /// </summary>
-    [WebMethod]
-    public bool VerifyUser(string login)
-    {    
-        return UserBLL.VerifyUserExists(login);
     }
 
     [WebMethod]
@@ -130,7 +78,7 @@ public class CatbertWebService : System.Web.Services.WebService
         if (user == null) return null; //make sure we have a real user
 
         List<User> users = new List<User>();
-        users.Add(user);//Get the user, and add it to the user list
+        users.Add(user); //Get the user, and add it to the user list
 
         List<CatbertUser> catbertUsers = ConvertFromUserList(users, application);
 
@@ -139,24 +87,133 @@ public class CatbertWebService : System.Web.Services.WebService
         return catbertUsers[0];
     }
 
+    [WebMethod]
+    public bool AddUnit(string login, string application, string unitFIS)
+    {
+        return UserBLL.AssociateUnit(login, application, unitFIS, CurrentServiceUser);
+    }
+
+    [WebMethod]
+    public bool DeleteUnit(string login, string application, string unitFIS)
+    {
+        return UserBLL.UnassociateUnit(login, application, unitFIS, CurrentServiceUser);
+    }
+
+    [WebMethod]
+    public void AssociateRole(string login, string role, string application)
+    {
+        PermissionBLL.InsertPermission(application, role, login, CurrentServiceUser);
+    }
+
+    [WebMethod]
+    public void DissociateRole(string login, string role, string application)
+    {
+        PermissionBLL.DeletePermission(application, role, login, CurrentServiceUser);
+    }
+
+    /// <summary>
+    /// Get all users in this application, filtered by query, unit and role
+    /// </summary>
+    [WebMethod]
+    public RecordSet GetUsers(string application, string search, string unit, string role, int page, int pagesize,
+                              string sortname, string sortorder)
+    {
+        if (page <= 0 || pagesize <= 0) throw new ArgumentException("Page variables must be positive integers");
+
+        string orderBy = string.IsNullOrEmpty(sortname)
+                             ? "LastName DESC"
+                             : string.Format("{0} {1}", sortname, sortorder);
+
+        int totalUsers = 0;
+
+        var users = UserBLL.GetByApplication(application, CurrentServiceUser, role, unit, search, page, pagesize,
+                                             orderBy, out totalUsers);
+        var serviceUsers = ConvertFromUserList(users, application);
+
+        RecordSet grid = new RecordSet()
+                             {
+                                 page = page,
+                                 total = (int) Math.Ceiling((double) totalUsers/pagesize),
+                                 records = serviceUsers.Count
+                             };
+
+        foreach (var user in serviceUsers)
+        {
+            grid.rows.Add(user);
+        }
+
+        return grid;
+    }
+
+    #endregion
+
+    #region NonServiceMethods
+
+    /// <summary>
+    /// Finds all uses that meet the given criteri
+    /// </summary>
+    /// <returns>list of users, or an empty list if none found</returns>
+    public List<ServiceUser> SearchNewUser(string eid, string firstName, string lastName, string login, string email)
+    {
+        List<ServiceUser> users = new List<ServiceUser>();
+
+        foreach (var person in DirectoryServices.SearchUsers(eid, firstName, lastName, login, email))
+        {
+            users.Add(new ServiceUser()
+                          {
+                              EmployeeID = person.EmployeeID,
+                              FirstName = person.FirstName,
+                              LastName = person.LastName,
+                              Login = person.LoginID,
+                              Email = person.EmailAddress,
+                              Phone = person.PhoneNumber
+                          });
+        }
+
+        return users;
+    }
+
+    public int InsertNewUser(ServiceUser serviceUser)
+    {
+        User user = new User()
+                        {
+                            FirstName = serviceUser.FirstName,
+                            LastName = serviceUser.LastName,
+                            Email = serviceUser.Email,
+                            LoginID = serviceUser.Login,
+                            EmployeeID = serviceUser.EmployeeID,
+                            Phone = serviceUser.Phone
+                        };
+
+        var insertedUser = UserBLL.InsertNewUser(user, CurrentServiceUser);
+        return insertedUser.ID;
+    }
+
+    /// <summary>
+    /// Verify that the given login exists in the database
+    /// </summary>
+    public bool VerifyUser(string login)
+    {
+        return UserBLL.VerifyUserExists(login);
+    }
+
     #region Permissions
 
     /// <summary>
     /// Assigns the given role to the desired user within the application.  Returns true only on successfull assigning of permissions --
     /// If the permission is already assigned or if there are other errors, true will not be returned.
     /// </summary>
-    [WebMethod]
     public bool AssignPermissions(string login, string application, string role)
     {
         //If the credentials don't validate or the caller doesn't have access to this application, return false
         if (!this.ValidateApplicationPermission(CurrentServiceUser, application)) return false;
 
         Permission result = PermissionBLL.InsertPermission(application, role, login, CurrentServiceUser);
-        
+
         return result != null; //true on non-null result
     }
 
-    [WebMethod]
+
     public bool DeletePermissions(string login, string application, string role)
     {
         if (!this.ValidateApplicationPermission(CurrentServiceUser, application)) return false;
@@ -179,7 +236,6 @@ public class CatbertWebService : System.Web.Services.WebService
     /// Check to see if a permission exists and is active (works like is user in role)
     /// </summary>
     /// <returns>True if login has the correct active role in this application </returns>
-    [WebMethod]
     public bool PermissionExists(string login, string application, string role)
     {
         return PermissionBLL.PermissionExists(application, role, login, false);
@@ -189,32 +245,19 @@ public class CatbertWebService : System.Web.Services.WebService
 
     #region Units
 
-    [WebMethod]
-    public bool AddUnit(string login, string application, string unitFIS)
-    {
-        return UserBLL.AssociateUnit(login, application, unitFIS, CurrentServiceUser);
-    }
-
-    [WebMethod]
-    public bool DeleteUnit(string login, string application, string unitFIS)
-    {
-        return UserBLL.UnassociateUnit(login, application, unitFIS, CurrentServiceUser);
-    }
-
-    [WebMethod]
     public List<ServiceUnit> GetUnits()
     {
         List<ServiceUnit> serviceUnits = new List<ServiceUnit>();
 
         foreach (var unit in UnitBLL.GetAllUnits())
         {
-            serviceUnits.Add(new ServiceUnit() { ID = unit.ID, Name = unit.ShortName, UnitFIS = unit.FISCode });
+            serviceUnits.Add(new ServiceUnit() {ID = unit.ID, Name = unit.ShortName, UnitFIS = unit.FISCode});
         }
 
         return serviceUnits;
     }
 
-    [WebMethod]
+
     public List<AutoCompleteData> GetUnitsAuto(string q /*query*/, int limit)
     {
         List<AutoCompleteData> auto = new List<AutoCompleteData>();
@@ -232,7 +275,7 @@ public class CatbertWebService : System.Web.Services.WebService
                                 Name = unit.ShortName,
                                 FIS = unit.FISCode
                             }
-                    ));
+                        ));
             }
         }
 
@@ -240,16 +283,15 @@ public class CatbertWebService : System.Web.Services.WebService
     }
 
 
-    [WebMethod]
     public List<ServiceUnit> GetUnitsByUser(string login, string application)
     {
         List<ServiceUnit> serviceUnits = new List<ServiceUnit>();
 
         foreach (var unit in UnitBLL.GetByUser(login, application))
         {
-            serviceUnits.Add(new ServiceUnit() { ID = unit.ID, Name = unit.ShortName, UnitFIS = unit.FISCode });
+            serviceUnits.Add(new ServiceUnit() {ID = unit.ID, Name = unit.ShortName, UnitFIS = unit.FISCode});
         }
-        
+
         return serviceUnits;
     }
 
@@ -257,25 +299,12 @@ public class CatbertWebService : System.Web.Services.WebService
 
     #region Roles
 
-    [WebMethod]
     public void AddRole(string role)
     {
         RoleBLL.CreateRole(role, CurrentServiceUser);
     }
 
-    [WebMethod]
-    public void AssociateRole(string login, string role, string application)
-    {
-        PermissionBLL.InsertPermission(application, role, login, CurrentServiceUser);
-    }
 
-    [WebMethod]
-    public void DissociateRole(string login, string role, string application)
-    {
-        PermissionBLL.DeletePermission(application, role, login, CurrentServiceUser);
-    }
-
-    [WebMethod]
     public List<ServiceRole> GetRoles(string application)
     {
         List<ServiceRole> roles = new List<ServiceRole>();
@@ -284,21 +313,21 @@ public class CatbertWebService : System.Web.Services.WebService
         {
             if (!role.Role.Inactive) //only return active roles
             {
-                roles.Add(new ServiceRole() { ID = role.Role.ID, Name = role.Role.Name });
+                roles.Add(new ServiceRole() {ID = role.Role.ID, Name = role.Role.Name});
             }
         }
 
         return roles;
     }
 
-    [WebMethod]
+
     public List<ServiceRole> GetRolesByUser(string application, string login)
     {
         List<ServiceRole> roles = new List<ServiceRole>();
 
         foreach (var role in PermissionBLL.GetRolesForUser(application, login))
         {
-            roles.Add(new ServiceRole() { ID = role.ID, Name = role.Name });
+            roles.Add(new ServiceRole() {ID = role.ID, Name = role.Name});
         }
 
         return roles;
@@ -308,20 +337,20 @@ public class CatbertWebService : System.Web.Services.WebService
 
     #region Applications
 
-    [WebMethod]
     public ServiceApplication GetApplication(string application)
     {
         Application app = ApplicationBLL.GetByName(application);
 
-        return new ServiceApplication(app);        
+        return new ServiceApplication(app);
     }
 
-    [WebMethod]
-    public void UpdateApplication(string application, string newName, string newAbbr, string newLocation, List<string> leveledRoles, List<string> nonLeveledRoles)
+
+    public void UpdateApplication(string application, string newName, string newAbbr, string newLocation,
+                                  List<string> leveledRoles, List<string> nonLeveledRoles)
     {
         //First get the application
         Application app = ApplicationBLL.GetByName(application);
-        
+
         //Change the properties
         app.Name = newName;
         app.Abbr = newAbbr;
@@ -334,11 +363,12 @@ public class CatbertWebService : System.Web.Services.WebService
         ApplicationBLL.Update(app, CurrentServiceUser);
     }
 
-    [WebMethod]
-    public void CreateApplication(string application, string abbr, string location, List<string> leveledRoles, List<string> nonLeveledRoles)
+
+    public void CreateApplication(string application, string abbr, string location, List<string> leveledRoles,
+                                  List<string> nonLeveledRoles)
     {
         //Create the new application
-        Application app = new Application() { Name = application, Abbr = abbr, Location = location, Inactive = false };
+        Application app = new Application() {Name = application, Abbr = abbr, Location = location, Inactive = false};
 
         //Reconcile the roles
         ApplicationBLL.SetRoles(app, leveledRoles, nonLeveledRoles);
@@ -347,13 +377,13 @@ public class CatbertWebService : System.Web.Services.WebService
         ApplicationBLL.Create(app, CurrentServiceUser);
     }
 
-    [WebMethod]
+
     public void ChangeApplicationActiveStatus(string application)
     {
         ApplicationBLL.SetActiveStatus(application, null, CurrentServiceUser);
     }
 
-    //[WebMethod]
+    //
     //public List<CatbertUser> GetUsersByApplication(string application)
     //{
     //    List<CatbertUser> users = ConvertFromUserList(UserBLL.GetByApplication(application), application);
@@ -361,32 +391,8 @@ public class CatbertWebService : System.Web.Services.WebService
     //    return users;
     //}
 
-    /// <summary>
-    /// Get all users in this application, filtered by query, unit and role
-    /// </summary>
-    [WebMethod]
-    public RecordSet GetUsers(string application, string search, string unit, string role, int page, int pagesize, string sortname, string sortorder)
-    {
-        if (page <= 0 || pagesize <= 0) throw new ArgumentException("Page variables must be positive integers");
-
-        string orderBy = string.IsNullOrEmpty(sortname) ? "LastName DESC" : string.Format("{0} {1}", sortname, sortorder);
-
-        int totalUsers = 0;
-
-        var users = UserBLL.GetByApplication(application, CurrentServiceUser, role, unit, search, page, pagesize, orderBy, out totalUsers);
-        var serviceUsers = ConvertFromUserList(users, application);
-
-        RecordSet grid = new RecordSet() { page = page, total = (int)Math.Ceiling((double)totalUsers/pagesize), records = serviceUsers.Count };
-
-        foreach (var user in serviceUsers)
-        {
-            grid.rows.Add(user);
-        }
-
-        return grid;
-    }
     /*
-    [WebMethod]
+    
     public List<CatbertUser> GetUsersByApplicationRole(string application, string role)
     {
         List<CatbertUser> users = ConvertFromUserList(UserBLL.GetByApplicationRole(application, role), application);
@@ -399,7 +405,6 @@ public class CatbertWebService : System.Web.Services.WebService
     /// Convert a list of users from the Core class into a web service object.  Requires the application name for
     /// resolution of roles
     /// </summary>
-    [WebMethod]
     private static List<CatbertUser> ConvertFromUserList(List<User> users, string application)
     {
         List<CatbertUser> catbertUsers = new List<CatbertUser>();
@@ -408,21 +413,21 @@ public class CatbertWebService : System.Web.Services.WebService
         {
             //Add the user's basic info
             CatbertUser catbertUser = new CatbertUser()
-            {
-                UserID = user.ID,
-                Login = user.LoginID,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email,
-                EmployeeID = user.EmployeeID,
-                Roles = new List<ServiceRole>(),
-                Units = new List<ServiceUnit>()
-            };
+                                          {
+                                              UserID = user.ID,
+                                              Login = user.LoginID,
+                                              FirstName = user.FirstName,
+                                              LastName = user.LastName,
+                                              Email = user.Email,
+                                              EmployeeID = user.EmployeeID,
+                                              Roles = new List<ServiceRole>(),
+                                              Units = new List<ServiceUnit>()
+                                          };
 
             //Add in the units
             foreach (var unit in UnitBLL.GetByUser(user.LoginID, application))
             {
-                catbertUser.Units.Add(new ServiceUnit() { ID = unit.ID, Name = unit.ShortName, UnitFIS = unit.FISCode });
+                catbertUser.Units.Add(new ServiceUnit() {ID = unit.ID, Name = unit.ShortName, UnitFIS = unit.FISCode});
             }
 
             //Grab this user's roles only for this application
@@ -432,7 +437,7 @@ public class CatbertWebService : System.Web.Services.WebService
             {
                 if (role.Inactive == false) //only add in active permissions
                 {
-                    catbertUser.Roles.Add(new ServiceRole() { ID = role.ID, Name = role.Name });
+                    catbertUser.Roles.Add(new ServiceRole() {ID = role.ID, Name = role.Name});
                 }
             }
 
@@ -446,17 +451,18 @@ public class CatbertWebService : System.Web.Services.WebService
 
     #region Contact Information
 
-    [WebMethod]
     public bool SetEmail(string login, string emailAddress)
     {
         return UserBLL.SetEmail(login, emailAddress, CurrentServiceUser);
     }
 
-    [WebMethod]
+
     public bool SetPhoneNumber(string login, string phoneNumber)
     {
         return UserBLL.SetPhone(login, phoneNumber, CurrentServiceUser);
     }
+
+    #endregion
 
     #endregion
 }
