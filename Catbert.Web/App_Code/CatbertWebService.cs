@@ -347,6 +347,8 @@ public class CatbertWebService : System.Web.Services.WebService
     [WebMethod]
     public RecordSet GetUsers(string application, string search, string unit, string role, int page, int pagesize, string sortname, string sortorder)
     {
+        if (page <= 0 || pagesize <= 0) throw new ArgumentException("Page variables must be positive integers");
+
         int totalUsers = 0;
 
         //var users = ConvertFromUserList(UserBLL.GetByApplication(application), application);
@@ -354,7 +356,7 @@ public class CatbertWebService : System.Web.Services.WebService
 
         search = search == null ? null : search.ToLower();
 
-        RecordSet grid = new RecordSet() { page = page, total = 2, records = users.Count };
+        RecordSet grid = new RecordSet() { page = page, total = totalUsers/pagesize, records = users.Count };
 
         foreach (var user in users)
         {
