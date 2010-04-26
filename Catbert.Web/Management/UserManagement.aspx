@@ -23,6 +23,8 @@
         var sortname = "LastName";
         var sortorder = "ASC";
 
+        var userTableDirty = false;
+
         $(document).ready(function() {
             application = $("#app").val();
 
@@ -200,6 +202,8 @@
                     null,
                     null
                 );
+
+                userTableDirty = true; //Users have been modified
             }
             else {
                 alert("User already has the role " + newrole);
@@ -234,6 +238,8 @@
                     null,
                     null
                 );
+
+                userTableDirty = true; //Users have been modified
             }
             else {
                 alert("User already has the unit " + $.trim(newunitname));
@@ -250,7 +256,13 @@
                 }
             }
 
-            OpenDialog(dialogUserInfo, buttons, "User Information", function() { PopulateUserTableDefault(applicationName); });
+            OpenDialog(dialogUserInfo, buttons, "User Information",
+                function() {
+                    if (userTableDirty) {
+                        PopulateUserTableDefault(applicationName);
+                    }
+                }
+            );
 
             var baseUrl = baseURL;
             
@@ -324,6 +336,8 @@
                 null,
                 null
             );
+
+            userTableDirty = true; //Users have been modified
         }
 
         function DeleteRole(login, role, application, rowToDelete) {
@@ -333,7 +347,9 @@
                 { login: login, role: role, application: application },
                 null,
                 null
-            );            
+            );
+
+            userTableDirty = true; //Users have been modified
         }
 
         function AddUserSuccess(application, search) {
@@ -403,6 +419,7 @@
 
             SortTable();
             ShowLoadingIndicator(false);
+            userTableDirty = false;//The user table is now up to date
         }
 
         function ShowLoadingIndicator(on) {
