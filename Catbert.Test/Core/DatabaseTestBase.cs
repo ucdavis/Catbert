@@ -28,8 +28,26 @@ namespace CAESDO.Catbert.Test.Core
                 LoadApplications();
                 LoadUnits();
                 LoadRoles();
+                LoadTracking();
 
                 ts.CommitTransaction();
+            }
+        }
+
+        private static void LoadTracking()
+        {
+            foreach (var trackingTypeName in Enum.GetNames(typeof(TrackingTypes)))
+            {
+                var trackingType = new TrackingType {Name = trackingTypeName};
+
+                GenericBLL<TrackingType,int>.EnsurePersistent(trackingType);
+            }
+
+            foreach (var trackingActionName in Enum.GetNames(typeof(TrackingActions)))
+            {
+                var trackingAction = new TrackingAction {Name = trackingActionName};
+
+                GenericBLL<TrackingAction,int>.EnsurePersistent(trackingAction);
             }
         }
 
@@ -61,17 +79,17 @@ namespace CAESDO.Catbert.Test.Core
                 
                 if (i==0)
                 {
-                    unit.FISCode = "AANS";
+                    unit.FISCode = "Uni0";
                     unit.School = school1;
                 }
                 else if (i == 1)
                 {
-                    unit.FISCode = "APLS";
+                    unit.FISCode = "Uni1";
                     unit.School = school1;
                 }
                 else if (i == 2)
                 {
-                    unit.FISCode = "CHEM";
+                    unit.FISCode = "Uni2";
                     unit.School = school2;
                 }
                 
