@@ -238,22 +238,33 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Name</td>
+                            <td>First</td>
                             <td>
-                                <span id="UserInfoName"></span>
+                                <input type="text" id="UserInfoFirstName" maxlength="50" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Last</td>
+                            <td>
+                                <input type="text" id="UserInfoLastName" maxlength="50" />
                             </td>
                         </tr>
                         <tr>
                             <td>Email</td>
                             <td>
-                                <span id="UserInfoEmail"></span>
+                                <input type="text" id="UserInfoEmail" maxlength="50" />
                             </td>
                         </tr>
                         <tr>
                             <td>Phone</td>
                             <td>
-                                <span id="UserInfoPhone"></span>
+                                <input type="text" id="UserInfoPhone" maxlength="50" />
                             </td>
+                        </tr>
+                        <tr><td colspan="2">&nbsp;</td></tr>
+                        <tr>
+                            <td></td>
+                            <td><input type="button" id="btnUpdateUserInfo" value="Update Information" /></td>
                         </tr>
                     </tbody>
                 </table>

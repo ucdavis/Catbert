@@ -118,6 +118,8 @@ $(document).ready(function() {
 
     $("#btnAddUser").click(AddUser);
 
+    $("#btnUpdateUserInfo").click(function() { alert("test"); });
+
     $("#filterApplications").change(function() {
         page = 1; //Reset the paging
 
@@ -392,9 +394,10 @@ function PopulateUserInfo(data) {
 function PopulateUserInformation(data) {
     //Insert the userInfo
     $("#UserInfoLogin").html(data.LoginId);
-    $("#UserInfoName").html(data.FirstName + " " + data.LastName);
-    $("#UserInfoEmail").html(data.Email);
-    $("#UserInfoPhone").html(data.Phone);
+    $("#UserInfoFirstName").val(data.FirstName);
+    $("#UserInfoLastName").val(data.LastName);
+    $("#UserInfoEmail").val(data.Email);
+    $("#UserInfoPhone").val(data.Phone);
 }
 
 function CreateRoleRow(role, login, application) {
@@ -531,7 +534,7 @@ function ShowLoadingIndicator(on) {
 }
 
 function RenderRow(index, row) {
-    var newrow = $('<tr></tr>');
+    var newrow = $('<tr></tr>').attr("id", row.Login);
 
     rowEven == true ? newrow.addClass("even") : newrow.addClass("odd");
     rowEven = !rowEven;
