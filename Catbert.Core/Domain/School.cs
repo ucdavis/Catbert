@@ -16,5 +16,10 @@ namespace CAESDO.Catbert.Core.Domain
         [StringLengthValidator(12)]
         [NotNullValidator]
         public virtual string Abbreviation { get; set; }
+
+        public virtual void SetID(string newID)
+        {
+            id = newID;
+        }
     }
 }

@@ -81,6 +81,7 @@
     <Compile Include="ApplicationTests.cs" />
     <Compile Include="BLLTests\UserTests.cs" />
     <Compile Include="CatbertManager.cs" />
+    <Compile Include="EntityIdSetter.cs" />
     <Compile Include="PermissionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleTests.cs" />

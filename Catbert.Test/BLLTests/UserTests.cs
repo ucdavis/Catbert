@@ -24,6 +24,20 @@ namespace CAESDO.Catbert.Test.BLLTests
         private static void LoadData()
         {
             LoadUsers();
+            LoadRolesAndUnits();
+            LoadApplications();
+
+        }
+
+        [TestMethod]
+        public void CanInsertNewUser()
+        {
+            var newUser = new User {FirstName = "Hermes", LastName = "Conrad", LoginID = "hconrad"};
+
+            var result = UserBLL.InsertNewUserWithRoleAndUnit(newUser, "Role1", "Unit1", "App1", "pjfry");
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(newUser.LoginID, result.LoginID);
         }
 
         [TestMethod]
@@ -43,6 +57,35 @@ namespace CAESDO.Catbert.Test.BLLTests
             using (var ts = new TransactionScope())
             {
                 UserBLL.EnsurePersistent(u);
+
+                ts.CommitTransaction();
+            }
+        }
+
+        private static void LoadApplications()
+        {
+            var app = new Application { Name = "App1" };
+
+            using (var ts = new TransactionScope())
+            {
+                ApplicationBLL.EnsurePersistent(app);
+                ts.CommitTransaction();
+            }
+        }
+
+        private static void LoadRolesAndUnits()
+        {
+            var role = new Role() { Name = "Role1" };
+            var school = new School() { Abbreviation = "School", LongDescription = "School", ShortDescription = "School"};
+            var unit = new Unit() { FISCode = "NEWW", FullName = "Unit1", ShortName = "Unit1", School = school };
+
+            school.SetID("99");
+
+            using (var ts = new TransactionScope())
+            {
+                RoleBLL.EnsurePersistent(role);
+                SchoolBLL.EnsurePersistent(school, true);
+                UnitBLL.EnsurePersistent(unit);
 
                 ts.CommitTransaction();
             }

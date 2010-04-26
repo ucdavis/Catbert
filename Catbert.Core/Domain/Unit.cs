@@ -13,6 +13,7 @@ namespace CAESDO.Catbert.Core.Domain
         public virtual string ShortName { get; set; }
 
         [StringLengthValidator(6)]
+        [IgnoreNulls]
         public virtual string PPSCode { get; set; }
 
         [StringLengthValidator(4)]
