@@ -103,7 +103,7 @@ $(document).ready(function() {
     $("#btnAddUserRole").click(function() { AddUserRole(application); });
 
     $("#btnAddUnits").click(AddUserUnit);
-    
+
     $("#btnSearchUser").click(function() {
         $("#spanSearchProgress").show(0); //Show the loading dialog
         $("#divSearchResultsSuccess").hide(0); //Hide the content
@@ -128,28 +128,36 @@ $(document).ready(function() {
     });
 
     $("#applications").change(function() {
-        var selectedApp = $(this).val();
+        OnApplicationSelected($(this).val(), $("#applicationRoles"));
+    });
 
-        if (selectedApp == "") {
-            $("#applicationRoles").attr("disabled", "disabled"); //disable the application roles ddl
-            return;
-        }
-
-        AjaxCall(
-            baseURL + "GetRolesForApplication",
-            { application: selectedApp },
-            function(data) { PopulateRolesForApplication(data); },
-            null
-        );
-
-        console.info($(this).val());
+    $("#applicationsPermissions").change(function() {
+        OnApplicationSelected($(this).val(), $("#rolesPermissions"));
     });
 });
 
-function PopulateRolesForApplication(data) {
+//Populate an associated roles list for the selected application
+function OnApplicationSelected(selectedApp, associatedRolesList) {
+    
+    if (selectedApp == "") {
+        associatedRolesList.attr("disabled", "disabled"); //disable the application roles ddl
+        return;
+    }
+
+    AjaxCall(
+                baseURL + "GetRolesForApplication",
+                { application: selectedApp },
+                function(data) { PopulateRolesForApplication(data, associatedRolesList); },
+                null
+            );
+
+    console.info(selectedApp);
+}
+
+function PopulateRolesForApplication(data, rolesList) {
     console.dir(data);
 
-    var appRoles = $("#applicationRoles");
+    var appRoles = rolesList;
     appRoles.empty();
 
     appRoles.removeAttr("disabled");

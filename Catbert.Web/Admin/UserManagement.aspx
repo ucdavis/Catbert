@@ -165,7 +165,9 @@
                                 </asp:ListView>
                             </td>
                             <td>
-                                <select id="rolesPermissions"></select>
+                                <select id="rolesPermissions" disabled="disabled">
+                                    <option value="">Select An Application</option>
+                                </select>
                             </td>
                             <td>
                                 <input id="btnAddPermission" type="button" value="+" />
