@@ -38,8 +38,13 @@ namespace CAESDO.Catbert.Core.Domain
 
         public TrackingType()
         {
-
+            
         }
+    }
+
+    public enum TrackingTypes
+    {
+        Application, Role, Permission, Unit, User
     }
 
     /// <summary>
@@ -54,4 +59,9 @@ namespace CAESDO.Catbert.Core.Domain
 
         }
     }
+
+    public enum TrackingActions
+	{
+        Add, Change, Delete
+	}
 }

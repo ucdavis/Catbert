@@ -7,9 +7,15 @@
       <generator class="identity" />
     </id>
     
-    <property name="UserName" column="UserName" />
-    <property name="ActionDate" column="ActionDate" />
+    <property name="UserName" column="TrackingUserName" />
+    <property name="ActionDate" column="TrackingActionDate" />
     <property name="Comments" column="Comments" />
+
+    <many-to-one name="Type" column="TrackingTypeID"
+      class="CAESDO.Catbert.Core.Domain.TrackingType, CAESDO.Catbert.Core" not-null="true" />
+
+    <many-to-one name="Action" column="TrackingActionID"
+      class="CAESDO.Catbert.Core.Domain.TrackingAction, CAESDO.Catbert.Core" not-null="true" />
     
   </class>
 
