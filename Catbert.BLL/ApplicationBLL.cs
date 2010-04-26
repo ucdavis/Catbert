@@ -22,7 +22,7 @@ namespace CAESDO.Catbert.BLL
         /// <summary>
         /// Set the roles in this application to be the roles
         /// </summary>
-        public static void SetRoles(Application application, List<string> roles)
+        public static void SetRoles(Application application, List<string> leveledRoles, List<string> nonLeveledRoles)
         {
             throw new NotImplementedException();
             /*

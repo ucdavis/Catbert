@@ -63,14 +63,14 @@ $(document).ready(function() {
         //Clear out the input boxes
         $("#dialogUserInfo :text").val('');
 
-        //Clear out the checkboxes
-        $("#dialogUserInfo :checked").each(function() {
-            $(this).attr('checked', false);
-        });
+        var sortableRolesList = $("#sortableRoles");
+        var nonSortableRolesList = $("#nonSortableRoles");
+        var allRolesList = $("#availableRoles");
 
-        //Show all the checkboxes
-        ChangeRoleDisplay($("#allRolesLink"));
-        ShowActiveRolesOnly(false);
+        //Clear out the associated roles lists, and unhide the allRolesList
+        sortableRolesList.empty();
+        nonSortableRolesList.empty();
+        allRolesList.find("li").show(0);
 
         //Make sure the application info div is visible, and the loading span is hidden
         $("#divApplicationInfo").css('visibility', 'visible');
@@ -96,43 +96,7 @@ $(document).ready(function() {
 
         AjaxCall(baseUrl + 'AddRole', { role: roleName }, null, OnError);
     });
-
-    //Hook up a click handler for the 'active roles only' button
-    $("#roleViewOptions li a").click(function() {
-        ChangeRoleDisplay($(this));
-
-        //Now if this is the allRoles button, show all, else just show checked roles
-        if (this.id == "activeRolesLink")
-            ShowActiveRolesOnly(true); //just active roles
-        else
-            ShowActiveRolesOnly(false);
-    });
 });
-
-function ChangeRoleDisplay(el) {
-    var activeState = "ui-state-active";
-    var defaultState = "ui-state-default";
-
-    //Reset all of the anchors to their default classes
-    $("#roleViewOptions li a").removeClass(activeState).addClass(defaultState);
-    el.removeClass(defaultState).addClass(activeState);
-}
-
-function ShowActiveRolesOnly(activeOnly) {
-    if (typeof (rolelist) == undefined) roleList = $("#ulRoles");
-    var addRoleButton = $("#addRole");
-
-    if (activeOnly) {
-        //var checkedlist = $("li", roleList).filter(" :has(:checked)");
-        $("li", roleList).filter(" :has(:checked)").show();
-        $("li", roleList).filter(" :has(:not(:checked))").hide();
-        addRoleButton.hide(0);
-    }
-    else {
-        $("li", roleList).show();
-        addRoleButton.show(0);
-    }
-}
 
 function ShowApplicationInfo() {
     var row = $(this).parents("tr");
@@ -144,12 +108,7 @@ function ShowApplicationInfo() {
             $(this).dialog("close");
         },
         "Update": function() {
-            var sortableList = $("#sortableRoles");
-            var info = sortableList.sortable('toArray');
-            console.log(info);
-            
-            ///TODO: Testing
-            //UpdateApplication(applicationID, applicationName);
+            UpdateApplication(applicationID, applicationName);
             $(this).dialog("close");
         }
     }
@@ -192,6 +151,11 @@ function PopulateApplication(app) {
     var sortableRolesList = $("#sortableRoles");
     var nonSortableRolesList = $("#nonSortableRoles");
     var allRolesList = $("#availableRoles");
+
+    //Clear out the associated roles lists, and unhide the allRolesList
+    sortableRolesList.empty();
+    nonSortableRolesList.empty();
+    allRolesList.find("li").show(0);
     
     //All of the applications with a non null level go in the sortableRoles list, others go in the nonSortableRoles list
     for (var i in app.Roles) {
@@ -204,7 +168,6 @@ function PopulateApplication(app) {
         if (app.Roles[i].Level == null) {
             console.info("Null Level", roleName);
             
-            //var listElement = $("<li>").attr("id", roleName).addClass("ui-state-default").append(roleName);
             nonSortableRolesList.append(listElement);
         }
         else {
@@ -213,17 +176,6 @@ function PopulateApplication(app) {
             sortableRolesList.append(listElement);
         }
     }
-    
-    //Go through each role and check the corresonding box          
-    for (var i in app.Roles) {
-        var roleName = app.Roles[i].Name;
-        var roleBox = $("input[value=" + roleName + "]", roleList); //Find the one role with the value of roleName                
-        roleBox.attr('checked', 'checked'); //Check it
-    }
-
-    //Now show only the checked ones
-    ChangeRoleDisplay($("#activeRolesLink"));
-    ShowActiveRolesOnly(true);
 
     //Application is populated, so show the information div
     ShowApplicationInformation(true);
@@ -233,13 +185,16 @@ function PopulateApplication(app) {
 function UpdateApplication(ID, name) {
     var application = CollectApplicationInformation();
 
+    console.dir(application);
+    
     //Now we have the update information, send it to the web service
     AjaxCall(baseUrl + 'UpdateApplication', {
         application: name,
         newName: application.appName,
         newAbbr: application.appAbbr,
         newLocation: application.appLocation,
-        roles: application.roles
+        leveledRoles: application.sortableRoles,
+        nonLeveledRoles: application.nonSortableRoles
     },
             function() {
                 UpdateApplicationComplete(ID, application.appName, application.appAbbr, application.appLocation);
@@ -273,7 +228,8 @@ function CreateApplication(el) {
                     application: application.appName,
                     abbr: application.appAbbr,
                     location: application.appLocation,
-                    roles: application.roles
+                    leveledRoles: application.sortableRoles,
+                    nonLeveledRoles: application.nonSortableRoles
                 },
                 function() { window.location.reload(); },
                 OnError
@@ -290,11 +246,17 @@ function CollectApplicationInformation() {
     application.appName = $("#txtApplicationName").val();
     application.appAbbr = $("#txtApplicationAbbr").val();
     application.appLocation = $("#txtApplicationLocation").val();
+    
+    var sortableList = $("#sortableRoles");
+    var nonSortableList = $("#nonSortableRoles");
 
-    application.roles = new Array();
-    $(":checked", roleList).each(function() {
-        application.roles.push($(this).val());
-    });
+    var sortableRoles = sortableList.sortable('toArray');
+    var nonSortableRoles = nonSortableList.sortable("toArray");
+    console.log("Sortable", sortableRoles);
+    console.log("NonSortable", nonSortableRoles);
+
+    application.sortableRoles = sortableRoles;
+    application.nonSortableRoles = nonSortableRoles;  
 
     return application;
 }
@@ -309,7 +271,6 @@ function ShowApplicationInformation(loaded) {
 
     $("#divApplicationInfo").css('visibility', infoVisible);
     $("#spanLoading").fadeTo('fast', loadingOpacity);
-
 }
 
 function OnError() {

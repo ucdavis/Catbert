@@ -79,105 +79,72 @@
             <asp:Parameter DefaultValue="true" Name="ascending" Type="Boolean" />
         </SelectParameters>
     </asp:ObjectDataSource>
-    
     <!-- ui-dialog -->
-	<div id="dialogUserInfo" title="Application Information" style="display: none;">
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-		<div>
-		    <span id="spanLoading">Loading....</span>
-		</div>
-		<div id="divApplicationInfo" style="visibility:hidden">
-		<table>
-		    <tr>
-		        <td>Name</td>
-		        <td><input type="text" id="txtApplicationName" size="40" /></td>
-		    </tr>
-		    <tr>
-		        <td>Abbr</td>
-		        <td><input type="text" id="txtApplicationAbbr" size="40" /></td>
-		    </tr>
-		    <tr>
-		        <td>Location</td>
-		        <td><input type="text" id="txtApplicationLocation" size="40" /></td>
-		    </tr>
-		</table>
-        <br /><br />
-        <div id="RoleChoice">
-            <%--Need three choice boxes for roles--%>
-            <ul id="sortableRoles" class="connectedSortable"></ul>
-                        
-            <ul id="nonSortableRoles" class="connectedSortable"></ul>
-            
-            <%--<ul id="availableRoles" class="connectedSortable" style="padding:5px;background: #eee;">
-                	<li class="ui-state-default">Item 1</li>
-	                <li class="ui-state-default">Item 2</li>
-	                <li class="ui-state-default">Item 3</li>
-	                <li class="ui-state-default">Item 4</li>
-	                <li class="ui-state-default">Item 5</li>
-            </ul>--%>
-            
-            <asp:ListView ID="lviewAllRoles" runat="server" DataSourceID="odsAllRoles">
-                <LayoutTemplate>
-                    <ul id="availableRoles" class="connectedSortable">
-                        <li id="itemPlaceholder" runat="server"></li>
-                    </ul>
-                </LayoutTemplate>
-                <ItemTemplate>
-                    <li class="ui-state-default" id='<%# Eval("Name") %>'>
-                        <%# Eval("Name") %>
-                    </li>
-                </ItemTemplate>
-            </asp:ListView>
-            <asp:ObjectDataSource ID="odsAllRoles" runat="server" OldValuesParameterFormatString="original_{0}"
-                SelectMethod="GetAll" TypeName="CAESDO.Catbert.BLL.RoleBLL">
-                <SelectParameters>
-                    <asp:Parameter DefaultValue="Name" Name="propertyName" Type="String" />
-                    <asp:Parameter DefaultValue="true" Name="ascending" Type="Boolean" />
-                </SelectParameters>
-            </asp:ObjectDataSource>
-        
+    <div id="dialogUserInfo" title="Application Information" style="display: none;">
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <div>
+            <span id="spanLoading">Loading....</span>
         </div>
-        <br /><br />
-        <div style="display:none;">
-            <div id="Roles">
-                <div id="roletabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
-                    <ul id="roleViewOptions" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-                        <li id="activeRoles" class="ui-corner-top"><a id="activeRolesLink" href="javascript:;" class="ui-state-active"><span>Active Roles:</span></a></li>
-                        <li id="allRoles" class="ui-corner-top"><a id="allRolesLink" href="javascript:;" class="ui-state-default"><span>All Roles:</span></a></li>
-                    </ul>
-                    <div class="ui-tabs-panel ui-widget-content ui-corner-bottom">
-                        <asp:ListView ID="lviewRoles" runat="server" DataSourceID="odsRoles">
-                            <LayoutTemplate>
-                                <ul id="ulRoles">
-                                    <li id="itemPlaceholder" runat="server"></li>
-                                </ul>
-                            </LayoutTemplate>
-                            <ItemTemplate>
-                                <li>
-                                    <input type="checkbox" value="<%# Eval("Name") %>" /><%# Eval("Name") %>
-                                </li>
-                            </ItemTemplate>
-                        </asp:ListView>
-                        <asp:ObjectDataSource ID="odsRoles" runat="server" OldValuesParameterFormatString="original_{0}"
-                            SelectMethod="GetAll" TypeName="CAESDO.Catbert.BLL.RoleBLL">
-                            <SelectParameters>
-                                <asp:Parameter DefaultValue="Name" Name="propertyName" Type="String" />
-                                <asp:Parameter DefaultValue="true" Name="ascending" Type="Boolean" />
-                            </SelectParameters>
-                        </asp:ObjectDataSource>
-                    </div>
-                </div>
-            </div>
-            <div id="addRole" style="display: none">
-                <span id="spanAddRole">
-                    <input type="text" id="txtAddRole" />
-                </span>
-                <a href="javascript:;" id="btnAddRole" class="dialog_link ui-state-default ui-corner-all">
-                    <span class="ui-icon ui-icon-plusthick"></span>Add Role 
-                </a>
+        <div id="divApplicationInfo" style="visibility: hidden">
+            <table>
+                <tr>
+                    <td>
+                        Name
+                    </td>
+                    <td>
+                        <input type="text" id="txtApplicationName" size="40" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Abbr
+                    </td>
+                    <td>
+                        <input type="text" id="txtApplicationAbbr" size="40" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Location
+                    </td>
+                    <td>
+                        <input type="text" id="txtApplicationLocation" size="40" />
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <br />
+            <div id="RoleChoice">
+                <%--Need three choice boxes for roles--%>
+                <ul id="sortableRoles" class="connectedSortable">
+                </ul>
+                <ul id="nonSortableRoles" class="connectedSortable">
+                </ul>
+                <asp:ListView ID="lviewAllRoles" runat="server" DataSourceID="odsAllRoles">
+                    <LayoutTemplate>
+                        <ul id="availableRoles" class="connectedSortable">
+                            <li id="itemPlaceholder" runat="server"></li>
+                        </ul>
+                    </LayoutTemplate>
+                    <ItemTemplate>
+                        <li class="ui-state-default" id='<%# Eval("Name") %>'>
+                            <%# Eval("Name") %>
+                        </li>
+                    </ItemTemplate>
+                </asp:ListView>
+                <asp:ObjectDataSource ID="odsAllRoles" runat="server" OldValuesParameterFormatString="original_{0}"
+                    SelectMethod="GetAll" TypeName="CAESDO.Catbert.BLL.RoleBLL">
+                    <SelectParameters>
+                        <asp:Parameter DefaultValue="Name" Name="propertyName" Type="String" />
+                        <asp:Parameter DefaultValue="true" Name="ascending" Type="Boolean" />
+                    </SelectParameters>
+                </asp:ObjectDataSource>
             </div>
         </div>
-        </div>
+    </div>
 	</div>
 </asp:Content>
 

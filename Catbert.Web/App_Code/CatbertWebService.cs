@@ -295,7 +295,7 @@ public class CatbertWebService : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public void UpdateApplication(string application, string newName, string newAbbr, string newLocation, List<string> roles)
+    public void UpdateApplication(string application, string newName, string newAbbr, string newLocation, List<string> leveledRoles, List<string> nonLeveledRoles)
     {
         //First get the application
         Application app = ApplicationBLL.GetByName(application);
@@ -306,20 +306,20 @@ public class CatbertWebService : System.Web.Services.WebService
         app.Location = newLocation;
 
         //Reconcile the roles
-        ApplicationBLL.SetRoles(app, roles);
+        ApplicationBLL.SetRoles(app, leveledRoles, nonLeveledRoles);
 
         //Now save the updated application
         ApplicationBLL.Update(app, CurrentServiceUser);
     }
 
     [WebMethod]
-    public void CreateApplication(string application, string abbr, string location, List<string> roles)
+    public void CreateApplication(string application, string abbr, string location, List<string> leveledRoles, List<string> nonLeveledRoles)
     {
         //Create the new application
         Application app = new Application() { Name = application, Abbr = abbr, Location = location, Inactive = false };
 
         //Reconcile the roles
-        ApplicationBLL.SetRoles(app, roles);
+        ApplicationBLL.SetRoles(app, leveledRoles, nonLeveledRoles);
 
         //Create the application
         ApplicationBLL.Create(app, CurrentServiceUser);
