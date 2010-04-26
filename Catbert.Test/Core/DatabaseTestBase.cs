@@ -25,8 +25,59 @@ namespace CAESDO.Catbert.Test.Core
             using (var ts = new TransactionScope())
             {
                 LoadUsers();
+                LoadApplications();
+                LoadUnits();
 
                 ts.CommitTransaction();
+            }
+        }
+
+        private static void LoadUnits()
+        {
+            //Load Schools
+            var school1 = new School {ShortDescription = "School1", LongDescription = "School1", Abbreviation = "School1"};
+            school1.SetID("01");
+
+            var school2 = new School { ShortDescription = "School2", LongDescription = "School2", Abbreviation = "School2" };
+            school2.SetID("02");
+
+            SchoolBLL.EnsurePersistent(school1, true);
+            SchoolBLL.EnsurePersistent(school2, true);
+
+            for (int i = 0; i < 3; i++)
+            {
+                var unit = new Unit();
+                
+                if (i==0)
+                {
+                    unit.FISCode = "AANS";
+                    unit.School = school1;
+                }
+                else if (i == 1)
+                {
+                    unit.FISCode = "APLS";
+                    unit.School = school1;
+                }
+                else if (i == 2)
+                {
+                    unit.FISCode = "CHEM";
+                    unit.School = school2;
+                }
+                
+                unit.ShortName = "School" + unit.FISCode;
+                unit.FullName = unit.ShortName;
+                
+                UnitBLL.EnsurePersistent(unit);
+            }
+        }
+
+        private static void LoadApplications()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                var app = new Application {Name = "App" + i};
+
+                ApplicationBLL.EnsurePersistent(app);
             }
         }
 

@@ -23,7 +23,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Catbert.Web", "Catbert.Web"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "1772"
+		VWDPort = "62124"
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
@@ -65,7 +65,6 @@ Global
 		SccLocalPath3 = Catbert.Data
 		SccWebProject4 = true
 		SccProjectUniqueName4 = Catbert.Web
-		SccProjectName4 = Catbert.Web
 		SccLocalPath4 = .
 		SccProjectFilePathRelativizedFromConnection4 = Catbert.Web\\
 		SccProjectEnlistmentChoice4 = 2
