@@ -118,26 +118,16 @@ namespace Catbert.Services
         public ServiceUnit()
         {
         }
-        public ServiceUnit(int unitID, string unit)
+        public ServiceUnit(int unitID, string unit, string unitFIS)
         {
-            this._unitID = unitID;
-            this._unit = unit;
+            this.ID = unitID;
+            this.Name = unit;
+            this.UnitFIS = unitFIS;
         }
 
-        private int _unitID;
-        private string _unit;
-
-        public int UnitID
-        {
-            get { return _unitID; }
-            set { _unitID = value; }
-        }
-        public string Unit
-        {
-            get { return _unit; }
-            set { _unit = value; }
-        }
-
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string UnitFIS { get; set; }
     }
     public class ServiceRole
     {
@@ -146,24 +136,12 @@ namespace Catbert.Services
         }
         public ServiceRole(int roleID, string role)
         {
-            this._roleID = roleID;
-            this._role = role;
+            this.ID = roleID;
+            this.Name = role;
         }
 
-        private int _roleID;
-        private string _role;
-
-        public int RoleID
-        {
-            get { return _roleID; }
-            set { _roleID = value; }
-        }
-        public string Role
-        {
-            get { return _role; }
-            set { _role = value; }
-        }
-
+        public int ID { get; set; }
+        public string Name { get; set; }
     }
 
 }

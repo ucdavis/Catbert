@@ -37,9 +37,6 @@ namespace CAESDO.Catbert.Test
             }
         }
 
-        string role = "Reader";
-        string user = "postit";
-
         #region Additional test attributes
         //
         // You can use the following additional attributes as you write your tests:
@@ -66,15 +63,15 @@ namespace CAESDO.Catbert.Test
         public void CheckPermissions()
         {
             //First remove the user from the role
-            bool result = CatbertManager.RemoveUserFromRole(user, role);
+            bool result = CatbertManager.RemoveUserFromRole(TestHelper.TestUser, TestHelper.TestRole);
 
             Assert.IsTrue(result); //make sure that worked
-                        
-            result = CatbertManager.AddUserToRole(user, role); //now add the user to the role
+
+            result = CatbertManager.AddUserToRole(TestHelper.TestUser, TestHelper.TestRole); //now add the user to the role
 
             Assert.IsTrue(result); //make sure that works
 
-            result = CatbertManager.AddUserToRole(user, role); //try to add the user to the role again
+            result = CatbertManager.AddUserToRole(TestHelper.TestUser, TestHelper.TestRole); //try to add the user to the role again
 
             Assert.IsFalse(result); //that shouldn't work
         }
@@ -82,14 +79,14 @@ namespace CAESDO.Catbert.Test
         [TestMethod]
         public void EnsureReaderPermission()
         {
-            bool result = CatbertManager.IsUserInRole(user, role);
+            bool result = CatbertManager.IsUserInRole(TestHelper.TestUser, TestHelper.TestRole);
 
             Assert.IsTrue(result);
         }
 
         public void FailFakePermission()
         {
-            bool result = CatbertManager.IsUserInRole(user, "FAKE");
+            bool result = CatbertManager.IsUserInRole(TestHelper.TestUser, "FAKE");
 
             Assert.IsFalse(result);
         }

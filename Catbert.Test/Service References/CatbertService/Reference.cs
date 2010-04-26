@@ -164,31 +164,31 @@ namespace CAESDO.Catbert.Test.CatbertService {
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="CAESDO.Services")]
     public partial class ServiceRole : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private int roleIDField;
+        private int idField;
         
-        private string roleField;
+        private string nameField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int RoleID {
+        public int ID {
             get {
-                return this.roleIDField;
+                return this.idField;
             }
             set {
-                this.roleIDField = value;
-                this.RaisePropertyChanged("RoleID");
+                this.idField = value;
+                this.RaisePropertyChanged("ID");
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string Role {
+        public string Name {
             get {
-                return this.roleField;
+                return this.nameField;
             }
             set {
-                this.roleField = value;
-                this.RaisePropertyChanged("Role");
+                this.nameField = value;
+                this.RaisePropertyChanged("Name");
             }
         }
         
@@ -210,31 +210,45 @@ namespace CAESDO.Catbert.Test.CatbertService {
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="CAESDO.Services")]
     public partial class ServiceUnit : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private int unitIDField;
+        private int idField;
         
-        private string unitField;
+        private string nameField;
+        
+        private string unitFISField;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int UnitID {
+        public int ID {
             get {
-                return this.unitIDField;
+                return this.idField;
             }
             set {
-                this.unitIDField = value;
-                this.RaisePropertyChanged("UnitID");
+                this.idField = value;
+                this.RaisePropertyChanged("ID");
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string Unit {
+        public string Name {
             get {
-                return this.unitField;
+                return this.nameField;
             }
             set {
-                this.unitField = value;
-                this.RaisePropertyChanged("Unit");
+                this.nameField = value;
+                this.RaisePropertyChanged("Name");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
+        public string UnitFIS {
+            get {
+                return this.unitFISField;
+            }
+            set {
+                this.unitFISField = value;
+                this.RaisePropertyChanged("UnitFIS");
             }
         }
         
@@ -704,15 +718,15 @@ namespace CAESDO.Catbert.Test.CatbertService {
         public string login;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=1)]
-        public int unitID;
+        public string unitFIS;
         
         public AddUnitRequest() {
         }
         
-        public AddUnitRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, int unitID) {
+        public AddUnitRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string unitFIS) {
             this.SecurityContext = SecurityContext;
             this.login = login;
-            this.unitID = unitID;
+            this.unitFIS = unitFIS;
         }
     }
     
@@ -748,15 +762,15 @@ namespace CAESDO.Catbert.Test.CatbertService {
         public string login;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=1)]
-        public int unitID;
+        public string unitFIS;
         
         public DeleteUnitRequest() {
         }
         
-        public DeleteUnitRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, int unitID) {
+        public DeleteUnitRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string unitFIS) {
             this.SecurityContext = SecurityContext;
             this.login = login;
-            this.unitID = unitID;
+            this.unitFIS = unitFIS;
         }
     }
     
@@ -825,14 +839,14 @@ namespace CAESDO.Catbert.Test.CatbertService {
         public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public string loginID;
+        public string login;
         
         public GetUnitsByUserRequest() {
         }
         
-        public GetUnitsByUserRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string loginID) {
+        public GetUnitsByUserRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login) {
             this.SecurityContext = SecurityContext;
-            this.loginID = loginID;
+            this.login = login;
         }
     }
     
@@ -1245,11 +1259,11 @@ namespace CAESDO.Catbert.Test.CatbertService {
             return base.Channel.AddUnit(request);
         }
         
-        public bool AddUnit(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, int unitID) {
+        public bool AddUnit(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string unitFIS) {
             CAESDO.Catbert.Test.CatbertService.AddUnitRequest inValue = new CAESDO.Catbert.Test.CatbertService.AddUnitRequest();
             inValue.SecurityContext = SecurityContext;
             inValue.login = login;
-            inValue.unitID = unitID;
+            inValue.unitFIS = unitFIS;
             CAESDO.Catbert.Test.CatbertService.AddUnitResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).AddUnit(inValue);
             SecurityContext = retVal.SecurityContext;
             return retVal.AddUnitResult;
@@ -1260,11 +1274,11 @@ namespace CAESDO.Catbert.Test.CatbertService {
             return base.Channel.DeleteUnit(request);
         }
         
-        public bool DeleteUnit(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, int unitID) {
+        public bool DeleteUnit(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string unitFIS) {
             CAESDO.Catbert.Test.CatbertService.DeleteUnitRequest inValue = new CAESDO.Catbert.Test.CatbertService.DeleteUnitRequest();
             inValue.SecurityContext = SecurityContext;
             inValue.login = login;
-            inValue.unitID = unitID;
+            inValue.unitFIS = unitFIS;
             CAESDO.Catbert.Test.CatbertService.DeleteUnitResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).DeleteUnit(inValue);
             SecurityContext = retVal.SecurityContext;
             return retVal.DeleteUnitResult;
@@ -1288,10 +1302,10 @@ namespace CAESDO.Catbert.Test.CatbertService {
             return base.Channel.GetUnitsByUser(request);
         }
         
-        public ServiceUnit[] GetUnitsByUser(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string loginID) {
+        public ServiceUnit[] GetUnitsByUser(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login) {
             CAESDO.Catbert.Test.CatbertService.GetUnitsByUserRequest inValue = new CAESDO.Catbert.Test.CatbertService.GetUnitsByUserRequest();
             inValue.SecurityContext = SecurityContext;
-            inValue.loginID = loginID;
+            inValue.login = login;
             CAESDO.Catbert.Test.CatbertService.GetUnitsByUserResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).GetUnitsByUser(inValue);
             SecurityContext = retVal.SecurityContext;
             return retVal.GetUnitsByUserResult;

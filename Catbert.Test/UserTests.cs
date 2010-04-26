@@ -62,7 +62,7 @@ namespace CAESDO.Catbert.Test
         [TestMethod]
         public void VerifyUserFound()
         {
-            bool verified = CatbertManager.VerifyUser("postit");
+            bool verified = CatbertManager.VerifyUser(TestHelper.TestUser);
 
             Assert.IsTrue(verified);
         }
@@ -78,11 +78,11 @@ namespace CAESDO.Catbert.Test
         [TestMethod]
         public void SearchNewUser()
         {
-            var result = CatbertManager.SearchNewUsers(null, null, null, "postit");
+            var result = CatbertManager.SearchNewUsers(null, null, null, TestHelper.TestUser);
 
             Assert.IsNotNull(result);
             Assert.AreEqual<int>(1, result.Count());
-            Assert.AreEqual<string>("postit", result[0].Login);
+            Assert.AreEqual<string>(TestHelper.TestUser, result[0].Login);
         }
 
         [TestMethod]

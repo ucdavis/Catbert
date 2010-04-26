@@ -122,7 +122,7 @@
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="unitID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="unitFIS" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -137,7 +137,7 @@
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="unitID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="unitFIS" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -165,14 +165,15 @@
       </s:complexType>
       <s:complexType name="ServiceUnit">
         <s:sequence>
-          <s:element minOccurs="1" maxOccurs="1" name="UnitID" type="s:int" />
-          <s:element minOccurs="0" maxOccurs="1" name="Unit" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UnitFIS" type="s:string" />
         </s:sequence>
       </s:complexType>
       <s:element name="GetUnitsByUser">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="loginID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -204,8 +205,8 @@
       </s:complexType>
       <s:complexType name="ServiceRole">
         <s:sequence>
-          <s:element minOccurs="1" maxOccurs="1" name="RoleID" type="s:int" />
-          <s:element minOccurs="0" maxOccurs="1" name="Role" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
         </s:sequence>
       </s:complexType>
       <s:element name="GetRolesByUser">

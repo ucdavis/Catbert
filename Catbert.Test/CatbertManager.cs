@@ -108,12 +108,33 @@ namespace CAESDO.Catbert.Test
             return catops.VerifyUser(login);
         }
          */
+
+        public static bool AddUserToUnit(string login, string unitFIS)
+        {
+            var sc = GetSecurityContext();
+
+            return catops.AddUnit(ref sc, login, unitFIS);
+        }
+
+        public static bool RemoveUserFromUnit(string login, string unitFIS)
+        {
+            var sc = GetSecurityContext();
+
+            return catops.DeleteUnit(ref sc, login, unitFIS);
+        }
+
+        public static ServiceUnit[] GetUnitsForUser(string login)
+        {
+            var sc = GetSecurityContext();
+
+            return catops.GetUnitsByUser(ref sc, login);
+        }
         
         public static bool AddUserToRole(CatbertService.ServiceUser user, CatbertService.ServiceRole role)
         {
             var sc = GetSecurityContext();
 
-            return catops.AssignPermissions(ref sc, user.Login, AppName, role.Role);
+            return catops.AssignPermissions(ref sc, user.Login, AppName, role.Name);
         }
 
         public static bool AddUserToRole(string login, string role)

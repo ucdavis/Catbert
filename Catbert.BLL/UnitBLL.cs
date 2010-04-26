@@ -22,5 +22,15 @@ namespace CAESDO.Catbert.BLL
         {
             return Queryable.Where(u => u.FISCode == unitFIS).SingleOrDefault();
         }
+
+        /// <summary>
+        /// Get all of the units associated with the given user
+        /// </summary>
+        public static List<Unit> GetByUser(string login)
+        {
+            List<Unit> units = new List<Unit>(UserBLL.GetUser(login).Units);
+
+            return units;
+        }
     }
 }

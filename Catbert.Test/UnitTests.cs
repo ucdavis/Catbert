@@ -64,5 +64,17 @@ namespace CAESDO.Catbert.Test
         {
             Assert.Inconclusive("Not implemented");
         }
+
+        [TestMethod]
+        public void GetUnits()
+        {
+            //Get the units in order for easier comparison later.
+            var units = CatbertManager.GetUnitsForUser(TestHelper.TestUser).OrderBy(u => u.UnitFIS).ToList();
+            
+            Assert.AreEqual<int>(3, units.Count());
+            Assert.AreEqual("AANS", units[0].UnitFIS);
+            Assert.AreEqual("ADNO", units[1].UnitFIS);
+            Assert.AreEqual("APLS", units[2].UnitFIS);
+        }
     }
 }
