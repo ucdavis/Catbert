@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class
+    name="CAESDO.Catbert.Core.Domain.Unit, CAESDO.Catbert.Core"
+    table="Unit" >
+    <id name="id" access="field" column="UnitID" unsaved-value="0">
+      <generator class="identity" />
+    </id>
+    
+    <property name="FullName" column="FullName" />
+    <property name="ShortName" column="ShortName" />
+    <property name="PPSCode" column="PPSCode" />
+    <property name="FISCode" column="FISCode" />
+
+    <many-to-one name="School" column="SchoolCode" class="CAESDO.Catbert.Core.Domain.School, CAESDO.Catbert.Core"></many-to-one>
+    
+  </class>
+</hibernate-mapping>

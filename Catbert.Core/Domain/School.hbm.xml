@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class
+    name="CAESDO.Catbert.Core.Domain.School, CAESDO.Catbert.Core"
+    table="Schools">
+    <id name="id" access="field" column="SchoolCode" unsaved-value="0">
+      <generator class="assigned" />
+    </id>
+    
+    <property name="ShortDescription" column="ShortDescription" />
+    <property name="LongDescription" column="LongDescription" />
+    
+    <property name="Abbreviation" column="Abbreviation" />
+
+  </class>
+</hibernate-mapping>
