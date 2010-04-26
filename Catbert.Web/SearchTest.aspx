@@ -44,10 +44,11 @@
                 width: 260,
                 selectFirst: true,
                 autoFill: false,
+                extraParams: { app: "Catbert" },
                 //highlight: function(value, q) { return "SS"; },
                 formatItem: function(row, i, max) {
                     //debugger;
-                    return row.Name; //i + "/" + max + ": \"" + row.name + "\" [" + row.to + "]";
+                    return row.Name + "<br/>" + row.FIS; //i + "/" + max + ": \"" + row.name + "\" [" + row.to + "]";
                 }
             });
 
