@@ -11,6 +11,17 @@ namespace CAESDO.Catbert.BLL
         static readonly string LDAPUser = System.Web.Configuration.WebConfigurationManager.AppSettings["LDAPUser"];
         static readonly string LDAPPassword = System.Web.Configuration.WebConfigurationManager.AppSettings["LDAPPassword"];
 
+        static readonly string STR_LDAPURL = "ldap.ucdavis.edu";
+        static readonly int STR_LDAPPort = 636;
+
+        const string STR_UID = "uid";
+        const string STR_EmployeeNumber = "employeeNumber";
+        const string STR_Mail = "mail";
+        const string STR_DisplayName = "displayName";
+        const string STR_CN = "cn";
+        const string STR_SN = "sn";
+        const string STR_GivenName = "givenName";
+
         public static List<DirectoryUser> LDAPSearchUsers(string employeeID, string firstName, string lastName, string loginID)
         {
             if (employeeID == null && firstName == null && lastName == null && loginID == null) return new List<DirectoryUser>();
@@ -18,7 +29,7 @@ namespace CAESDO.Catbert.BLL
             List<DirectoryUser> users = new List<DirectoryUser>();
 
             //Establishing a Connection to the LDAP Server
-            LdapDirectoryIdentifier ldapident = new LdapDirectoryIdentifier("ldap.ucdavis.edu", 636);
+            LdapDirectoryIdentifier ldapident = new LdapDirectoryIdentifier(STR_LDAPURL, STR_LDAPPort);
             //LdapConnection lc = new LdapConnection(ldapident, null, AuthType.Basic);
             LdapConnection lc = new LdapConnection(ldapident, new System.Net.NetworkCredential(LDAPUser, LDAPPassword), AuthType.Basic);
             lc.Bind();
@@ -26,7 +37,7 @@ namespace CAESDO.Catbert.BLL
             lc.SessionOptions.SecureSocketLayer = true;
 
             //Configure the Search Request to Query the UCD OpenLDAP Server's People Search Base for a Specific User ID or Mail ID and Return the Requested Attributes 
-            string[] attributesToReturn = new string[] { "uid", "employeeNumber", "mail", "displayName", "cn", "sn", "givenName" };
+            string[] attributesToReturn = new string[] { STR_UID, STR_EmployeeNumber, STR_Mail, STR_DisplayName, STR_CN, STR_SN, STR_GivenName };
 
             StringBuilder searchFilter = new StringBuilder("(&");
 
@@ -34,22 +45,22 @@ namespace CAESDO.Catbert.BLL
 
             if (employeeID != null)
             {
-                searchFilter.AppendFormat("(employeeNumber={0})", employeeID);
+                searchFilter.AppendFormat("({0}={1})", STR_EmployeeNumber, employeeID);
             }
 
             if (firstName != null)
             {
-                searchFilter.AppendFormat("(givenName={0})", firstName);
+                searchFilter.AppendFormat("({0}={1})", STR_GivenName, firstName);
             }
 
             if (lastName != null)
             {
-                searchFilter.AppendFormat("(sn={0})", lastName);
+                searchFilter.AppendFormat("({0}={1})", STR_SN, lastName);
             }
 
             if (loginID != null)
             {
-                searchFilter.AppendFormat("(uid={0})", loginID);
+                searchFilter.AppendFormat("({0}={1})", STR_UID, loginID);
             }
 
             searchFilter.Append(")");
@@ -71,22 +82,22 @@ namespace CAESDO.Catbert.BLL
                 {
                     switch (attr.Name)
                     {
-                        case "uid":
+                        case STR_UID:
                             user.LoginID = attr[0].ToString();
                             break;
-                        case "givenName":
+                        case STR_GivenName:
                             user.FirstName = attr[0].ToString();
                             break;
-                        case "sn":
+                        case STR_SN:
                             user.LastName = attr[0].ToString();
                             break;
-                        case "mail":
+                        case STR_Mail:
                             user.EmailAddress = attr[0].ToString();
                             break;
-                        case "employeeNumber":
+                        case STR_EmployeeNumber:
                             user.EmployeeID = attr[0].ToString();
                             break;
-                        case "cn":
+                        case STR_CN:
                             user.FullName = attr[0].ToString();
                             break;
                         default:
@@ -98,6 +109,34 @@ namespace CAESDO.Catbert.BLL
             }
 
             return users;
+        }
+
+        /// <summary>
+        /// Prepare the 
+        /// </summary>
+        public static List<DirectoryUser> SearchUsers(string employeeID, string firstName, string lastName, string loginID)
+        {
+            if (string.IsNullOrEmpty(employeeID))
+            {
+                employeeID = null;
+            }
+
+            if (string.IsNullOrEmpty(firstName))
+            {
+                firstName = null;
+            }
+
+            if (string.IsNullOrEmpty(lastName))
+            {
+                lastName = null;
+            }
+
+            if (string.IsNullOrEmpty(loginID))
+            {
+                loginID = null;
+            }
+                
+            return LDAPSearchUsers(employeeID, firstName, lastName, loginID);
         }
     }
 

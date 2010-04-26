@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Services;
 using System.Web.Services.Protocols;
-using CAESDO.Catbert.Core.Domain;
+using CAESDO.Catbert.BLL;
 using Catbert.Services;
 
 /// <summary>
@@ -29,13 +27,29 @@ public class CatbertWebService : System.Web.Services.WebService
     /// </summary>
     /// <returns>list of users, or an empty list if none found</returns>
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
-    public List<Users> SearchNewUser(string eid, string firstName, string lastName, string login)
+    public List<ServiceUser> SearchNewUser(string eid, string firstName, string lastName, string login)
     {
-        throw new NotImplementedException(); 
+        EnsureCredentials(secureCTX);
+
+        List<ServiceUser> users = new List<ServiceUser>();
+
+        foreach (var person in DirectoryServices.SearchUsers(eid, firstName, lastName, login))
+        {
+            users.Add(new ServiceUser()
+            {
+                EmployeeID = person.EmployeeID,
+                FirstName = person.FirstName,
+                LastName = person.LastName,
+                Login = person.LoginID,
+                Email = person.EmailAddress
+            });
+        }
+
+        return users;
     }
 
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
-    public int InsertNewUser(Users user)
+    public int InsertNewUser(ServiceUser user)
     {
         throw new NotImplementedException(); 
     }
@@ -77,13 +91,13 @@ public class CatbertWebService : System.Web.Services.WebService
     }
 
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
-    public List<Units> GetUnits()
+    public List<ServiceUnit> GetUnits()
     {
         throw new NotImplementedException();
     }
 
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
-    public List<Units> GetUnitsByUser(string loginID)
+    public List<ServiceUnit> GetUnitsByUser(string loginID)
     {
         throw new NotImplementedException();
     }
@@ -93,13 +107,13 @@ public class CatbertWebService : System.Web.Services.WebService
     #region Roles
 
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
-    public List<Roles> GetRoles(string application)
+    public List<ServiceRole> GetRoles(string application)
     {
         throw new NotImplementedException();
     }
 
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
-    public List<Roles> GetRolesByUser(string application, string login)
+    public List<ServiceRole> GetRolesByUser(string application, string login)
     {
         throw new NotImplementedException();
     }
@@ -109,13 +123,13 @@ public class CatbertWebService : System.Web.Services.WebService
     #region Applications
 
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
-    public List<CatbertUsers> GetUsersByApplications(string application)
+    public List<CatbertUser> GetUsersByApplications(string application)
     {
         throw new NotImplementedException();
     }
 
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
-    public List<CatbertUsers> GetUsersByApplicationRole(string application, int roleID)
+    public List<CatbertUser> GetUsersByApplicationRole(string application, int roleID)
     {
         throw new NotImplementedException();
     }
@@ -136,18 +150,6 @@ public class CatbertWebService : System.Web.Services.WebService
         throw new NotImplementedException();
     }
 
-    [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
-    public List<EmailTypes> GetEmailTypes()
-    {
-        throw new NotImplementedException();
-    }
-
-    [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
-    public List<PhoneTypes> GetPhoneTypes()
-    {
-        throw new NotImplementedException();
-    }
-
     #endregion
 
     #region Private
@@ -155,6 +157,11 @@ public class CatbertWebService : System.Web.Services.WebService
     private bool ValidateCredentials(SecurityContext secureCTX)
     {
         throw new NotImplementedException();
+    }
+
+    private void EnsureCredentials(SecurityContext secureCTX)
+    {
+        if (!ValidateCredentials(secureCTX)) throw new ApplicationException("Authorization Failed");
     }
 
     private bool ValidateApplicationPermission(SecurityContext secureCTX, int applicationID)

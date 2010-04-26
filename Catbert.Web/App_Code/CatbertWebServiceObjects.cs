@@ -12,12 +12,12 @@ using System.Xml.Linq;
 
 namespace Catbert.Services
 {
-    public class Users
+    public class ServiceUser
     {
-        public Users()
+        public ServiceUser()
         {
         }
-        public Users(string eid, string firstName, string lastName, string login, string email, string department)
+        public ServiceUser(string eid, string firstName, string lastName, string login, string email, string department)
         {
             this._employeeID = eid;
             this._firstName = firstName;
@@ -65,12 +65,12 @@ namespace Catbert.Services
             set { _department = value; }
         }
     }
-    public class CatbertUsers : Users
+    public class CatbertUser : ServiceUser
     {
-        public CatbertUsers()
+        public CatbertUser()
         {
         }
-        public CatbertUsers(int userID, string eid, string firstName, string lastName, string login, string email, string sid, string role, int roleID)
+        public CatbertUser(int userID, string eid, string firstName, string lastName, string login, string email, string sid, string role, int roleID)
         {
             this._userID = userID;
             this._employeeID = eid;
@@ -112,62 +112,13 @@ namespace Catbert.Services
             set { _role = value; }
         }
     }
-    public class EmailTypes
+
+    public class ServiceUnit
     {
-        public EmailTypes()
+        public ServiceUnit()
         {
         }
-        public EmailTypes(int emailTypeID, string type)
-        {
-            this.emailTypeID = emailTypeID;
-            this._type = type;
-        }
-
-        private int emailTypeID;
-        private string _type;
-
-        public int EmailTypeID
-        {
-            get { return emailTypeID; }
-            set { emailTypeID = value; }
-        }
-        public string Type
-        {
-            get { return _type; }
-            set { _type = value; }
-        }
-    }
-    public class PhoneTypes
-    {
-        public PhoneTypes()
-        {
-        }
-        public PhoneTypes(int phoneTypeID, string type)
-        {
-            this._phoneTypeID = phoneTypeID;
-            this._phoneType = type;
-        }
-
-        private int _phoneTypeID;
-        private string _phoneType;
-
-        public int PhoneTypeID
-        {
-            get { return _phoneTypeID; }
-            set { _phoneTypeID = value; }
-        }
-        public string Type
-        {
-            get { return _phoneType; }
-            set { _phoneType = value; }
-        }
-    }
-    public class Units
-    {
-        public Units()
-        {
-        }
-        public Units(int unitID, string unit)
+        public ServiceUnit(int unitID, string unit)
         {
             this._unitID = unitID;
             this._unit = unit;
@@ -188,12 +139,12 @@ namespace Catbert.Services
         }
 
     }
-    public class Roles
+    public class ServiceRole
     {
-        public Roles()
+        public ServiceRole()
         {
         }
-        public Roles(int roleID, string role)
+        public ServiceRole(int roleID, string role)
         {
             this._roleID = roleID;
             this._role = role;
