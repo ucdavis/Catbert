@@ -25,6 +25,5 @@ public partial class Management_UserManagement : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
     }
 }

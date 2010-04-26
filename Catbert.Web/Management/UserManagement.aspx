@@ -1,21 +1,47 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Catbert.master" AutoEventWireup="true" CodeFile="UserManagement.aspx.cs" Inherits="Management_UserManagement" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+    <link href="../CSS/jquery.autocomplete.css" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" Runat="Server">
+    <script src="../JS/jquery.ajaxQueue.js" type="text/javascript"></script>
+    <script src="../JS/jquery.autocomplete.js" type="text/javascript"></script>
+    
     <script type="text/javascript">
         var baseURL = '../Services/CatbertWebService.asmx/';
-        
+        var autocompleteUnitsURL = '../Services/AutocompleteService.asmx/GetUsers';
         $(document).ready(function() {
             var application = $("#app").val();
 
             PopulateUserTable(application); //Populate the user table
+
+            $("#txtSearch").autocomplete(autocompleteUnitsURL, {
+                width: 260,
+                minChars: 2,
+                selectFirst: false,
+                autoFill: false,
+                //highlight: function(value, q) { debugger; },
+                extraParams: { application: application },
+                formatItem: function(row, i, max) {
+                    return row.Name + " (" + row.Login + ")<br/>" + row.Email; //i + "/" + max + ": \"" + row.name + "\" [" + row.to + "]";
+                }
+            });
+
+            $("#txtSearch").keypress(function(event) {
+                if (event.keyCode == 13) {
+                    PopulateUserTable(application, $(this).val() /*textbox value*/);
+                    return false; //Don't post back
+                }
+            });
         });
 
-        function PopulateUserTable(application) {
+        function PopulateUserTable(application, search) {
             //Setup the parameters
-            var data = { application: application };
+            var data = { application: application, search: search };
 
+            //Clear the usertable
+            $("#tblUsersBody").empty();
+            
             //Call the webservice
             AjaxCall('jqGetUsersByApplication', data, PopulateUserTableSuccess, null);
         }
@@ -25,7 +51,6 @@
 
             //Render out each row
             $(data.rows).each(RenderRow);
-
         }
 
         function RenderRow(index, row) {
@@ -41,8 +66,7 @@
             newrow.append('<td class="Units">' + units + '</td>');
             newrow.append('<td class="Roles">' + roles + '</td>');
 
-            $("#tblUsers tbody").append(newrow);
-            //debugger;
+            $("#tblUsersBody").append(newrow);
         }
 
         function CreateDomFromUserInfoArray(array) {
@@ -81,12 +105,16 @@
     
 <br /><br />
 
+    <div id="divHeader">
+        <span id="search">
+            Search Users: <input type="text" id="txtSearch" />
+        </span>
+    </div>
     <table id="tblUsers">
-        <tbody>
+        <tbody id="tblUsersBody">
             <%--Each row is a new person--%>
         </tbody>
     </table>
-    
-    
+        
 </asp:Content>
 
