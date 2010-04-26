@@ -6,6 +6,7 @@
 
 <script type="text/javascript">
     var tabs;
+    var baseURL = '../Admin/UserInformationService.asmx/';
     
     $(document).ready(function() {
         
@@ -32,6 +33,19 @@
         tabs.tabs('select', 0); //select the first tab by default when viewing a new user
 
         OpenDialog(dialogUserInfo, buttons, "User Information", null);
+
+        var url = baseURL + 'GetUserInfo';
+        
+        AjaxCall(
+                url,
+                { loginId: loginId },
+                function(data) { PopulateUserInfo(data); },
+                null //TODO: Error method
+            );
+    }
+
+    function PopulateUserInfo(data) {
+        console.dir(data);
     }
 
     function OpenDialog(dialog /*The dialog DIV JQuery object*/, buttons /*Button collection */, title, onClose) {

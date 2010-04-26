@@ -15,5 +15,11 @@ public class UserInformationService : WebService
     {
         return UserInformationServiceBLL.GetInformationByLoginId(loginId);
     }
+
+    [WebMethod]
+    public string HelloWorld()
+    {
+        return "Hello World";
+    }
 }
 
