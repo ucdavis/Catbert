@@ -30,127 +30,57 @@ namespace CAESDO.Catbert.BLL
 
         public GenericBLL()
         {
-
+            
         }
 
         public static T GetByID(IdT id)
         {
-            using (var ts = new TransactionScope())
-            {
-                var result = daoFactory.GetGenericDao<T, IdT>().GetById(id, false);
-
-                ts.CommittTransaction();
-
-                return result;
-            }
+            return daoFactory.GetGenericDao<T, IdT>().GetById(id, false);
         }
 
         public static T GetNullableByID(IdT id)
         {
-            using (var ts = new TransactionScope())
-            {
-                var result = daoFactory.GetGenericDao<T, IdT>().GetNullableByID(id);
-
-                ts.CommittTransaction();
-
-                return result;
-            }
+            return daoFactory.GetGenericDao<T, IdT>().GetNullableByID(id);
         }
 
         public static T GetByName(string name)
         {
-            using (var ts = new TransactionScope())
-            {
-                var result = daoFactory.GetGenericDao<T, IdT>().GetByProperty("Name", name);
-
-                ts.CommittTransaction();
-
-                return result;
-            }
+            return daoFactory.GetGenericDao<T, IdT>().GetByProperty("Name", name);
         }
 
         public static T GetByProperty(string propertyName, object propertyValue)
         {
-            using (var ts = new TransactionScope())
-            {
-                var result = daoFactory.GetGenericDao<T, IdT>().GetByProperty(propertyName, propertyValue);
-
-                ts.CommittTransaction();
-
-                return result;
-            }
+            return daoFactory.GetGenericDao<T, IdT>().GetByProperty(propertyName, propertyValue);
         }
 
         public static List<T> GetAll()
         {
-            using (var ts = new TransactionScope())
-            {
-                var result = daoFactory.GetGenericDao<T, IdT>().GetAll();
-
-                ts.CommittTransaction();
-
-                return result;
-            }
+            return daoFactory.GetGenericDao<T, IdT>().GetAll();
         }
 
         public static List<T> GetAll(string propertyName, bool ascending)
         {
-            using (var ts = new TransactionScope())
-            {
-                var result = daoFactory.GetGenericDao<T, IdT>().GetAll(propertyName, ascending);
-
-                ts.CommittTransaction();
-
-                return result;
-            }
+            return daoFactory.GetGenericDao<T, IdT>().GetAll(propertyName, ascending);
         }
 
         public static List<T> GetByExample(T exampleInstance, params string[] propertiesToExclude)
         {
-            using (var ts = new TransactionScope())
-            {
-                var result = daoFactory.GetGenericDao<T, IdT>().GetByExample(exampleInstance, propertiesToExclude);
-
-                ts.CommittTransaction();
-
-                return result;
-            }
+            return daoFactory.GetGenericDao<T, IdT>().GetByExample(exampleInstance, propertiesToExclude);
         }
 
         public static T GetUniqueByExample(T exampleInstance, params string[] propertiesToExclude)
         {
-            using (var ts = new TransactionScope())
-            {
-                var result = daoFactory.GetGenericDao<T, IdT>().GetUniqueByExample(exampleInstance, propertiesToExclude);
-
-                ts.CommittTransaction();
-
-                return result;
-            }
+            return daoFactory.GetGenericDao<T, IdT>().GetUniqueByExample(exampleInstance, propertiesToExclude);
         }
 
         public static List<T> GetByInclusionExample(T exampleInstance, params string[] propertiesToInclude)
         {
-            using (var ts = new TransactionScope())
-            {
-                var result = daoFactory.GetGenericDao<T, IdT>().GetByInclusionExample(exampleInstance, propertiesToInclude);
-
-                ts.CommittTransaction();
-
-                return result;
-            }
+            return daoFactory.GetGenericDao<T, IdT>().GetByInclusionExample(exampleInstance, propertiesToInclude);
         }
 
         public static List<T> GetByInclusionExample(T exampleInstance, string sortPropertyName, bool ascending, params string[] propertiesToInclude)
         {
-            using (var ts = new TransactionScope())
-            {
-                var result = daoFactory.GetGenericDao<T, IdT>().GetByInclusionExample(exampleInstance, sortPropertyName, ascending, propertiesToInclude);
-
-                ts.CommittTransaction();
-
-                return result;
-            }
+            return daoFactory.GetGenericDao<T, IdT>().GetByInclusionExample(exampleInstance, sortPropertyName, ascending, propertiesToInclude);
         }
 
         public static bool MakePersistent(ref T entity)
