@@ -12,4 +12,26 @@
     <property name="Comments" column="Comments" />
     
   </class>
+
+  <class
+    name="CAESDO.Catbert.Core.Domain.TrackingType, CAESDO.Catbert.Core"
+    table="TrackingTypes" >
+    <id name="id" access="field" column="TrackingTypeID" unsaved-value="0">
+      <generator class="identity" />
+    </id>
+
+    <property name="Name" column="TrackingType" />
+
+  </class>
+
+  <class
+    name="CAESDO.Catbert.Core.Domain.TrackingAction, CAESDO.Catbert.Core"
+    table="TrackingActions" >
+    <id name="id" access="field" column="TrackingActionID" unsaved-value="0">
+      <generator class="identity" />
+    </id>
+
+    <property name="Name" column="TrackingAction" />
+
+  </class>
 </hibernate-mapping>
