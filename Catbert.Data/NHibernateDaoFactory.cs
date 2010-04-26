@@ -42,7 +42,8 @@ namespace CAESDO.Catbert.Data
         {
             public List<User> GetByApplication(string application, string role, string unit, string searchToken, int page, int pageSize, string orderBy, out int totalUsers)
             {                
-                //Now filter out all of the users in this list by the search criteria 
+                //Now filter out all of the users in this list by the role search criteria 
+                //Note: If no role is selected, we still need to filter and make sure the user has ANY role in the application
                 ICriteria criteria = NHibernateSessionManager.Instance.GetSession().CreateCriteria(typeof(User))
                     .Add(
                         Expression.Disjunction()
@@ -51,8 +52,12 @@ namespace CAESDO.Catbert.Data
                             .Add(Expression.Like("LastName", searchToken, MatchMode.Anywhere))
                             .Add(Expression.Like("LoginID", searchToken, MatchMode.Anywhere))
                         )
-                    .Add(Expression.InG<int>("id", GetUsersByApplicationRoleAndUnit(application, role, unit) ));
+                    .Add(Subqueries.PropertyIn("id", GetUsersByApplicationRole(application, role)));
 
+                //If the unit is specified, also filter by unit
+                if (!string.IsNullOrEmpty(unit))
+                    criteria = criteria.Add(Subqueries.PropertyIn("id", GetUsersByApplicationUnit(application, unit)));
+                
                 //Get the total rows returned from this query using a row count transformer
                 totalUsers = CriteriaTransformer.TransformToRowCount(criteria).UniqueResult<int>(); // criteria.SetProjection(Projections.RowCount()).UniqueResult<int>();
              
@@ -62,26 +67,6 @@ namespace CAESDO.Catbert.Data
                             .AddOrder(GetOrder(orderBy));
 
                 return criteria.List<User>() as List<User>;
-            }
-
-            private HashSet<int> GetUsersByApplicationRoleAndUnit(string application, string role, string unit)
-            {
-                //First get the users by application role
-                var userIdsByPermission = GetUsersByApplicationRole(application, role).GetExecutableCriteria(NHibernateSessionManager.Instance.GetSession()).List<int>();
-
-                //Now we have all the userIDs that have permission to this application
-                HashSet<int> userIds = new HashSet<int>(userIdsByPermission);
-
-                //If we have a unit, lets get those IDs
-                if (!string.IsNullOrEmpty(unit))
-                {
-                    var userIdsByUnit = GetUsersByApplicationUnit(application, unit).GetExecutableCriteria(NHibernateSessionManager.Instance.GetSession()).List<int>();
-
-                    //Now create a hashed set with only the ids that are common
-                    userIds.IntersectWith(userIdsByUnit);
-                }
-
-                return userIds;
             }
 
             private DetachedCriteria GetUsersByApplicationUnit(string application, string unit)
