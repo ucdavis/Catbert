@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Services;
 using System.Linq;
+using CAESArch.BLL;
 using CAESDO.Catbert.BLL;
 using CAESDO.Catbert.BLL.Service;
 using CAESDO.Catbert.Core.Domain;
 using CAESDO.Catbert.Core.ServiceObjects;
 using Catbert.Services;
+using CAESArch.Core.Utils;
 
 /// <summary>
 /// Summary description for CatbertAdminService
@@ -97,6 +99,15 @@ public class CatbertAdminService : WebService
     public UserInformation GetUserInfo(string loginId)
     {
         return UserInformationServiceBLL.GetInformationByLoginId(loginId);
+    }
+
+    [WebMethod]
+    public void UpdateUserInfo(ServiceUser serviceUser)
+    {
+        Check.Require(serviceUser != null);
+
+        UserBLL.SetUserInfo(serviceUser.Login, serviceUser.FirstName, serviceUser.LastName, serviceUser.Phone,
+                            serviceUser.Email, CurrentServiceUser);
     }
 
     [WebMethod]

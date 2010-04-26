@@ -174,6 +174,37 @@ namespace CAESDO.Catbert.BLL
             return true;
         }
 
+        public static bool SetUserInfo(string login, string firstName, string lastName, string phone, string email, string trackingUserName)
+        {
+            //First get the user identified by the login
+            User user = Queryable.Where(usr => usr.LoginID == login).SingleOrDefault();
+
+            if (user == null) return false;
+
+            //Set the userInfo
+            user.FirstName = firstName;
+            user.LastName = lastName;
+            user.Email = email;
+            user.Phone = phone;
+
+            //Check to see if the user is valid, if not return false
+            if (!ValidateBusinessObject<User>.IsValid(user)) return false;
+
+            //We have a valid user, so get the tracking info and save
+            Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.User, TrackingActions.Change);
+            tracking.Comments = string.Format("UserInfo changed to {0} {1}, {2}, {3} for user {4}", user.FirstName, user.LastName, user.Email, user.Phone, user.ID);
+
+            using (var ts = new TransactionScope())
+            {
+                EnsurePersistent(user);
+                TrackingBLL.EnsurePersistent(tracking);
+
+                ts.CommitTransaction();
+            }
+
+            return true;
+        }
+
         #region Applications
 
         public static List<User> GetByApplication(string application, string searchToken, int page, int pageSize)

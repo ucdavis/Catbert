@@ -406,17 +406,26 @@ function PopulateUserInformation(data) {
 
 function UpdateUserInfo() {
     //Grab the userInfo
-    var fname = $("#UserInfoFirstName").val();
-    var lname = $("#UserInfoLastName").val();
-    var email = $("#UserInfoEmail").val();
-    var phone = $("#UserInfoPhone").val();
+    var user = new Object();
+    user.FirstName = $("#UserInfoFirstName").val();
+    user.LastName = $("#UserInfoLastName").val();
+    user.Login = $("#UserInfoLogin").html();
+    user.Email = $("#UserInfoEmail").val();
+    user.Phone = $("#UserInfoPhone").val();
 
-    if (lname == '' || email == '') {
+    if (user.LastName == '' || user.Email == '') {
         alert("Last Name and Email Required");        
         return;
     }
 
-    userTableDirty = true;
+    var url = baseURL + 'UpdateUserInfo';
+    
+    AjaxCall(
+        url,
+        { serviceUser: user },
+        function(data) { userTableDirty = true; }, //set the usertable to dirty on success
+        null
+    );
 }
 
 function CreateRoleRow(role, login, application) {
