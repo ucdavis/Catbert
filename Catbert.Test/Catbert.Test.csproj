@@ -82,9 +82,6 @@
     <None Include="Service References\CatbertService\CAESDO.Catbert.Test.CatbertService.CatbertUser.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\CatbertService\CAESDO.Catbert.Test.CatbertService.SecurityContext.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Service References\CatbertService\CAESDO.Catbert.Test.CatbertService.ServiceRole.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

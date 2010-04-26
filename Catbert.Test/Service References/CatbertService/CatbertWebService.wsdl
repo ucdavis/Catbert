@@ -34,14 +34,6 @@
           <s:element minOccurs="0" maxOccurs="1" name="Department" type="s:string" />
         </s:sequence>
       </s:complexType>
-      <s:element name="SecurityContext" type="tns:SecurityContext" />
-      <s:complexType name="SecurityContext">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="UserID" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
-        </s:sequence>
-        <s:anyAttribute />
-      </s:complexType>
       <s:element name="InsertNewUser">
         <s:complexType>
           <s:sequence>
@@ -322,17 +314,11 @@
   <wsdl:message name="SearchNewUserSoapOut">
     <wsdl:part name="parameters" element="tns:SearchNewUserResponse" />
   </wsdl:message>
-  <wsdl:message name="SearchNewUserSecurityContext">
-    <wsdl:part name="SecurityContext" element="tns:SecurityContext" />
-  </wsdl:message>
   <wsdl:message name="InsertNewUserSoapIn">
     <wsdl:part name="parameters" element="tns:InsertNewUser" />
   </wsdl:message>
   <wsdl:message name="InsertNewUserSoapOut">
     <wsdl:part name="parameters" element="tns:InsertNewUserResponse" />
-  </wsdl:message>
-  <wsdl:message name="InsertNewUserSecurityContext">
-    <wsdl:part name="SecurityContext" element="tns:SecurityContext" />
   </wsdl:message>
   <wsdl:message name="VerifyUserSoapIn">
     <wsdl:part name="parameters" element="tns:VerifyUser" />
@@ -340,17 +326,11 @@
   <wsdl:message name="VerifyUserSoapOut">
     <wsdl:part name="parameters" element="tns:VerifyUserResponse" />
   </wsdl:message>
-  <wsdl:message name="VerifyUserSecurityContext">
-    <wsdl:part name="SecurityContext" element="tns:SecurityContext" />
-  </wsdl:message>
   <wsdl:message name="GetUserSoapIn">
     <wsdl:part name="parameters" element="tns:GetUser" />
   </wsdl:message>
   <wsdl:message name="GetUserSoapOut">
     <wsdl:part name="parameters" element="tns:GetUserResponse" />
-  </wsdl:message>
-  <wsdl:message name="GetUserSecurityContext">
-    <wsdl:part name="SecurityContext" element="tns:SecurityContext" />
   </wsdl:message>
   <wsdl:message name="AssignPermissionsSoapIn">
     <wsdl:part name="parameters" element="tns:AssignPermissions" />
@@ -358,17 +338,11 @@
   <wsdl:message name="AssignPermissionsSoapOut">
     <wsdl:part name="parameters" element="tns:AssignPermissionsResponse" />
   </wsdl:message>
-  <wsdl:message name="AssignPermissionsSecurityContext">
-    <wsdl:part name="SecurityContext" element="tns:SecurityContext" />
-  </wsdl:message>
   <wsdl:message name="DeletePermissionsSoapIn">
     <wsdl:part name="parameters" element="tns:DeletePermissions" />
   </wsdl:message>
   <wsdl:message name="DeletePermissionsSoapOut">
     <wsdl:part name="parameters" element="tns:DeletePermissionsResponse" />
-  </wsdl:message>
-  <wsdl:message name="DeletePermissionsSecurityContext">
-    <wsdl:part name="SecurityContext" element="tns:SecurityContext" />
   </wsdl:message>
   <wsdl:message name="PermissionExistsSoapIn">
     <wsdl:part name="parameters" element="tns:PermissionExists" />
@@ -376,17 +350,11 @@
   <wsdl:message name="PermissionExistsSoapOut">
     <wsdl:part name="parameters" element="tns:PermissionExistsResponse" />
   </wsdl:message>
-  <wsdl:message name="PermissionExistsSecurityContext">
-    <wsdl:part name="SecurityContext" element="tns:SecurityContext" />
-  </wsdl:message>
   <wsdl:message name="AddUnitSoapIn">
     <wsdl:part name="parameters" element="tns:AddUnit" />
   </wsdl:message>
   <wsdl:message name="AddUnitSoapOut">
     <wsdl:part name="parameters" element="tns:AddUnitResponse" />
-  </wsdl:message>
-  <wsdl:message name="AddUnitSecurityContext">
-    <wsdl:part name="SecurityContext" element="tns:SecurityContext" />
   </wsdl:message>
   <wsdl:message name="DeleteUnitSoapIn">
     <wsdl:part name="parameters" element="tns:DeleteUnit" />
@@ -394,17 +362,11 @@
   <wsdl:message name="DeleteUnitSoapOut">
     <wsdl:part name="parameters" element="tns:DeleteUnitResponse" />
   </wsdl:message>
-  <wsdl:message name="DeleteUnitSecurityContext">
-    <wsdl:part name="SecurityContext" element="tns:SecurityContext" />
-  </wsdl:message>
   <wsdl:message name="GetUnitsSoapIn">
     <wsdl:part name="parameters" element="tns:GetUnits" />
   </wsdl:message>
   <wsdl:message name="GetUnitsSoapOut">
     <wsdl:part name="parameters" element="tns:GetUnitsResponse" />
-  </wsdl:message>
-  <wsdl:message name="GetUnitsSecurityContext">
-    <wsdl:part name="SecurityContext" element="tns:SecurityContext" />
   </wsdl:message>
   <wsdl:message name="GetUnitsByUserSoapIn">
     <wsdl:part name="parameters" element="tns:GetUnitsByUser" />
@@ -412,17 +374,11 @@
   <wsdl:message name="GetUnitsByUserSoapOut">
     <wsdl:part name="parameters" element="tns:GetUnitsByUserResponse" />
   </wsdl:message>
-  <wsdl:message name="GetUnitsByUserSecurityContext">
-    <wsdl:part name="SecurityContext" element="tns:SecurityContext" />
-  </wsdl:message>
   <wsdl:message name="GetRolesSoapIn">
     <wsdl:part name="parameters" element="tns:GetRoles" />
   </wsdl:message>
   <wsdl:message name="GetRolesSoapOut">
     <wsdl:part name="parameters" element="tns:GetRolesResponse" />
-  </wsdl:message>
-  <wsdl:message name="GetRolesSecurityContext">
-    <wsdl:part name="SecurityContext" element="tns:SecurityContext" />
   </wsdl:message>
   <wsdl:message name="GetRolesByUserSoapIn">
     <wsdl:part name="parameters" element="tns:GetRolesByUser" />
@@ -430,17 +386,11 @@
   <wsdl:message name="GetRolesByUserSoapOut">
     <wsdl:part name="parameters" element="tns:GetRolesByUserResponse" />
   </wsdl:message>
-  <wsdl:message name="GetRolesByUserSecurityContext">
-    <wsdl:part name="SecurityContext" element="tns:SecurityContext" />
-  </wsdl:message>
   <wsdl:message name="GetUsersByApplicationSoapIn">
     <wsdl:part name="parameters" element="tns:GetUsersByApplication" />
   </wsdl:message>
   <wsdl:message name="GetUsersByApplicationSoapOut">
     <wsdl:part name="parameters" element="tns:GetUsersByApplicationResponse" />
-  </wsdl:message>
-  <wsdl:message name="GetUsersByApplicationSecurityContext">
-    <wsdl:part name="SecurityContext" element="tns:SecurityContext" />
   </wsdl:message>
   <wsdl:message name="GetUsersByApplicationRoleSoapIn">
     <wsdl:part name="parameters" element="tns:GetUsersByApplicationRole" />
@@ -448,26 +398,17 @@
   <wsdl:message name="GetUsersByApplicationRoleSoapOut">
     <wsdl:part name="parameters" element="tns:GetUsersByApplicationRoleResponse" />
   </wsdl:message>
-  <wsdl:message name="GetUsersByApplicationRoleSecurityContext">
-    <wsdl:part name="SecurityContext" element="tns:SecurityContext" />
-  </wsdl:message>
   <wsdl:message name="SetEmailSoapIn">
     <wsdl:part name="parameters" element="tns:SetEmail" />
   </wsdl:message>
   <wsdl:message name="SetEmailSoapOut">
     <wsdl:part name="parameters" element="tns:SetEmailResponse" />
   </wsdl:message>
-  <wsdl:message name="SetEmailSecurityContext">
-    <wsdl:part name="SecurityContext" element="tns:SecurityContext" />
-  </wsdl:message>
   <wsdl:message name="SetPhoneNumberSoapIn">
     <wsdl:part name="parameters" element="tns:SetPhoneNumber" />
   </wsdl:message>
   <wsdl:message name="SetPhoneNumberSoapOut">
     <wsdl:part name="parameters" element="tns:SetPhoneNumberResponse" />
-  </wsdl:message>
-  <wsdl:message name="SetPhoneNumberSecurityContext">
-    <wsdl:part name="SecurityContext" element="tns:SecurityContext" />
   </wsdl:message>
   <wsdl:portType name="CatbertWebServiceSoap">
     <wsdl:operation name="SearchNewUser">
@@ -545,187 +486,153 @@
       <soap:operation soapAction="CAESDO.Services/SearchNewUser" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
-        <soap:header message="tns:SearchNewUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal" />
-        <soap:header message="tns:SearchNewUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="InsertNewUser">
       <soap:operation soapAction="CAESDO.Services/InsertNewUser" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
-        <soap:header message="tns:InsertNewUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal" />
-        <soap:header message="tns:InsertNewUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="VerifyUser">
       <soap:operation soapAction="CAESDO.Services/VerifyUser" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
-        <soap:header message="tns:VerifyUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal" />
-        <soap:header message="tns:VerifyUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetUser">
       <soap:operation soapAction="CAESDO.Services/GetUser" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
-        <soap:header message="tns:GetUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal" />
-        <soap:header message="tns:GetUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="AssignPermissions">
       <soap:operation soapAction="CAESDO.Services/AssignPermissions" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
-        <soap:header message="tns:AssignPermissionsSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal" />
-        <soap:header message="tns:AssignPermissionsSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="DeletePermissions">
       <soap:operation soapAction="CAESDO.Services/DeletePermissions" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
-        <soap:header message="tns:DeletePermissionsSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal" />
-        <soap:header message="tns:DeletePermissionsSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="PermissionExists">
       <soap:operation soapAction="CAESDO.Services/PermissionExists" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
-        <soap:header message="tns:PermissionExistsSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal" />
-        <soap:header message="tns:PermissionExistsSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="AddUnit">
       <soap:operation soapAction="CAESDO.Services/AddUnit" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
-        <soap:header message="tns:AddUnitSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal" />
-        <soap:header message="tns:AddUnitSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="DeleteUnit">
       <soap:operation soapAction="CAESDO.Services/DeleteUnit" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
-        <soap:header message="tns:DeleteUnitSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal" />
-        <soap:header message="tns:DeleteUnitSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetUnits">
       <soap:operation soapAction="CAESDO.Services/GetUnits" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
-        <soap:header message="tns:GetUnitsSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal" />
-        <soap:header message="tns:GetUnitsSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetUnitsByUser">
       <soap:operation soapAction="CAESDO.Services/GetUnitsByUser" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
-        <soap:header message="tns:GetUnitsByUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal" />
-        <soap:header message="tns:GetUnitsByUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetRoles">
       <soap:operation soapAction="CAESDO.Services/GetRoles" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
-        <soap:header message="tns:GetRolesSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal" />
-        <soap:header message="tns:GetRolesSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetRolesByUser">
       <soap:operation soapAction="CAESDO.Services/GetRolesByUser" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
-        <soap:header message="tns:GetRolesByUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal" />
-        <soap:header message="tns:GetRolesByUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetUsersByApplication">
       <soap:operation soapAction="CAESDO.Services/GetUsersByApplication" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
-        <soap:header message="tns:GetUsersByApplicationSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal" />
-        <soap:header message="tns:GetUsersByApplicationSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetUsersByApplicationRole">
       <soap:operation soapAction="CAESDO.Services/GetUsersByApplicationRole" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
-        <soap:header message="tns:GetUsersByApplicationRoleSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal" />
-        <soap:header message="tns:GetUsersByApplicationRoleSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="SetEmail">
       <soap:operation soapAction="CAESDO.Services/SetEmail" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
-        <soap:header message="tns:SetEmailSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal" />
-        <soap:header message="tns:SetEmailSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="SetPhoneNumber">
       <soap:operation soapAction="CAESDO.Services/SetPhoneNumber" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
-        <soap:header message="tns:SetPhoneNumberSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal" />
-        <soap:header message="tns:SetPhoneNumberSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
@@ -735,187 +642,153 @@
       <soap12:operation soapAction="CAESDO.Services/SearchNewUser" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
-        <soap12:header message="tns:SearchNewUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
-        <soap12:header message="tns:SearchNewUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="InsertNewUser">
       <soap12:operation soapAction="CAESDO.Services/InsertNewUser" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
-        <soap12:header message="tns:InsertNewUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
-        <soap12:header message="tns:InsertNewUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="VerifyUser">
       <soap12:operation soapAction="CAESDO.Services/VerifyUser" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
-        <soap12:header message="tns:VerifyUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
-        <soap12:header message="tns:VerifyUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetUser">
       <soap12:operation soapAction="CAESDO.Services/GetUser" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
-        <soap12:header message="tns:GetUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
-        <soap12:header message="tns:GetUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="AssignPermissions">
       <soap12:operation soapAction="CAESDO.Services/AssignPermissions" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
-        <soap12:header message="tns:AssignPermissionsSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
-        <soap12:header message="tns:AssignPermissionsSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="DeletePermissions">
       <soap12:operation soapAction="CAESDO.Services/DeletePermissions" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
-        <soap12:header message="tns:DeletePermissionsSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
-        <soap12:header message="tns:DeletePermissionsSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="PermissionExists">
       <soap12:operation soapAction="CAESDO.Services/PermissionExists" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
-        <soap12:header message="tns:PermissionExistsSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
-        <soap12:header message="tns:PermissionExistsSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="AddUnit">
       <soap12:operation soapAction="CAESDO.Services/AddUnit" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
-        <soap12:header message="tns:AddUnitSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
-        <soap12:header message="tns:AddUnitSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="DeleteUnit">
       <soap12:operation soapAction="CAESDO.Services/DeleteUnit" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
-        <soap12:header message="tns:DeleteUnitSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
-        <soap12:header message="tns:DeleteUnitSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetUnits">
       <soap12:operation soapAction="CAESDO.Services/GetUnits" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
-        <soap12:header message="tns:GetUnitsSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
-        <soap12:header message="tns:GetUnitsSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetUnitsByUser">
       <soap12:operation soapAction="CAESDO.Services/GetUnitsByUser" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
-        <soap12:header message="tns:GetUnitsByUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
-        <soap12:header message="tns:GetUnitsByUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetRoles">
       <soap12:operation soapAction="CAESDO.Services/GetRoles" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
-        <soap12:header message="tns:GetRolesSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
-        <soap12:header message="tns:GetRolesSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetRolesByUser">
       <soap12:operation soapAction="CAESDO.Services/GetRolesByUser" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
-        <soap12:header message="tns:GetRolesByUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
-        <soap12:header message="tns:GetRolesByUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetUsersByApplication">
       <soap12:operation soapAction="CAESDO.Services/GetUsersByApplication" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
-        <soap12:header message="tns:GetUsersByApplicationSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
-        <soap12:header message="tns:GetUsersByApplicationSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetUsersByApplicationRole">
       <soap12:operation soapAction="CAESDO.Services/GetUsersByApplicationRole" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
-        <soap12:header message="tns:GetUsersByApplicationRoleSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
-        <soap12:header message="tns:GetUsersByApplicationRoleSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="SetEmail">
       <soap12:operation soapAction="CAESDO.Services/SetEmail" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
-        <soap12:header message="tns:SetEmailSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
-        <soap12:header message="tns:SetEmailSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="SetPhoneNumber">
       <soap12:operation soapAction="CAESDO.Services/SetPhoneNumber" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
-        <soap12:header message="tns:SetPhoneNumberSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
-        <soap12:header message="tns:SetPhoneNumberSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>

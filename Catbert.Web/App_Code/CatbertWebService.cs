@@ -5,6 +5,7 @@ using System.Web.Services.Protocols;
 using CAESDO.Catbert.BLL;
 using Catbert.Services;
 using CAESDO.Catbert.Core.Domain;
+using System.Web;
 
 /// <summary>
 /// Summary description for CatbertWebService
@@ -12,11 +13,17 @@ using CAESDO.Catbert.Core.Domain;
 [WebService(Namespace = "CAESDO.Services")]
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
-// [System.Web.Script.Services.ScriptService]
+[System.Web.Script.Services.ScriptService]
 public class CatbertWebService : System.Web.Services.WebService
 {
-    public SecurityContext secureCTX;
-    
+    public string CurrentServiceUser
+    {
+        get
+        {
+            return HttpContext.Current.User.Identity.Name;
+        }
+    }
+
     public CatbertWebService()
     {
         //Uncomment the following line if using designed components 
@@ -27,11 +34,9 @@ public class CatbertWebService : System.Web.Services.WebService
     /// Finds all uses that meet the given criteri
     /// </summary>
     /// <returns>list of users, or an empty list if none found</returns>
-    [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
+    [WebMethod]
     public List<ServiceUser> SearchNewUser(string eid, string firstName, string lastName, string login)
     {
-        EnsureCredentials(secureCTX);
-
         List<ServiceUser> users = new List<ServiceUser>();
 
         foreach (var person in DirectoryServices.SearchUsers(eid, firstName, lastName, login))
@@ -49,11 +54,9 @@ public class CatbertWebService : System.Web.Services.WebService
         return users;
     }
 
-    [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
+    [WebMethod]
     public int InsertNewUser(ServiceUser serviceUser)
     {
-        EnsureCredentials(secureCTX);
-
         User user = new User()
         {
             FirstName = serviceUser.FirstName,
@@ -63,25 +66,21 @@ public class CatbertWebService : System.Web.Services.WebService
             EmployeeID = serviceUser.EmployeeID
         };
 
-        return UserBLL.InsertNewUser(user, secureCTX.UserID);
+        return UserBLL.InsertNewUser(user, CurrentServiceUser);
     }
 
     /// <summary>
     /// Verify that the given login exists in the database
     /// </summary>
-    [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
+    [WebMethod]
     public bool VerifyUser(string login)
-    {
-        EnsureCredentials(secureCTX);
-
+    {    
         return UserBLL.VerifyUserExists(login);
     }
 
-    [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
+    [WebMethod]
     public CatbertUser GetUser(string login, string application)
     {
-        EnsureCredentials(secureCTX);
-
         User user = UserBLL.GetUser(login);
 
         if (user == null) return null; //make sure we have a real user
@@ -102,38 +101,37 @@ public class CatbertWebService : System.Web.Services.WebService
     /// Assigns the given role to the desired user within the application.  Returns true only on successfull assigning of permissions --
     /// If the permission is already assigned or if there are other errors, true will not be returned.
     /// </summary>
-    [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
+    [WebMethod]
     public bool AssignPermissions(string login, string application, string role)
     {
-        EnsureCredentials(secureCTX);
-
         //If the credentials don't validate or the caller doesn't have access to this application, return false
-        if (!this.ValidateApplicationPermission(secureCTX, application)) return false;
+        if (!this.ValidateApplicationPermission(CurrentServiceUser, application)) return false;
 
-        Permission result = PermissionBLL.InsertPermission(application, role, login, secureCTX.UserID);
+        Permission result = PermissionBLL.InsertPermission(application, role, login, CurrentServiceUser);
         
         return result != null; //true on non-null result
     }
 
-    [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
+    [WebMethod]
     public bool DeletePermissions(string login, string application, string role)
     {
-        EnsureCredentials(secureCTX);
+        if (!this.ValidateApplicationPermission(CurrentServiceUser, application)) return false;
 
-        if (!this.ValidateApplicationPermission(secureCTX, application)) return false;
+        return PermissionBLL.DeletePermission(application, role, login, CurrentServiceUser);
+    }
 
-        return PermissionBLL.DeletePermission(application, role, login, secureCTX.UserID);
+    private bool ValidateApplicationPermission(string CurrentServiceUser, string application)
+    {
+        throw new NotImplementedException();
     }
 
     /// <summary>
     /// Check to see if a permission exists and is active (works like is user in role)
     /// </summary>
     /// <returns>True if login has the correct active role in this application </returns>
-    [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
+    [WebMethod]
     public bool PermissionExists(string login, string application, string role)
     {
-        EnsureCredentials(secureCTX);
-
         return PermissionBLL.PermissionExists(application, role, login, false);
     }
 
@@ -141,27 +139,21 @@ public class CatbertWebService : System.Web.Services.WebService
 
     #region Units
 
-    [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
+    [WebMethod]
     public bool AddUnit(string login, string unitFIS)
     {
-        EnsureCredentials(secureCTX);
-
-        return UserBLL.AssociateUnit(login, unitFIS, secureCTX.UserID);
+        return UserBLL.AssociateUnit(login, unitFIS, CurrentServiceUser);
     }
 
-    [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
+    [WebMethod]
     public bool DeleteUnit(string login, string unitFIS)
     {
-        EnsureCredentials(secureCTX);
-
-        return UserBLL.UnassociateUnit(login, unitFIS, secureCTX.UserID);
+        return UserBLL.UnassociateUnit(login, unitFIS, CurrentServiceUser);
     }
 
-    [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
+    [WebMethod]
     public List<ServiceUnit> GetUnits()
     {
-        EnsureCredentials(secureCTX);
-
         List<ServiceUnit> serviceUnits = new List<ServiceUnit>();
 
         foreach (var unit in UnitBLL.GetAll())
@@ -172,11 +164,9 @@ public class CatbertWebService : System.Web.Services.WebService
         return serviceUnits;
     }
 
-    [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
+    [WebMethod]
     public List<ServiceUnit> GetUnitsByUser(string login)
     {
-        EnsureCredentials(secureCTX);
-
         List<ServiceUnit> serviceUnits = new List<ServiceUnit>();
 
         foreach (var unit in UnitBLL.GetByUser(login))
@@ -191,11 +181,9 @@ public class CatbertWebService : System.Web.Services.WebService
 
     #region Roles
 
-    [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
+    [WebMethod]
     public List<ServiceRole> GetRoles(string application)
     {
-        EnsureCredentials(secureCTX);
-
         List<ServiceRole> roles = new List<ServiceRole>();
 
         foreach (var role in RoleBLL.GetRolesByApplication(application))
@@ -209,11 +197,9 @@ public class CatbertWebService : System.Web.Services.WebService
         return roles;
     }
 
-    [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
+    [WebMethod]
     public List<ServiceRole> GetRolesByUser(string application, string login)
     {
-        EnsureCredentials(secureCTX);
-
         List<ServiceRole> roles = new List<ServiceRole>();
 
         foreach (var role in PermissionBLL.GetRolesForUser(application, login))
@@ -228,21 +214,17 @@ public class CatbertWebService : System.Web.Services.WebService
 
     #region Applications
 
-    [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
+    [WebMethod]
     public List<CatbertUser> GetUsersByApplication(string application)
     {
-        EnsureCredentials(secureCTX);
-
         List<CatbertUser> users = ConvertFromUserList(UserBLL.GetByApplication(application), application);
 
         return users;
     }
 
-    [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
+    [WebMethod]
     public List<CatbertUser> GetUsersByApplicationRole(string application, string role)
     {
-        EnsureCredentials(secureCTX);
-
         List<CatbertUser> users = ConvertFromUserList(UserBLL.GetByApplicationRole(application, role), application);
 
         return users;
@@ -252,6 +234,7 @@ public class CatbertWebService : System.Web.Services.WebService
     /// Convert a list of users from the Core class into a web service object.  Requires the application name for
     /// resolution of roles
     /// </summary>
+    [WebMethod]
     private static List<CatbertUser> ConvertFromUserList(List<User> users, string application)
     {
         List<CatbertUser> catbertUsers = new List<CatbertUser>();
@@ -298,63 +281,17 @@ public class CatbertWebService : System.Web.Services.WebService
 
     #region Contact Information
 
-    [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
+    [WebMethod]
     public bool SetEmail(string login, string emailAddress)
     {
-        EnsureCredentials(secureCTX);
-
-        return UserBLL.SetEmail(login, emailAddress, secureCTX.UserID);
+        return UserBLL.SetEmail(login, emailAddress, CurrentServiceUser);
     }
 
-    [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
+    [WebMethod]
     public bool SetPhoneNumber(string login, string phoneNumber)
     {
-        EnsureCredentials(secureCTX);
-
-        return UserBLL.SetPhone(login, phoneNumber, secureCTX.UserID);
+        return UserBLL.SetPhone(login, phoneNumber, CurrentServiceUser);
     }
 
     #endregion
-
-    #region Private
-
-    private bool ValidateCredentials(SecurityContext secureCTX)
-    {
-        if (secureCTX == null) return false; //Make sure we have a real context
-
-        string login = secureCTX.UserID;
-
-        User user = UserBLL.GetUser(login);
-
-        if (user == null || user.UserKey == null) return false; //Make sure we have a valid user and key
-
-        //Secure context is valid iff this user's key matched the one in the secureCTX [password]
-
-        if (user.UserKey.ToString().Equals(secureCTX.Password, StringComparison.CurrentCultureIgnoreCase))
-        {
-            return true; //The keys match, and the credentials are valid
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    private void EnsureCredentials(SecurityContext secureCTX)
-    {
-        if (!ValidateCredentials(secureCTX)) throw new ApplicationException("Authorization Failed");
-    }
-
-    private bool ValidateApplicationPermission(SecurityContext secureCTX, string application)
-    {
-        return PermissionBLL.AnyPermissionExists(application, secureCTX.UserID, false);
-    }
-
-    #endregion
-}
-
-public class SecurityContext : SoapHeader
-{
-    public string UserID;
-    public string Password;
 }

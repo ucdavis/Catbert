@@ -9,443 +9,436 @@
 //------------------------------------------------------------------------------
 
 namespace CAESDO.Catbert.Test.CatbertService {
+    using System.Runtime.Serialization;
+    using System;
     
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceUser", Namespace="CAESDO.Services")]
+    [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CAESDO.Catbert.Test.CatbertService.CatbertUser))]
+    public partial class ServiceUser : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmployeeIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FirstNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LastNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LoginField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmailField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DepartmentField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string EmployeeID {
+            get {
+                return this.EmployeeIDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmployeeIDField, value) != true)) {
+                    this.EmployeeIDField = value;
+                    this.RaisePropertyChanged("EmployeeID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string FirstName {
+            get {
+                return this.FirstNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FirstNameField, value) != true)) {
+                    this.FirstNameField = value;
+                    this.RaisePropertyChanged("FirstName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string LastName {
+            get {
+                return this.LastNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LastNameField, value) != true)) {
+                    this.LastNameField = value;
+                    this.RaisePropertyChanged("LastName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string Login {
+            get {
+                return this.LoginField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LoginField, value) != true)) {
+                    this.LoginField = value;
+                    this.RaisePropertyChanged("Login");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=4)]
+        public string Email {
+            get {
+                return this.EmailField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
+                    this.EmailField = value;
+                    this.RaisePropertyChanged("Email");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=5)]
+        public string Department {
+            get {
+                return this.DepartmentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DepartmentField, value) != true)) {
+                    this.DepartmentField = value;
+                    this.RaisePropertyChanged("Department");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CatbertUser", Namespace="CAESDO.Services")]
+    [System.SerializableAttribute()]
+    public partial class CatbertUser : CAESDO.Catbert.Test.CatbertService.ServiceUser {
+        
+        private int UserIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CAESDO.Catbert.Test.CatbertService.ServiceRole[] RolesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private CAESDO.Catbert.Test.CatbertService.ServiceUnit[] UnitsField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int UserID {
+            get {
+                return this.UserIDField;
+            }
+            set {
+                if ((this.UserIDField.Equals(value) != true)) {
+                    this.UserIDField = value;
+                    this.RaisePropertyChanged("UserID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public CAESDO.Catbert.Test.CatbertService.ServiceRole[] Roles {
+            get {
+                return this.RolesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RolesField, value) != true)) {
+                    this.RolesField = value;
+                    this.RaisePropertyChanged("Roles");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public CAESDO.Catbert.Test.CatbertService.ServiceUnit[] Units {
+            get {
+                return this.UnitsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UnitsField, value) != true)) {
+                    this.UnitsField = value;
+                    this.RaisePropertyChanged("Units");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceRole", Namespace="CAESDO.Services")]
+    [System.SerializableAttribute()]
+    public partial class ServiceRole : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private int IDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int ID {
+            get {
+                return this.IDField;
+            }
+            set {
+                if ((this.IDField.Equals(value) != true)) {
+                    this.IDField = value;
+                    this.RaisePropertyChanged("ID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceUnit", Namespace="CAESDO.Services")]
+    [System.SerializableAttribute()]
+    public partial class ServiceUnit : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private int IDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UnitFISField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public int ID {
+            get {
+                return this.IDField;
+            }
+            set {
+                if ((this.IDField.Equals(value) != true)) {
+                    this.IDField = value;
+                    this.RaisePropertyChanged("ID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string UnitFIS {
+            get {
+                return this.UnitFISField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UnitFISField, value) != true)) {
+                    this.UnitFISField = value;
+                    this.RaisePropertyChanged("UnitFIS");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(Namespace="CAESDO.Services", ConfigurationName="CatbertService.CatbertWebServiceSoap")]
     public interface CatbertWebServiceSoap {
         
-        // CODEGEN: Generating message contract since message SearchNewUserRequest has headers
+        // CODEGEN: Generating message contract since element name eid from namespace CAESDO.Services is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="CAESDO.Services/SearchNewUser", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute()]
         CAESDO.Catbert.Test.CatbertService.SearchNewUserResponse SearchNewUser(CAESDO.Catbert.Test.CatbertService.SearchNewUserRequest request);
         
-        // CODEGEN: Generating message contract since message InsertNewUserRequest has headers
+        // CODEGEN: Generating message contract since element name serviceUser from namespace CAESDO.Services is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="CAESDO.Services/InsertNewUser", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute()]
         CAESDO.Catbert.Test.CatbertService.InsertNewUserResponse InsertNewUser(CAESDO.Catbert.Test.CatbertService.InsertNewUserRequest request);
         
-        // CODEGEN: Generating message contract since message VerifyUserRequest has headers
+        // CODEGEN: Generating message contract since element name login from namespace CAESDO.Services is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="CAESDO.Services/VerifyUser", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute()]
         CAESDO.Catbert.Test.CatbertService.VerifyUserResponse VerifyUser(CAESDO.Catbert.Test.CatbertService.VerifyUserRequest request);
         
-        // CODEGEN: Generating message contract since message GetUserRequest has headers
+        // CODEGEN: Generating message contract since element name login from namespace CAESDO.Services is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="CAESDO.Services/GetUser", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute()]
         CAESDO.Catbert.Test.CatbertService.GetUserResponse GetUser(CAESDO.Catbert.Test.CatbertService.GetUserRequest request);
         
-        // CODEGEN: Generating message contract since message AssignPermissionsRequest has headers
+        // CODEGEN: Generating message contract since element name login from namespace CAESDO.Services is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="CAESDO.Services/AssignPermissions", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute()]
         CAESDO.Catbert.Test.CatbertService.AssignPermissionsResponse AssignPermissions(CAESDO.Catbert.Test.CatbertService.AssignPermissionsRequest request);
         
-        // CODEGEN: Generating message contract since message DeletePermissionsRequest has headers
+        // CODEGEN: Generating message contract since element name login from namespace CAESDO.Services is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="CAESDO.Services/DeletePermissions", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute()]
         CAESDO.Catbert.Test.CatbertService.DeletePermissionsResponse DeletePermissions(CAESDO.Catbert.Test.CatbertService.DeletePermissionsRequest request);
         
-        // CODEGEN: Generating message contract since message PermissionExistsRequest has headers
+        // CODEGEN: Generating message contract since element name login from namespace CAESDO.Services is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="CAESDO.Services/PermissionExists", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute()]
         CAESDO.Catbert.Test.CatbertService.PermissionExistsResponse PermissionExists(CAESDO.Catbert.Test.CatbertService.PermissionExistsRequest request);
         
-        // CODEGEN: Generating message contract since message AddUnitRequest has headers
+        // CODEGEN: Generating message contract since element name login from namespace CAESDO.Services is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="CAESDO.Services/AddUnit", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute()]
         CAESDO.Catbert.Test.CatbertService.AddUnitResponse AddUnit(CAESDO.Catbert.Test.CatbertService.AddUnitRequest request);
         
-        // CODEGEN: Generating message contract since message DeleteUnitRequest has headers
+        // CODEGEN: Generating message contract since element name login from namespace CAESDO.Services is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="CAESDO.Services/DeleteUnit", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute()]
         CAESDO.Catbert.Test.CatbertService.DeleteUnitResponse DeleteUnit(CAESDO.Catbert.Test.CatbertService.DeleteUnitRequest request);
         
-        // CODEGEN: Generating message contract since message GetUnitsRequest has headers
+        // CODEGEN: Generating message contract since element name GetUnitsResult from namespace CAESDO.Services is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="CAESDO.Services/GetUnits", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute()]
         CAESDO.Catbert.Test.CatbertService.GetUnitsResponse GetUnits(CAESDO.Catbert.Test.CatbertService.GetUnitsRequest request);
         
-        // CODEGEN: Generating message contract since message GetUnitsByUserRequest has headers
+        // CODEGEN: Generating message contract since element name login from namespace CAESDO.Services is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="CAESDO.Services/GetUnitsByUser", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute()]
         CAESDO.Catbert.Test.CatbertService.GetUnitsByUserResponse GetUnitsByUser(CAESDO.Catbert.Test.CatbertService.GetUnitsByUserRequest request);
         
-        // CODEGEN: Generating message contract since message GetRolesRequest has headers
+        // CODEGEN: Generating message contract since element name application from namespace CAESDO.Services is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="CAESDO.Services/GetRoles", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute()]
         CAESDO.Catbert.Test.CatbertService.GetRolesResponse GetRoles(CAESDO.Catbert.Test.CatbertService.GetRolesRequest request);
         
-        // CODEGEN: Generating message contract since message GetRolesByUserRequest has headers
+        // CODEGEN: Generating message contract since element name application from namespace CAESDO.Services is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="CAESDO.Services/GetRolesByUser", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute()]
         CAESDO.Catbert.Test.CatbertService.GetRolesByUserResponse GetRolesByUser(CAESDO.Catbert.Test.CatbertService.GetRolesByUserRequest request);
         
-        // CODEGEN: Generating message contract since message GetUsersByApplicationRequest has headers
+        // CODEGEN: Generating message contract since element name application from namespace CAESDO.Services is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="CAESDO.Services/GetUsersByApplication", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute()]
         CAESDO.Catbert.Test.CatbertService.GetUsersByApplicationResponse GetUsersByApplication(CAESDO.Catbert.Test.CatbertService.GetUsersByApplicationRequest request);
         
-        // CODEGEN: Generating message contract since message GetUsersByApplicationRoleRequest has headers
+        // CODEGEN: Generating message contract since element name application from namespace CAESDO.Services is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="CAESDO.Services/GetUsersByApplicationRole", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute()]
         CAESDO.Catbert.Test.CatbertService.GetUsersByApplicationRoleResponse GetUsersByApplicationRole(CAESDO.Catbert.Test.CatbertService.GetUsersByApplicationRoleRequest request);
         
-        // CODEGEN: Generating message contract since message SetEmailRequest has headers
+        // CODEGEN: Generating message contract since element name login from namespace CAESDO.Services is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="CAESDO.Services/SetEmail", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute()]
         CAESDO.Catbert.Test.CatbertService.SetEmailResponse SetEmail(CAESDO.Catbert.Test.CatbertService.SetEmailRequest request);
         
-        // CODEGEN: Generating message contract since message SetPhoneNumberRequest has headers
+        // CODEGEN: Generating message contract since element name login from namespace CAESDO.Services is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="CAESDO.Services/SetPhoneNumber", ReplyAction="*")]
-        [System.ServiceModel.XmlSerializerFormatAttribute()]
         CAESDO.Catbert.Test.CatbertService.SetPhoneNumberResponse SetPhoneNumber(CAESDO.Catbert.Test.CatbertService.SetPhoneNumberRequest request);
     }
     
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "2.0.50727.3082")]
-    [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="CAESDO.Services")]
-    public partial class SecurityContext : object, System.ComponentModel.INotifyPropertyChanged {
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class SearchNewUserRequest {
         
-        private string userIDField;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="SearchNewUser", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.SearchNewUserRequestBody Body;
         
-        private string passwordField;
-        
-        private System.Xml.XmlAttribute[] anyAttrField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string UserID {
-            get {
-                return this.userIDField;
-            }
-            set {
-                this.userIDField = value;
-                this.RaisePropertyChanged("UserID");
-            }
+        public SearchNewUserRequest() {
         }
         
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string Password {
-            get {
-                return this.passwordField;
-            }
-            set {
-                this.passwordField = value;
-                this.RaisePropertyChanged("Password");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAnyAttributeAttribute()]
-        public System.Xml.XmlAttribute[] AnyAttr {
-            get {
-                return this.anyAttrField;
-            }
-            set {
-                this.anyAttrField = value;
-                this.RaisePropertyChanged("AnyAttr");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "2.0.50727.3082")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="CAESDO.Services")]
-    public partial class ServiceUnit : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private int idField;
-        
-        private string nameField;
-        
-        private string unitFISField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int ID {
-            get {
-                return this.idField;
-            }
-            set {
-                this.idField = value;
-                this.RaisePropertyChanged("ID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string Name {
-            get {
-                return this.nameField;
-            }
-            set {
-                this.nameField = value;
-                this.RaisePropertyChanged("Name");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string UnitFIS {
-            get {
-                return this.unitFISField;
-            }
-            set {
-                this.unitFISField = value;
-                this.RaisePropertyChanged("UnitFIS");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "2.0.50727.3082")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="CAESDO.Services")]
-    public partial class ServiceRole : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private int idField;
-        
-        private string nameField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int ID {
-            get {
-                return this.idField;
-            }
-            set {
-                this.idField = value;
-                this.RaisePropertyChanged("ID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string Name {
-            get {
-                return this.nameField;
-            }
-            set {
-                this.nameField = value;
-                this.RaisePropertyChanged("Name");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(CatbertUser))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "2.0.50727.3082")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="CAESDO.Services")]
-    public partial class ServiceUser : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private string employeeIDField;
-        
-        private string firstNameField;
-        
-        private string lastNameField;
-        
-        private string loginField;
-        
-        private string emailField;
-        
-        private string departmentField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public string EmployeeID {
-            get {
-                return this.employeeIDField;
-            }
-            set {
-                this.employeeIDField = value;
-                this.RaisePropertyChanged("EmployeeID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=1)]
-        public string FirstName {
-            get {
-                return this.firstNameField;
-            }
-            set {
-                this.firstNameField = value;
-                this.RaisePropertyChanged("FirstName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=2)]
-        public string LastName {
-            get {
-                return this.lastNameField;
-            }
-            set {
-                this.lastNameField = value;
-                this.RaisePropertyChanged("LastName");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=3)]
-        public string Login {
-            get {
-                return this.loginField;
-            }
-            set {
-                this.loginField = value;
-                this.RaisePropertyChanged("Login");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=4)]
-        public string Email {
-            get {
-                return this.emailField;
-            }
-            set {
-                this.emailField = value;
-                this.RaisePropertyChanged("Email");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=5)]
-        public string Department {
-            get {
-                return this.departmentField;
-            }
-            set {
-                this.departmentField = value;
-                this.RaisePropertyChanged("Department");
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "2.0.50727.3082")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="CAESDO.Services")]
-    public partial class CatbertUser : ServiceUser {
-        
-        private int userIDField;
-        
-        private ServiceRole[] rolesField;
-        
-        private ServiceUnit[] unitsField;
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Order=0)]
-        public int UserID {
-            get {
-                return this.userIDField;
-            }
-            set {
-                this.userIDField = value;
-                this.RaisePropertyChanged("UserID");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=1)]
-        public ServiceRole[] Roles {
-            get {
-                return this.rolesField;
-            }
-            set {
-                this.rolesField = value;
-                this.RaisePropertyChanged("Roles");
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayAttribute(Order=2)]
-        public ServiceUnit[] Units {
-            get {
-                return this.unitsField;
-            }
-            set {
-                this.unitsField = value;
-                this.RaisePropertyChanged("Units");
-            }
+        public SearchNewUserRequest(CAESDO.Catbert.Test.CatbertService.SearchNewUserRequestBody Body) {
+            this.Body = Body;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="SearchNewUser", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
-    public partial class SearchNewUserRequest {
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class SearchNewUserRequestBody {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
         public string eid;
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=1)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
         public string firstName;
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=2)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
         public string lastName;
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=3)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
         public string login;
         
-        public SearchNewUserRequest() {
+        public SearchNewUserRequestBody() {
         }
         
-        public SearchNewUserRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string eid, string firstName, string lastName, string login) {
-            this.SecurityContext = SecurityContext;
+        public SearchNewUserRequestBody(string eid, string firstName, string lastName, string login) {
             this.eid = eid;
             this.firstName = firstName;
             this.lastName = lastName;
@@ -455,123 +448,195 @@ namespace CAESDO.Catbert.Test.CatbertService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="SearchNewUserResponse", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class SearchNewUserResponse {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public ServiceUser[] SearchNewUserResult;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="SearchNewUserResponse", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.SearchNewUserResponseBody Body;
         
         public SearchNewUserResponse() {
         }
         
-        public SearchNewUserResponse(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, ServiceUser[] SearchNewUserResult) {
-            this.SecurityContext = SecurityContext;
+        public SearchNewUserResponse(CAESDO.Catbert.Test.CatbertService.SearchNewUserResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class SearchNewUserResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.ServiceUser[] SearchNewUserResult;
+        
+        public SearchNewUserResponseBody() {
+        }
+        
+        public SearchNewUserResponseBody(CAESDO.Catbert.Test.CatbertService.ServiceUser[] SearchNewUserResult) {
             this.SearchNewUserResult = SearchNewUserResult;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="InsertNewUser", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class InsertNewUserRequest {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public CAESDO.Catbert.Test.CatbertService.ServiceUser serviceUser;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="InsertNewUser", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.InsertNewUserRequestBody Body;
         
         public InsertNewUserRequest() {
         }
         
-        public InsertNewUserRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, CAESDO.Catbert.Test.CatbertService.ServiceUser serviceUser) {
-            this.SecurityContext = SecurityContext;
+        public InsertNewUserRequest(CAESDO.Catbert.Test.CatbertService.InsertNewUserRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class InsertNewUserRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.ServiceUser serviceUser;
+        
+        public InsertNewUserRequestBody() {
+        }
+        
+        public InsertNewUserRequestBody(CAESDO.Catbert.Test.CatbertService.ServiceUser serviceUser) {
             this.serviceUser = serviceUser;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="InsertNewUserResponse", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class InsertNewUserResponse {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public int InsertNewUserResult;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="InsertNewUserResponse", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.InsertNewUserResponseBody Body;
         
         public InsertNewUserResponse() {
         }
         
-        public InsertNewUserResponse(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, int InsertNewUserResult) {
-            this.SecurityContext = SecurityContext;
+        public InsertNewUserResponse(CAESDO.Catbert.Test.CatbertService.InsertNewUserResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class InsertNewUserResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public int InsertNewUserResult;
+        
+        public InsertNewUserResponseBody() {
+        }
+        
+        public InsertNewUserResponseBody(int InsertNewUserResult) {
             this.InsertNewUserResult = InsertNewUserResult;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="VerifyUser", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class VerifyUserRequest {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public string login;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="VerifyUser", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.VerifyUserRequestBody Body;
         
         public VerifyUserRequest() {
         }
         
-        public VerifyUserRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login) {
-            this.SecurityContext = SecurityContext;
+        public VerifyUserRequest(CAESDO.Catbert.Test.CatbertService.VerifyUserRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class VerifyUserRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string login;
+        
+        public VerifyUserRequestBody() {
+        }
+        
+        public VerifyUserRequestBody(string login) {
             this.login = login;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="VerifyUserResponse", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class VerifyUserResponse {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public bool VerifyUserResult;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="VerifyUserResponse", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.VerifyUserResponseBody Body;
         
         public VerifyUserResponse() {
         }
         
-        public VerifyUserResponse(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, bool VerifyUserResult) {
-            this.SecurityContext = SecurityContext;
+        public VerifyUserResponse(CAESDO.Catbert.Test.CatbertService.VerifyUserResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class VerifyUserResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public bool VerifyUserResult;
+        
+        public VerifyUserResponseBody() {
+        }
+        
+        public VerifyUserResponseBody(bool VerifyUserResult) {
             this.VerifyUserResult = VerifyUserResult;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetUser", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class GetUserRequest {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public string login;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=1)]
-        public string application;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetUser", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.GetUserRequestBody Body;
         
         public GetUserRequest() {
         }
         
-        public GetUserRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string application) {
-            this.SecurityContext = SecurityContext;
+        public GetUserRequest(CAESDO.Catbert.Test.CatbertService.GetUserRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class GetUserRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string login;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string application;
+        
+        public GetUserRequestBody() {
+        }
+        
+        public GetUserRequestBody(string login, string application) {
             this.login = login;
             this.application = application;
         }
@@ -579,46 +644,70 @@ namespace CAESDO.Catbert.Test.CatbertService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetUserResponse", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class GetUserResponse {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public CAESDO.Catbert.Test.CatbertService.CatbertUser GetUserResult;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetUserResponse", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.GetUserResponseBody Body;
         
         public GetUserResponse() {
         }
         
-        public GetUserResponse(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, CAESDO.Catbert.Test.CatbertService.CatbertUser GetUserResult) {
-            this.SecurityContext = SecurityContext;
+        public GetUserResponse(CAESDO.Catbert.Test.CatbertService.GetUserResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class GetUserResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.CatbertUser GetUserResult;
+        
+        public GetUserResponseBody() {
+        }
+        
+        public GetUserResponseBody(CAESDO.Catbert.Test.CatbertService.CatbertUser GetUserResult) {
             this.GetUserResult = GetUserResult;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="AssignPermissions", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class AssignPermissionsRequest {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public string login;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=1)]
-        public string application;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=2)]
-        public string role;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="AssignPermissions", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.AssignPermissionsRequestBody Body;
         
         public AssignPermissionsRequest() {
         }
         
-        public AssignPermissionsRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string application, string role) {
-            this.SecurityContext = SecurityContext;
+        public AssignPermissionsRequest(CAESDO.Catbert.Test.CatbertService.AssignPermissionsRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class AssignPermissionsRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string login;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string application;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public string role;
+        
+        public AssignPermissionsRequestBody() {
+        }
+        
+        public AssignPermissionsRequestBody(string login, string application, string role) {
             this.login = login;
             this.application = application;
             this.role = role;
@@ -627,46 +716,70 @@ namespace CAESDO.Catbert.Test.CatbertService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="AssignPermissionsResponse", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class AssignPermissionsResponse {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public bool AssignPermissionsResult;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="AssignPermissionsResponse", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.AssignPermissionsResponseBody Body;
         
         public AssignPermissionsResponse() {
         }
         
-        public AssignPermissionsResponse(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, bool AssignPermissionsResult) {
-            this.SecurityContext = SecurityContext;
+        public AssignPermissionsResponse(CAESDO.Catbert.Test.CatbertService.AssignPermissionsResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class AssignPermissionsResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public bool AssignPermissionsResult;
+        
+        public AssignPermissionsResponseBody() {
+        }
+        
+        public AssignPermissionsResponseBody(bool AssignPermissionsResult) {
             this.AssignPermissionsResult = AssignPermissionsResult;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="DeletePermissions", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class DeletePermissionsRequest {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public string login;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=1)]
-        public string application;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=2)]
-        public string role;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="DeletePermissions", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.DeletePermissionsRequestBody Body;
         
         public DeletePermissionsRequest() {
         }
         
-        public DeletePermissionsRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string application, string role) {
-            this.SecurityContext = SecurityContext;
+        public DeletePermissionsRequest(CAESDO.Catbert.Test.CatbertService.DeletePermissionsRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class DeletePermissionsRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string login;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string application;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public string role;
+        
+        public DeletePermissionsRequestBody() {
+        }
+        
+        public DeletePermissionsRequestBody(string login, string application, string role) {
             this.login = login;
             this.application = application;
             this.role = role;
@@ -675,46 +788,70 @@ namespace CAESDO.Catbert.Test.CatbertService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="DeletePermissionsResponse", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class DeletePermissionsResponse {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public bool DeletePermissionsResult;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="DeletePermissionsResponse", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.DeletePermissionsResponseBody Body;
         
         public DeletePermissionsResponse() {
         }
         
-        public DeletePermissionsResponse(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, bool DeletePermissionsResult) {
-            this.SecurityContext = SecurityContext;
+        public DeletePermissionsResponse(CAESDO.Catbert.Test.CatbertService.DeletePermissionsResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class DeletePermissionsResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public bool DeletePermissionsResult;
+        
+        public DeletePermissionsResponseBody() {
+        }
+        
+        public DeletePermissionsResponseBody(bool DeletePermissionsResult) {
             this.DeletePermissionsResult = DeletePermissionsResult;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="PermissionExists", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class PermissionExistsRequest {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public string login;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=1)]
-        public string application;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=2)]
-        public string role;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="PermissionExists", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.PermissionExistsRequestBody Body;
         
         public PermissionExistsRequest() {
         }
         
-        public PermissionExistsRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string application, string role) {
-            this.SecurityContext = SecurityContext;
+        public PermissionExistsRequest(CAESDO.Catbert.Test.CatbertService.PermissionExistsRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class PermissionExistsRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string login;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string application;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public string role;
+        
+        public PermissionExistsRequestBody() {
+        }
+        
+        public PermissionExistsRequestBody(string login, string application, string role) {
             this.login = login;
             this.application = application;
             this.role = role;
@@ -723,43 +860,67 @@ namespace CAESDO.Catbert.Test.CatbertService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="PermissionExistsResponse", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class PermissionExistsResponse {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public bool PermissionExistsResult;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="PermissionExistsResponse", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.PermissionExistsResponseBody Body;
         
         public PermissionExistsResponse() {
         }
         
-        public PermissionExistsResponse(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, bool PermissionExistsResult) {
-            this.SecurityContext = SecurityContext;
+        public PermissionExistsResponse(CAESDO.Catbert.Test.CatbertService.PermissionExistsResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class PermissionExistsResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public bool PermissionExistsResult;
+        
+        public PermissionExistsResponseBody() {
+        }
+        
+        public PermissionExistsResponseBody(bool PermissionExistsResult) {
             this.PermissionExistsResult = PermissionExistsResult;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="AddUnit", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class AddUnitRequest {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public string login;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=1)]
-        public string unitFIS;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="AddUnit", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.AddUnitRequestBody Body;
         
         public AddUnitRequest() {
         }
         
-        public AddUnitRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string unitFIS) {
-            this.SecurityContext = SecurityContext;
+        public AddUnitRequest(CAESDO.Catbert.Test.CatbertService.AddUnitRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class AddUnitRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string login;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string unitFIS;
+        
+        public AddUnitRequestBody() {
+        }
+        
+        public AddUnitRequestBody(string login, string unitFIS) {
             this.login = login;
             this.unitFIS = unitFIS;
         }
@@ -767,43 +928,67 @@ namespace CAESDO.Catbert.Test.CatbertService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="AddUnitResponse", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class AddUnitResponse {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public bool AddUnitResult;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="AddUnitResponse", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.AddUnitResponseBody Body;
         
         public AddUnitResponse() {
         }
         
-        public AddUnitResponse(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, bool AddUnitResult) {
-            this.SecurityContext = SecurityContext;
+        public AddUnitResponse(CAESDO.Catbert.Test.CatbertService.AddUnitResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class AddUnitResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public bool AddUnitResult;
+        
+        public AddUnitResponseBody() {
+        }
+        
+        public AddUnitResponseBody(bool AddUnitResult) {
             this.AddUnitResult = AddUnitResult;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="DeleteUnit", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class DeleteUnitRequest {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public string login;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=1)]
-        public string unitFIS;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="DeleteUnit", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.DeleteUnitRequestBody Body;
         
         public DeleteUnitRequest() {
         }
         
-        public DeleteUnitRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string unitFIS) {
-            this.SecurityContext = SecurityContext;
+        public DeleteUnitRequest(CAESDO.Catbert.Test.CatbertService.DeleteUnitRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class DeleteUnitRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string login;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string unitFIS;
+        
+        public DeleteUnitRequestBody() {
+        }
+        
+        public DeleteUnitRequestBody(string login, string unitFIS) {
             this.login = login;
             this.unitFIS = unitFIS;
         }
@@ -811,159 +996,252 @@ namespace CAESDO.Catbert.Test.CatbertService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="DeleteUnitResponse", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class DeleteUnitResponse {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public bool DeleteUnitResult;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="DeleteUnitResponse", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.DeleteUnitResponseBody Body;
         
         public DeleteUnitResponse() {
         }
         
-        public DeleteUnitResponse(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, bool DeleteUnitResult) {
-            this.SecurityContext = SecurityContext;
+        public DeleteUnitResponse(CAESDO.Catbert.Test.CatbertService.DeleteUnitResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class DeleteUnitResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public bool DeleteUnitResult;
+        
+        public DeleteUnitResponseBody() {
+        }
+        
+        public DeleteUnitResponseBody(bool DeleteUnitResult) {
             this.DeleteUnitResult = DeleteUnitResult;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetUnits", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class GetUnitsRequest {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetUnits", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.GetUnitsRequestBody Body;
         
         public GetUnitsRequest() {
         }
         
-        public GetUnitsRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext) {
-            this.SecurityContext = SecurityContext;
+        public GetUnitsRequest(CAESDO.Catbert.Test.CatbertService.GetUnitsRequestBody Body) {
+            this.Body = Body;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetUnitsResponse", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.Runtime.Serialization.DataContractAttribute()]
+    public partial class GetUnitsRequestBody {
+        
+        public GetUnitsRequestBody() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class GetUnitsResponse {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public ServiceUnit[] GetUnitsResult;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetUnitsResponse", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.GetUnitsResponseBody Body;
         
         public GetUnitsResponse() {
         }
         
-        public GetUnitsResponse(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, ServiceUnit[] GetUnitsResult) {
-            this.SecurityContext = SecurityContext;
+        public GetUnitsResponse(CAESDO.Catbert.Test.CatbertService.GetUnitsResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class GetUnitsResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.ServiceUnit[] GetUnitsResult;
+        
+        public GetUnitsResponseBody() {
+        }
+        
+        public GetUnitsResponseBody(CAESDO.Catbert.Test.CatbertService.ServiceUnit[] GetUnitsResult) {
             this.GetUnitsResult = GetUnitsResult;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetUnitsByUser", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class GetUnitsByUserRequest {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public string login;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetUnitsByUser", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.GetUnitsByUserRequestBody Body;
         
         public GetUnitsByUserRequest() {
         }
         
-        public GetUnitsByUserRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login) {
-            this.SecurityContext = SecurityContext;
+        public GetUnitsByUserRequest(CAESDO.Catbert.Test.CatbertService.GetUnitsByUserRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class GetUnitsByUserRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string login;
+        
+        public GetUnitsByUserRequestBody() {
+        }
+        
+        public GetUnitsByUserRequestBody(string login) {
             this.login = login;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetUnitsByUserResponse", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class GetUnitsByUserResponse {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public ServiceUnit[] GetUnitsByUserResult;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetUnitsByUserResponse", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.GetUnitsByUserResponseBody Body;
         
         public GetUnitsByUserResponse() {
         }
         
-        public GetUnitsByUserResponse(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, ServiceUnit[] GetUnitsByUserResult) {
-            this.SecurityContext = SecurityContext;
+        public GetUnitsByUserResponse(CAESDO.Catbert.Test.CatbertService.GetUnitsByUserResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class GetUnitsByUserResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.ServiceUnit[] GetUnitsByUserResult;
+        
+        public GetUnitsByUserResponseBody() {
+        }
+        
+        public GetUnitsByUserResponseBody(CAESDO.Catbert.Test.CatbertService.ServiceUnit[] GetUnitsByUserResult) {
             this.GetUnitsByUserResult = GetUnitsByUserResult;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetRoles", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class GetRolesRequest {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public string application;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetRoles", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.GetRolesRequestBody Body;
         
         public GetRolesRequest() {
         }
         
-        public GetRolesRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string application) {
-            this.SecurityContext = SecurityContext;
+        public GetRolesRequest(CAESDO.Catbert.Test.CatbertService.GetRolesRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class GetRolesRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string application;
+        
+        public GetRolesRequestBody() {
+        }
+        
+        public GetRolesRequestBody(string application) {
             this.application = application;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetRolesResponse", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class GetRolesResponse {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public ServiceRole[] GetRolesResult;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetRolesResponse", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.GetRolesResponseBody Body;
         
         public GetRolesResponse() {
         }
         
-        public GetRolesResponse(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, ServiceRole[] GetRolesResult) {
-            this.SecurityContext = SecurityContext;
+        public GetRolesResponse(CAESDO.Catbert.Test.CatbertService.GetRolesResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class GetRolesResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.ServiceRole[] GetRolesResult;
+        
+        public GetRolesResponseBody() {
+        }
+        
+        public GetRolesResponseBody(CAESDO.Catbert.Test.CatbertService.ServiceRole[] GetRolesResult) {
             this.GetRolesResult = GetRolesResult;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetRolesByUser", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class GetRolesByUserRequest {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public string application;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=1)]
-        public string login;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetRolesByUser", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.GetRolesByUserRequestBody Body;
         
         public GetRolesByUserRequest() {
         }
         
-        public GetRolesByUserRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string application, string login) {
-            this.SecurityContext = SecurityContext;
+        public GetRolesByUserRequest(CAESDO.Catbert.Test.CatbertService.GetRolesByUserRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class GetRolesByUserRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string application;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string login;
+        
+        public GetRolesByUserRequestBody() {
+        }
+        
+        public GetRolesByUserRequestBody(string application, string login) {
             this.application = application;
             this.login = login;
         }
@@ -971,83 +1249,131 @@ namespace CAESDO.Catbert.Test.CatbertService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetRolesByUserResponse", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class GetRolesByUserResponse {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public ServiceRole[] GetRolesByUserResult;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetRolesByUserResponse", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.GetRolesByUserResponseBody Body;
         
         public GetRolesByUserResponse() {
         }
         
-        public GetRolesByUserResponse(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, ServiceRole[] GetRolesByUserResult) {
-            this.SecurityContext = SecurityContext;
+        public GetRolesByUserResponse(CAESDO.Catbert.Test.CatbertService.GetRolesByUserResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class GetRolesByUserResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.ServiceRole[] GetRolesByUserResult;
+        
+        public GetRolesByUserResponseBody() {
+        }
+        
+        public GetRolesByUserResponseBody(CAESDO.Catbert.Test.CatbertService.ServiceRole[] GetRolesByUserResult) {
             this.GetRolesByUserResult = GetRolesByUserResult;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetUsersByApplication", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class GetUsersByApplicationRequest {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public string application;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetUsersByApplication", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.GetUsersByApplicationRequestBody Body;
         
         public GetUsersByApplicationRequest() {
         }
         
-        public GetUsersByApplicationRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string application) {
-            this.SecurityContext = SecurityContext;
+        public GetUsersByApplicationRequest(CAESDO.Catbert.Test.CatbertService.GetUsersByApplicationRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class GetUsersByApplicationRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string application;
+        
+        public GetUsersByApplicationRequestBody() {
+        }
+        
+        public GetUsersByApplicationRequestBody(string application) {
             this.application = application;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetUsersByApplicationResponse", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class GetUsersByApplicationResponse {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public CatbertUser[] GetUsersByApplicationResult;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetUsersByApplicationResponse", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.GetUsersByApplicationResponseBody Body;
         
         public GetUsersByApplicationResponse() {
         }
         
-        public GetUsersByApplicationResponse(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, CatbertUser[] GetUsersByApplicationResult) {
-            this.SecurityContext = SecurityContext;
+        public GetUsersByApplicationResponse(CAESDO.Catbert.Test.CatbertService.GetUsersByApplicationResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class GetUsersByApplicationResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.CatbertUser[] GetUsersByApplicationResult;
+        
+        public GetUsersByApplicationResponseBody() {
+        }
+        
+        public GetUsersByApplicationResponseBody(CAESDO.Catbert.Test.CatbertService.CatbertUser[] GetUsersByApplicationResult) {
             this.GetUsersByApplicationResult = GetUsersByApplicationResult;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetUsersByApplicationRole", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class GetUsersByApplicationRoleRequest {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public string application;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=1)]
-        public string role;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetUsersByApplicationRole", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.GetUsersByApplicationRoleRequestBody Body;
         
         public GetUsersByApplicationRoleRequest() {
         }
         
-        public GetUsersByApplicationRoleRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string application, string role) {
-            this.SecurityContext = SecurityContext;
+        public GetUsersByApplicationRoleRequest(CAESDO.Catbert.Test.CatbertService.GetUsersByApplicationRoleRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class GetUsersByApplicationRoleRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string application;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string role;
+        
+        public GetUsersByApplicationRoleRequestBody() {
+        }
+        
+        public GetUsersByApplicationRoleRequestBody(string application, string role) {
             this.application = application;
             this.role = role;
         }
@@ -1055,43 +1381,67 @@ namespace CAESDO.Catbert.Test.CatbertService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="GetUsersByApplicationRoleResponse", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class GetUsersByApplicationRoleResponse {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public CatbertUser[] GetUsersByApplicationRoleResult;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="GetUsersByApplicationRoleResponse", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.GetUsersByApplicationRoleResponseBody Body;
         
         public GetUsersByApplicationRoleResponse() {
         }
         
-        public GetUsersByApplicationRoleResponse(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, CatbertUser[] GetUsersByApplicationRoleResult) {
-            this.SecurityContext = SecurityContext;
+        public GetUsersByApplicationRoleResponse(CAESDO.Catbert.Test.CatbertService.GetUsersByApplicationRoleResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class GetUsersByApplicationRoleResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.CatbertUser[] GetUsersByApplicationRoleResult;
+        
+        public GetUsersByApplicationRoleResponseBody() {
+        }
+        
+        public GetUsersByApplicationRoleResponseBody(CAESDO.Catbert.Test.CatbertService.CatbertUser[] GetUsersByApplicationRoleResult) {
             this.GetUsersByApplicationRoleResult = GetUsersByApplicationRoleResult;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="SetEmail", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class SetEmailRequest {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public string login;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=1)]
-        public string emailAddress;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="SetEmail", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.SetEmailRequestBody Body;
         
         public SetEmailRequest() {
         }
         
-        public SetEmailRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string emailAddress) {
-            this.SecurityContext = SecurityContext;
+        public SetEmailRequest(CAESDO.Catbert.Test.CatbertService.SetEmailRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class SetEmailRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string login;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string emailAddress;
+        
+        public SetEmailRequestBody() {
+        }
+        
+        public SetEmailRequestBody(string login, string emailAddress) {
             this.login = login;
             this.emailAddress = emailAddress;
         }
@@ -1099,43 +1449,67 @@ namespace CAESDO.Catbert.Test.CatbertService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="SetEmailResponse", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class SetEmailResponse {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public bool SetEmailResult;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="SetEmailResponse", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.SetEmailResponseBody Body;
         
         public SetEmailResponse() {
         }
         
-        public SetEmailResponse(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, bool SetEmailResult) {
-            this.SecurityContext = SecurityContext;
+        public SetEmailResponse(CAESDO.Catbert.Test.CatbertService.SetEmailResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class SetEmailResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public bool SetEmailResult;
+        
+        public SetEmailResponseBody() {
+        }
+        
+        public SetEmailResponseBody(bool SetEmailResult) {
             this.SetEmailResult = SetEmailResult;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="SetPhoneNumber", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class SetPhoneNumberRequest {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public string login;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=1)]
-        public string phoneNumber;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="SetPhoneNumber", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.SetPhoneNumberRequestBody Body;
         
         public SetPhoneNumberRequest() {
         }
         
-        public SetPhoneNumberRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string phoneNumber) {
-            this.SecurityContext = SecurityContext;
+        public SetPhoneNumberRequest(CAESDO.Catbert.Test.CatbertService.SetPhoneNumberRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class SetPhoneNumberRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string login;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string phoneNumber;
+        
+        public SetPhoneNumberRequestBody() {
+        }
+        
+        public SetPhoneNumberRequestBody(string login, string phoneNumber) {
             this.login = login;
             this.phoneNumber = phoneNumber;
         }
@@ -1143,20 +1517,32 @@ namespace CAESDO.Catbert.Test.CatbertService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="SetPhoneNumberResponse", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class SetPhoneNumberResponse {
         
-        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
-        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public bool SetPhoneNumberResult;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="SetPhoneNumberResponse", Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.SetPhoneNumberResponseBody Body;
         
         public SetPhoneNumberResponse() {
         }
         
-        public SetPhoneNumberResponse(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, bool SetPhoneNumberResult) {
-            this.SecurityContext = SecurityContext;
+        public SetPhoneNumberResponse(CAESDO.Catbert.Test.CatbertService.SetPhoneNumberResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="CAESDO.Services")]
+    public partial class SetPhoneNumberResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public bool SetPhoneNumberResult;
+        
+        public SetPhoneNumberResponseBody() {
+        }
+        
+        public SetPhoneNumberResponseBody(bool SetPhoneNumberResult) {
             this.SetPhoneNumberResult = SetPhoneNumberResult;
         }
     }
@@ -1193,16 +1579,15 @@ namespace CAESDO.Catbert.Test.CatbertService {
             return base.Channel.SearchNewUser(request);
         }
         
-        public ServiceUser[] SearchNewUser(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string eid, string firstName, string lastName, string login) {
+        public CAESDO.Catbert.Test.CatbertService.ServiceUser[] SearchNewUser(string eid, string firstName, string lastName, string login) {
             CAESDO.Catbert.Test.CatbertService.SearchNewUserRequest inValue = new CAESDO.Catbert.Test.CatbertService.SearchNewUserRequest();
-            inValue.SecurityContext = SecurityContext;
-            inValue.eid = eid;
-            inValue.firstName = firstName;
-            inValue.lastName = lastName;
-            inValue.login = login;
+            inValue.Body = new CAESDO.Catbert.Test.CatbertService.SearchNewUserRequestBody();
+            inValue.Body.eid = eid;
+            inValue.Body.firstName = firstName;
+            inValue.Body.lastName = lastName;
+            inValue.Body.login = login;
             CAESDO.Catbert.Test.CatbertService.SearchNewUserResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).SearchNewUser(inValue);
-            SecurityContext = retVal.SecurityContext;
-            return retVal.SearchNewUserResult;
+            return retVal.Body.SearchNewUserResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1210,13 +1595,12 @@ namespace CAESDO.Catbert.Test.CatbertService {
             return base.Channel.InsertNewUser(request);
         }
         
-        public int InsertNewUser(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, CAESDO.Catbert.Test.CatbertService.ServiceUser serviceUser) {
+        public int InsertNewUser(CAESDO.Catbert.Test.CatbertService.ServiceUser serviceUser) {
             CAESDO.Catbert.Test.CatbertService.InsertNewUserRequest inValue = new CAESDO.Catbert.Test.CatbertService.InsertNewUserRequest();
-            inValue.SecurityContext = SecurityContext;
-            inValue.serviceUser = serviceUser;
+            inValue.Body = new CAESDO.Catbert.Test.CatbertService.InsertNewUserRequestBody();
+            inValue.Body.serviceUser = serviceUser;
             CAESDO.Catbert.Test.CatbertService.InsertNewUserResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).InsertNewUser(inValue);
-            SecurityContext = retVal.SecurityContext;
-            return retVal.InsertNewUserResult;
+            return retVal.Body.InsertNewUserResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1224,13 +1608,12 @@ namespace CAESDO.Catbert.Test.CatbertService {
             return base.Channel.VerifyUser(request);
         }
         
-        public bool VerifyUser(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login) {
+        public bool VerifyUser(string login) {
             CAESDO.Catbert.Test.CatbertService.VerifyUserRequest inValue = new CAESDO.Catbert.Test.CatbertService.VerifyUserRequest();
-            inValue.SecurityContext = SecurityContext;
-            inValue.login = login;
+            inValue.Body = new CAESDO.Catbert.Test.CatbertService.VerifyUserRequestBody();
+            inValue.Body.login = login;
             CAESDO.Catbert.Test.CatbertService.VerifyUserResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).VerifyUser(inValue);
-            SecurityContext = retVal.SecurityContext;
-            return retVal.VerifyUserResult;
+            return retVal.Body.VerifyUserResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1238,14 +1621,13 @@ namespace CAESDO.Catbert.Test.CatbertService {
             return base.Channel.GetUser(request);
         }
         
-        public CAESDO.Catbert.Test.CatbertService.CatbertUser GetUser(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string application) {
+        public CAESDO.Catbert.Test.CatbertService.CatbertUser GetUser(string login, string application) {
             CAESDO.Catbert.Test.CatbertService.GetUserRequest inValue = new CAESDO.Catbert.Test.CatbertService.GetUserRequest();
-            inValue.SecurityContext = SecurityContext;
-            inValue.login = login;
-            inValue.application = application;
+            inValue.Body = new CAESDO.Catbert.Test.CatbertService.GetUserRequestBody();
+            inValue.Body.login = login;
+            inValue.Body.application = application;
             CAESDO.Catbert.Test.CatbertService.GetUserResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).GetUser(inValue);
-            SecurityContext = retVal.SecurityContext;
-            return retVal.GetUserResult;
+            return retVal.Body.GetUserResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1253,15 +1635,14 @@ namespace CAESDO.Catbert.Test.CatbertService {
             return base.Channel.AssignPermissions(request);
         }
         
-        public bool AssignPermissions(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string application, string role) {
+        public bool AssignPermissions(string login, string application, string role) {
             CAESDO.Catbert.Test.CatbertService.AssignPermissionsRequest inValue = new CAESDO.Catbert.Test.CatbertService.AssignPermissionsRequest();
-            inValue.SecurityContext = SecurityContext;
-            inValue.login = login;
-            inValue.application = application;
-            inValue.role = role;
+            inValue.Body = new CAESDO.Catbert.Test.CatbertService.AssignPermissionsRequestBody();
+            inValue.Body.login = login;
+            inValue.Body.application = application;
+            inValue.Body.role = role;
             CAESDO.Catbert.Test.CatbertService.AssignPermissionsResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).AssignPermissions(inValue);
-            SecurityContext = retVal.SecurityContext;
-            return retVal.AssignPermissionsResult;
+            return retVal.Body.AssignPermissionsResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1269,15 +1650,14 @@ namespace CAESDO.Catbert.Test.CatbertService {
             return base.Channel.DeletePermissions(request);
         }
         
-        public bool DeletePermissions(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string application, string role) {
+        public bool DeletePermissions(string login, string application, string role) {
             CAESDO.Catbert.Test.CatbertService.DeletePermissionsRequest inValue = new CAESDO.Catbert.Test.CatbertService.DeletePermissionsRequest();
-            inValue.SecurityContext = SecurityContext;
-            inValue.login = login;
-            inValue.application = application;
-            inValue.role = role;
+            inValue.Body = new CAESDO.Catbert.Test.CatbertService.DeletePermissionsRequestBody();
+            inValue.Body.login = login;
+            inValue.Body.application = application;
+            inValue.Body.role = role;
             CAESDO.Catbert.Test.CatbertService.DeletePermissionsResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).DeletePermissions(inValue);
-            SecurityContext = retVal.SecurityContext;
-            return retVal.DeletePermissionsResult;
+            return retVal.Body.DeletePermissionsResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1285,15 +1665,14 @@ namespace CAESDO.Catbert.Test.CatbertService {
             return base.Channel.PermissionExists(request);
         }
         
-        public bool PermissionExists(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string application, string role) {
+        public bool PermissionExists(string login, string application, string role) {
             CAESDO.Catbert.Test.CatbertService.PermissionExistsRequest inValue = new CAESDO.Catbert.Test.CatbertService.PermissionExistsRequest();
-            inValue.SecurityContext = SecurityContext;
-            inValue.login = login;
-            inValue.application = application;
-            inValue.role = role;
+            inValue.Body = new CAESDO.Catbert.Test.CatbertService.PermissionExistsRequestBody();
+            inValue.Body.login = login;
+            inValue.Body.application = application;
+            inValue.Body.role = role;
             CAESDO.Catbert.Test.CatbertService.PermissionExistsResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).PermissionExists(inValue);
-            SecurityContext = retVal.SecurityContext;
-            return retVal.PermissionExistsResult;
+            return retVal.Body.PermissionExistsResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1301,14 +1680,13 @@ namespace CAESDO.Catbert.Test.CatbertService {
             return base.Channel.AddUnit(request);
         }
         
-        public bool AddUnit(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string unitFIS) {
+        public bool AddUnit(string login, string unitFIS) {
             CAESDO.Catbert.Test.CatbertService.AddUnitRequest inValue = new CAESDO.Catbert.Test.CatbertService.AddUnitRequest();
-            inValue.SecurityContext = SecurityContext;
-            inValue.login = login;
-            inValue.unitFIS = unitFIS;
+            inValue.Body = new CAESDO.Catbert.Test.CatbertService.AddUnitRequestBody();
+            inValue.Body.login = login;
+            inValue.Body.unitFIS = unitFIS;
             CAESDO.Catbert.Test.CatbertService.AddUnitResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).AddUnit(inValue);
-            SecurityContext = retVal.SecurityContext;
-            return retVal.AddUnitResult;
+            return retVal.Body.AddUnitResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1316,14 +1694,13 @@ namespace CAESDO.Catbert.Test.CatbertService {
             return base.Channel.DeleteUnit(request);
         }
         
-        public bool DeleteUnit(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string unitFIS) {
+        public bool DeleteUnit(string login, string unitFIS) {
             CAESDO.Catbert.Test.CatbertService.DeleteUnitRequest inValue = new CAESDO.Catbert.Test.CatbertService.DeleteUnitRequest();
-            inValue.SecurityContext = SecurityContext;
-            inValue.login = login;
-            inValue.unitFIS = unitFIS;
+            inValue.Body = new CAESDO.Catbert.Test.CatbertService.DeleteUnitRequestBody();
+            inValue.Body.login = login;
+            inValue.Body.unitFIS = unitFIS;
             CAESDO.Catbert.Test.CatbertService.DeleteUnitResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).DeleteUnit(inValue);
-            SecurityContext = retVal.SecurityContext;
-            return retVal.DeleteUnitResult;
+            return retVal.Body.DeleteUnitResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1331,12 +1708,11 @@ namespace CAESDO.Catbert.Test.CatbertService {
             return base.Channel.GetUnits(request);
         }
         
-        public ServiceUnit[] GetUnits(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext) {
+        public CAESDO.Catbert.Test.CatbertService.ServiceUnit[] GetUnits() {
             CAESDO.Catbert.Test.CatbertService.GetUnitsRequest inValue = new CAESDO.Catbert.Test.CatbertService.GetUnitsRequest();
-            inValue.SecurityContext = SecurityContext;
+            inValue.Body = new CAESDO.Catbert.Test.CatbertService.GetUnitsRequestBody();
             CAESDO.Catbert.Test.CatbertService.GetUnitsResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).GetUnits(inValue);
-            SecurityContext = retVal.SecurityContext;
-            return retVal.GetUnitsResult;
+            return retVal.Body.GetUnitsResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1344,13 +1720,12 @@ namespace CAESDO.Catbert.Test.CatbertService {
             return base.Channel.GetUnitsByUser(request);
         }
         
-        public ServiceUnit[] GetUnitsByUser(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login) {
+        public CAESDO.Catbert.Test.CatbertService.ServiceUnit[] GetUnitsByUser(string login) {
             CAESDO.Catbert.Test.CatbertService.GetUnitsByUserRequest inValue = new CAESDO.Catbert.Test.CatbertService.GetUnitsByUserRequest();
-            inValue.SecurityContext = SecurityContext;
-            inValue.login = login;
+            inValue.Body = new CAESDO.Catbert.Test.CatbertService.GetUnitsByUserRequestBody();
+            inValue.Body.login = login;
             CAESDO.Catbert.Test.CatbertService.GetUnitsByUserResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).GetUnitsByUser(inValue);
-            SecurityContext = retVal.SecurityContext;
-            return retVal.GetUnitsByUserResult;
+            return retVal.Body.GetUnitsByUserResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1358,13 +1733,12 @@ namespace CAESDO.Catbert.Test.CatbertService {
             return base.Channel.GetRoles(request);
         }
         
-        public ServiceRole[] GetRoles(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string application) {
+        public CAESDO.Catbert.Test.CatbertService.ServiceRole[] GetRoles(string application) {
             CAESDO.Catbert.Test.CatbertService.GetRolesRequest inValue = new CAESDO.Catbert.Test.CatbertService.GetRolesRequest();
-            inValue.SecurityContext = SecurityContext;
-            inValue.application = application;
+            inValue.Body = new CAESDO.Catbert.Test.CatbertService.GetRolesRequestBody();
+            inValue.Body.application = application;
             CAESDO.Catbert.Test.CatbertService.GetRolesResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).GetRoles(inValue);
-            SecurityContext = retVal.SecurityContext;
-            return retVal.GetRolesResult;
+            return retVal.Body.GetRolesResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1372,14 +1746,13 @@ namespace CAESDO.Catbert.Test.CatbertService {
             return base.Channel.GetRolesByUser(request);
         }
         
-        public ServiceRole[] GetRolesByUser(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string application, string login) {
+        public CAESDO.Catbert.Test.CatbertService.ServiceRole[] GetRolesByUser(string application, string login) {
             CAESDO.Catbert.Test.CatbertService.GetRolesByUserRequest inValue = new CAESDO.Catbert.Test.CatbertService.GetRolesByUserRequest();
-            inValue.SecurityContext = SecurityContext;
-            inValue.application = application;
-            inValue.login = login;
+            inValue.Body = new CAESDO.Catbert.Test.CatbertService.GetRolesByUserRequestBody();
+            inValue.Body.application = application;
+            inValue.Body.login = login;
             CAESDO.Catbert.Test.CatbertService.GetRolesByUserResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).GetRolesByUser(inValue);
-            SecurityContext = retVal.SecurityContext;
-            return retVal.GetRolesByUserResult;
+            return retVal.Body.GetRolesByUserResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1387,13 +1760,12 @@ namespace CAESDO.Catbert.Test.CatbertService {
             return base.Channel.GetUsersByApplication(request);
         }
         
-        public CatbertUser[] GetUsersByApplication(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string application) {
+        public CAESDO.Catbert.Test.CatbertService.CatbertUser[] GetUsersByApplication(string application) {
             CAESDO.Catbert.Test.CatbertService.GetUsersByApplicationRequest inValue = new CAESDO.Catbert.Test.CatbertService.GetUsersByApplicationRequest();
-            inValue.SecurityContext = SecurityContext;
-            inValue.application = application;
+            inValue.Body = new CAESDO.Catbert.Test.CatbertService.GetUsersByApplicationRequestBody();
+            inValue.Body.application = application;
             CAESDO.Catbert.Test.CatbertService.GetUsersByApplicationResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).GetUsersByApplication(inValue);
-            SecurityContext = retVal.SecurityContext;
-            return retVal.GetUsersByApplicationResult;
+            return retVal.Body.GetUsersByApplicationResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1401,14 +1773,13 @@ namespace CAESDO.Catbert.Test.CatbertService {
             return base.Channel.GetUsersByApplicationRole(request);
         }
         
-        public CatbertUser[] GetUsersByApplicationRole(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string application, string role) {
+        public CAESDO.Catbert.Test.CatbertService.CatbertUser[] GetUsersByApplicationRole(string application, string role) {
             CAESDO.Catbert.Test.CatbertService.GetUsersByApplicationRoleRequest inValue = new CAESDO.Catbert.Test.CatbertService.GetUsersByApplicationRoleRequest();
-            inValue.SecurityContext = SecurityContext;
-            inValue.application = application;
-            inValue.role = role;
+            inValue.Body = new CAESDO.Catbert.Test.CatbertService.GetUsersByApplicationRoleRequestBody();
+            inValue.Body.application = application;
+            inValue.Body.role = role;
             CAESDO.Catbert.Test.CatbertService.GetUsersByApplicationRoleResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).GetUsersByApplicationRole(inValue);
-            SecurityContext = retVal.SecurityContext;
-            return retVal.GetUsersByApplicationRoleResult;
+            return retVal.Body.GetUsersByApplicationRoleResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1416,14 +1787,13 @@ namespace CAESDO.Catbert.Test.CatbertService {
             return base.Channel.SetEmail(request);
         }
         
-        public bool SetEmail(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string emailAddress) {
+        public bool SetEmail(string login, string emailAddress) {
             CAESDO.Catbert.Test.CatbertService.SetEmailRequest inValue = new CAESDO.Catbert.Test.CatbertService.SetEmailRequest();
-            inValue.SecurityContext = SecurityContext;
-            inValue.login = login;
-            inValue.emailAddress = emailAddress;
+            inValue.Body = new CAESDO.Catbert.Test.CatbertService.SetEmailRequestBody();
+            inValue.Body.login = login;
+            inValue.Body.emailAddress = emailAddress;
             CAESDO.Catbert.Test.CatbertService.SetEmailResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).SetEmail(inValue);
-            SecurityContext = retVal.SecurityContext;
-            return retVal.SetEmailResult;
+            return retVal.Body.SetEmailResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1431,14 +1801,13 @@ namespace CAESDO.Catbert.Test.CatbertService {
             return base.Channel.SetPhoneNumber(request);
         }
         
-        public bool SetPhoneNumber(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string phoneNumber) {
+        public bool SetPhoneNumber(string login, string phoneNumber) {
             CAESDO.Catbert.Test.CatbertService.SetPhoneNumberRequest inValue = new CAESDO.Catbert.Test.CatbertService.SetPhoneNumberRequest();
-            inValue.SecurityContext = SecurityContext;
-            inValue.login = login;
-            inValue.phoneNumber = phoneNumber;
+            inValue.Body = new CAESDO.Catbert.Test.CatbertService.SetPhoneNumberRequestBody();
+            inValue.Body.login = login;
+            inValue.Body.phoneNumber = phoneNumber;
             CAESDO.Catbert.Test.CatbertService.SetPhoneNumberResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).SetPhoneNumber(inValue);
-            SecurityContext = retVal.SecurityContext;
-            return retVal.SetPhoneNumberResult;
+            return retVal.Body.SetPhoneNumberResult;
         }
     }
 }
