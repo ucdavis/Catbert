@@ -33,9 +33,20 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catbert.Core", "Catbert.Cor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catbert.Data", "Catbert.Data\Catbert.Data.csproj", "{55DA8BF5-C31F-4C3B-AEE3-07FDF47DA6F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catbert.Test", "Catbert.Test\Catbert.Test.csproj", "{C6075B5F-2281-465B-BCA4-EE3E2F8CF013}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F72EF2F0-EF1F-47C4-925A-A3F1621ECA5C} = {F72EF2F0-EF1F-47C4-925A-A3F1621ECA5C}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AC4CC766-F9A5-44E2-9CCC-A4EFECA9B956}"
+	ProjectSection(SolutionItems) = preProject
+		CatbertSolution.vsmdi = CatbertSolution.vsmdi
+		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
+		SccNumberOfProjects = 6
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = http://1x:8080/
 		SccLocalPath0 = .
@@ -53,6 +64,12 @@ Global
 		SccLocalPath4 = .
 		SccProjectFilePathRelativizedFromConnection4 = Catbert.Web\\
 		SccProjectEnlistmentChoice4 = 2
+		SccProjectUniqueName5 = Catbert.Test\\Catbert.Test.csproj
+		SccProjectName5 = Catbert.Test
+		SccLocalPath5 = Catbert.Test
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = CatbertSolution.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +92,10 @@ Global
 		{55DA8BF5-C31F-4C3B-AEE3-07FDF47DA6F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55DA8BF5-C31F-4C3B-AEE3-07FDF47DA6F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55DA8BF5-C31F-4C3B-AEE3-07FDF47DA6F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6075B5F-2281-465B-BCA4-EE3E2F8CF013}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6075B5F-2281-465B-BCA4-EE3E2F8CF013}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6075B5F-2281-465B-BCA4-EE3E2F8CF013}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6075B5F-2281-465B-BCA4-EE3E2F8CF013}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
