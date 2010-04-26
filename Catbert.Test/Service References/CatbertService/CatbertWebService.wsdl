@@ -224,17 +224,17 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="GetUsersByApplications">
+      <s:element name="GetUsersByApplication">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="application" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="GetUsersByApplicationsResponse">
+      <s:element name="GetUsersByApplicationResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetUsersByApplicationsResult" type="tns:ArrayOfCatbertUser" />
+            <s:element minOccurs="0" maxOccurs="1" name="GetUsersByApplicationResult" type="tns:ArrayOfCatbertUser" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -247,10 +247,9 @@
         <s:complexContent mixed="false">
           <s:extension base="tns:ServiceUser">
             <s:sequence>
-              <s:element minOccurs="1" maxOccurs="1" name="RoleID" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:int" />
-              <s:element minOccurs="0" maxOccurs="1" name="SID" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Role" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Roles" type="tns:ArrayOfServiceRole" />
+              <s:element minOccurs="0" maxOccurs="1" name="Units" type="tns:ArrayOfServiceUnit" />
             </s:sequence>
           </s:extension>
         </s:complexContent>
@@ -259,7 +258,7 @@
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="application" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="roleID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="role" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -412,13 +411,13 @@
   <wsdl:message name="GetRolesByUserSecurityContext">
     <wsdl:part name="SecurityContext" element="tns:SecurityContext" />
   </wsdl:message>
-  <wsdl:message name="GetUsersByApplicationsSoapIn">
-    <wsdl:part name="parameters" element="tns:GetUsersByApplications" />
+  <wsdl:message name="GetUsersByApplicationSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUsersByApplication" />
   </wsdl:message>
-  <wsdl:message name="GetUsersByApplicationsSoapOut">
-    <wsdl:part name="parameters" element="tns:GetUsersByApplicationsResponse" />
+  <wsdl:message name="GetUsersByApplicationSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUsersByApplicationResponse" />
   </wsdl:message>
-  <wsdl:message name="GetUsersByApplicationsSecurityContext">
+  <wsdl:message name="GetUsersByApplicationSecurityContext">
     <wsdl:part name="SecurityContext" element="tns:SecurityContext" />
   </wsdl:message>
   <wsdl:message name="GetUsersByApplicationRoleSoapIn">
@@ -497,9 +496,9 @@
       <wsdl:input message="tns:GetRolesByUserSoapIn" />
       <wsdl:output message="tns:GetRolesByUserSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="GetUsersByApplications">
-      <wsdl:input message="tns:GetUsersByApplicationsSoapIn" />
-      <wsdl:output message="tns:GetUsersByApplicationsSoapOut" />
+    <wsdl:operation name="GetUsersByApplication">
+      <wsdl:input message="tns:GetUsersByApplicationSoapIn" />
+      <wsdl:output message="tns:GetUsersByApplicationSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="GetUsersByApplicationRole">
       <wsdl:input message="tns:GetUsersByApplicationRoleSoapIn" />
@@ -648,15 +647,15 @@
         <soap:header message="tns:GetRolesByUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetUsersByApplications">
-      <soap:operation soapAction="CAESDO.Services/GetUsersByApplications" style="document" />
+    <wsdl:operation name="GetUsersByApplication">
+      <soap:operation soapAction="CAESDO.Services/GetUsersByApplication" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
-        <soap:header message="tns:GetUsersByApplicationsSecurityContext" part="SecurityContext" use="literal" />
+        <soap:header message="tns:GetUsersByApplicationSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal" />
-        <soap:header message="tns:GetUsersByApplicationsSecurityContext" part="SecurityContext" use="literal" />
+        <soap:header message="tns:GetUsersByApplicationSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetUsersByApplicationRole">
@@ -827,15 +826,15 @@
         <soap12:header message="tns:GetRolesByUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetUsersByApplications">
-      <soap12:operation soapAction="CAESDO.Services/GetUsersByApplications" style="document" />
+    <wsdl:operation name="GetUsersByApplication">
+      <soap12:operation soapAction="CAESDO.Services/GetUsersByApplication" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
-        <soap12:header message="tns:GetUsersByApplicationsSecurityContext" part="SecurityContext" use="literal" />
+        <soap12:header message="tns:GetUsersByApplicationSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
-        <soap12:header message="tns:GetUsersByApplicationsSecurityContext" part="SecurityContext" use="literal" />
+        <soap12:header message="tns:GetUsersByApplicationSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetUsersByApplicationRole">

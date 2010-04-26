@@ -64,6 +64,17 @@ namespace CAESDO.Catbert.BLL
             return Queryable.Where(user => user.LoginID == login).Any();
         }
 
+        public static List<User> GetByApplication(string application)
+        {
+            //Grab all permissions in this application
+            var permissions = PermissionBLL.Queryable.Where(perm => perm.Application.Name == application && perm.Inactive == false).ToList();
+
+            //Now get all users among these permissions
+            var users = permissions.Select(perm => perm.User).Distinct();
+
+            return users.ToList();
+        }
+
         public static List<User> GetByApplicationRole(int applicationID, int roleID)
         {
             //Can't implement through LINQ because of restrictions on joins.

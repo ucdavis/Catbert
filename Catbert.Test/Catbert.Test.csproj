@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationTests.cs" />
     <Compile Include="CatbertManager.cs" />
     <Compile Include="PermissionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

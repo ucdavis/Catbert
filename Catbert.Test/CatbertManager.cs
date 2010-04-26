@@ -76,13 +76,7 @@ namespace CAESDO.Catbert.Test
             return catops.GetRolesByUser(AppName, login);
         }
 
-        public static CatOps.CatbertUsers[] GetUsersInApplication()
-        {
-            SetSecurityContext();
-
-            return catops.GetUsersByApplications(AppName);
-        }
-
+        
         public static int InsertNewUser(string login)
         {
             SetSecurityContext();
@@ -108,6 +102,13 @@ namespace CAESDO.Catbert.Test
             return catops.VerifyUser(login);
         }
          */
+
+        public static CatbertUser[] GetUsersInApplication()
+        {
+            var sc = GetSecurityContext();
+
+            return catops.GetUsersByApplication(ref sc, AppName);
+        }
 
         public static ServiceRole[] GetRoles()
         {

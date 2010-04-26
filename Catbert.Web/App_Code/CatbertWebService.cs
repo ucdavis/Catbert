@@ -210,7 +210,47 @@ public class CatbertWebService : System.Web.Services.WebService
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
     public List<CatbertUser> GetUsersByApplication(string application)
     {
-        throw new NotImplementedException();
+        EnsureCredentials(secureCTX);
+
+        List<CatbertUser> users = new List<CatbertUser>();
+
+        foreach (var user in UserBLL.GetByApplication(application))
+        {
+            //Add the user's basic info
+            CatbertUser catbertUser = new CatbertUser()
+            {
+                UserID = user.ID,
+                Login = user.LoginID,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                EmployeeID = user.EmployeeID,
+                Roles = new List<ServiceRole>(),
+                Units = new List<ServiceUnit>()
+            };
+
+            //Add in the units
+            foreach (var unit in user.Units)
+            {
+                catbertUser.Units.Add(new ServiceUnit() { ID = unit.ID, Name = unit.ShortName, UnitFIS = unit.FISCode });
+            }
+
+            //Grab this user's roles only for this application
+            var roles = PermissionBLL.GetRolesForUser(application, catbertUser.Login);
+
+            foreach (var role in roles)
+            {
+                if (role.Inactive == false) //only add in active permissions
+                {
+                    catbertUser.Roles.Add(new ServiceRole() { ID = role.ID, Name = role.Name });
+                }
+            }
+
+            //Add this catbertUser to the main list
+            users.Add(catbertUser);
+        }
+
+        return users;
     }
 
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]

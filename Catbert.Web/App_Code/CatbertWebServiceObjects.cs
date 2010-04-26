@@ -45,16 +45,17 @@ namespace Catbert.Services
         public CatbertUser(int userID, string eid, string firstName, string lastName, string login, string email, string sid, string role, int roleID)
             : base(eid, firstName, lastName, login, email, null)
         {
-            UserID = userID;
-
             Roles = new List<ServiceRole>();
+            Units = new List<ServiceUnit>();
+
+            UserID = userID;
             Roles.Add(new ServiceRole() { ID = roleID, Name = role });
         }
 
-        public int RoleID { get; set; }
         public int UserID { get; set; }
-        public string SID { get; set; }
+        //public string SID { get; set; }
         public List<ServiceRole> Roles { get; set; }
+        public List<ServiceUnit> Units { get; set; }
     }
 
     public class ServiceUnit
