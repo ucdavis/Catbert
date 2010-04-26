@@ -6,6 +6,7 @@ using System.Web.UI;
 using CAESArch.BLL;
 using CAESDO.Catbert.BLL;
 using CAESDO.Catbert.Core.Domain;
+using CAESArch.Core.Utils;
 
 public partial class Management_UserManagement : System.Web.UI.Page
 {
@@ -19,14 +20,12 @@ public partial class Management_UserManagement : System.Web.UI.Page
     /// </summary>
     protected void Page_Init(object sender, EventArgs e)
     {
-        ///TODO: For testing only, set application to Catbert
-        CurrentApplication = Request.QueryString["app"] ?? "Catbert";
+        CurrentApplication = Request.QueryString["app"];
+
+        Check.Require(CurrentApplication != null, "Application Required");
 
         ClientScript.RegisterHiddenField("app", CurrentApplication); //Register a hidden field with the application name in it for use from JS
         ClientScript.RegisterHiddenField("user", User.Identity.Name); //Also a hidden field with the user's name in it for use from JS
-
-        //Check permissions for the current user to the application Application
-        ///TODOL Implement check
     }
 
     protected void Page_Load(object sender, EventArgs e)
