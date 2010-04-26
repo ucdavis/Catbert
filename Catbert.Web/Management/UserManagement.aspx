@@ -39,19 +39,11 @@
                 formatItem: function(row, i, max) {
                     return row.Name + " (" + row.Login + ")<br/>" + row.Email; //i + "/" + max + ": \"" + row.name + "\" [" + row.to + "]";
                 }
-            });
+            }).result(SearchUsers);
 
             $("#txtSearch").keypress(function(event) {
                 if (event.keyCode == 13) {
-                    search = $(this).val() /*textbox value*/;
-                    page = 1; //Change the page when a new search is executed
-                    PopulateUserTable(application, search, unit, role, sortname, sortorder);
-                    
-                    setTimeout(function() {
-                        $(".ac_results").hide(); //Hide the results whenever you hit enter
-                    }, 250);
-                    
-                    return false; //Don't post back
+                    return SearchUsers();
                 }
             });
 
@@ -161,6 +153,18 @@
                 null);
             });
         });
+
+        function SearchUsers() {
+            search = $("#txtSearch").val() /*textbox value*/;
+            page = 1; //Change the page when a new search is executed
+            PopulateUserTable(application, search, unit, role, sortname, sortorder);
+
+            setTimeout(function() {
+                $(".ac_results").hide(); //Hide the results whenever you hit enter
+            }, 250);
+
+            return false; //Don't post back
+        }
 
         function ChangeSortOrder() {
             sortname = $(this).attr("title");
