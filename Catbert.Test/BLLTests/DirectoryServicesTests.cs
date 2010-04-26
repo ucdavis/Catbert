@@ -41,5 +41,13 @@ namespace CAESDO.Catbert.Test.BLLTests
 
             Assert.IsNull(student);
         }
+
+        [TestMethod]
+        public void NullStudentIdReturnsNull()
+        {
+            var student = DirectoryServices.FindStudent(null);
+
+            Assert.IsNull(student);
+        }
     }
 }
