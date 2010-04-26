@@ -29,7 +29,7 @@
         </span>
         
         <span id="filter" style="float:right;">
-            <asp:ListView ID="lviewFilterRoles" runat="server" DataSourceID="odsRoles">
+            <asp:ListView ID="lviewFilterRoles" runat="server">
                 <LayoutTemplate>
                     <select id="filterRoles">
                         <option value="">-- Filter By Role --</option>
@@ -43,7 +43,7 @@
                 </ItemTemplate>
             </asp:ListView>
             
-            <asp:ListView ID="lviewFilterUnits" runat="server" DataSourceID="odsUnits">
+            <asp:ListView ID="lviewFilterUnits" runat="server">
                 <LayoutTemplate>
                     <select id="filterUnits">
                         <option value="">-- Filter By Unit --</option>
@@ -111,7 +111,7 @@
                 </tbody>
             </table>
             <br />
-            <asp:ListView ID="lviewUserRoles" runat="server" DataSourceID="odsRoles">
+            <asp:ListView ID="lviewUserRoles" runat="server">
                 <LayoutTemplate>
                     <select id="UserRoles">
                         <option id="itemPlaceholder" runat="server"></option>
@@ -143,7 +143,7 @@
                 </tbody>
             </table>
             <br />
-            <asp:ListView ID="lviewUserUnits" runat="server" DataSourceID="odsUnits">
+            <asp:ListView ID="lviewUserUnits" runat="server">
                 <LayoutTemplate>
                     <select id="UserUnits">
                         <option id="itemPlaceholder" runat="server"></option>
@@ -168,7 +168,7 @@
             Email: <input type="text" id="txtNewUserEmail" /><br />
             Phone: <input type="text" id="txtNewUserPhone" /><br />
             Role:
-            <asp:ListView ID="lviewRoles" runat="server" DataSourceID="odsRoles">
+            <asp:ListView ID="lviewRoles" runat="server">
                 <LayoutTemplate>
                     <select id="applicationRoles">
                         <option id="itemPlaceholder" runat="server"></option>
@@ -180,15 +180,15 @@
                     </option>
                 </ItemTemplate>
             </asp:ListView>
-            <asp:ObjectDataSource ID="odsRoles" runat="server" OldValuesParameterFormatString="original_{0}"
+<%--            <asp:ObjectDataSource ID="odsRoles" runat="server" OldValuesParameterFormatString="original_{0}"
                 SelectMethod="GetVisibleByUser" TypeName="CAESDO.Catbert.BLL.RoleBLL">
                 <SelectParameters>
                     <asp:QueryStringParameter QueryStringField="app" Name="application" DefaultValue="Catbert" />
                 </SelectParameters>
-            </asp:ObjectDataSource>
+            </asp:ObjectDataSource>--%>
             <br />
             Unit:
-            <asp:ListView ID="lviewUnits" runat="server" DataSourceID="odsUnits">
+            <asp:ListView ID="lviewUnits" runat="server">
                 <LayoutTemplate>
                     <select id="units">
                         <option id="itemPlaceholder" runat="server"></option>
@@ -200,12 +200,12 @@
                     </option>
                 </ItemTemplate>
             </asp:ListView>
-            <asp:ObjectDataSource ID="odsUnits" runat="server" OldValuesParameterFormatString="original_{0}"
+<%--            <asp:ObjectDataSource ID="odsUnits" runat="server" OldValuesParameterFormatString="original_{0}"
                 SelectMethod="GetVisibleByUser" TypeName="CAESDO.Catbert.BLL.UnitBLL">
                 <SelectParameters>
                     <asp:QueryStringParameter QueryStringField="app" Name="application" DefaultValue="Catbert" />
                 </SelectParameters>
-            </asp:ObjectDataSource>
+            </asp:ObjectDataSource>--%>
             <br /><br />
             <input type="button" id="btnAddUser" value="Add" /><span id="spanAddUserProgress" style="display:none;">Processing...</span>
         </div>

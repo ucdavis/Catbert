@@ -62,14 +62,7 @@ namespace CAESDO.Catbert.BLL
         /// </summary>
         public static List<Unit> GetVisibleByUser(string login, string application)
         {
-            using (var ts = new TransactionScope())
-            {
-                var result = daoFactory.GetUnitDao().GetVisibleByUser(login, application);
-
-                ts.CommittTransaction();
-
-                return result;
-            }
+            return daoFactory.GetUnitDao().GetVisibleByUser(login, application);
         }
 
         /// <summary>

@@ -56,6 +56,7 @@
     <Compile Include="DirectoryServices.cs" />
     <Compile Include="Dynamic.cs" />
     <Compile Include="GenericBLL.cs" />
+    <Compile Include="Transaction.cs" />
     <Compile Include="PermissionBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleBLL.cs" />
