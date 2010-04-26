@@ -54,7 +54,7 @@
         }
 
         function PopulateUserTableSuccess(data) {
-            data = data.d; //Grab the inner container of data
+            //data = data.d; //Grab the inner container of data
 
             //Clear the usertable
             $("#tblUsersBody").empty();
@@ -108,7 +108,7 @@
                 dataType: 'json', //JSON
                 contentType: 'application/json',
                 processData: true,
-                success: onSuccess,
+                success: function(data) { return onSuccess(data.d); },
                 error: onError
             });
         }
