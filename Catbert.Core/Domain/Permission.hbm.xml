@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class
+    name="CAESDO.Catbert.Core.Domain.Permission, CAESDO.Catbert.Core"
+    table="Permissions" >
+    <id name="id" access="field" column="PermissionID" unsaved-value="0">
+      <generator class="identity" />
+    </id>
+    
+    <property name="Inactive" column="Inactive" />
+
+    <many-to-one name="User" column="UserID"
+      class="CAESDO.Catbert.Core.Domain.User, CAESDO.Catbert.Core" not-null="true" />
+
+    <many-to-one name="Application" column="ApplicationID"
+      class="CAESDO.Catbert.Core.Domain.Application, CAESDO.Catbert.Core" not-null="true" />
+
+    <many-to-one name="Role" column="RoleID"
+      class="CAESDO.Catbert.Core.Domain.Role, CAESDO.Catbert.Core" not-null="true" />
+    
+  </class>
+</hibernate-mapping>
