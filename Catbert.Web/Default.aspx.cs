@@ -6,16 +6,18 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using CAESDO.Catbert.Core.Domain;
 using CAESDO.Catbert.BLL;
+using System.Web.Security;
 
 public partial class _Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        //var schools = GenericBLL<School, string>.GetAll();
+        lblLoginID.Text = User.Identity.Name;
+    }
 
-        //Response.Write(schools.Count);
-        
-        //var q = GenericBLL<TrackingType, int>.GetAll();
-        //var q = UserBLL.GetByApplicationRole(1, 1);
+    protected void btnLogout_Click(object sender, EventArgs e)
+    {
+        FormsAuthentication.SignOut();
+        Response.Redirect(FormsAuthentication.DefaultUrl);
     }
 }
