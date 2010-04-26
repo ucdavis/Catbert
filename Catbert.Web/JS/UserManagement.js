@@ -264,7 +264,14 @@ function ShowUserInfo(applicationName, Login) {
     OpenDialog(dialogUserInfo, buttons, "User Information",
                 function() {
                     if (userTableDirty) {
-                        PopulateUserTableDefault(applicationName);
+                        if (Login == user) {
+                            //We must repopulate the page since the currently logged in user changed their account
+                            window.location.reload();
+                        }
+                        else {
+                            //We can just repopulate the user's table since someone else was modified
+                            PopulateUserTableDefault(applicationName);
+                        }
                     }
                 }
             );
