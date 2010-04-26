@@ -42,7 +42,7 @@ $(document).ready(function() {
     $("#imgSearch").click(function() {
         search = "";
         $("#txtSearch").val(search); //clear out the text
-
+        page = 1; //Go back to the first page
         PopulateUserTable(application, search, unit, role, sortname, sortorder);
         $(".ac_results").hide(); //Hide the results whenever you hit enter
 
