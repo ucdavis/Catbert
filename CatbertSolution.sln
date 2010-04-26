@@ -1,0 +1,81 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Catbert.Web", "Catbert.Web", "{F72EF2F0-EF1F-47C4-925A-A3F1621ECA5C}"
+	ProjectSection(WebsiteProperties) = preProject
+		SccProjectName = "SAK"
+		SccAuxPath = "SAK"
+		SccLocalPath = "SAK"
+		SccProvider = "SAK"
+		TargetFramework = "3.5"
+		Debug.AspNetCompiler.VirtualPath = "/Catbert.Web"
+		Debug.AspNetCompiler.PhysicalPath = "Catbert.Web\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\Catbert.Web\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/Catbert.Web"
+		Release.AspNetCompiler.PhysicalPath = "Catbert.Web\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\Catbert.Web\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "1772"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catbert.BLL", "Catbert.BLL\Catbert.BLL.csproj", "{08264AE9-DFB6-4961-B704-3C3BB9E52904}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catbert.Core", "Catbert.Core\Catbert.Core.csproj", "{A7B433EA-F2D1-4BF3-93FB-0787C99F9870}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catbert.Data", "Catbert.Data\Catbert.Data.csproj", "{55DA8BF5-C31F-4C3B-AEE3-07FDF47DA6F0}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://1x:8080/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Catbert.BLL\\Catbert.BLL.csproj
+		SccProjectName1 = Catbert.BLL
+		SccLocalPath1 = Catbert.BLL
+		SccProjectUniqueName2 = Catbert.Core\\Catbert.Core.csproj
+		SccProjectName2 = Catbert.Core
+		SccLocalPath2 = Catbert.Core
+		SccProjectUniqueName3 = Catbert.Data\\Catbert.Data.csproj
+		SccProjectName3 = Catbert.Data
+		SccLocalPath3 = Catbert.Data
+		SccWebProject4 = true
+		SccProjectUniqueName4 = Catbert.Web
+		SccLocalPath4 = .
+		SccProjectFilePathRelativizedFromConnection4 = Catbert.Web\\
+		SccProjectEnlistmentChoice4 = 2
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F72EF2F0-EF1F-47C4-925A-A3F1621ECA5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F72EF2F0-EF1F-47C4-925A-A3F1621ECA5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F72EF2F0-EF1F-47C4-925A-A3F1621ECA5C}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{F72EF2F0-EF1F-47C4-925A-A3F1621ECA5C}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{08264AE9-DFB6-4961-B704-3C3BB9E52904}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08264AE9-DFB6-4961-B704-3C3BB9E52904}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08264AE9-DFB6-4961-B704-3C3BB9E52904}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08264AE9-DFB6-4961-B704-3C3BB9E52904}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7B433EA-F2D1-4BF3-93FB-0787C99F9870}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7B433EA-F2D1-4BF3-93FB-0787C99F9870}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7B433EA-F2D1-4BF3-93FB-0787C99F9870}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7B433EA-F2D1-4BF3-93FB-0787C99F9870}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55DA8BF5-C31F-4C3B-AEE3-07FDF47DA6F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55DA8BF5-C31F-4C3B-AEE3-07FDF47DA6F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55DA8BF5-C31F-4C3B-AEE3-07FDF47DA6F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55DA8BF5-C31F-4C3B-AEE3-07FDF47DA6F0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
