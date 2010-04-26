@@ -492,14 +492,10 @@ function CreateDomFromUserInfoArray(array) {
         if (index != 0) //For everything other than the first element, include the comma
             dom += ", ";
 
-        dom += Trim(obj.Name);
+        dom += $.trim(obj.Name);
     });
 
     return dom;
-}
-
-function Trim(str) {
-    return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
 }
 
 function OpenDialog(dialog /*The dialog DIV JQuery object*/, buttons /*Button collection */, title, onClose) {
@@ -509,6 +505,7 @@ function OpenDialog(dialog /*The dialog DIV JQuery object*/, buttons /*Button co
         autoOpen: true,
         closeOnEscape: false,
         width: 600,
+        height: 600,
         modal: true,
         title: title,
         buttons: buttons,
