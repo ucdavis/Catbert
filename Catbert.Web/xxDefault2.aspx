@@ -3,26 +3,25 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 
-    <script type="text/javascript" src="../JS/jquery-1.2.6.js"></script>
-    <script type="text/javascript" src="../JS/jquery.tablesorter.js"></script>
-    <script type="text/javascript" src="../JS/jquery-latest.js"></script> 
-
-  
-    
-    <script type="text/javascript">
-
-        $(document).ready(function() {
-        $("#myTable").tablesorter({ sortList: [[0, 0]], widgets: ['zebra'] });
-        }
-    ); 
     
   
-  </script>
+  
     
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" Runat="Server">
 
+    <script type="text/javascript" src="<%= Request.ApplicationPath + @"/JS/jquery.tablesorter.min.js" %>"></script>
+  
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            $("#myTable").tablesorter();
+        }
+    ); 
+    
+  
+  </script>
 
 
 <table id="myTable"> 

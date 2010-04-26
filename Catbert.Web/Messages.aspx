@@ -3,9 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 
   <script type="text/javascript" src="http://jqueryui.com/latest/ui/ui.tabs.js"></script>
-  <script type="text/javascript" src="../JS/jquery.tablesorter.js"></script>
-  <script type="text/javascript" src="../JS/jquery-latest.js"></script> 
-
+  <script type="text/javascript" src="<%= Request.ApplicationPath + @"/JS/jquery.tablesorter.min.js" %>"></script>
 
     <script type="text/javascript">
 
@@ -18,7 +16,7 @@
             $("#ListView1").tablesorter({ sortList: [[0, 0]], widgets: ['zebra'] });
 
 
-            console.log("HI");
+            //console.log("HI");
         });
   
   </script>
