@@ -26,7 +26,14 @@ namespace CAESDO.Catbert.BLL
         {
             //Remove all of the current application roles
             application.ApplicationRoles.Clear();
-            //application.ApplicationRoles = new List<ApplicationRole>();
+            
+            //Get the roles that we are going to need all at once
+            var rolesNeeded = from r in RoleBLL.Queryable
+                        where r.Inactive == false &&
+                                (leveledRoles.Contains(r.Name) || nonLeveledRoles.Contains(r.Name))
+                        select r;
+
+            var roles = rolesNeeded.ToList(); //Now grab these from the DB.
 
             //Now go through the leveled roles and add them in order to the applicationRoles object
             for (int i = 0; i < leveledRoles.Count; i++)
@@ -34,7 +41,7 @@ namespace CAESDO.Catbert.BLL
                 application.ApplicationRoles.Add(new ApplicationRole()
                 {
                     Application = application,
-                    Role = RoleBLL.GetByName(leveledRoles[i]),
+                    Role = roles.Single(r => r.Name == leveledRoles[i]),
                     Level = i + 1 //The level is the current index plus one, so that they start at 1
                 });
             }
@@ -45,7 +52,7 @@ namespace CAESDO.Catbert.BLL
                 application.ApplicationRoles.Add(new ApplicationRole()
                 {
                     Application = application,
-                    Role = RoleBLL.GetByName(role),
+                    Role = roles.Single(r => r.Name == role),
                     Level = null //No level for these
                 });
             }
