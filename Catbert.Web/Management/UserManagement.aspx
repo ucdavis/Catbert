@@ -83,7 +83,7 @@
 
             $("#btnAddUserRole").click(function() { AddUserRole(application); });
 
-            $("#btnAddUserUnit").click(AddUserUnit);
+            $("#btnAddUserUnit").click(function() { AddUserUnit(application); });
 
             $("#btnSearchUser").click(function() {
                 $("#spanSearchProgress").show(0); //Show the loading dialog
@@ -127,7 +127,7 @@
             var login = $("#UserInfoLogin").html();
             var roles = $("#UserInfoRoles");
             var newrole = $("#UserRoles").val();
-
+            
             //Find out if the role is already in the roles table
             var existingRoleMatch = roles.find("tbody tr:visible td:contains(" + newrole + ")").filter(
                 function() {
@@ -160,8 +160,34 @@
             var login = $("#UserInfoLogin").html();
             var units = $("#UserInfoUnits");
             var newunit = $("#UserUnits").val();
+            var newunitname = $("#UserUnits option:selected").text();
+            
+            //Find out if the unitFIS is already in the unit table
+            var existingUnitMatch = units.find("tbody tr:visible td:contains(" + newunit + ")").filter(
+                function() {
+                    if ($(this).text() == newunit)
+                        return true;
+                    else
+                        return false;
+                }
+            );
 
-            debugger;
+            if (existingUnitMatch.size() == 0) {
+                //Add the unit
+                var newrow = CreateUnitRow(newunitname, newunit, login, application);
+                units.append(newrow);
+
+                $(newrow).effect("highlight", {}, 3000);
+
+                AjaxCall(baseURL + "AddUnit",
+                    { login: login, unitFIS: newunit },
+                    null,
+                    null
+                );
+            }
+            else {
+                alert("User already has the unit " + $.trim(newunitname));
+            }
         }
 
         function ShowUserInfo(applicationName) {
