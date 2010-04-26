@@ -302,13 +302,11 @@ function AddUserUnit() {
 
         $(newrow).effect("highlight", {color: "#555555"}, 3000);
 
-        /*
-        AjaxCall(baseURL + "AddUnit",
-                    { login: login, application: application, unitFIS: newunit },
+        AjaxCall(baseURL + "AssociateUnit",
+                    { login: login, application: app, unitFIS: newunit },
                     null,
                     null
                 );
-        */
     }
     else {
         alert("User already has the unit " + $.trim(newunitname) + 'in ' + $.trim(app));

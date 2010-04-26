@@ -125,12 +125,24 @@ public class CatbertAdminService : WebService
         UserBLL.InsertNewUserWithRoleAndUnit(user, role, unit, application, CurrentServiceUser);
     }
 
-    #region Disassociate
+    #region Associations
 
     [WebMethod]
-    public bool DissociateUnit(string login, string application, string unitFIS)
+    public void AssociateUnit(string login, string application, string unitFIS)
     {
-        return UserBLL.UnassociateUnit(login, application, unitFIS, CurrentServiceUser);
+        UserBLL.AssociateUnit(login, application, unitFIS, CurrentServiceUser);
+    }
+
+    [WebMethod]
+    public void DissociateUnit(string login, string application, string unitFIS)
+    {
+        UserBLL.UnassociateUnit(login, application, unitFIS, CurrentServiceUser);
+    }
+
+    [WebMethod]
+    public void AssociateRole(string login, string application, string role)
+    {
+        PermissionBLL.InsertPermission(application, role, login, CurrentServiceUser);
     }
 
     [WebMethod]
