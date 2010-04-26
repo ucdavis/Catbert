@@ -15,20 +15,7 @@ using CAESDO.Catbert.Core.Domain;
 
 namespace Catbert.Services
 {
-    public class GridData
-    {
-        public int page { get; set; }
-        public int total { get; set; }
-
-        public List<GridDataRow> rows { get; set; }
-
-        public GridData()
-        {
-            rows = new List<GridDataRow>();
-        }
-    }
-
-    public class jqGridData
+    public class RecordSet
     {
         public int page { get; set; }
         public int total { get; set; }
@@ -36,16 +23,10 @@ namespace Catbert.Services
 
         public List<object> rows { get; set; }
 
-        public jqGridData()
+        public RecordSet()
         {
             rows = new List<object>();
         }
-    }
-
-    public class GridDataRow
-    {
-        public int id { get; set; }
-        public List<string> cell { get; set; }
     }
 
     public class ServiceUser
@@ -72,6 +53,7 @@ namespace Catbert.Services
         public string Phone { get; set; }
         public string Department { get; set; }
     }
+
     public class CatbertUser : ServiceUser
     {
         public CatbertUser()
@@ -90,7 +72,6 @@ namespace Catbert.Services
         }
 
         public int UserID { get; set; }
-        //public string SID { get; set; }
         public List<ServiceRole> Roles { get; set; }
         public List<ServiceUnit> Units { get; set; }
     }

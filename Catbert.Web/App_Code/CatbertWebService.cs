@@ -329,59 +329,16 @@ public class CatbertWebService : System.Web.Services.WebService
         return users;
     }
 
-    [WebMethod]
-    public GridData DataGetUsersByApplication(string application)
-    {
-        var users = UserBLL.GetByApplication(application);
-
-        GridData grid = new GridData() { page = 1, total = 20 };
-
-        foreach (var user in users)
-        {
-            grid.rows.Add(new GridDataRow()
-            {
-                id = user.ID,
-                cell = new List<string> 
-                {
-                    user.LoginID, 
-                    user.FirstName, 
-                    user.LastName, 
-                    user.EmployeeID, 
-                    user.Email
-                }
-            });
-        }
-
-        return grid;
-    }
-
-    [WebMethod]
-    public jqGridData jqGetUsersByApplication(string application)
-    {
-        var users = ConvertFromUserList(UserBLL.GetByApplication(application), application);
-
-        jqGridData grid = new jqGridData() { page = 1, total = 2, records = 20 };
-
-        foreach (var user in users)
-        {
-            grid.rows.Add(user);
-        }
-        
-        grid.records = grid.rows.Count;
-
-        return grid;
-    }
-
     /// <summary>
     /// Get all users in this application, filtered by query, unit and role
     /// </summary>
     [WebMethod]
-    public jqGridData jqGetUsers(string application, string search, string unit, string role, string sortname, string sortorder)
+    public RecordSet GetUsers(string application, string search, string unit, string role, string sortname, string sortorder)
     {
         var users = ConvertFromUserList(UserBLL.GetByApplication(application), application);
         search = search == null ? null : search.ToLower();
 
-        jqGridData grid = new jqGridData() { page = 1, total = 2, records = 20 };
+        RecordSet grid = new RecordSet() { page = 1, total = 2, records = 20 };
 
         foreach (var user in users)
         {
