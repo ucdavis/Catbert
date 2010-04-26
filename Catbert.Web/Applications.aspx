@@ -1,293 +1,15 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Catbert.master" AutoEventWireup="true" CodeFile="Applications.aspx.cs" Inherits="Applications" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-    <link href="CSS/fcbklistselection.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .connectedSortable { list-style-type: none; margin: 0; padding: 0; float: left; margin-right: 10px; background: #eee; padding: 5px; width: 143px;}
+	    .connectedSortable li { margin: 5px; padding: 5px; font-size: 1.2em; width: 120px; }
+	</style>
+    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" Runat="Server">
     <script src="JS/jquery.tablesorter.min.js" type="text/javascript"></script>
-    
-    <script type="text/javascript">
-        var baseUrl = 'Services/CatbertWebService.asmx/';
-        var roleList;
-
-        $(document).ready(function() {
-            roleList = $('#ulRoles');
-            //Sort table
-            $("#tblApplications").tablesorter({
-                headers: { 0: { sorter: false} },
-                sortList: [[1, 0]],
-                cssAsc: 'headerSortUp',
-                cssDesc: 'headerSortDown',
-                cssHeader: 'header',
-                widgets: ['zebra']
-            });
-
-            //Bind the ShowApplicationInfo method to the select links
-            $("#tblApplications tbody tr td[title=Select] a").click(ShowApplicationInfo);
-
-            //Create a live binding to images with the activeIndicator class' click event
-            $(":image.activeIndicator").live("click", (function() {
-                //Swap the images
-                var el = $(this);
-                var activeText = 'Active';
-                var inactiveText = 'Inactive';
-
-                if (el.attr('alt') == activeText) {
-                    el.attr('src', 'Images/Inactive.gif');
-                    el.attr('alt', inactiveText);
-                }
-                else {
-                    el.attr('src', 'Images/Active.gif');
-                    el.attr('alt', activeText);
-                }
-
-                var containingRow = $(this).parents('tr');
-                containingRow.children("td").effect('highlight', {}, 300);
-
-                //Now call the webservice to do the active switching
-                AjaxCall(baseUrl + 'ChangeApplicationActiveStatus', { application: el.val() }, null, OnError);
-
-                return false;
-            }));
-
-            //Bind the click method of the add user button
-            $("#addApplication").click(function() {
-                var buttons = {
-                    "Close": function() {
-                        $(this).dialog("close");
-                    },
-                    "Create": function() {
-                        CreateApplication(this);
-                        $(this).dialog("close");
-                    }
-                }
-
-                //Clear out the input boxes
-                $("#dialogUserInfo :text").val('');
-
-                //Clear out the checkboxes
-                $("#dialogUserInfo :checked").each(function() {
-                    $(this).attr('checked', false);
-                });
-
-                //Show all the checkboxes
-                ChangeRoleDisplay($("#allRolesLink"));
-                ShowActiveRolesOnly(false);
-
-                //Make sure the application info div is visible, and the loading span is hidden
-                $("#divApplicationInfo").css('visibility', 'visible');
-                $("#spanLoading").fadeTo(0, 0);
-
-                OpenDialog(buttons, "Create New Application");
-            });
-
-            //Bind the click method of the add role button
-            $("#btnAddRole").click(function() {
-                //Call the add role method, and add the role to the rolelist
-                var roleName = $("#txtAddRole").val();
-
-                var checkbox = $("<input type='checkbox' value='" + roleName + "' />");
-                var newListElement = $("<li></li>");
-
-                newListElement.append(checkbox).append(roleName);
-
-                $("#ulRoles").append(newListElement);
-
-                //Now flash the new element!
-                newListElement.effect("highlight", {}, 2000); //highlight the whole row that was changed
-
-                AjaxCall(baseUrl + 'AddRole', { role: roleName }, null, OnError);
-            });
-
-            //Hook up a click handler for the 'active roles only' button
-            $("#roleViewOptions li a").click(function() {
-                ChangeRoleDisplay($(this));
-
-                //Now if this is the allRoles button, show all, else just show checked roles
-                if (this.id == "activeRolesLink")
-                    ShowActiveRolesOnly(true); //just active roles
-                else
-                    ShowActiveRolesOnly(false);
-            });
-        });
-
-        function ChangeRoleDisplay(el) {
-            var activeState = "ui-state-active";
-            var defaultState = "ui-state-default";
-
-            //Reset all of the anchors to their default classes
-            $("#roleViewOptions li a").removeClass(activeState).addClass(defaultState);
-            el.removeClass(defaultState).addClass(activeState);
-        }
-
-        function ShowActiveRolesOnly(activeOnly) {
-            if (typeof (rolelist) == undefined) roleList = $("#ulRoles");
-            var addRoleButton = $("#addRole");
-
-            if (activeOnly) {
-                //var checkedlist = $("li", roleList).filter(" :has(:checked)");
-                $("li", roleList).filter(" :has(:checked)").show();
-                $("li", roleList).filter(" :has(:not(:checked))").hide();
-                addRoleButton.hide(0); 
-            }
-            else {
-                $("li", roleList).show();
-                addRoleButton.show(0);
-            }
-        }
-
-        function ShowApplicationInfo() {
-            var row = $(this).parents("tr");
-            var applicationID = row.attr('id');
-            var applicationName = row.attr('title');
-        
-            var buttons = {
-                "Close": function() {
-                    $(this).dialog("close");
-                },
-                "Update": function() {
-                    UpdateApplication(applicationID, applicationName);
-                    $(this).dialog("close");
-                }
-            }
-            
-            OpenDialog(buttons, applicationName);
-
-            ShowApplicationInformation(false);  //Don't show the information until it loads
-            
-            //Clear out the roles list checked options
-            $(":checked", roleList).attr('checked', false);
-
-            
-            AjaxCall(
-                baseUrl + 'GetApplication',
-                { application: applicationName },
-                function(data) { PopulateApplication(data); },
-                OnError //TODO: Error method
-            );
-        }
-
-        function OpenDialog(buttons, title) {
-            var dialog = $("#dialogUserInfo"); //the dialog div
-
-            dialog.dialog("destroy"); //Reset the dialog to its initial state
-            dialog.dialog({
-                autoOpen: true,
-                width: 600,
-                modal: true,
-                title: title,
-                buttons: buttons
-            });
-        }
-
-        function PopulateApplication(app) {
-            //Populate the application info boxes
-            $("#txtApplicationName").val(app.Name);
-            $("#txtApplicationAbbr").val(app.Abbr);
-            $("#txtApplicationLocation").val(app.Location);
-            
-            //Go through each role and check the corresonding box          
-            for (var i in app.Roles) {
-                var roleName = app.Roles[i].Name;
-                var roleBox = $("input[value=" + roleName + "]", roleList); //Find the one role with the value of roleName                
-                roleBox.attr('checked', 'checked');//Check it
-            }
-
-            //Now show only the checked ones
-            ChangeRoleDisplay($("#activeRolesLink"));
-            ShowActiveRolesOnly(true);
-
-            //Application is populated, so show the information div
-            ShowApplicationInformation(true);
-        }
-
-        ///Update the given application, which resides in the row identified by the ID
-        function UpdateApplication(ID, name) {
-            var application = CollectApplicationInformation();
-
-            //Now we have the update information, send it to the web service
-            AjaxCall(baseUrl + 'UpdateApplication', {
-                application: name,
-                newName: application.appName,
-                newAbbr: application.appAbbr,
-                newLocation: application.appLocation,
-                roles: application.roles
-            },
-            function() {
-                UpdateApplicationComplete(ID, application.appName, application.appAbbr, application.appLocation);
-            },
-            OnError); 
-        }
-
-        function UpdateApplicationComplete(ID, appName, appAbbr, appLocation) {
-            var row = $("#" + ID); //The changed row
-            
-            var nameCell = $("td[title=Name]", row);
-            var abbrCell = $("td[title=Abbr]", row);
-            var locationCell = $("td[title=Location] a", row);
-
-            nameCell.html(appName);
-            abbrCell.html(appAbbr);
-            
-            locationCell.html(appLocation);
-            locationCell.attr('href', appLocation);
-            
-            $("td", row).effect("highlight", {}, 3000); //highlight the whole row that was changed
-        }
-
-        //Create the new application
-        function CreateApplication(el) {
-            var application = CollectApplicationInformation();
-
-            AjaxCall(
-                baseUrl + 'CreateApplication',
-                {
-                    application: application.appName,
-                    abbr: application.appAbbr,
-                    location: application.appLocation,
-                    roles: application.roles
-                },
-                function() { window.location.reload(); },
-                OnError
-            );
-        }
-
-        function OnCreateApplicationComplete(applicationName, abbr, location) {
-            //Create a new row in the application table with this application information
-        }
-        
-        //Gets all of the information out of the application popup
-        function CollectApplicationInformation() {
-            var application = new Object();  
-            application.appName = $("#txtApplicationName").val();
-            application.appAbbr = $("#txtApplicationAbbr").val();
-            application.appLocation = $("#txtApplicationLocation").val();
-
-            application.roles = new Array();
-            $(":checked", roleList).each(function() {
-                application.roles.push($(this).val());
-            });
-
-            return application;
-        }
-
-        function ShowApplicationInformation(loaded) {
-            var infoVisible = loaded ? 'visible' : 'hidden';
-            var loadingOpacity = loaded ? 0 : 1; //go to invisible if we have loaded
-            var updateButton = $(":button:contains('Update')"); //.attr("disabled", "disabled");
-
-            if (loaded) updateButton.attr('disabled', false);
-            else updateButton.attr('disabled', 'disabled');
-            
-            $("#divApplicationInfo").css('visibility', infoVisible);
-            $("#spanLoading").fadeTo('fast', loadingOpacity);
-            
-        }
-
-        function OnError() {
-            alert("Danger Will Robinson!");
-        }
-    </script>
+    <script src="JS/Applications.js" type="text/javascript"></script>
 
     <a href="javascript:;" id="addApplication" class="dialog_link ui-state-default ui-corner-all">
         <span class="ui-icon ui-icon-newwin"></span>Add Application
@@ -380,6 +102,43 @@
 		    </tr>
 		</table>
         <br /><br />
+        <div id="RoleChoice">
+            <%--Need three choice boxes for roles--%>
+            <ul id="sortableRoles" class="connectedSortable"></ul>
+                        
+            <ul id="nonSortableRoles" class="connectedSortable"></ul>
+            
+            <%--<ul id="availableRoles" class="connectedSortable" style="padding:5px;background: #eee;">
+                	<li class="ui-state-default">Item 1</li>
+	                <li class="ui-state-default">Item 2</li>
+	                <li class="ui-state-default">Item 3</li>
+	                <li class="ui-state-default">Item 4</li>
+	                <li class="ui-state-default">Item 5</li>
+            </ul>--%>
+            
+            <asp:ListView ID="lviewAllRoles" runat="server" DataSourceID="odsAllRoles">
+                <LayoutTemplate>
+                    <ul id="availableRoles" class="connectedSortable">
+                        <li id="itemPlaceholder" runat="server"></li>
+                    </ul>
+                </LayoutTemplate>
+                <ItemTemplate>
+                    <li class="ui-state-default" id='<%# Eval("Name") %>'>
+                        <%# Eval("Name") %>
+                    </li>
+                </ItemTemplate>
+            </asp:ListView>
+            <asp:ObjectDataSource ID="odsAllRoles" runat="server" OldValuesParameterFormatString="original_{0}"
+                SelectMethod="GetAll" TypeName="CAESDO.Catbert.BLL.RoleBLL">
+                <SelectParameters>
+                    <asp:Parameter DefaultValue="Name" Name="propertyName" Type="String" />
+                    <asp:Parameter DefaultValue="true" Name="ascending" Type="Boolean" />
+                </SelectParameters>
+            </asp:ObjectDataSource>
+        
+        </div>
+        <br /><br />
+        <div style="display:none;">
             <div id="Roles">
                 <div id="roletabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
                     <ul id="roleViewOptions" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
@@ -417,6 +176,7 @@
                     <span class="ui-icon ui-icon-plusthick"></span>Add Role 
                 </a>
             </div>
+        </div>
         </div>
 	</div>
 </asp:Content>

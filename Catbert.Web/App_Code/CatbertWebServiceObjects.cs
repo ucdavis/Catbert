@@ -97,14 +97,16 @@ namespace Catbert.Services
         public ServiceRole()
         {
         }
-        public ServiceRole(int roleID, string role)
+        public ServiceRole(int roleID, string role, int? level)
         {
             this.ID = roleID;
             this.Name = role;
+            this.Level = level;
         }
 
         public int ID { get; set; }
         public string Name { get; set; }
+        public int? Level { get; set; }
     }
 
     public class ServiceApplication
@@ -126,7 +128,7 @@ namespace Catbert.Services
             foreach (var appRole in application.ApplicationRoles)
             {
                 if ( appRole.Role.Inactive == false )
-                    Roles.Add(new ServiceRole(appRole.Role.ID, appRole.Role.Name));
+                    Roles.Add(new ServiceRole(appRole.Role.ID, appRole.Role.Name, appRole.Level));
             }
         }
     }
