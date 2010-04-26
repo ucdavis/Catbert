@@ -6,6 +6,7 @@ using CAESDO.Catbert.BLL;
 using Catbert.Services;
 using CAESDO.Catbert.Core.Domain;
 using System.Web;
+using System.Collections.Specialized;
 
 /// <summary>
 /// Summary description for CatbertWebService
@@ -170,6 +171,32 @@ public class CatbertWebService : System.Web.Services.WebService
 
         return serviceUnits;
     }
+
+    [WebMethod]
+    public List<AutoCompleteData> GetUnitsAuto(string q /*query*/, int limit)
+    {
+        List<AutoCompleteData> auto = new List<AutoCompleteData>();
+
+        foreach (var unit in UnitBLL.GetAll())
+        {
+            if (unit.FISCode.ToLower().Contains(q) || unit.ShortName.ToLower().Contains(q))
+            {
+                auto.Add(
+                    new AutoCompleteData(
+                        unit.FISCode, //Result
+                        string.Empty, //Value
+                        new //Additional Info Anonymous Type
+                            {
+                                Name = unit.ShortName,
+                                FIS = unit.FISCode
+                            }
+                    ));
+            }
+        }
+
+        return auto;
+    }
+
 
     [WebMethod]
     public List<ServiceUnit> GetUnitsByUser(string login)
