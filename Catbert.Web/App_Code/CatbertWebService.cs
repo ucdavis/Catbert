@@ -289,8 +289,6 @@ public class CatbertWebService : System.Web.Services.WebService
     [WebMethod]
     public ServiceApplication GetApplication(string application)
     {
-        //TODO: FOR TESTING ONLY
-        System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
         Application app = ApplicationBLL.GetByName(application);
 
         return new ServiceApplication(app);        
