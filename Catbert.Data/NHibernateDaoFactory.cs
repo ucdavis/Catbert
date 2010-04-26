@@ -32,11 +32,58 @@ namespace CAESDO.Catbert.Data
             return new UnitDao();
         }
 
+        public IRoleDao GetRoleDao()
+        {
+            return new RoleDao();
+        }
         #endregion
 
         #region Inline DAO implementations
 
         public class GenericDao<T, IdT> : AbstractNHibernateDao<T, IdT>, IGenericDao<T, IdT> { }
+
+        public class RoleDao : AbstractNHibernateDao<Role, int>, IRoleDao
+        {
+            public List<Role> GetVisibleByUser(string application, string login)
+            {
+                var userRoles = GetRolesForUser(application, login);
+
+                var minLevel = GetMinApplicationRole(userRoles, application);
+
+                var roles = userRoles.GetExecutableCriteria(NHibernateSessionManager.Instance.GetSession()).List();
+
+                var result = minLevel.GetExecutableCriteria(NHibernateSessionManager.Instance.GetSession()).List();
+
+                return null;
+            }
+
+            private DetachedCriteria GetMinApplicationRole(DetachedCriteria roles, string application)
+            {
+                DetachedCriteria criteria = DetachedCriteria.For<ApplicationRole>()
+                    .Add(Expression.IsNotNull("Level"))
+                    .CreateAlias("Application", "Application")
+                    .CreateAlias("Role", "Role")
+                    .Add(Expression.Eq("Application.Name", application))
+                    .Add(Subqueries.PropertyIn("Role.id", roles)) //this role must be in the given roles list
+                    .SetProjection(Projections.Min("Level"));
+
+                return criteria; //Returns the minimum level of these application roles
+            }
+
+            private DetachedCriteria GetRolesForUser(string application, string login)
+            {
+                DetachedCriteria criteria = DetachedCriteria.For<Permission>()
+                    .Add(Expression.Eq("Inactive", false))
+                    .CreateAlias("Application", "Application")
+                    .CreateAlias("Role", "Role")
+                    .CreateAlias("User", "User")
+                    .Add(Expression.Eq("Application.Name", application))
+                    .Add(Expression.Eq("User.LoginID", login))
+                    .SetProjection(Projections.Property("Role.id"));
+
+                return criteria;
+            }
+        }
 
         public class UserDao : AbstractNHibernateDao<User, int>, IUserDao
         {

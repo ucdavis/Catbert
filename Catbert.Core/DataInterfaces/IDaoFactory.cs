@@ -11,6 +11,7 @@ namespace CAESDO.Catbert.Core.DataInterfaces
         IGenericDao<T, IdT> GetGenericDao<T, IdT>();
         IUserDao GetUserDao();
         IUnitDao GetUnitDao();
+        IRoleDao GetRoleDao();
     }
 
     // There's no need to declare each of the DAO interfaces in its own file, so just add them inline here.
@@ -27,6 +28,10 @@ namespace CAESDO.Catbert.Core.DataInterfaces
         List<Unit> GetVisibleByUser(string login, string application);
     }
 
+    public interface IRoleDao : IDao<Role, int>
+    {
+        List<Role> GetVisibleByUser(string application, string login);
+    }
 
     #endregion
 }
