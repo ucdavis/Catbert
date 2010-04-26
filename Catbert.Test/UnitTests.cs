@@ -62,7 +62,17 @@ namespace CAESDO.Catbert.Test
         [TestMethod]
         public void AddRemoveUnit()
         {
-            Assert.Inconclusive("Not implemented");
+            bool result = CatbertManager.RemoveUserFromUnit(TestHelper.TestUser, TestHelper.TestUnit);
+
+            Assert.IsTrue(result);
+
+            result = CatbertManager.AddUserToUnit(TestHelper.TestUser, TestHelper.TestUnit);
+
+            Assert.IsTrue(result);
+
+            result = CatbertManager.AddUserToUnit(TestHelper.TestUser, TestHelper.TestUnit);
+
+            Assert.IsFalse(result); //shouldn't be able to re-add this association
         }
 
         [TestMethod]

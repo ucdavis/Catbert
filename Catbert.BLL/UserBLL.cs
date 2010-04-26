@@ -99,7 +99,7 @@ namespace CAESDO.Catbert.BLL
             if (user == null || unit == null) return false;
 
             //Check to see if there is already an association between this unit and this unit
-            bool userUnitExists = Queryable.Where(usr => usr.Units.Contains(unit)).Any();
+            bool userUnitExists = user.Units.Contains(unit);
 
             if (userUnitExists) return false;
 
@@ -107,7 +107,39 @@ namespace CAESDO.Catbert.BLL
             user.Units.Add(unit);
 
             Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.User, TrackingActions.Change);
-            tracking.Comments = string.Format("{Unit {0} associated with user {1}", unit.ID, user.ID);
+            tracking.Comments = string.Format("Unit {0} associated with user {1}", unit.ID, user.ID);
+
+            using (var ts = new TransactionScope())
+            {
+                EnsurePersistent(ref user);
+                TrackingBLL.EnsurePersistent(ref tracking);
+
+                ts.CommittTransaction();
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Unassociate the identified unit
+        /// </summary>
+        public static bool UnassociateUnit(string login, string unitFIS, string trackingUserName)
+        {
+            //Get the user and unit and make sure they exist
+            User user = UserBLL.GetUser(login);
+            Unit unit = UnitBLL.GetByFIS(unitFIS);
+
+            if (user == null || unit == null) return false;
+
+            //Check to see if there is already an association between this unit and this unit
+            bool userUnitExists = user.Units.Contains(unit);
+
+            if (!userUnitExists) return false; //If there isn't, return false
+
+            user.Units.Remove(unit); //remove the unit association
+
+            Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.User, TrackingActions.Change);
+            tracking.Comments = string.Format("Unit {0} unassociated from user {1}", unit.ID, user.ID);
 
             using (var ts = new TransactionScope())
             {

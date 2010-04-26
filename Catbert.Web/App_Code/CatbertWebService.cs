@@ -123,13 +123,17 @@ public class CatbertWebService : System.Web.Services.WebService
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
     public bool AddUnit(string login, string unitFIS)
     {
-        throw new NotImplementedException();
+        EnsureCredentials(secureCTX);
+
+        return UserBLL.AssociateUnit(login, unitFIS, secureCTX.UserID);
     }
 
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
     public bool DeleteUnit(string login, string unitFIS)
     {
-        throw new NotImplementedException();
+        EnsureCredentials(secureCTX);
+
+        return UserBLL.UnassociateUnit(login, unitFIS, secureCTX.UserID);
     }
 
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
