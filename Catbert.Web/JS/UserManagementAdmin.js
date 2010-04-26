@@ -286,13 +286,11 @@ function AddUserRole() {
 
         $(newrow).effect("highlight", {color: "#555555"}, 3000);
 
-        /*
         AjaxCall(baseURL + "AssociateRole",
-                    { login: login, role: newrole, application: application },
+                    { login: login, role: newrole, application: app },
                     null,
                     null
                 );
-*/
     }
     else {
         alert("User already has the role " + $.trim(newrole) + ' in ' + $.trim(app));
