@@ -32,6 +32,16 @@ namespace CAESDO.Catbert.Test.BLLTests.ServiceTests
             UserInformationServiceBLL.GetInformationByLoginId(invalidUserId);
         }
 
+        [TestMethod]
+        public void GettingUserInformationForValidUserSetsUserIdProperty()
+        {
+            const string validUserId = "login0";
+
+            var userinfo = UserInformationServiceBLL.GetInformationByLoginId(validUserId);
+
+            Assert.AreEqual(validUserId, userinfo.LoginId);
+        }
+
         [TestInitialize]
         public void AddUnitAndPermissionAssociations()
         {

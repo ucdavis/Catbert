@@ -12,7 +12,9 @@ namespace CAESDO.Catbert.BLL.Service
 
             Check.Require(user != null);
 
-            throw new NotImplementedException();
+            var userInformation = new UserInformation {LoginId = user.LoginID};
+
+            return userInformation;
         }
     }
 }
