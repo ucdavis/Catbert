@@ -166,7 +166,8 @@ namespace CAESDO.Catbert.Data
                     //Now get all units that are associated with these schools
                     ICriteria units = NHibernateSessionManager.Instance.GetSession().CreateCriteria(typeof(Unit))
                         .CreateAlias("School", "School")
-                        .Add(Subqueries.PropertyIn("School.id", schools));
+                        .Add(Subqueries.PropertyIn("School.id", schools))
+                        .AddOrder(Order.Asc("ShortName"));
 
                     return units.List<Unit>() as List<Unit>;
                 }
@@ -185,7 +186,8 @@ namespace CAESDO.Catbert.Data
                         .SetProjection(Projections.Property("Unit.id"));
 
                     ICriteria units = NHibernateSessionManager.Instance.GetSession().CreateCriteria(typeof(Unit))
-                        .Add(Subqueries.PropertyIn("id", associatedUnitIds));
+                        .Add(Subqueries.PropertyIn("id", associatedUnitIds))
+                        .AddOrder(Order.Asc("ShortName"));
                     
                     return units.List<Unit>() as List<Unit>;                    
                 }
