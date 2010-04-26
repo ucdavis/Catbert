@@ -79,16 +79,31 @@ public class CatbertWebService : System.Web.Services.WebService
 
     #region Permissions
 
+    /// <summary>
+    /// Assigns the given role to the desired user within the application.  Returns true only on successfull assigning of permissions --
+    /// If the permission is already assigned or if there are other errors, true will not be returned.
+    /// </summary>
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
-    public bool AssignPermissions(string login, string application, int role)
+    public bool AssignPermissions(string login, string application, string role)
     {
-        throw new NotImplementedException();
+        EnsureCredentials(secureCTX);
+
+        //If the credentials don't validate or the caller doesn't have access to this application, return false
+        if (!this.ValidateApplicationPermission(secureCTX, GetApplicationID(application))) return false;
+
+        Permission result = PermissionBLL.InsertPermission(application, role, login, secureCTX.UserID);
+        
+        return result != null; //true on non-null result
     }
 
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
-    public bool DeletePermissions(string login, string application, int role)
+    public bool DeletePermissions(string login, string application, string role)
     {
-        throw new NotImplementedException();
+        EnsureCredentials(secureCTX);
+
+        if (!this.ValidateApplicationPermission(secureCTX, GetApplicationID(application))) return false;
+
+        return PermissionBLL.DeletePermission(application, role, login, secureCTX.UserID);
     }
 
     #endregion
@@ -184,17 +199,18 @@ public class CatbertWebService : System.Web.Services.WebService
 
     private bool ValidateApplicationPermission(SecurityContext secureCTX, int applicationID)
     {
-        throw new NotImplementedException();
+        return true; //TODO: TESTING ONLY!!!
+        //throw new NotImplementedException();
     }
 
     /// <summary>
-    /// Finds the applicationID from a given application
+    /// Finds the applicationID from a given application name
     /// </summary>
     /// <param name="application"></param>
     /// <returns></returns>
     private int GetApplicationID(string application)
     {
-        throw new NotImplementedException();
+        return ApplicationBLL.GetID(application);
     }
 
     #endregion

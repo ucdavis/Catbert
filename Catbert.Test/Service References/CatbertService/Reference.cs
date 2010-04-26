@@ -558,12 +558,12 @@ namespace CAESDO.Catbert.Test.CatbertService {
         public string application;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=2)]
-        public int role;
+        public string role;
         
         public AssignPermissionsRequest() {
         }
         
-        public AssignPermissionsRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string application, int role) {
+        public AssignPermissionsRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string application, string role) {
             this.SecurityContext = SecurityContext;
             this.login = login;
             this.application = application;
@@ -606,12 +606,12 @@ namespace CAESDO.Catbert.Test.CatbertService {
         public string application;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=2)]
-        public int role;
+        public string role;
         
         public DeletePermissionsRequest() {
         }
         
-        public DeletePermissionsRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string application, int role) {
+        public DeletePermissionsRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string application, string role) {
             this.SecurityContext = SecurityContext;
             this.login = login;
             this.application = application;
@@ -1144,7 +1144,7 @@ namespace CAESDO.Catbert.Test.CatbertService {
             return base.Channel.AssignPermissions(request);
         }
         
-        public bool AssignPermissions(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string application, int role) {
+        public bool AssignPermissions(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string application, string role) {
             CAESDO.Catbert.Test.CatbertService.AssignPermissionsRequest inValue = new CAESDO.Catbert.Test.CatbertService.AssignPermissionsRequest();
             inValue.SecurityContext = SecurityContext;
             inValue.login = login;
@@ -1160,7 +1160,7 @@ namespace CAESDO.Catbert.Test.CatbertService {
             return base.Channel.DeletePermissions(request);
         }
         
-        public bool DeletePermissions(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string application, int role) {
+        public bool DeletePermissions(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string application, string role) {
             CAESDO.Catbert.Test.CatbertService.DeletePermissionsRequest inValue = new CAESDO.Catbert.Test.CatbertService.DeletePermissionsRequest();
             inValue.SecurityContext = SecurityContext;
             inValue.login = login;

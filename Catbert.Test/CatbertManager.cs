@@ -53,26 +53,7 @@ namespace CAESDO.Catbert.Test
             return catops.SearchNewUser(null, null, null, login);
         }
 
-        public static bool AddUserToRole(CatOps.Users user, CatOps.Roles role)
-        {
-            SetSecurityContext();
 
-            return catops.AssignPermissions(user.Login, AppName, role.RoleID);
-        }
-
-        public static bool AddUserToRole(string login, int roleID)
-        {
-            SetSecurityContext();
-
-            return catops.AssignPermissions(login, AppName, roleID);
-        }
-
-        public static bool RemoveUserFromRole(int roleID, string login)
-        {
-            SetSecurityContext();
-
-            return catops.DeletePermissions(login, AppName, roleID);
-        }
 
         public static bool AddUserToUnit(string login, int UnitID)
         {
@@ -127,6 +108,27 @@ namespace CAESDO.Catbert.Test
             return catops.VerifyUser(login);
         }
          */
+        
+        public static bool AddUserToRole(CatbertService.ServiceUser user, CatbertService.ServiceRole role)
+        {
+            var sc = GetSecurityContext();
+
+            return catops.AssignPermissions(ref sc, user.Login, AppName, role.Role);
+        }
+
+        public static bool AddUserToRole(string login, string role)
+        {
+            var sc = GetSecurityContext();
+
+            return catops.AssignPermissions(ref sc, login, AppName, role);
+        }
+
+        public static bool RemoveUserFromRole(string login, string role)
+        {
+            var sc = GetSecurityContext();
+
+            return catops.DeletePermissions(ref sc, login, AppName, role);
+        }
 
         public static ServiceUser[] SearchNewUsers(string EmployeeID, string FirstName, string LastName, string Login)
         {

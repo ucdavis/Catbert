@@ -86,5 +86,13 @@ namespace CAESDO.Catbert.BLL
 
             return true;
         }
+
+        /// <summary>
+        /// Returns an application's ID given its name
+        /// </summary>
+        public static int GetID(string application)
+        {
+            return Queryable.Where(app => app.Name == application).Select(app => app.ID).Single();
+        }
     }
 }
