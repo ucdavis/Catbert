@@ -15,7 +15,47 @@
 	    <li><a href="#tabUnits">Units</a></li>
 		<li><a href="#tabSchools">Schools</a></li>		
 	</ul>
+	<div id="tabUnits">
+	    <br />
+		<asp:ListView ID="lviewUnits" runat="server" DataSourceID="odsUnits">
+            <LayoutTemplate>
+                <table id="tblUnits">
+                    <thead>
+                        <tr>
+                            <th>FIS Code</th>
+                            <th>PPS Code</th>
+                            <th>Full Name</th>
+                            <th>Short Name</th>
+                            <th>School</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="itemPlaceholder" runat="server"></tr>
+                    </tbody>
+                </table>
+            </LayoutTemplate>
+            <ItemTemplate>
+                <tr>
+                    <td><%# Eval("FISCode") %></td>
+                    <td><%# Eval("PPSCode") %></td>
+                    <td><%# Eval("FullName")%></td>
+                    <td><%# Eval("ShortName")%></td>
+                    <td><%# Eval("School.ShortDescription")%></td>
+                </tr>
+            </ItemTemplate>
+        </asp:ListView>
+        <asp:ObjectDataSource ID="odsUnits" runat="server" 
+            OldValuesParameterFormatString="original_{0}" SelectMethod="GetAll" 
+            TypeName="CAESDO.Catbert.BLL.UnitBLL">
+            <SelectParameters>
+                <asp:Parameter DefaultValue="FullName" Name="propertyName" 
+                    Type="String" />
+                <asp:Parameter DefaultValue="true" Name="ascending" Type="Boolean" />
+            </SelectParameters>
+        </asp:ObjectDataSource>
+	</div>
 	<div id="tabSchools">
+	    <br />
         <asp:ListView ID="lviewSchools" runat="server" DataSourceID="odsSchools">
             <LayoutTemplate>
                 <table id="tblSchools">
@@ -51,12 +91,7 @@
             </SelectParameters>
         </asp:ObjectDataSource>
 	</div>
-	<div id="tabUnits">
-		<p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
-	</div>
 </div>
-
-
 
 </asp:Content>
 
