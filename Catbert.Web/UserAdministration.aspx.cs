@@ -9,6 +9,8 @@ public partial class UserAdministration : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        frame.Attributes["src"] = string.Format("Management/UserManagement.aspx?app={0}", dlistApplications.SelectedValue);
+        var applicationName = dlistApplications.SelectedValue;
+        
+        frame.Attributes["src"] = string.Format("Management/UserManagement.aspx?app={0}", applicationName);
     }
 }
