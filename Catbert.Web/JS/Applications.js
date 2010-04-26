@@ -84,12 +84,12 @@ $(document).ready(function() {
         //Call the add role method, and add the role to the rolelist
         var roleName = $("#txtAddRole").val();
 
-        var checkbox = $("<input type='checkbox' value='" + roleName + "' />");
-        var newListElement = $("<li></li>");
+        var newListRole = $("<li class='ui-state-default' id='" + roleName + "'></li>");
 
-        newListElement.append(checkbox).append(roleName);
+        //var checkbox = $("<input type='checkbox' value='" + roleName + "' />");
+        var newListElement = newListRole.append(roleName);
 
-        $("#ulRoles").append(newListElement);
+        $("#availableRoles").append(newListElement);
 
         //Now flash the new element!
         newListElement.effect("highlight", {}, 2000); //highlight the whole row that was changed

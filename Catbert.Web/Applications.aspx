@@ -118,11 +118,17 @@
             <br />
             <br />
             <div id="RoleChoice">
+                <input type="text" id="txtAddRole" style="width:8em" />
+                
+                <a href="javascript:;" id="btnAddRole" class="dialog_link ui-state-default ui-corner-all">
+                    <span class="ui-icon ui-icon-plus"></span>Add Role
+                </a>
+                <br /><br />
+                
                 <%--Need three choice boxes for roles--%>
-                <ul id="sortableRoles" class="connectedSortable">
-                </ul>
-                <ul id="nonSortableRoles" class="connectedSortable">
-                </ul>
+                <ul id="sortableRoles" class="connectedSortable"></ul>
+                <ul id="nonSortableRoles" class="connectedSortable"></ul>
+                
                 <asp:ListView ID="lviewAllRoles" runat="server" DataSourceID="odsAllRoles">
                     <LayoutTemplate>
                         <ul id="availableRoles" class="connectedSortable">
