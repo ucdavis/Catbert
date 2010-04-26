@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Services;
+using System.Linq;
 using CAESDO.Catbert.BLL;
 using CAESDO.Catbert.BLL.Service;
 using CAESDO.Catbert.Core.Domain;
@@ -96,6 +97,16 @@ public class CatbertAdminService : WebService
     public UserInformation GetUserInfo(string loginId)
     {
         return UserInformationServiceBLL.GetInformationByLoginId(loginId);
+    }
+
+    [WebMethod]
+    public List<string> GetRolesForApplication(string application)
+    {
+        //Get back all of the application roles
+        var appRoles = RoleBLL.GetRolesByApplication(application);
+
+        //Just pull out the list of names
+        return appRoles.OrderBy(role => role.Role.Name).Select(role => role.Role.Name).ToList();
     }
 
     #region Disassociate

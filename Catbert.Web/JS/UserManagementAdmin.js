@@ -18,14 +18,14 @@ var userTableDirty = false;
 var rowEven = true;
 
 var tabs;
-    
+
 $(document).ready(function() {
     user = $("#user").val();
 
     PopulateUserTable(application, search, unit, role, sortname, sortorder); //Populate the user table
 
     tabs = $('#tabs').tabs();
-    
+
     $("#txtSearch").autocomplete(baseURL + 'GetUsersAutoComplete', {
         width: 260,
         minChars: 2,
@@ -151,7 +151,38 @@ $(document).ready(function() {
         console.info(application);
         PopulateUserTableDefault(application);
     });
+
+    $("#applications").change(function() {
+        var selectedApp = $(this).val();
+
+        if (selectedApp == "") {
+            $("#applicationRoles").attr("disabled", "disabled"); //disable the application roles ddl
+            return;
+        }
+
+        AjaxCall(
+            baseURL + "GetRolesForApplication",
+            { application: selectedApp },
+            function(data) { PopulateRolesForApplication(data); },
+            null
+        );
+
+        console.info($(this).val());
+    });
 });
+
+function PopulateRolesForApplication(data) {
+    console.dir(data);
+
+    var appRoles = $("#applicationRoles");
+    appRoles.empty();
+
+    appRoles.removeAttr("disabled");
+    
+    $(data).each(function() {
+        appRoles.append("<option>" + this +"</option>");
+    });
+}
 
 function SearchUsers() {
     search = $("#txtSearch").val() /*textbox value*/;

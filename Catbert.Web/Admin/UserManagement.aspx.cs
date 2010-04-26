@@ -40,13 +40,8 @@ public partial class Management_UserManagement : System.Web.UI.Page
         
         //Units
         lviewUnits.DataSource = Units;
-        
+
         lviewUnits.DataBind();
-        
-        //Roles
-        lviewRoles.DataSource = Roles;
-        
-        lviewRoles.DataBind();
         
         //Applications
         lviewFilterApplications.DataSource = Applications;

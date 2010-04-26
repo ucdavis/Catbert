@@ -87,6 +87,7 @@
             <asp:ListView ID="lviewApplications" runat="server">
                 <LayoutTemplate>
                     <select id="applications">
+                        <option value="">-- Select An Application --</option>
                         <option id="itemPlaceholder" runat="server"></option>
                     </select>
                 </LayoutTemplate>
@@ -98,18 +99,9 @@
             </asp:ListView>
             <br />
             <label>Role:</label>
-            <asp:ListView ID="lviewRoles" runat="server">
-                <LayoutTemplate>
-                    <select id="applicationRoles">
-                        <option id="itemPlaceholder" runat="server"></option>
-                    </select>
-                </LayoutTemplate>
-                <ItemTemplate>
-                    <option>
-                        <%# Eval("Name") %>
-                    </option>
-                </ItemTemplate>
-            </asp:ListView>
+            <select id="applicationRoles" disabled="disabled">
+                <option>Select An Application</option>
+            </select>
             <br />
             <label>Unit:</label>
             <asp:ListView ID="lviewUnits" runat="server">
