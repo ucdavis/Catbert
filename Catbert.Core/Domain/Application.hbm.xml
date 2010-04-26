@@ -19,9 +19,9 @@
       <many-to-many column="RoleID" class="CAESDO.Catbert.Core.Domain.Role, CAESDO.Catbert.Core" />
     </bag>-->
     
-    <bag name="ApplicationRoles" table="ApplicationRoles" inverse="false">
+    <bag name="ApplicationRoles" table="ApplicationRoles" cascade="all-delete-orphan" inverse="true">
       <key column="ApplicationID" />
-      <many-to-many column="ApplicationRoleID" class="CAESDO.Catbert.Core.Domain.ApplicationRole, CAESDO.Catbert.Core" />
+      <one-to-many class="CAESDO.Catbert.Core.Domain.ApplicationRole, CAESDO.Catbert.Core" />
     </bag>
   
   </class>

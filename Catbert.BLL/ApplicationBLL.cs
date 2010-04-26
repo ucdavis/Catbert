@@ -24,7 +24,35 @@ namespace CAESDO.Catbert.BLL
         /// </summary>
         public static void SetRoles(Application application, List<string> leveledRoles, List<string> nonLeveledRoles)
         {
-            throw new NotImplementedException();
+            //Remove all of the current application roles
+            application.ApplicationRoles.Clear();
+            //application.ApplicationRoles = new List<ApplicationRole>();
+
+            //Now go through the leveled roles and add them in order to the applicationRoles object
+            for (int i = 0; i < leveledRoles.Count; i++)
+            {
+                application.ApplicationRoles.Add(new ApplicationRole()
+                {
+                    Application = application,
+                    Role = RoleBLL.GetByName(leveledRoles[i]),
+                    Level = i + 1 //The level is the current index plus one, so that they start at 1
+                });
+            }
+
+            //Now add the non-leveled roles
+            foreach (var role in nonLeveledRoles)
+            {
+                application.ApplicationRoles.Add(new ApplicationRole()
+                {
+                    Application = application,
+                    Role = RoleBLL.GetByName(role),
+                    Level = null //No level for these
+                });
+            }
+
+            //Now we should have an application with reconciled roles
+
+
             /*
             List<Role> rolesToRemove = new List<Role>();
 
