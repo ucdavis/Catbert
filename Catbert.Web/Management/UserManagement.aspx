@@ -19,7 +19,7 @@
         
         var sortname = "LastName";
         var sortorder = "ASC";
-        
+
         $(document).ready(function() {
             var application = $("#app").val();
 
@@ -60,15 +60,17 @@
                     $("#btnSearchUser").click();
                 }
             });
-
+            /*
             $("#tblUsers").tablesorter({
-                headers: { 4: { sorter: false }, 5: { sorter: false} },
-                cssAsc: 'headerSortUp',
-                cssDesc: 'headerSortDown',
-                cssHeader: 'header',
-                widgets: ['zebra']
+            headers: { 4: { sorter: false }, 5: { sorter: false} },
+            cssAsc: 'headerSortUp',
+            cssDesc: 'headerSortDown',
+            cssHeader: 'header',
+            widgets: ['zebra']
             });
-
+            */
+            $("#tblUsers thead tr th.header").click(ChangeSortOrder);
+            
             $("#modifyUserTEST").click(function() { ShowUserInfo(application); });
 
             $("#addUser").click(function() {
@@ -127,6 +129,12 @@
                 null);
             });
         });
+
+        function ChangeSortOrder() {
+            var sortName = $(this).attr("title");
+            var sortOrder = $(this).hasClass("headerSortUp") ? "DESC" : "ASC";
+            debugger;
+        }
 
         function AddUserRole(application) {
             var login = $("#UserInfoLogin").html();
@@ -383,6 +391,7 @@
 
         //Trigger a sort update, and sort on the last name column
         function SortTable() {
+            /*
             if ($("#tblUsersBody tr").size() > 0) { //Only resort sort if there are rows to sort
             
                 $("#tblUsers").trigger("update");
@@ -390,6 +399,7 @@
                 // sort on the first column 
                 $("#tblUsers").trigger("sorton", [sorting]);
             }
+            */
         }
 
         function CreateDomFromUserInfoArray(array) {
@@ -452,10 +462,10 @@
     <table id="tblUsers" class="tablesorter">
         <thead>
             <tr>
-                <th >First Name</th>
-                <th >Last Name</th>
-                <th >Login</th>
-                <th >Email</th>
+                <th class="header" title="FirstName">First Name</th>
+                <th class="header headerSortUp" title="LastName">Last Name</th>
+                <th class="header" title="Login">Login</th>
+                <th class="header" title="Email">Email</th>
                 <th >Departments</th>
                 <th >Roles</th>
             </tr>
