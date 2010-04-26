@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Web;
 using CAESArch.BLL;
 using CAESDO.Catbert.Core.Domain;
-using System.Web;
 
 namespace CAESDO.Catbert.BLL
 {
@@ -12,21 +11,22 @@ namespace CAESDO.Catbert.BLL
     {
         public static void CreateRole(string roleName, string trackingUserName)
         {
-            if (RoleBLL.GetByName(roleName) != null) //If there is already a role by that name, throw an error
+            if (GetByName(roleName) != null) //If there is already a role by that name, throw an error
             {
                 throw new ArgumentException(string.Format("The role {0} already exists in the system", roleName));
             }
             else
             {
                 //Create a new role
-                Role role = new Role() { Inactive = false, Name = roleName };
+                var role = new Role() {Inactive = false, Name = roleName};
 
-                var tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.Role, TrackingActions.Add);
+                Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.Role,
+                                                                    TrackingActions.Add);
                 tracking.Comments = string.Format("Role {0} added", roleName);
 
                 using (var ts = new TransactionScope())
                 {
-                    RoleBLL.MakePersistent(role);
+                    MakePersistent(role);
                     TrackingBLL.MakePersistent(tracking);
 
                     ts.CommitTransaction();
@@ -41,10 +41,10 @@ namespace CAESDO.Catbert.BLL
         /// <returns></returns>
         public static List<ApplicationRole> GetRolesByApplication(string application)
         {
-            var query = from role in ApplicationRoleBLL.Queryable
-                        where role.Application.Name == application
-                                && role.Role.Inactive == false
-                        select role;
+            IQueryable<ApplicationRole> query = from role in ApplicationRoleBLL.Queryable
+                                                where role.Application.Name == application
+                                                      && role.Role.Inactive == false
+                                                select role;
 
             return query.ToList();
         }

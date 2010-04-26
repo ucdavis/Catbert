@@ -1,5 +1,6 @@
 ﻿using CAESArch.BLL;
 using CAESDO.Catbert.Core.DataInterfaces;
+using CAESDO.Catbert.Data;
 
 namespace CAESDO.Catbert.BLL
 {
@@ -7,7 +8,7 @@ namespace CAESDO.Catbert.BLL
     {
         public static IDaoFactory DaoFactory
         {
-            get { return new CAESDO.Catbert.Data.NHibernateDaoFactory(); }
+            get { return new NHibernateDaoFactory(); }
         }
     }
 

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using CAESArch.BLL;
 using CAESDO.Catbert.Core.Domain;
-using CAESDO.Catbert.Data;
 
 namespace CAESDO.Catbert.BLL
 {
@@ -12,10 +9,10 @@ namespace CAESDO.Catbert.BLL
     {
         public static List<Application> GetAll(bool inactive)
         {
-            var query = from app in Queryable
-                           where app.Inactive == inactive
-                           orderby app.Name
-                            select app;
+            IOrderedQueryable<Application> query = from app in Queryable
+                                                   where app.Inactive == inactive
+                                                   orderby app.Name
+                                                   select app;
 
             return query.ToList<Application>();
         }
@@ -27,35 +24,36 @@ namespace CAESDO.Catbert.BLL
         {
             //Remove all of the current application roles
             application.ApplicationRoles.Clear();
-            
-            //Get the roles that we are going to need all at once
-            var rolesNeeded = from r in RoleBLL.Queryable
-                        where r.Inactive == false &&
-                                (leveledRoles.Contains(r.Name) || nonLeveledRoles.Contains(r.Name))
-                        select r;
 
-            var roles = rolesNeeded.ToList(); //Now grab these from the DB.
+            //Get the roles that we are going to need all at once
+            IQueryable<Role> rolesNeeded = from r in RoleBLL.Queryable
+                                           where r.Inactive == false &&
+                                                 (leveledRoles.Contains(r.Name) || nonLeveledRoles.Contains(r.Name))
+                                           select r;
+
+            List<Role> roles = rolesNeeded.ToList(); //Now grab these from the DB.
 
             //Now go through the leveled roles and add them in order to the applicationRoles object
             for (int i = 0; i < leveledRoles.Count; i++)
             {
-                application.ApplicationRoles.Add(new ApplicationRole()
-                {
-                    Application = application,
-                    Role = roles.Single(r => r.Name == leveledRoles[i]),
-                    Level = i + 1 //The level is the current index plus one, so that they start at 1
-                });
+                application.ApplicationRoles.Add(new ApplicationRole
+                                                     {
+                                                         Application = application,
+                                                         Role = roles.Single(r => r.Name == leveledRoles[i]),
+                                                         Level = i + 1
+                                                         //The level is the current index plus one, so that they start at 1
+                                                     });
             }
 
             //Now add the non-leveled roles
-            foreach (var role in nonLeveledRoles)
+            foreach (string role in nonLeveledRoles)
             {
                 application.ApplicationRoles.Add(new ApplicationRole()
-                {
-                    Application = application,
-                    Role = roles.Single(r => r.Name == role),
-                    Level = null //No level for these
-                });
+                                                     {
+                                                         Application = application,
+                                                         Role = roles.Single(r => r.Name == role),
+                                                         Level = null //No level for these
+                                                     });
             }
 
             //Now we should have an application with reconciled roles
@@ -102,13 +100,14 @@ namespace CAESDO.Catbert.BLL
         /// </summary>
         public static void Update(Application application, string trackingUserName)
         {
-            Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.Application, TrackingActions.Change);
+            Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.Application,
+                                                                TrackingActions.Change);
             tracking.Comments = string.Format("Application {0} updated", application.ID);
 
-            using (TransactionScope ts = new TransactionScope())
+            using (var ts = new TransactionScope())
             {
-                ApplicationBLL.EnsurePersistent( application); //Persist the application
-                TrackingBLL.EnsurePersistent( tracking);
+                EnsurePersistent(application); //Persist the application
+                TrackingBLL.EnsurePersistent(tracking);
 
                 ts.CommitTransaction();
             }
@@ -119,14 +118,15 @@ namespace CAESDO.Catbert.BLL
         /// </summary>
         public static void Create(Application application, string trackingUserName)
         {
-            Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.Application, TrackingActions.Add);
-            
-            using (TransactionScope ts = new TransactionScope())
+            Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.Application,
+                                                                TrackingActions.Add);
+
+            using (var ts = new TransactionScope())
             {
-                ApplicationBLL.EnsurePersistent( application); //Persist the application
+                EnsurePersistent(application); //Persist the application
 
                 tracking.Comments = string.Format("Application {0} created", application.ID);
-                TrackingBLL.EnsurePersistent( tracking);
+                TrackingBLL.EnsurePersistent(tracking);
 
                 ts.CommitTransaction();
             }
@@ -139,13 +139,13 @@ namespace CAESDO.Catbert.BLL
         public static bool SetActiveStatus(string applicationName, bool? inactive, string trackingUserName)
         {
             //Get the application
-            Application application = ApplicationBLL.GetByName(applicationName);
+            Application application = GetByName(applicationName);
 
             if (inactive.HasValue == false)
             {
                 application.Inactive = !application.Inactive;
             }
-            else if (application.Inactive == inactive)//Does this application's active status need to be changed?
+            else if (application.Inactive == inactive) //Does this application's active status need to be changed?
             {
                 return false;
             }
@@ -155,13 +155,15 @@ namespace CAESDO.Catbert.BLL
             }
 
             //Track the change
-            Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.Application, TrackingActions.Change);
-            tracking.Comments = string.Format("Application {0} status changed to inactive={1}", applicationName, inactive);
+            Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.Application,
+                                                                TrackingActions.Change);
+            tracking.Comments = string.Format("Application {0} status changed to inactive={1}", applicationName,
+                                              inactive);
 
-            using (TransactionScope ts = new TransactionScope())
+            using (var ts = new TransactionScope())
             {
-                ApplicationBLL.EnsurePersistent( application);
-                TrackingBLL.EnsurePersistent( tracking);
+                EnsurePersistent(application);
+                TrackingBLL.EnsurePersistent(tracking);
 
                 ts.CommitTransaction();
             }

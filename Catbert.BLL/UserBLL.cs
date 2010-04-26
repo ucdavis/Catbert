@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Dynamic;
-using System.Text;
 using System.Web;
 using CAESArch.BLL;
 using CAESArch.Core.Utils;
 using CAESDO.Catbert.Core.Domain;
-using CAESDO.Catbert.Data;
 
 namespace CAESDO.Catbert.BLL
 {
@@ -37,22 +34,27 @@ namespace CAESDO.Catbert.BLL
         public static User InsertNewUser(User user, string trackingUserName)
         {
             //Make sure the user given in valid according to enlib validation
-            if (!ValidateBusinessObject<User>.IsValid(user)) throw new ApplicationException(string.Format("User not valid: {0}", ValidateBusinessObject<User>.GetValidationResultsAsString(user)));
+            if (!ValidateBusinessObject<User>.IsValid(user))
+                throw new ApplicationException(string.Format("User not valid: {0}",
+                                                             ValidateBusinessObject<User>.GetValidationResultsAsString(
+                                                                 user)));
 
             //If so, make sure there are no other users in the DB with the given login
-            if (Queryable.Where(u => u.LoginID == user.LoginID).Any()) throw new ApplicationException(string.Format("User creation failed: LoginID already exists"));
+            if (Queryable.Where(u => u.LoginID == user.LoginID).Any())
+                throw new ApplicationException(string.Format("User creation failed: LoginID already exists"));
 
             //Since we have a new user, assign defaults and insert
             user.Inactive = false;
             user.UserKey = Guid.NewGuid();
 
-            Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.User, TrackingActions.Add);
+            Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.User,
+                                                                TrackingActions.Add);
             tracking.Comments = string.Format("User {0} added", user.LoginID);
 
             using (var ts = new TransactionScope())
             {
-                EnsurePersistent( user);
-                TrackingBLL.EnsurePersistent( tracking);
+                EnsurePersistent(user);
+                TrackingBLL.EnsurePersistent(tracking);
 
                 ts.CommitTransaction();
             }
@@ -65,11 +67,13 @@ namespace CAESDO.Catbert.BLL
         /// If the user doesn't exist, it is created, and the role and units are associated if they were not already.
         /// </summary>
         /// <returns>the ID of the user</returns>
-        public static User InsertNewUserWithRoleAndUnit(User userInformation, string role, string unit, string application, string trackingUserName)
+        public static User InsertNewUserWithRoleAndUnit(User userInformation, string role, string unit,
+                                                        string application, string trackingUserName)
         {
-            if (userInformation == null || string.IsNullOrEmpty(role) || string.IsNullOrEmpty(unit) || string.IsNullOrEmpty(application) ) throw new ArgumentException();
+            if (userInformation == null || string.IsNullOrEmpty(role) || string.IsNullOrEmpty(unit) ||
+                string.IsNullOrEmpty(application)) throw new ArgumentException();
 
-            User user = new User();
+            var user = new User();
 
             if (VerifyUserExists(userInformation.LoginID)) //Either get the existing user or create a new one
             {
@@ -77,7 +81,7 @@ namespace CAESDO.Catbert.BLL
             }
             else
             {
-                user = InsertNewUser(userInformation, trackingUserName); 
+                user = InsertNewUser(userInformation, trackingUserName);
             }
 
             PermissionBLL.InsertPermission(application, role, user.LoginID, trackingUserName); //Insert the permission
@@ -101,7 +105,7 @@ namespace CAESDO.Catbert.BLL
         public static bool SetEmail(string login, string email, string trackingUserName)
         {
             //First get the user identified by the login
-            var user = Queryable.Where(usr => usr.LoginID == login).SingleOrDefault();
+            User user = Queryable.Where(usr => usr.LoginID == login).SingleOrDefault();
 
             if (user == null) return false;
 
@@ -117,8 +121,8 @@ namespace CAESDO.Catbert.BLL
 
             using (var ts = new TransactionScope())
             {
-                EnsurePersistent( user);
-                TrackingBLL.EnsurePersistent( tracking);
+                EnsurePersistent(user);
+                TrackingBLL.EnsurePersistent(tracking);
 
                 ts.CommitTransaction();
             }
@@ -133,7 +137,7 @@ namespace CAESDO.Catbert.BLL
         public static bool SetPhone(string login, string phone, string trackingUserName)
         {
             //First get the user identified by the login
-            var user = Queryable.Where(usr => usr.LoginID == login).SingleOrDefault();
+            User user = Queryable.Where(usr => usr.LoginID == login).SingleOrDefault();
 
             if (user == null) return false;
 
@@ -149,8 +153,8 @@ namespace CAESDO.Catbert.BLL
 
             using (var ts = new TransactionScope())
             {
-                EnsurePersistent( user);
-                TrackingBLL.EnsurePersistent( tracking);
+                EnsurePersistent(user);
+                TrackingBLL.EnsurePersistent(tracking);
 
                 ts.CommitTransaction();
             }
@@ -159,16 +163,18 @@ namespace CAESDO.Catbert.BLL
         }
 
         #region Applications
-        
+
         public static List<User> GetByApplication(string application, string searchToken, int page, int pageSize)
         {
             string currentLogin = HttpContext.Current.User.Identity.Name;
             int totalUsers;
 
-            return GetByApplication(application, currentLogin, null, null, searchToken, page, pageSize, "LastName ASC", out totalUsers);
+            return GetByApplication(application, currentLogin, null, null, searchToken, page, pageSize, "LastName ASC",
+                                    out totalUsers);
 
             //return UserBLL.daoFactory.GetUserDao().GetByApplication(application, null, null, searchToken, page, pageSize, "LastName ASC", out totalUsers);
         }
+
         /*
         private static IQueryable<User> GetUserQueryableByApplication(string application, string role, string unit, string searchToken)
         {
@@ -192,9 +198,12 @@ namespace CAESDO.Catbert.BLL
             return users.AsQueryable<User>();
         }*/
 
-        public static List<User> GetByApplication(string application, string currentLogin, string role, string unit, string searchToken, int page, int pageSize, string orderBy, out int totalUsers)
+        public static List<User> GetByApplication(string application, string currentLogin, string role, string unit,
+                                                  string searchToken, int page, int pageSize, string orderBy,
+                                                  out int totalUsers)
         {
-            return DaoFactory.GetUserDao().GetByApplication(application, currentLogin, role, unit, searchToken, page, pageSize, orderBy, out totalUsers);
+            return DaoFactory.GetUserDao().GetByApplication(application, currentLogin, role, unit, searchToken, page,
+                                                            pageSize, orderBy, out totalUsers);
         }
 
         /*
@@ -213,7 +222,7 @@ namespace CAESDO.Catbert.BLL
             return users.ToList();
         }
          */
- 
+
         #endregion
 
         #region Units
@@ -237,6 +246,5 @@ namespace CAESDO.Catbert.BLL
         }
 
         #endregion
-
     }
 }

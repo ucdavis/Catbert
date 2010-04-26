@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using CAESDO.Catbert.Core.Domain;
 
 namespace CAESDO.Catbert.BLL
@@ -10,10 +7,10 @@ namespace CAESDO.Catbert.BLL
     {
         internal static Tracking GetTrackingInstance(string username, TrackingTypes type, TrackingActions action)
         {
-            Tracking tracking = new Tracking() { UserName = username, ActionDate = DateTime.Now };
+            var tracking = new Tracking() {UserName = username, ActionDate = DateTime.Now};
 
-            tracking.Action = TrackingBLL.GetTrackingAction(TrackingActions.Change);
-            tracking.Type = TrackingBLL.GetTrackingType(TrackingTypes.Application);
+            tracking.Action = GetTrackingAction(TrackingActions.Change);
+            tracking.Type = GetTrackingType(TrackingTypes.Application);
 
             return tracking;
         }
@@ -29,6 +26,11 @@ namespace CAESDO.Catbert.BLL
         }
     }
 
-    internal class TrackingTypeBLL : GenericBLL<TrackingType, int> { }
-    internal class TrackingActionBLL : GenericBLL<TrackingAction, int> { }
+    internal class TrackingTypeBLL : GenericBLL<TrackingType, int>
+    {
+    }
+
+    internal class TrackingActionBLL : GenericBLL<TrackingAction, int>
+    {
+    }
 }

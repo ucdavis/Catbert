@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using CAESArch.BLL;
 using CAESDO.Catbert.Core.Domain;
-using CAESDO.Catbert.Data;
 
 namespace CAESDO.Catbert.BLL
 {
@@ -15,7 +12,8 @@ namespace CAESDO.Catbert.BLL
         /// </summary>
         public static Permission InsertPermission(string application, string role, string login, string trackingUserName)
         {
-            return InsertPermission(ApplicationBLL.GetID(application), RoleBLL.GetID(role), UserBLL.GetID(login), trackingUserName);
+            return InsertPermission(ApplicationBLL.GetID(application), RoleBLL.GetID(role), UserBLL.GetID(login),
+                                    trackingUserName);
         }
 
         /// <summary>
@@ -27,15 +25,16 @@ namespace CAESDO.Catbert.BLL
 
             //First check to make sure there isn't an existing active permission like this
             if (PermissionExists(applicationID, roleID, userID, inactive)) return null;
-            
+
             //Now see if there is an existing inactive permission
             Permission permission = Queryable.SingleOrDefault(perm => perm.Application.ID == applicationID &&
-                                                                perm.Role.ID == roleID && perm.User.ID == userID && perm.Inactive == true);
+                                                                      perm.Role.ID == roleID && perm.User.ID == userID &&
+                                                                      perm.Inactive == true);
 
             //If we didn't find a matching permission, make a new one
             if (permission == null)
             {
-                permission = new Permission() { Inactive = false };
+                permission = new Permission() {Inactive = false};
                 permission.Application = ApplicationBLL.GetByID(applicationID);
                 permission.Role = RoleBLL.GetByID(roleID);
                 permission.User = UserBLL.GetByID(userID);
@@ -45,13 +44,15 @@ namespace CAESDO.Catbert.BLL
                 permission.Inactive = false;
             }
 
-            Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.Permission, TrackingActions.Add);
-            tracking.Comments = string.Format("Role (roleid:{0}) to application (appid:{1}) granted.", roleID, applicationID);
+            Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.Permission,
+                                                                TrackingActions.Add);
+            tracking.Comments = string.Format("Role (roleid:{0}) to application (appid:{1}) granted.", roleID,
+                                              applicationID);
 
             using (var ts = new TransactionScope())
             {
-                EnsurePersistent( permission);
-                TrackingBLL.EnsurePersistent( tracking);
+                EnsurePersistent(permission);
+                TrackingBLL.EnsurePersistent(tracking);
 
                 ts.CommitTransaction();
             }
@@ -65,8 +66,9 @@ namespace CAESDO.Catbert.BLL
         public static bool DeletePermission(string application, string role, string login, string trackingUserName)
         {
             //First find the associated permission
-            Permission permission = Queryable.SingleOrDefault(perm => perm.Application.Name == application && perm.Role.Name == role
-                                                                  && perm.User.LoginID == login);
+            Permission permission =
+                Queryable.SingleOrDefault(perm => perm.Application.Name == application && perm.Role.Name == role
+                                                  && perm.User.LoginID == login);
 
             if (permission == null) return false;
 
@@ -85,13 +87,15 @@ namespace CAESDO.Catbert.BLL
 
             permission.Inactive = true; //Set the permission inactive
 
-            Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.Permission, TrackingActions.Delete);
-            tracking.Comments = string.Format("Role (roleid:{0}) to application (appid:{1}) removed.", permission.Role.ID, permission.Application.ID);
+            Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.Permission,
+                                                                TrackingActions.Delete);
+            tracking.Comments = string.Format("Role (roleid:{0}) to application (appid:{1}) removed.",
+                                              permission.Role.ID, permission.Application.ID);
 
             using (var ts = new TransactionScope())
             {
-                EnsurePersistent( permission);
-                TrackingBLL.EnsurePersistent( tracking);
+                EnsurePersistent(permission);
+                TrackingBLL.EnsurePersistent(tracking);
 
                 ts.CommitTransaction();
             }
@@ -104,12 +108,17 @@ namespace CAESDO.Catbert.BLL
         /// </summary>
         public static bool PermissionExists(string application, string role, string login, bool inactive)
         {
-            return PermissionExists(ApplicationBLL.GetID(application), RoleBLL.GetID(role), UserBLL.GetID(login), inactive);
+            return PermissionExists(ApplicationBLL.GetID(application), RoleBLL.GetID(role), UserBLL.GetID(login),
+                                    inactive);
         }
 
         public static bool PermissionExists(int applicationID, int roleID, int userID, bool inactive)
         {
-            return Queryable.Any(perm => perm.Application.ID == applicationID && perm.Role.ID == roleID && perm.User.ID == userID && perm.Inactive == inactive);
+            return
+                Queryable.Any(
+                    perm =>
+                    perm.Application.ID == applicationID && perm.Role.ID == roleID && perm.User.ID == userID &&
+                    perm.Inactive == inactive);
         }
 
         /// <summary>
@@ -117,13 +126,19 @@ namespace CAESDO.Catbert.BLL
         /// </summary>
         public static bool AnyPermissionExists(string application, string login, bool inactive)
         {
-            return Queryable.Any(perm => perm.Application.Name == application && perm.User.LoginID == login && perm.Inactive == inactive);
+            return
+                Queryable.Any(
+                    perm =>
+                    perm.Application.Name == application && perm.User.LoginID == login && perm.Inactive == inactive);
         }
 
         public static List<Role> GetRolesForUser(string application, string login)
         {
-            var permissions = Queryable.Where(perm => perm.Application.Name == application && perm.User.LoginID == login && perm.Inactive == false).ToList();
-            var roles = permissions.Select(perm => perm.Role);
+            List<Permission> permissions =
+                Queryable.Where(
+                    perm => perm.Application.Name == application && perm.User.LoginID == login && perm.Inactive == false)
+                    .ToList();
+            IEnumerable<Role> roles = permissions.Select(perm => perm.Role);
 
             return roles.ToList();
         }

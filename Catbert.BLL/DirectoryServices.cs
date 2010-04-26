@@ -1,46 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.DirectoryServices.Protocols;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Web.Configuration;
 
 namespace CAESDO.Catbert.BLL
 {
     public class DirectoryServices
     {
+        private const string STR_CN = "cn";
+        private const string STR_DisplayName = "displayName";
+        private const string STR_EmployeeNumber = "employeeNumber";
+        private const string STR_GivenName = "givenName";
+        private const string STR_Mail = "mail";
         private const string STR_SearchBase = "ou=People,dc=ucdavis,dc=edu";
-        static readonly string LDAPUser = System.Web.Configuration.WebConfigurationManager.AppSettings["LDAPUser"];
-        static readonly string LDAPPassword = System.Web.Configuration.WebConfigurationManager.AppSettings["LDAPPassword"];
-
-        static readonly string STR_LDAPURL = "ldap.ucdavis.edu";
-        static readonly int STR_LDAPPort = 636;
-
-        const string STR_UID = "uid";
-        const string STR_EmployeeNumber = "employeeNumber";
-        const string STR_Mail = "mail";
-        const string STR_DisplayName = "displayName";
-        const string STR_CN = "cn";
-        const string STR_SN = "sn";
-        const string STR_GivenName = "givenName";
-        const string STR_Telephone = "telephoneNumber";
+        private const string STR_SN = "sn";
+        private const string STR_Telephone = "telephoneNumber";
+        private const string STR_UID = "uid";
+        private static readonly string LDAPPassword = WebConfigurationManager.AppSettings["LDAPPassword"];
+        private static readonly string LDAPUser = WebConfigurationManager.AppSettings["LDAPUser"];
+        private static readonly int STR_LDAPPort = 636;
+        private static readonly string STR_LDAPURL = "ldap.ucdavis.edu";
 
         public static SearchResponse GetSearchResponse(string searchFilter, string searchBase)
         {
             //Establishing a Connection to the LDAP Server
-            LdapDirectoryIdentifier ldapident = new LdapDirectoryIdentifier(STR_LDAPURL, STR_LDAPPort);
+            var ldapident = new LdapDirectoryIdentifier(STR_LDAPURL, STR_LDAPPort);
             //LdapConnection lc = new LdapConnection(ldapident, null, AuthType.Basic);
-            LdapConnection lc = new LdapConnection(ldapident, new System.Net.NetworkCredential(LDAPUser, LDAPPassword), AuthType.Basic);
+            var lc = new LdapConnection(ldapident, new NetworkCredential(LDAPUser, LDAPPassword), AuthType.Basic);
             lc.Bind();
             lc.SessionOptions.ProtocolVersion = 3;
             lc.SessionOptions.SecureSocketLayer = true;
 
             //Configure the Search Request to Query the UCD OpenLDAP Server's People Search Base for a Specific User ID or Mail ID and Return the Requested Attributes 
-            string[] attributesToReturn = new string[] { STR_UID, STR_EmployeeNumber, STR_Mail, STR_Telephone, STR_DisplayName, STR_CN, STR_SN, STR_GivenName };
+            var attributesToReturn = new string[]
+                                         {
+                                             STR_UID, STR_EmployeeNumber, STR_Mail, STR_Telephone, STR_DisplayName, STR_CN,
+                                             STR_SN, STR_GivenName
+                                         };
 
-            SearchRequest sRequest = new SearchRequest(searchBase, searchFilter, SearchScope.Subtree, attributesToReturn);
+            var sRequest = new SearchRequest(searchBase, searchFilter, SearchScope.Subtree, attributesToReturn);
 
             //Send the Request and Load the Response
-            SearchResponse sResponse = (SearchResponse)lc.SendRequest(sRequest);
+            var sResponse = (SearchResponse) lc.SendRequest(sRequest);
 
             return sResponse;
         }
@@ -51,7 +54,7 @@ namespace CAESDO.Catbert.BLL
 
             foreach (SearchResultEntry result in sResponse.Entries)
             {
-                DirectoryUser user = new DirectoryUser();
+                var user = new DirectoryUser();
 
                 //Grab out the first response entry
 
@@ -91,11 +94,13 @@ namespace CAESDO.Catbert.BLL
             return users;
         }
 
-        public static List<DirectoryUser> LDAPSearchUsers(string employeeID, string firstName, string lastName, string loginID, string email)
+        public static List<DirectoryUser> LDAPSearchUsers(string employeeID, string firstName, string lastName,
+                                                          string loginID, string email)
         {
-            if (employeeID == null && firstName == null && lastName == null && loginID == null) return new List<DirectoryUser>();
+            if (employeeID == null && firstName == null && lastName == null && loginID == null)
+                return new List<DirectoryUser>();
 
-            StringBuilder searchFilter = new StringBuilder("(&");
+            var searchFilter = new StringBuilder("(&");
 
             if (!string.IsNullOrEmpty(employeeID))
             {
@@ -124,10 +129,11 @@ namespace CAESDO.Catbert.BLL
 
             searchFilter.Append(")");
 
-            string strSearchFilter = searchFilter.ToString(); //"(&(uid=" + (loginID ?? string.Empty) + ")(sn=" + (lastName ?? "Kirkland") + "))";
+            string strSearchFilter = searchFilter.ToString();
+                //"(&(uid=" + (loginID ?? string.Empty) + ")(sn=" + (lastName ?? "Kirkland") + "))";
             string strSearchBase = STR_SearchBase;
 
-            var sResponse = GetSearchResponse(strSearchFilter, strSearchBase);
+            SearchResponse sResponse = GetSearchResponse(strSearchFilter, strSearchBase);
 
             return GetUsersFromResponse(sResponse);
         }
@@ -139,7 +145,7 @@ namespace CAESDO.Catbert.BLL
         {
             if (string.IsNullOrEmpty(searchTerm)) return null;
 
-            StringBuilder searchFilter = new StringBuilder("(|");
+            var searchFilter = new StringBuilder("(|");
 
             //Append the login search
             searchFilter.AppendFormat("({0}={1})", STR_UID, searchTerm);
@@ -149,9 +155,9 @@ namespace CAESDO.Catbert.BLL
 
             searchFilter.Append(")");
 
-            var sResponse = GetSearchResponse(searchFilter.ToString(), STR_SearchBase);
+            SearchResponse sResponse = GetSearchResponse(searchFilter.ToString(), STR_SearchBase);
 
-            var foundUsers = GetUsersFromResponse(sResponse);
+            List<DirectoryUser> foundUsers = GetUsersFromResponse(sResponse);
 
             if (foundUsers.Count == 0)
             {
@@ -166,7 +172,8 @@ namespace CAESDO.Catbert.BLL
         /// <summary>
         /// Prepare the 
         /// </summary>
-        public static List<DirectoryUser> SearchUsers(string employeeID, string firstName, string lastName, string loginID, string email)
+        public static List<DirectoryUser> SearchUsers(string employeeID, string firstName, string lastName,
+                                                      string loginID, string email)
         {
             return LDAPSearchUsers(employeeID, firstName, lastName, loginID, email);
         }
@@ -182,6 +189,10 @@ namespace CAESDO.Catbert.BLL
 
     public class DirectoryUser
     {
+        public DirectoryUser()
+        {
+        }
+
         public string EmployeeID { get; set; }
         public string LoginID { get; set; }
         public string FirstName { get; set; }
@@ -189,11 +200,5 @@ namespace CAESDO.Catbert.BLL
         public string FullName { get; set; }
         public string EmailAddress { get; set; }
         public string PhoneNumber { get; set; }
-
-        public DirectoryUser()
-        {
-
-        }
-
     }
 }

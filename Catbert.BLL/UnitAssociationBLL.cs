@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using CAESArch.BLL;
 using CAESDO.Catbert.Core.Domain;
-using CAESDO.Catbert.Data;
 
 namespace CAESDO.Catbert.BLL
 {
@@ -12,16 +8,16 @@ namespace CAESDO.Catbert.BLL
     {
         public static bool AssociationExists(string login, string application, string unitFIS)
         {
-            return UnitAssociationBLL.Queryable.Where(assoc => assoc.User.LoginID == login
-                && assoc.Unit.FISCode == unitFIS
-                && assoc.Application.Name == application).Any();
+            return Queryable.Where(assoc => assoc.User.LoginID == login
+                                            && assoc.Unit.FISCode == unitFIS
+                                            && assoc.Application.Name == application).Any();
         }
 
         public static UnitAssociation GetUnitAssociation(string login, string application, string unitFIS)
         {
-            return UnitAssociationBLL.Queryable.Where(assoc => assoc.User.LoginID == login
-                && assoc.Unit.FISCode == unitFIS
-                && assoc.Application.Name == application).SingleOrDefault();
+            return Queryable.Where(assoc => assoc.User.LoginID == login
+                                            && assoc.Unit.FISCode == unitFIS
+                                            && assoc.Application.Name == application).SingleOrDefault();
         }
 
         /// <summary>
@@ -37,29 +33,30 @@ namespace CAESDO.Catbert.BLL
             if (user == null || unit == null || app == null) return false;
 
             //Get the association between this unit and this user in this application
-            var unitAssociation = UnitAssociationBLL.GetUnitAssociation(login, application, unitFIS);
+            UnitAssociation unitAssociation = GetUnitAssociation(login, application, unitFIS);
 
             //if the association doesn't exist, create it
             if (unitAssociation == null)
             {
-                unitAssociation = new UnitAssociation() { Application = app, Unit = unit, User = user, Inactive = false };
+                unitAssociation = new UnitAssociation() {Application = app, Unit = unit, User = user, Inactive = false};
             }
             else if (unitAssociation.Inactive == true) //if the association exists and is inactive, activate it
             {
                 unitAssociation.Inactive = false;
             }
-            else  //the association exists and is already active -- so ignore and return
+            else //the association exists and is already active -- so ignore and return
             {
                 return false;
             }
 
-            Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.User, TrackingActions.Change);
+            Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.User,
+                                                                TrackingActions.Change);
             tracking.Comments = string.Format("Unit {0} associated with user {1}", unit.ID, user.ID);
 
             using (var ts = new TransactionScope())
             {
-                EnsurePersistent( unitAssociation);  //persist the unitAssociation
-                TrackingBLL.EnsurePersistent( tracking);
+                EnsurePersistent(unitAssociation); //persist the unitAssociation
+                TrackingBLL.EnsurePersistent(tracking);
 
                 ts.CommitTransaction();
             }
@@ -80,7 +77,7 @@ namespace CAESDO.Catbert.BLL
             if (user == null || unit == null || app == null) return false;
 
             //Get the association between this unit and this user in this application
-            var unitAssociation = GetUnitAssociation(login, application, unitFIS);
+            UnitAssociation unitAssociation = GetUnitAssociation(login, application, unitFIS);
 
             if (unitAssociation == null)
             {
@@ -95,7 +92,8 @@ namespace CAESDO.Catbert.BLL
                 return false;
             }
 
-            Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.User, TrackingActions.Change);
+            Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.User,
+                                                                TrackingActions.Change);
             tracking.Comments = string.Format("Unit {0} unassociated from user {1}", unit.ID, user.ID);
 
             using (var ts = new TransactionScope())
