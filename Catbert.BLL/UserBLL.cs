@@ -74,26 +74,20 @@ namespace CAESDO.Catbert.BLL
 
             return users.ToList();
         }
-
-        public static List<User> GetByApplicationRole(int applicationID, int roleID)
+        
+        /// <summary>
+        /// Gets all users who are in the given application and role.
+        /// </summary>
+        /// <remarks>Can be improved once joins are possible</remarks>
+        public static List<User> GetByApplicationRole(string application, string role)
         {
-            //Can't implement through LINQ because of restrictions on joins.
-            throw new NotImplementedException();
+            //Grab all 'role' permissions in this application
+            var permissions = PermissionBLL.Queryable.Where(perm => perm.Application.Name == application && perm.Role.Name == role && perm.Inactive == false).ToList();
 
-            /*
-            var query = from perm in PermissionBLL.Queryable
-                        where perm.Application.ID == applicationID && perm.Role.ID == roleID
-                        select perm.User;
-            */
+            //Now get all users among these perms
+            var users = permissions.Select(perm => perm.User).Distinct();
 
-            /*
-            var query = from user in Queryable
-                        join perm in PermissionBLL.Queryable on user.ID equals perm.ID
-                        where perm.Application.ID == applicationID && perm.Role.ID == roleID
-                        select user;
-
-            return query.ToList();
-             */
+            return users.ToList();
         }
 
         #region Units

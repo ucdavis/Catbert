@@ -212,9 +212,30 @@ public class CatbertWebService : System.Web.Services.WebService
     {
         EnsureCredentials(secureCTX);
 
-        List<CatbertUser> users = new List<CatbertUser>();
+        List<CatbertUser> users = ConvertFromUserList(UserBLL.GetByApplication(application), application);
 
-        foreach (var user in UserBLL.GetByApplication(application))
+        return users;
+    }
+
+    [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
+    public List<CatbertUser> GetUsersByApplicationRole(string application, string role)
+    {
+        EnsureCredentials(secureCTX);
+
+        List<CatbertUser> users = ConvertFromUserList(UserBLL.GetByApplicationRole(application, role), application);
+
+        return users;
+    }
+
+    /// <summary>
+    /// Convert a list of users from the Core class into a web service object.  Requires the application name for
+    /// resolution of roles
+    /// </summary>
+    private static List<CatbertUser> ConvertFromUserList(List<User> users, string application)
+    {
+        List<CatbertUser> catbertUsers = new List<CatbertUser>();
+
+        foreach (var user in users)
         {
             //Add the user's basic info
             CatbertUser catbertUser = new CatbertUser()
@@ -247,16 +268,9 @@ public class CatbertWebService : System.Web.Services.WebService
             }
 
             //Add this catbertUser to the main list
-            users.Add(catbertUser);
+            catbertUsers.Add(catbertUser);
         }
-
-        return users;
-    }
-
-    [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
-    public List<CatbertUser> GetUsersByApplicationRole(string application, string role)
-    {
-        throw new NotImplementedException();
+        return catbertUsers;
     }
 
     #endregion

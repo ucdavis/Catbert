@@ -103,6 +103,13 @@ namespace CAESDO.Catbert.Test
         }
          */
 
+        public static CatbertUser[] GetUserInApplicationRole(string role)
+        {
+            var sc = GetSecurityContext();
+
+            return catops.GetUsersByApplicationRole(ref sc, AppName, role);
+        }
+
         public static CatbertUser[] GetUsersInApplication()
         {
             var sc = GetSecurityContext();

@@ -80,5 +80,29 @@ namespace CAESDO.Catbert.Test
             Assert.AreEqual<int>(1, users[0].Roles.Count());
             Assert.AreEqual("Admin", users[0].Roles[0].Name);
         }
+
+        [TestMethod]
+        public void CheckCatbertAdmins()
+        {
+            var users = CatbertManager.GetUserInApplicationRole("Admin").OrderBy(u => u.Login).ToList();
+
+            Assert.AreEqual<int>(5, users.Count());
+
+            Assert.AreEqual("adam", users[0].Login);
+            Assert.AreEqual("anlai", users[1].Login);
+            Assert.AreEqual("pgang", users[2].Login);
+            Assert.AreEqual("postit", users[3].Login);
+            Assert.AreEqual("taylorkj", users[4].Login);
+        }
+
+        [TestMethod]
+        public void CheckCatbertReaders()
+        {
+            var users = CatbertManager.GetUserInApplicationRole(TestHelper.TestRole).ToList();
+
+            Assert.AreEqual<int>(1, users.Count);
+
+            Assert.AreEqual(TestHelper.TestUser, users[0].Login);            
+        }
     }
 }
