@@ -94,11 +94,11 @@
     <div id="dialogUserInfo" title="User Information" style="display: none;">
         <div id="tabs">
             <ul>
-                <li><a href="#tabs-1">Nunc tincidunt</a></li>
-                <li><a href="#tabs-2">Proin dolor</a></li>
-                <li><a href="#tabs-3">Aenean lacinia</a></li>
+                <li><a href="#tabPermissions">Permissions</a></li>
+                <li><a href="#tabUnits">Units</a></li>
+                <li><a href="#tabInfo">Info</a></li>
             </ul>
-            <div id="tabs-1">
+            <div id="tabPermissions">
                 <p>
                     Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec
                     arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante.
@@ -108,7 +108,7 @@
                     pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum.
                     Nunc tristique tempus lectus.</p>
             </div>
-            <div id="tabs-2">
+            <div id="tabUnits">
                 <p>
                     Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra
                     massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget
@@ -119,7 +119,7 @@
                     convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod
                     felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
             </div>
-            <div id="tabs-3">
+            <div id="tabInfo">
                 <p>
                     Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate,
                     pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem.
