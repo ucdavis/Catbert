@@ -3,7 +3,7 @@
   <class
     name="CAESDO.Catbert.Core.Domain.School, CAESDO.Catbert.Core"
     table="Schools">
-    <id name="id" access="field" column="SchoolCode" unsaved-value="0">
+    <id name="ID" access="nosetter.lowercase" column="SchoolCode" unsaved-value="0">
       <generator class="assigned" />
     </id>
     
