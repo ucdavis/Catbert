@@ -290,7 +290,9 @@ namespace CAESDO
             string CurrentUser = HttpContext.Current.User.Identity.Name; //Current Logged In User
 
             _dops.ResetDops();
-            _dops.Sproc = "usp_getAllRoles";
+            _dops.Sproc = "usp_getAllRolesInApp";
+
+            _dops.SetParameter("@AppName", _applicationName, "IN");
 
             ArrayList fields = new ArrayList();
             fields.Add("Role");

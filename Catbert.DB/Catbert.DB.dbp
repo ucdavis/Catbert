@@ -19,4 +19,13 @@ Begin DataProject = "Catbert.DB"
    End
    Begin Folder = "Queries"
    End
+   Begin Folder = "RoleProvider"
+      Script = "usp_deleteEmptyRole.sql"
+      Script = "usp_deleteUserFromRole.sql"
+      Script = "usp_getAllRolesInApp.sql"
+      Script = "usp_getRolesInAppByLoginID.sql"
+      Script = "usp_getUsersInRole.sql"
+      Script = "usp_insertRole.sql"
+      Script = "usp_insertUserInRole.sql"
+   End
 End
