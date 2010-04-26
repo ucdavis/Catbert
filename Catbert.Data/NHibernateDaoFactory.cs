@@ -110,10 +110,11 @@ namespace CAESDO.Catbert.Data
         public class UserDao : IUserDao
         {
             public List<User> GetByApplication(string application, string currentLogin, string role, string unit, string searchToken, int page, int pageSize, string orderBy, out int totalUsers)
-            {                
+            {   
                 //Now filter out all of the users in this list by the role search criteria 
                 //Note: If no role is selected, we still need to filter and make sure the user has ANY role in the application
                 ICriteria criteria = NHibernateSessionManager.Instance.GetSession().CreateCriteria(typeof(User))
+                    .Add(Expression.Eq("Inactive", false))
                     .Add(
                         Expression.Disjunction()
                             .Add(Expression.Like("Email", searchToken, MatchMode.Anywhere))
