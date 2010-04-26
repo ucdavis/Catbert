@@ -10,7 +10,6 @@ using CAESArch.Core.Utils;
 
 public partial class Management_UserManagement : System.Web.UI.Page
 {
-    public string CurrentApplication { get; set; }
     public List<Unit> Units { get; set; }
     public List<Role> Roles { get; set; }
 
@@ -20,9 +19,7 @@ public partial class Management_UserManagement : System.Web.UI.Page
     /// </summary>
     protected void Page_Init(object sender, EventArgs e)
     {
-        CurrentApplication = "Catbert";
-
-        ClientScript.RegisterHiddenField("app", CurrentApplication); //Register a hidden field with the application name in it for use from JS
+        //ClientScript.RegisterHiddenField("app", CurrentApplication); //Register a hidden field with the application name in it for use from JS
         ClientScript.RegisterHiddenField("user", User.Identity.Name); //Also a hidden field with the user's name in it for use from JS
     }
 

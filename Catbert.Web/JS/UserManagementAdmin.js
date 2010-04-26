@@ -18,7 +18,6 @@ var userTableDirty = false;
 var rowEven = true;
 
 $(document).ready(function() {
-    application = $("#app").val();
     user = $("#user").val();
 
     PopulateUserTable(application, search, unit, role, sortname, sortorder); //Populate the user table
@@ -426,6 +425,8 @@ function PopulateUserTable(application, search, unit, role, sortname, sortorder)
         sortorder: sortorder
     };
 
+    console.dir(data);
+    
     //Call the webservice
     AjaxCall(baseURL + 'GetUsers', data, PopulateUserTableSuccess, null);
 }
