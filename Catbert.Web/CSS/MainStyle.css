@@ -27,7 +27,7 @@ h2 {margin-bottom: 0px;}
 .menu p a:hover {border-bottom: 3px #df070b dashed;}
 .menu ul {width: 420px; float: right; margin: 335px 0 0;}
 .menu ul li {margin: 0 0 15px; list-style: none;}
-.menu ul li a {background: url(../Images/menu-nav.jpg) no-repeat; position: relative; text-indent: -99999px; overflow: hidden; display: block; width: 420px; height: 27px;}
+.menu ul li a {background: url(../Images/menu-nav.jpg) no-repeat; outline: none; position: relative; text-indent: -99999px; overflow: hidden; display: block; width: 420px; height: 27px;}
 
     .menu ul li.m1 a {z-index: 5;}
     .menu ul li.m2 a {z-index: 4; height: 35px; background-position: 0px -27px;}
