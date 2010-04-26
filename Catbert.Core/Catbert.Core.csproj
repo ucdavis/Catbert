@@ -58,6 +58,7 @@
     <Compile Include="Domain\Application.cs" />
     <Compile Include="Domain\ApplicationRole.cs" />
     <Compile Include="Domain\ITrackable.cs" />
+    <Compile Include="Domain\Message.cs" />
     <Compile Include="Domain\Permission.cs" />
     <Compile Include="Domain\Role.cs" />
     <Compile Include="Domain\School.cs" />
@@ -94,6 +95,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Domain\ApplicationRole.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Domain\Message.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Utils\" />

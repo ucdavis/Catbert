@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class
+    name="CAESDO.Catbert.Core.Domain.Message, CAESDO.Catbert.Core"
+    table="Messages" >
+    <id name="ID" access="nosetter.lowercase" column="ID" unsaved-value="0">
+      <generator class="identity" />
+    </id>
+
+    <property name="MessageName" column="Message" />
+    <property name="BeginDisplayDate" column="BeginDisplayDate" />
+    <property name="EndDisplyDate" column="EndDisplyDate" />
+    <property name="Isactive" column="Isactive"></property>
+    <many-to-one name="Application" class="Application" column="ApplicationID" cascade="none" />
+
+  </class>
+</hibernate-mapping>
