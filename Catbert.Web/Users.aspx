@@ -14,29 +14,37 @@
     <script type="text/javascript">
         $(document).ready(function() {
 
-        var json = { login: "postit", application: "Catbert" };
-        var test = JSON2.stringify(json);
+            var json = { login: "postit", application: "Catbert" };
+            var test = JSON2.stringify(json);
             //debugger;
             $("#tblUsers").flexigrid({
                 url: "Services/CatbertWebService.asmx/DataGetUsersByApplication",
                 dataType: 'json',
                 method: 'POST',
                 params: json,
-                colModel : [
-				    {display: 'Login', name : 'login', width : 40, sortable : true, align: 'center'},
-				    {display: 'FirstName', name : 'firstname', width : 180, sortable : true, align: 'left'},
+                colModel: [
+				    { display: 'Login', name: 'login', width: 40, sortable: true, align: 'center' },
+				    { display: 'FirstName', name: 'firstname', width: 180, sortable: true, align: 'left' },
 				    { display: 'LastName', name: 'lastname', width: 120, sortable: true, align: 'left' },
-				    {display: 'Email', name : 'emai22l', width : 130, sortable : true, align: 'left', hide: false},
+				    { display: 'Email', name: 'email', width: 130, sortable: true, align: 'left', hide: false },
 				    ],
-				sortname: "lastname",
-				sortorder: "asc",
-				usepager: true,
-				title: 'Users',
-				useRp: true,
-				rp: 15,
-				showTableToggleBtn: true,
-				width: 700,
-				height: 200
+				searchitems: [
+				    { display: 'Any', name: 'any', isdefault: true },
+				    { display: 'FirstName', name: 'firstname' },
+				    { display: 'LastName', name: 'lastname' }
+				    ],
+                sortname: "lastname",
+                sortorder: "asc",
+                usepager: true,
+                title: 'Users',
+                useRp: true,
+                rp: 20,
+                showTableToggleBtn: false, //Seems to show anyway
+                width: 700,
+                height: 200,
+                onToggleCol: function() {
+                    alert("Toggle Just Occurred");
+                }
 
                 //args: json
             });
