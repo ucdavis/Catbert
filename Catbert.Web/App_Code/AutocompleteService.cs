@@ -56,7 +56,7 @@ public class AutocompleteService : System.Web.Services.WebService
     [WebMethod]
     public List<AutoCompleteData> GetUsers(string application, string q /*query*/, int limit)
     {
-        var users = UserBLL.GetByApplication(application, q, 0 /* Start at the first record */, limit);
+        var users = UserBLL.GetByApplication(application, q, 1 /* Start at the first record */, limit);
 
         List<AutoCompleteData> auto = new List<AutoCompleteData>();
 

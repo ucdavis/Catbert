@@ -351,7 +351,7 @@ public class CatbertWebService : System.Web.Services.WebService
 
         int totalUsers = 0;
 
-        var users = UserBLL.GetByApplication(application, role, unit, search, page, pagesize, orderBy, ref totalUsers);
+        var users = UserBLL.GetByApplication(application, role, unit, search, page, pagesize, orderBy, out totalUsers);
         var serviceUsers = ConvertFromUserList(users, application);
 
         RecordSet grid = new RecordSet() { page = page, total = (int)Math.Ceiling((double)totalUsers/pagesize), records = serviceUsers.Count };
@@ -363,7 +363,7 @@ public class CatbertWebService : System.Web.Services.WebService
 
         return grid;
     }
-
+    /*
     [WebMethod]
     public List<CatbertUser> GetUsersByApplicationRole(string application, string role)
     {
@@ -371,6 +371,7 @@ public class CatbertWebService : System.Web.Services.WebService
 
         return users;
     }
+     */
 
     /// <summary>
     /// Convert a list of users from the Core class into a web service object.  Requires the application name for

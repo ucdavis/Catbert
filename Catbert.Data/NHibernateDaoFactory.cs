@@ -51,7 +51,7 @@ namespace CAESDO.Catbert.Data
                 totalUsers = CriteriaTransformer.TransformToRowCount(criteria).UniqueResult<int>(); // criteria.SetProjection(Projections.RowCount()).UniqueResult<int>();
              
                 criteria = criteria
-                            .SetFirstResult(page * pageSize)
+                            .SetFirstResult((page - 1) * pageSize)
                             .SetMaxResults(pageSize)
                             .AddOrder(GetOrder(orderBy));
 

@@ -161,9 +161,11 @@ namespace CAESDO.Catbert.BLL
         {
             int totalUsers;
 
-            return UserBLL.daoFactory.GetUserDao().GetByApplication(application, null, null, searchToken, page, pageSize, "LastName ASC", out totalUsers);
-        }
+            return GetByApplication(application, null, null, searchToken, page, pageSize, "LastName ASC", out totalUsers);
 
+            //return UserBLL.daoFactory.GetUserDao().GetByApplication(application, null, null, searchToken, page, pageSize, "LastName ASC", out totalUsers);
+        }
+        /*
         private static IQueryable<User> GetUserQueryableByApplication(string application, string role, string unit, string searchToken)
         {
             //Grab all permissions in this application
@@ -184,20 +186,14 @@ namespace CAESDO.Catbert.BLL
             }
 
             return users.AsQueryable<User>();
-        }
+        }*/
 
-        public static List<User> GetByApplication(string application, string role, string unit, string searchToken, int page, int pageSize, string orderBy, ref int totalUsers)
+        public static List<User> GetByApplication(string application, string role, string unit, string searchToken, int page, int pageSize, string orderBy, out int totalUsers)
         {
-            IQueryable<User> users = GetUserQueryableByApplication(application, role, unit, searchToken).OrderBy(orderBy);
-
-            totalUsers = users.Count();
-
-            //Now take/skip to get the correct users
-            users = users.Skip((page - 1) * pageSize).Take(pageSize);
-
-            return users.ToList();
+            return UserBLL.daoFactory.GetUserDao().GetByApplication(application, role, unit, searchToken, page, pageSize, orderBy, out totalUsers);
         }
 
+        /*
         /// <summary>
         /// Gets all users who are in the given application and role.
         /// </summary>
@@ -212,6 +208,7 @@ namespace CAESDO.Catbert.BLL
 
             return users.ToList();
         }
+         */
  
         #endregion
 
