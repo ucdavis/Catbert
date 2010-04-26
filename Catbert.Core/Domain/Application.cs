@@ -17,6 +17,8 @@ namespace CAESDO.Catbert.Core.Domain
 
         public virtual bool Inactive { get; set; }
 
+        public virtual IList<Role> Roles { get; set; }
+
         public Application()
         {
 

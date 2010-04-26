@@ -13,6 +13,11 @@
     <property name="WebServiceHash" column="WebServiceHash" />
     <property name="Salt" column="Salt"></property>
     <property name="Inactive" column="Inactive"></property>
+
+    <bag name="Roles" table="ApplicationRoles" inverse="true">
+      <key column="ApplicationID" />
+      <many-to-many column="RoleID" class="CAESDO.Catbert.Core.Domain.Role, CAESDO.Catbert.Core" />
+    </bag>
     
   </class>
 </hibernate-mapping>
