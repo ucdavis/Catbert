@@ -30,7 +30,7 @@ namespace CAESDO.Catbert.BLL
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public static int InsertNewUser(User user)
+        public static int InsertNewUser(User user, string trackingUserName)
         {
             //Make sure the user given in valid according to enlib validation
             if (!ValidateBO<User>.isValid(user)) throw new ApplicationException(string.Format("User not valid: {0}", ValidateBO<User>.GetValidationResultsAsString(user)));
@@ -42,9 +42,13 @@ namespace CAESDO.Catbert.BLL
             user.Inactive = false;
             user.UserKey = Guid.NewGuid();
 
+            Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.User, TrackingActions.Add);
+            tracking.Comments = string.Format("User {0} added", user.LoginID);
+
             using (var ts = new TransactionScope())
             {
                 EnsurePersistent(ref user);
+                TrackingBLL.EnsurePersistent(ref tracking);
 
                 ts.CommittTransaction();
             }
@@ -80,5 +84,42 @@ namespace CAESDO.Catbert.BLL
             return query.ToList();
              */
         }
+
+        #region Units
+
+        /// <summary>
+        /// Associate the unit identified by unitFIS 
+        /// </summary>
+        public static bool AssociateUnit(string login, string unitFIS, string trackingUserName)
+        {
+            //Get the user and unit and make sure they exist
+            User user = UserBLL.GetUser(login);
+            Unit unit = UnitBLL.GetByFIS(unitFIS);
+
+            if (user == null || unit == null) return false;
+
+            //Check to see if there is already an association between this unit and this unit
+            bool userUnitExists = Queryable.Where(usr => usr.Units.Contains(unit)).Any();
+
+            if (userUnitExists) return false;
+
+            //Add the unit to the user
+            user.Units.Add(unit);
+
+            Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.User, TrackingActions.Change);
+            tracking.Comments = string.Format("{Unit {0} associated with user {1}", unit.ID, user.ID);
+
+            using (var ts = new TransactionScope())
+            {
+                EnsurePersistent(ref user);
+                TrackingBLL.EnsurePersistent(ref tracking);
+
+                ts.CommittTransaction();
+            }
+
+            return true;
+        }
+
+        #endregion
     }
 }

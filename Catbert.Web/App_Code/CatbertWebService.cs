@@ -63,7 +63,7 @@ public class CatbertWebService : System.Web.Services.WebService
             EmployeeID = serviceUser.EmployeeID
         };
 
-        return UserBLL.InsertNewUser(user);
+        return UserBLL.InsertNewUser(user, secureCTX.UserID);
     }
 
     /// <summary>
@@ -121,13 +121,13 @@ public class CatbertWebService : System.Web.Services.WebService
     #region Units
 
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
-    public bool AddUnit(string login, int unitID)
+    public bool AddUnit(string login, string unitFIS)
     {
         throw new NotImplementedException();
     }
 
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
-    public bool DeleteUnit(string login, int unitID)
+    public bool DeleteUnit(string login, string unitFIS)
     {
         throw new NotImplementedException();
     }
