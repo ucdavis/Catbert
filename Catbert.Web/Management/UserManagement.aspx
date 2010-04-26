@@ -18,6 +18,7 @@
         
         var page = 1;
         var pageSize = 3;
+        var totalPages = 1;
         
         var sortname = "LastName";
         var sortorder = "ASC";
@@ -41,6 +42,7 @@
             $("#txtSearch").keypress(function(event) {
                 if (event.keyCode == 13) {
                     search = $(this).val() /*textbox value*/;
+                    page = 1; //Change the page when a new search is executed
                     PopulateUserTable(application, search, unit, role, sortname, sortorder);
                     $(".ac_results").hide(); //Hide the results whenever you hit enter
                     return false; //Don't post back
@@ -71,8 +73,30 @@
             widgets: ['zebra']
             });
             */
+
+            $(".pager").click(function() {
+                var pagerType = $(this).attr("name");
+
+                if (pagerType == "First") {
+                    page = 1;
+                }
+                else if (pagerType == "Last") {
+                    page = totalPages;
+                }
+                else if (pagerType == "Previous") {
+                    page--;
+                    if (page == 0) page = 1;
+                }
+                else { //pagerType = "Next"
+                    page++;
+                    if (page > totalPages) page = totalPages;
+                }
+
+                PopulateUserTableDefault(application);
+            });
+
             $("#tblUsers thead tr th.header").click(ChangeSortOrder);
-            
+
             $("#modifyUserTEST").click(function() { ShowUserInfo(application); });
 
             $("#addUser").click(function() {
@@ -372,6 +396,11 @@
             //Render out each row
             $(data.rows).each(RenderRow);
 
+            totalPages = data.total;
+            
+            //Populate Page Info
+            $("#spanPageInfo").html(page + " of " + totalPages);
+
             SortTable();
             ShowLoadingIndicator(false);
         }
@@ -486,6 +515,17 @@
         <tbody id="tblUsersBody">
             <%--Each row is a new person--%>
         </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6" align="center">
+                    <input id="btnFirst" class="pager" name="First" type="button" value="First" />
+                    <input id="btnPrevious" class="pager" name="Previous" type="button" value="Previous" />
+                    <span id="spanPageInfo"></span>
+                    <input id="btnNext" class="pager" name="Next" type="button" value="Next" />
+                    <input id="btnLast" class="pager" name="Last" type="button" value="Last" />
+                </td>
+            </tr>
+        </tfoot>
     </table>
     
     <div id="dialogUserInfo" title="User Information" style="display: none;">

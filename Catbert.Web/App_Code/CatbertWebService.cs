@@ -356,7 +356,7 @@ public class CatbertWebService : System.Web.Services.WebService
         //var users = ConvertFromUserList(UserBLL.GetByApplication(application), application);
         var users = ConvertFromUserList(UserBLL.GetByApplication(application, search, page, pagesize, orderBy, ref totalUsers), application);
 
-        RecordSet grid = new RecordSet() { page = page, total = totalUsers/pagesize, records = users.Count };
+        RecordSet grid = new RecordSet() { page = page, total = (int)Math.Ceiling((double)totalUsers/pagesize), records = users.Count };
 
         foreach (var user in users)
         {
