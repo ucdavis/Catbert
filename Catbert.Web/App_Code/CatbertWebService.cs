@@ -208,13 +208,13 @@ public class CatbertWebService : System.Web.Services.WebService
     #region Applications
 
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
-    public List<CatbertUser> GetUsersByApplications(string application)
+    public List<CatbertUser> GetUsersByApplication(string application)
     {
         throw new NotImplementedException();
     }
 
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
-    public List<CatbertUser> GetUsersByApplicationRole(string application, int roleID)
+    public List<CatbertUser> GetUsersByApplicationRole(string application, string role)
     {
         throw new NotImplementedException();
     }

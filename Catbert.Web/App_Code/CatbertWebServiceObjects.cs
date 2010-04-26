@@ -9,6 +9,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
+using System.Collections.Generic;
 
 namespace Catbert.Services
 {
@@ -19,98 +20,41 @@ namespace Catbert.Services
         }
         public ServiceUser(string eid, string firstName, string lastName, string login, string email, string department)
         {
-            this._employeeID = eid;
-            this._firstName = firstName;
-            this._lastName = lastName;
-            this._login = login;
-            this._email = email;
-            this._department = department;
+            EmployeeID = eid;
+            FirstName = firstName;
+            LastName = lastName;
+            Login = login;
+            Email = email;
+            Department = department;
         }
 
-        protected string _employeeID;
-        protected string _firstName;
-        protected string _lastName;
-        protected string _login;
-        protected string _email;
-        protected string _department;
-
-        public string EmployeeID
-        {
-            get { return _employeeID; }
-            set { _employeeID = value; }
-        }
-        public string FirstName
-        {
-            get { return _firstName; }
-            set { _firstName = value; }
-        }
-        public string LastName
-        {
-            get { return _lastName; }
-            set { _lastName = value; }
-        }
-        public string Login
-        {
-            get { return _login; }
-            set { _login = value; }
-        }
-        public string Email
-        {
-            get { return _email; }
-            set { _email = value; }
-        }
-        public string Department
-        {
-            get { return _department; }
-            set { _department = value; }
-        }
+        public string EmployeeID { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Login { get; set; }
+        public string Email { get; set; }
+        public string Department { get; set; }
     }
     public class CatbertUser : ServiceUser
     {
         public CatbertUser()
         {
+
         }
+
         public CatbertUser(int userID, string eid, string firstName, string lastName, string login, string email, string sid, string role, int roleID)
+            : base(eid, firstName, lastName, login, email, null)
         {
-            this._userID = userID;
-            this._employeeID = eid;
-            this._firstName = firstName;
-            this._lastName = lastName;
-            this._sid = sid;
-            this._role = role;
+            UserID = userID;
 
-            this._roleID = roleID;
-
-            this._login = login;
-            this._email = email;
+            Roles = new List<ServiceRole>();
+            Roles.Add(new ServiceRole() { ID = roleID, Name = role });
         }
 
-        private int _userID;
-        private string _sid;
-        private string _role;
-        private int _roleID;
-
-        public int RoleID
-        {
-            get { return _roleID; }
-            set { _roleID = value; }
-        }
-
-        public int UserID
-        {
-            get { return _userID; }
-            set { _userID = value; }
-        }
-        public string SID
-        {
-            get { return _sid; }
-            set { _sid = value; }
-        }
-        public string Role
-        {
-            get { return _role; }
-            set { _role = value; }
-        }
+        public int RoleID { get; set; }
+        public int UserID { get; set; }
+        public string SID { get; set; }
+        public List<ServiceRole> Roles { get; set; }
     }
 
     public class ServiceUnit
