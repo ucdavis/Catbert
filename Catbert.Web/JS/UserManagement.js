@@ -144,6 +144,18 @@ $(document).ready(function() {
                 function() { AddUserSuccess(application, search); },
                 null);
     });
+
+    $("#filterRoles").change(function() {
+        role = $(this).val();
+
+        PopulateUserTableDefault(application);
+    });
+
+    $("#filterUnits").change(function() {
+        unit = $(this).val();
+
+        PopulateUserTableDefault(application);
+    });
 });
 
 function SearchUsers() {
@@ -382,7 +394,7 @@ function SearchNewUserSuccess(data) {
 }
 
 function PopulateUserTableDefault(application) {
-    PopulateUserTable(application, search, null, null, sortname, sortorder);
+    PopulateUserTable(application, search, unit, role, sortname, sortorder);
 }
 
 function PopulateUserTable(application, search, unit, role, sortname, sortorder) {

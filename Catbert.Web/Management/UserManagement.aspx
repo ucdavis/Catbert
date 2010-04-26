@@ -24,11 +24,41 @@
 <br /><br />
 
     <div id="divHeader">
-        <span id="search">
+        <span id="search" style="float:left;">
             Search Users: <input type="text" id="txtSearch" /><input type="image" id="imgSearch" title="Clear Search" alt="Clear Search" src="../Images/checked.gif" />
         </span>
+        
+        <span id="filter" style="float:right;">
+            <asp:ListView ID="lviewFilterRoles" runat="server" DataSourceID="odsRoles">
+                <LayoutTemplate>
+                    <select id="filterRoles">
+                        <option value="">-- Filter By Role --</option>
+                        <option id="itemPlaceholder" runat="server"></option>
+                    </select>
+                </LayoutTemplate>
+                <ItemTemplate>
+                    <option>
+                        <%# Eval("Name") %>
+                    </option>
+                </ItemTemplate>
+            </asp:ListView>
+            
+            <asp:ListView ID="lviewFilterUnits" runat="server" DataSourceID="odsUnits">
+                <LayoutTemplate>
+                    <select id="filterUnits">
+                        <option value="">-- Filter By Unit --</option>
+                        <option id="itemPlaceholder" runat="server"></option>
+                    </select>
+                </LayoutTemplate>
+                <ItemTemplate>
+                    <option value='<%# Eval("FISCode") %>'>
+                        <%# Eval("ShortName")%>
+                    </option>
+                </ItemTemplate>
+            </asp:ListView>
+        </span>
     </div>
-    <div id="divLoading" style="display:none;">
+    <div id="divLoading" style="display:none; clear: left;">
         Loading...
     </div>
     <table id="tblUsers" class="tablesorter">
