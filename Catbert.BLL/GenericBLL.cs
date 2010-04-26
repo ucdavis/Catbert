@@ -1,11 +1,17 @@
 ﻿using CAESArch.BLL;
 using CAESDO.Catbert.Core.DataInterfaces;
 using CAESDO.Catbert.Data;
+using System.Linq;
 
 namespace CAESDO.Catbert.BLL
 {
     public class GenericBLL<T, IdT> : GenericBLLBase<T, IdT>
     {
+        public static IQueryable<T> EntitySet
+        {
+            get { return Queryable; }
+        }
+
         public static IDaoFactory DaoFactory
         {
             get { return new NHibernateDaoFactory(); }

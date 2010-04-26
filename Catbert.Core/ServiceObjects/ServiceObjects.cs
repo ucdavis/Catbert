@@ -10,7 +10,7 @@ namespace CAESDO.Catbert.Core.ServiceObjects
     public class PermissionAssociation
     {
         public string ApplicationName { get; set; }
-        public string PermissionName { get; set; }
+        public string RoleName { get; set; }
     }
 
     /// <summary>

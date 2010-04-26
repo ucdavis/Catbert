@@ -10,6 +10,7 @@ namespace CAESDO.Catbert.Test.BLLTests.ServiceTests
     public class UserInformationServiceTests : DatabaseTestBase
     {
         private const string ValidLoginId = "login0";
+        private const string EmptyLoginId = "login2";
 
         [TestMethod]
         [ExpectedException(typeof(PreconditionException))]
@@ -56,6 +57,38 @@ namespace CAESDO.Catbert.Test.BLLTests.ServiceTests
             var userinfo = UserInformationServiceBLL.GetInformationByLoginId(ValidLoginId);
 
             Assert.AreEqual(3, userinfo.UnitAssociations.Count);
+        }
+
+        [TestMethod]
+        public void CanGetAllPermissionAssociationsByLoginId()
+        {
+            var perms = UserInformationServiceBLL.GetPermissionAssociationsByLoginId(ValidLoginId);
+
+            Assert.AreEqual(4, perms.Count);
+        }
+
+        [TestMethod]
+        public void CanGetEmptyPermissionAssociationsByLoginId()
+        {
+            var perms = UserInformationServiceBLL.GetPermissionAssociationsByLoginId(EmptyLoginId);
+
+            Assert.AreEqual(0, perms.Count);
+        }
+
+        [TestMethod]
+        public void CanGetAllUnitAssociationsByLoginId()
+        {
+            var units = UserInformationServiceBLL.GetUnitAssociationsByLoginId(ValidLoginId);
+
+            Assert.AreEqual(3, units.Count);
+        }
+
+        [TestMethod]
+        public void CanGetEmptyUnitAssociationsByLoginId()
+        {
+            var units = UserInformationServiceBLL.GetUnitAssociationsByLoginId(EmptyLoginId);
+
+            Assert.AreEqual(0, units.Count);
         }
 
         [TestInitialize]

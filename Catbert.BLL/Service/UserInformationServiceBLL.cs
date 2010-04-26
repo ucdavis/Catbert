@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using CAESDO.Catbert.Core.ServiceObjects;
 using CAESArch.Core.Utils;
 
@@ -27,17 +27,39 @@ namespace CAESDO.Catbert.BLL.Service
         /// <summary>
         /// Returns a list of app Name <--> unit Name objects
         /// </summary>
-        private static List<UnitAssociation> GetUnitAssociationsByLoginId(string loginId)
+        public static List<UnitAssociation> GetUnitAssociationsByLoginId(string loginId)
         {
-            throw new NotImplementedException();
+            Check.Require(!string.IsNullOrEmpty(loginId));
+
+            var unitAssociations = from association in UnitAssociationBLL.EntitySet
+                                    where association.User.LoginID == loginId && association.Inactive == false
+                                    select
+                                      new UnitAssociation
+                                          {
+                                              ApplicationName = association.Application.Name,
+                                              UnitName = association.Unit.ShortName
+                                          };
+
+            return unitAssociations.ToList();
         }
 
         /// <summary>
         /// Returns a list of app name <--> role name objects
         /// </summary>
-        private static List<PermissionAssociation> GetPermissionAssociationsByLoginId(string loginId)
+        public static List<PermissionAssociation> GetPermissionAssociationsByLoginId(string loginId)
         {
-            throw new NotImplementedException();
+            Check.Require(!string.IsNullOrEmpty(loginId));
+
+            var permissions = from perm in PermissionBLL.EntitySet
+                              where perm.User.LoginID == loginId && perm.Inactive == false
+                              select
+                                  new PermissionAssociation
+                                      {
+                                          ApplicationName = perm.Application.Name, 
+                                          RoleName = perm.Role.Name
+                                      };
+
+            return permissions.ToList();
         }
     }
 }
