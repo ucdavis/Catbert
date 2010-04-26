@@ -222,7 +222,7 @@ namespace CAESDO.Catbert.BLL
 
         public static List<User> GetAllByCriteria(string application, string search, int page, int pagesize, string orderBy, out int users)
         {
-            Check.Require(Roles.IsUserInRole("Admin"), "User Must Be An Administrator To View The List Of All Users");
+            Check.Require(Roles.IsUserInRole("Admin"), "User Must Be A Catbert Administrator To View The List Of All Users");
 
             return DaoFactory.GetUserDao().GetByCriteria(application, search, page, pagesize, orderBy, out users);
         }
