@@ -10,8 +10,7 @@ namespace CAESDO.Catbert.BLL
     public class UnitBLL : GenericBLL<Unit, int>
     {
         private const string STR_Units = "Units";
-        private static Cache cache = HttpContext.Current.Cache;
-
+        
         public static List<Unit> GetAllUnits()
         {
             return GetAllUnits("ShortName", true);
@@ -19,14 +18,7 @@ namespace CAESDO.Catbert.BLL
 
         public static List<Unit> GetAllUnits(string propertyName, bool ascending)
         {
-            if (cache.Get(STR_Units) == null)
-            {
-                //Add the units list to the cache and never expire it (units don't change often)
-                cache.Insert(STR_Units, GetAll(propertyName, ascending), null, DateTime.MaxValue,
-                             Cache.NoSlidingExpiration);
-            }
-
-            return (List<Unit>) cache.Get(STR_Units);
+            return GetAll(propertyName, ascending);
         }
 
         /// <summary>

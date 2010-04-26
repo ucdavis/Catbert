@@ -25,7 +25,7 @@ namespace CAESDO.Catbert.Core.Domain
         public virtual string Email { get; set; }
 
         [StringLengthValidator(50)]
-        [RegexValidator(@"((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}")]
+        [RegexValidator(@"((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}")]
         [IgnoreNulls]
         public virtual string Phone { get; set; }
 

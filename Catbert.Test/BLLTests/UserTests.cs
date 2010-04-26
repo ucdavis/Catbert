@@ -30,9 +30,32 @@ namespace CAESDO.Catbert.Test.BLLTests
         }
 
         [TestMethod]
+        public void CanInsertNewUserWithPhoneNumberAndEmail()
+        {
+            var newUser = new User
+                              {
+                                  FirstName = "Stephen",
+                                  LastName = "Pesis",
+                                  LoginID = "scpesis",
+                                  Email = "scpesis@ucdavis.edu",
+                                  Phone = "+1 530 752 7573"
+                              };
+
+            var result = UserBLL.InsertNewUserWithRoleAndUnit(newUser, "Role1", "Unit1", "App1", "pjfry");
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(newUser.LoginID, result.LoginID);
+        }
+
+        [TestMethod]
         public void CanInsertNewUser()
         {
-            var newUser = new User {FirstName = "Hermes", LastName = "Conrad", LoginID = "hconrad"};
+            var newUser = new User
+            {
+                FirstName = "Hermes",
+                LastName = "Conrad",
+                LoginID = "hconrad"
+            };
 
             var result = UserBLL.InsertNewUserWithRoleAndUnit(newUser, "Role1", "Unit1", "App1", "pjfry");
 
