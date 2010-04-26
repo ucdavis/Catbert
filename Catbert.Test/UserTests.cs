@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Catbert.Test
+namespace CAESDO.Catbert.Test
 {
     /// <summary>
     /// Summary description for UserTests
@@ -60,11 +60,36 @@ namespace Catbert.Test
         #endregion
 
         [TestMethod]
-        public void TestMethod1()
+        public void VerifyUserFound()
         {
-            //
-            // TODO: Add test logic	here
-            //
+            bool verified = CatbertManager.VerifyUser("postit");
+
+            Assert.IsTrue(verified);
         }
+
+        [TestMethod]
+        public void VerifyUserFalse()
+        {
+            bool verified = CatbertManager.VerifyUser("fake");
+
+            Assert.IsFalse(verified);
+        }
+
+        [TestMethod]
+        public void SearchNewUser()
+        {
+            var result = CatbertManager.SearchNewUsers(null, null, null, "postit");
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual<int>(1, result.Count());
+            Assert.AreEqual<string>("postit", result[0].Login);
+        }
+
+        [TestMethod]
+        public void InsertNewUser()
+        {
+            Assert.Inconclusive("Test Not Developed");
+        }
+
     }
 }

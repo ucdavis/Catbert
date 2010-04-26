@@ -173,7 +173,8 @@ public class CatbertWebService : System.Web.Services.WebService
 
     private bool ValidateCredentials(SecurityContext secureCTX)
     {
-        throw new NotImplementedException();
+        return true; //TODO: TESTING ONLY
+        //throw new NotImplementedException();
     }
 
     private void EnsureCredentials(SecurityContext secureCTX)

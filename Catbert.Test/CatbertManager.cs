@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Web;
 using System.ComponentModel;
 using System.Net;
+using CAESDO.Catbert.Test.CatbertService;
 
 namespace CAESDO.Catbert.Test
 {
@@ -17,12 +18,11 @@ namespace CAESDO.Catbert.Test
 
         public CatbertService.SecurityContext securityContext; // = new CatbertService.SecurityContext() { Password = "CA0C898E-0287-40FE-AE76-554039B932FD", UserID = "postit" };
 
+        /*
         public static CatbertService.ServiceUnit[] GetUnits()
         {
             return catops.GetUnits(ref GetSecurityContext());
         }
-
-        /*
 
         public static CatOps.Roles[] GetRoles()
         {
@@ -127,6 +127,20 @@ namespace CAESDO.Catbert.Test
             return catops.VerifyUser(login);
         }
          */
+
+        public static ServiceUser[] SearchNewUsers(string EmployeeID, string FirstName, string LastName, string Login)
+        {
+            var sc = GetSecurityContext();
+
+            return catops.SearchNewUser(ref sc, EmployeeID, FirstName, LastName, Login);
+        }
+
+        public static bool VerifyUser(string login)
+        {
+            var sc = GetSecurityContext();
+            
+            return catops.VerifyUser(ref sc, login);
+        }
 
         public CatbertManager()
         {

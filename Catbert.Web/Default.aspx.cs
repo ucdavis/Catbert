@@ -14,8 +14,7 @@ public partial class _Default : System.Web.UI.Page
         //var schools = GenericBLL<School, string>.GetAll();
 
         //Response.Write(schools.Count);
-        CAESDO.CatbertService.CatbertWebServiceSoapClient c = new CAESDO.CatbertService.CatbertWebServiceSoapClient();
-
+        
         //var q = GenericBLL<TrackingType, int>.GetAll();
         //var q = UserBLL.GetByApplicationRole(1, 1);
     }
