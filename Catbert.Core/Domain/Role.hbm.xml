@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class
+    name="CAESDO.Catbert.Core.Domain.Role, CAESDO.Catbert.Core"
+    table="Roles">
+    <id name="id" access="field" column="RoleID" unsaved-value="0">
+      <generator class="identity" />
+    </id>
+    
+    <property name="Name" column="Role" />
+    <property name="Inactive" column="Inactive" />
+
+  </class>
+</hibernate-mapping>
