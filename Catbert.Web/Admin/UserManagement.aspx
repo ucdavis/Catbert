@@ -50,6 +50,10 @@
         var roles = $("#tblPermissions tbody");
         var units = $("#tblUnits tbody");
 
+        //Clear out the old roles and units
+        roles.empty();
+        units.empty();
+
         $(data.PermissionAssociations).each(function() {
             var newRoleRow = CreateRoleRow(this.RoleName, loginId, this.ApplicationName);
 
