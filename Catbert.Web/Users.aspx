@@ -3,8 +3,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" Runat="Server">
-    <script src="JS/jquery-ui-personalized-1.5.3.js" type="text/javascript"></script>
-    
     <br />
     <%--Main Users Table--%>
     <asp:ListView ID="lviewUsers" runat="server" DataSourceID="odsUsers">
