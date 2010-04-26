@@ -39,12 +39,6 @@
                 }
             });
 
-            $("#selectSort").change(function(even, other) {
-                sortname = this.value; //set the new sortname
-
-                PopulateUserTable(application, search, unit, role, sortname, "ASC");
-            });
-
             $("#tblUsers").tablesorter({
                 headers: { 4: { sorter: false }, 5: { sorter: false} },
                 cssAsc: 'headerSortUp',
@@ -137,15 +131,6 @@
     <div id="divHeader">
         <span id="search">
             Search Users: <input type="text" id="txtSearch" />
-        </span>
-        <span id="sort">
-            Sort by 
-            <select id="selectSort">
-                <option value="LastName" selected="selected">Last Name</option>
-                <option value="FirstName">First Name</option>
-                <option>Login</option>
-                <option>Email</option>
-            </select>
         </span>
     </div>
     <div id="divLoading" style="display:none;">
