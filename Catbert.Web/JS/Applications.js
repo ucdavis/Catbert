@@ -1,6 +1,6 @@
 ﻿///<reference path="jquery-1.3.1-vsdoc.js"/>
 
-var baseUrl = '../Services/CatbertWebService.asmx/';
+var baseUrl = '../Services/Admin/CatbertAdminService.asmx/';
 var roleList;
 
 $(document).ready(function() {

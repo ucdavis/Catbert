@@ -26,6 +26,8 @@ public class CatbertAdminService : WebService
             return HttpContext.Current.User.Identity.Name;
         }
     }
+    
+    #region UserManagement
 
     [WebMethod]
     public RecordSet GetUsers(string application, string search, string unit, string role, int page, int pagesize, string sortname, string sortorder)
@@ -186,5 +188,65 @@ public class CatbertAdminService : WebService
 
         return serviceUsers;
     }
+
+    #endregion
+
+    #region ApplicationManagement
+
+    [WebMethod]
+    public void ChangeApplicationActiveStatus(string application)
+    {
+        ApplicationBLL.SetActiveStatus(application, null, CurrentServiceUser);
+    }
+
+    [WebMethod]
+    public void AddRole(string role)
+    {
+        RoleBLL.CreateRole(role, CurrentServiceUser);
+    }
+
+    [WebMethod]
+    public ServiceApplication GetApplication(string application)
+    {
+        Application app = ApplicationBLL.GetByName(application);
+
+        return new ServiceApplication(app);
+    }
+
+    [WebMethod]
+    public void UpdateApplication(string application, string newName, string newAbbr, string newLocation,
+                                  List<string> leveledRoles, List<string> nonLeveledRoles)
+    {
+        //First get the application
+        Application app = ApplicationBLL.GetByName(application);
+
+        //Change the properties
+        app.Name = newName;
+        app.Abbr = newAbbr;
+        app.Location = newLocation;
+
+        //Reconcile the roles
+        ApplicationBLL.SetRoles(app, leveledRoles, nonLeveledRoles);
+
+        //Now save the updated application
+        ApplicationBLL.Update(app, CurrentServiceUser);
+    }
+
+    [WebMethod]
+    public void CreateApplication(string application, string abbr, string location, List<string> leveledRoles,
+                                  List<string> nonLeveledRoles)
+    {
+        //Create the new application
+        Application app = new Application() { Name = application, Abbr = abbr, Location = location, Inactive = false };
+
+        //Reconcile the roles
+        ApplicationBLL.SetRoles(app, leveledRoles, nonLeveledRoles);
+
+        //Create the application
+        ApplicationBLL.Create(app, CurrentServiceUser);
+    }
+
+
+    #endregion
 }
 
