@@ -50,7 +50,7 @@ table.tablesorter tbody td {
 	background: #fff;
 }
 table.tablesorter tbody tr.odd td {
-	background: #fff url(../Images/row-bg.png) repeat-x;
+	background: #fff url(../Images/row-bg.png) repeat-x 0px 2px;
 }
 table.tablesorter thead tr .headerSortUp {
 	background-image: url(../Images/arrow-down.png);
@@ -60,3 +60,17 @@ table.tablesorter thead tr .headerSortDown {
 }
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
 }
+
+table.tablesorter tfoot td {height: 35px; vertical-align: middle;}
+table.tablesorter span#spanPageInfo {position: relative; top: -3px;}
+
+
+/* =form elements */
+
+input, select, option {background: transparent; border: 0px; padding: 0px; margin: 0px; cursor: pointer;}
+
+input#btnFirst {background: url(../Images/a-first.png) no-repeat; text-indent: -99999px; height: 15px; width: 0px; padding-right: 16px;}
+input#btnPrevious {background: url(../Images/a-prev.png) no-repeat; text-indent: -99999px; height: 15px; width: 0px; padding-right: 18px;}
+input#btnNext {background: url(../Images/a-next.png) no-repeat; text-indent: -99999px; height: 15px; width: 0px; padding-right: 18px;}
+input#btnLast {background: url(../Images/a-last.png) no-repeat; text-indent: -99999px; height: 15px; width: 0px; padding-right: 16px;}
+

@@ -79,11 +79,11 @@
         <tfoot>
             <tr>
                 <td colspan="6" align="center">
-                    <input id="btnFirst" class="pager" name="First" type="button" value="First" />
-                    <input id="btnPrevious" class="pager" name="Previous" type="button" value="Previous" />
+                    <input id="btnFirst" class="pager" name="First" type="button" value="First" title="First" />
+                    <input id="btnPrevious" class="pager" name="Previous" type="button" value="Previous" title="Previous" />
                     <span id="spanPageInfo"></span>
-                    <input id="btnNext" class="pager" name="Next" type="button" value="Next" />
-                    <input id="btnLast" class="pager" name="Last" type="button" value="Last" />
+                    <input id="btnNext" class="pager" name="Next" type="button" value="Next" title="Next" />
+                    <input id="btnLast" class="pager" name="Last" type="button" value="Last" title="Last" />
                 </td>
             </tr>
         </tfoot>
