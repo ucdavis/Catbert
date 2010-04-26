@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class
+    name="CAESDO.Catbert.Core.Domain.Application, CAESDO.Catbert.Core"
+    table="Applications" >
+    <id name="id" access="field" column="ApplicationID" unsaved-value="0">
+      <generator class="identity" />
+    </id>
+    
+    <property name="Name" column="Name" />
+    <property name="Abbr" column="Abbr" />
+    <property name="Location" column="Location" />
+    <property name="WebServiceHash" column="WebServiceHash" />
+    <property name="Salt" column="Salt"></property>
+    <property name="Inactive" column="Inactive"></property>
+    
+  </class>
+</hibernate-mapping>
