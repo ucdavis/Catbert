@@ -46,7 +46,11 @@
                     search = $(this).val() /*textbox value*/;
                     page = 1; //Change the page when a new search is executed
                     PopulateUserTable(application, search, unit, role, sortname, sortorder);
-                    $(".ac_results").hide(); //Hide the results whenever you hit enter
+                    
+                    setTimeout(function() {
+                        $(".ac_results").hide(); //Hide the results whenever you hit enter
+                    }, 250);
+                    
                     return false; //Don't post back
                 }
             });
