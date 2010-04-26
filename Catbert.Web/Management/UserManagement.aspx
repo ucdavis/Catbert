@@ -38,7 +38,7 @@
                 </LayoutTemplate>
                 <ItemTemplate>
                     <option>
-                        <%# Eval("Role.Name") %>
+                        <%# Eval("Name") %>
                     </option>
                 </ItemTemplate>
             </asp:ListView>
@@ -119,7 +119,7 @@
                 </LayoutTemplate>
                 <ItemTemplate>
                     <option>
-                        <%# Eval("Role.Name") %>
+                        <%# Eval("Name") %>
                     </option>
                 </ItemTemplate>
             </asp:ListView>
@@ -176,12 +176,12 @@
                 </LayoutTemplate>
                 <ItemTemplate>
                     <option>
-                        <%# Eval("Role.Name") %>
+                        <%# Eval("Name") %>
                     </option>
                 </ItemTemplate>
             </asp:ListView>
             <asp:ObjectDataSource ID="odsRoles" runat="server" OldValuesParameterFormatString="original_{0}"
-                SelectMethod="GetRolesByApplication" TypeName="CAESDO.Catbert.BLL.RoleBLL">
+                SelectMethod="GetVisibleByUser" TypeName="CAESDO.Catbert.BLL.RoleBLL">
                 <SelectParameters>
                     <asp:QueryStringParameter QueryStringField="app" Name="application" DefaultValue="Catbert" />
                 </SelectParameters>

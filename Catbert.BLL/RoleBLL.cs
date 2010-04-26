@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using CAESDO.Catbert.Core.Domain;
 using CAESDO.Catbert.Data;
+using System.Web;
 
 namespace CAESDO.Catbert.BLL
 {
@@ -46,6 +47,16 @@ namespace CAESDO.Catbert.BLL
                         select role;
 
             return query.ToList();
+        }
+
+        public static List<Role> GetVisibleByUser(string application)
+        {
+            return GetVisibleByUser(application, HttpContext.Current.User.Identity.Name);
+        }
+
+        public static List<Role> GetVisibleByUser(string application, string login)
+        {
+            return daoFactory.GetRoleDao().GetVisibleByUser(application, login);
         }
 
         /// <summary>
