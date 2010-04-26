@@ -6,7 +6,8 @@
 <head runat="server">
     <title>Catbert v3</title>
     <link rel="stylesheet" href="CSS/MainStyle.css" type="text/css" />
-    <link href="CSS/ui.all.css" rel="stylesheet" type="text/css" />
+    <%--<link href="CSS/ui.all.css" rel="stylesheet" type="text/css" />--%>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/dot-luv/jquery-ui.css" rel="Stylesheet" type="text/css" />
     
     <script src="http://www.google.com/jsapi"></script>
     <script type="text/javascript">
