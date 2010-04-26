@@ -7,11 +7,12 @@
       <generator class="identity" />
     </id>
 
-    <property name="MessageName" column="Message" />
+    <property name="MessageText" column="Message" />
     <property name="BeginDisplayDate" column="BeginDisplayDate" />
     <property name="EndDisplyDate" column="EndDisplyDate" />
-    <property name="Isactive" column="Isactive"></property>
-    <many-to-one name="Application" class="Application" column="ApplicationID" cascade="none" />
+    <property name="IsActive" column="IsActive"></property>
+    
+    <many-to-one name="Application" class="CAESDO.Catbert.Core.Domain.Application, CAESDO.Catbert.Core" column="ApplicationID" cascade="none" />
 
   </class>
 </hibernate-mapping>
