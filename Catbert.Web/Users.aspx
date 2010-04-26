@@ -13,7 +13,28 @@
     <script type="text/javascript">
         $(document).ready(function() {
 
+        var json = { login: "postit", application: "Catbert" };
+
+        //Try to make an AJAX call to the webservice
+        $.ajax({
+
+            url: "Services/CatbertWebService.asmx/GetRolesByUser",
+            data: JSON2.stringify(json),
+            type: "POST",
+            processData: false,
+            contentType: "application/json",
+            timeout: 10000,
+            dataType: "text",  // not "json" we'll parse
+            success:
+                    function(res) {
+                        var result = JSON2.parse(res);
+
+                        var first = result.d[0];
+                        debugger;
+                        //alert(result);
+                    }
         });
+    });
     
         function ShowUserInfo(login, name) {
             $("#dialogUserInfo").dialog({

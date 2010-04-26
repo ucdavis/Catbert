@@ -9,18 +9,24 @@
     </asp:ContentPlaceHolder>
     <link rel="Stylesheet" runat="server" href="~/CSS/MainStyle.css" type="text/css" />
     <link href="CSS/ui.all.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="<%= Request.ApplicationPath + @"/JS/jquery-1.3.1.min.js" %>"></script>
+    <script type="text/javascript" src="<%= Request.ApplicationPath + @"/JS/jquery.quicksearch.js" %>"></script>
+    <script type="text/javascript" src="<%= Request.ApplicationPath + @"/JS/jquery.tablesorter.min.js" %>"></script>
+    <script type="text/javascript" src="<%= Request.ApplicationPath + @"/JS/jquery.ui.all.js" %>"></script>
+    <script type="text/javascript" src="<%= Request.ApplicationPath + @"/JS/json2.min.js" %>"></script>
 </head>
 <body>
     <form id="form1" runat="server">
-    <AjaxControlToolkit:ToolkitScriptManager ID="scriptManager" runat="server">
+<%--    <AjaxControlToolkit:ToolkitScriptManager ID="scriptManager" runat="server">
         <Scripts>
             <asp:ScriptReference Path="~/JS/jquery-1.3.1.min.js" />
             <asp:ScriptReference Path="~/JS/jquery.tablesorter.min.js" />
             <asp:ScriptReference Path="~/JS/jquery.quicksearch.js" />
             <asp:ScriptReference Path="~/JS/jquery.ui.all.js" />
         </Scripts>
-    </AjaxControlToolkit:ToolkitScriptManager>
-
+    </AjaxControlToolkit:ToolkitScriptManager>--%>
+    <%--<asp:ScriptManager ID="script" runat="server"></asp:ScriptManager>--%>
+    
     <script type="text/javascript">
         //Two custom table sorters for links and checkboxes
         $.tablesorter.addParser({
