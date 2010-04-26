@@ -23,6 +23,15 @@ namespace CAESDO.Catbert.Test.BLLTests.ServiceTests
             var userinfo = UserInformationServiceBLL.GetInformationByLoginId(string.Empty);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(PreconditionException))]
+        public void GettingUserInformationForInvalidUserThrowsPreconditionException()
+        {
+            const string invalidUserId = "BADUSER";
+
+            var userinfo = UserInformationServiceBLL.GetInformationByLoginId(invalidUserId);
+        }
+
         [TestInitialize]
         public void AddUnitAndPermissionAssociations()
         {
@@ -36,6 +45,12 @@ namespace CAESDO.Catbert.Test.BLLTests.ServiceTests
             //Associate with two roles in app0
             PermissionBLL.InsertPermission(appName, "Role0", user.LoginID, user.LoginID);
             PermissionBLL.InsertPermission(appName, "Role1", user.LoginID, user.LoginID);
+
+            //Now associate with a unit and role in another app
+            const string appName2 = "App1";
+
+            UnitAssociationBLL.AssociateUnit(user.LoginID, appName2, "Uni0", user.LoginID);
+            PermissionBLL.InsertPermission(appName2, "Role1", user.LoginID, user.LoginID);
         }
     }
 }
