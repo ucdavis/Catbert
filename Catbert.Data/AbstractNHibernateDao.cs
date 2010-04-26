@@ -13,14 +13,7 @@ namespace CAESDO.Catbert.Data
         //Returns a queryable set of type T
         public IQueryable<T> GetQueryable()
         {
-            using (var tx = new TransactionScope())
-            {
-                var result = (IQueryable<T>)NHibernateSession.Linq<T>();
-
-                tx.CommittTransaction();
-
-                return result;
-            }
+            return (IQueryable<T>)NHibernateSession.Linq<T>();
         }
 
         /// <summary>
@@ -60,14 +53,7 @@ namespace CAESDO.Catbert.Data
 
         public List<T> GetAll(string propertyName, bool ascending)
         {
-            using (var tx = new TransactionScope())
-            {
-                var result = GetByCriteria(propertyName, ascending);
-
-                tx.CommittTransaction();
-
-                return result;   
-            }
+            return GetByCriteria(propertyName, ascending);
         }
 
         /// <summary>
