@@ -6,6 +6,12 @@ namespace CAESDO.Catbert.Core.Domain
 {
     public class Application : DomainObject<Application, int>
     {
+        public Application()
+        {
+            ApplicationRoles = new List<ApplicationRole>();
+            //Roles = new List<Role>();
+        }
+
         [StringLengthValidator(50)]
         [NotNullValidator]
         public virtual string Name { get; set; }
@@ -21,6 +27,7 @@ namespace CAESDO.Catbert.Core.Domain
         [StringLengthValidator(100)]
         [IgnoreNulls]
         public virtual string WebServiceHash { get; set; }
+
         [StringLengthValidator(20)]
         [IgnoreNulls]
         public virtual string Salt { get; set; }
@@ -29,11 +36,5 @@ namespace CAESDO.Catbert.Core.Domain
 
         //public virtual IList<Role> Roles { get; set; }
         public virtual IList<ApplicationRole> ApplicationRoles { get; set; }
-
-        public Application()
-        {
-            ApplicationRoles = new List<ApplicationRole>();
-            //Roles = new List<Role>();
-        }
     }
 }

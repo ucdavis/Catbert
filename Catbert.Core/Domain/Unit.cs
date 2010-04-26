@@ -21,10 +21,5 @@ namespace CAESDO.Catbert.Core.Domain
 
         [NotNullValidator]
         public virtual School School { get; set; }
-
-        public Unit()
-        {
-
-        }
     }
 }

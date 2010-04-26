@@ -20,11 +20,6 @@ namespace CAESDO.Catbert.Core.Domain
         public virtual DateTime ActionDate { get; set; }
 
         public virtual string Comments { get; set; }
-
-        public Tracking()
-        {
-
-        }
     }
 
     /// <summary>
@@ -33,16 +28,15 @@ namespace CAESDO.Catbert.Core.Domain
     public class TrackingType : DomainObject<TrackingType, int>
     {
         public virtual string Name { get; set; }
-
-        public TrackingType()
-        {
-            
-        }
     }
 
     public enum TrackingTypes
     {
-        Application, Role, Permission, Unit, User
+        Application,
+        Role,
+        Permission,
+        Unit,
+        User
     }
 
     /// <summary>
@@ -51,15 +45,12 @@ namespace CAESDO.Catbert.Core.Domain
     public class TrackingAction : DomainObject<TrackingAction, int>
     {
         public virtual string Name { get; set; }
-
-        public TrackingAction()
-        {
-
-        }
     }
 
     public enum TrackingActions
-	{
-        Add, Change, Delete
-	}
+    {
+        Add,
+        Change,
+        Delete
+    }
 }

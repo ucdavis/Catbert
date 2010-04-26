@@ -10,10 +10,5 @@ namespace CAESDO.Catbert.Core.Domain
         public virtual string Name { get; set; }
 
         public virtual bool Inactive { get; set; }
-
-        public Role()
-        {
-
-        }
     }
 }

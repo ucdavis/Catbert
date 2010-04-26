@@ -10,9 +10,11 @@ namespace CAESDO.Catbert.Core.Domain
         [StringLengthValidator(50)]
         [IgnoreNulls]
         public virtual string FirstName { get; set; }
+
         [StringLengthValidator(50)]
         [IgnoreNulls]
         public virtual string LastName { get; set; }
+
         [StringLengthValidator(10)]
         [NotNullValidator]
         public virtual string LoginID { get; set; }
@@ -30,6 +32,7 @@ namespace CAESDO.Catbert.Core.Domain
         [StringLengthValidator(9)]
         [IgnoreNulls]
         public virtual string EmployeeID { get; set; }
+
         [StringLengthValidator(9)]
         [IgnoreNulls]
         public virtual string StudentID { get; set; }
@@ -42,10 +45,5 @@ namespace CAESDO.Catbert.Core.Domain
         public virtual IList<UnitAssociation> UnitAssociations { get; set; }
 
         public virtual IList<Permission> Permissions { get; set; }
-
-        public User()
-        {
-
-        }
     }
 }

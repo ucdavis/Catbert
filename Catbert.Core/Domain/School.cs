@@ -7,8 +7,8 @@ namespace CAESDO.Catbert.Core.Domain
     {
         [StringLengthValidator(25)]
         [NotNullValidator]
-
         public virtual string ShortDescription { get; set; }
+
         [StringLengthValidator(50)]
         [NotNullValidator]
         public virtual string LongDescription { get; set; }
@@ -16,10 +16,5 @@ namespace CAESDO.Catbert.Core.Domain
         [StringLengthValidator(12)]
         [NotNullValidator]
         public virtual string Abbreviation { get; set; }
-
-        public School()
-        {
-
-        }
     }
 }

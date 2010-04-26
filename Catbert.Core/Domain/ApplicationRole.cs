@@ -11,10 +11,5 @@ namespace CAESDO.Catbert.Core.Domain
         public virtual Role Role { get; set; }
 
         public virtual int? Level { get; set; }
-
-        public ApplicationRole()
-        {
-
-        }
     }
 }

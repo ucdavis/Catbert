@@ -1,12 +1,12 @@
-using CAESDO.Catbert.Core.Domain;
 using System.Collections.Generic;
+using CAESDO.Catbert.Core.Domain;
 
 namespace CAESDO.Catbert.Core.DataInterfaces
 {
     /// <summary>
     /// Provides an interface for retrieving DAO objects
     /// </summary>
-    public interface IDaoFactory 
+    public interface IDaoFactory
     {
         IGenericDao<T, IdT> GetGenericDao<T, IdT>();
         IUserDao GetUserDao();
@@ -16,15 +16,21 @@ namespace CAESDO.Catbert.Core.DataInterfaces
 
     // There's no need to declare each of the DAO interfaces in its own file, so just add them inline here.
     // But you're certainly welcome to put each declaration into its own file.
+
     #region Inline interface declarations
 
-    public interface IGenericDao<T, IdT> {}
-
-    public interface IUserDao {
-        List<User> GetByApplication(string application, string currentLogin, string role, string unit, string searchToken, int page, int pageSize, string orderBy, out int totalUsers);
+    public interface IGenericDao<T, IdT>
+    {
     }
 
-    public interface IUnitDao {
+    public interface IUserDao
+    {
+        List<User> GetByApplication(string application, string currentLogin, string role, string unit,
+                                    string searchToken, int page, int pageSize, string orderBy, out int totalUsers);
+    }
+
+    public interface IUnitDao
+    {
         List<Unit> GetVisibleByUser(string login, string application);
     }
 
