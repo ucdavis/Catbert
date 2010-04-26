@@ -345,12 +345,16 @@ public class CatbertWebService : System.Web.Services.WebService
     /// Get all users in this application, filtered by query, unit and role
     /// </summary>
     [WebMethod]
-    public RecordSet GetUsers(string application, string search, string unit, string role, string sortname, string sortorder)
+    public RecordSet GetUsers(string application, string search, string unit, string role, int page, int pagesize, string sortname, string sortorder)
     {
-        var users = ConvertFromUserList(UserBLL.GetByApplication(application), application);
+        int totalUsers = 0;
+
+        //var users = ConvertFromUserList(UserBLL.GetByApplication(application), application);
+        var users = ConvertFromUserList(UserBLL.GetByApplication(application, page, pagesize, ref totalUsers), application);
+
         search = search == null ? null : search.ToLower();
 
-        RecordSet grid = new RecordSet() { page = 1, total = 2, records = 20 };
+        RecordSet grid = new RecordSet() { page = page, total = 2, records = users.Count };
 
         foreach (var user in users)
         {

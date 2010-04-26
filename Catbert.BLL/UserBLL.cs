@@ -158,11 +158,26 @@ namespace CAESDO.Catbert.BLL
         
         public static List<User> GetByApplication(string application)
         {
+            return GetUserQueryableByApplication(application).ToList();
+        }
+
+        private static IEnumerable<User> GetUserQueryableByApplication(string application)
+        {
             //Grab all permissions in this application
             var permissions = PermissionBLL.Queryable.Where(perm => perm.Application.Name == application && perm.Inactive == false).ToList();
 
             //Now get all users among these permissions
-            var users = permissions.Select(perm => perm.User).Distinct();
+            return permissions.Select(perm => perm.User).Distinct();
+        }
+
+        public static List<User> GetByApplication(string application, int page, int pageSize, ref int totalUsers)
+        {
+            IEnumerable<User> users = GetUserQueryableByApplication(application);
+
+            totalUsers = users.Count();
+
+            //Now take/skip to get the correct users
+            users = users.Skip((page - 1) * pageSize).Take(pageSize);
 
             return users.ToList();
         }

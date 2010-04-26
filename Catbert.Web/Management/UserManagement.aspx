@@ -11,8 +11,12 @@
     <script type="text/javascript">
         var baseURL = '../Services/CatbertWebService.asmx/';
         var autocompleteUnitsURL = '../Services/AutocompleteService.asmx/GetUsers';
-        
+
         var search = null, unit = null, role = null; //start with no search, unit, or role filters
+        
+        var page = 1;
+        var pageSize = 3;
+        
         var sortname = "LastName";
         var sortorder = "ASC";
         
@@ -324,7 +328,15 @@
             ShowLoadingIndicator(true);
 
             //Setup the parameters
-            var data = { application: application, search: search, unit: unit, role: role, sortname: sortname, sortorder: sortorder };
+            var data = {
+                application: application,
+                search: search,
+                unit: unit,
+                role: role,
+                page: page,
+                pagesize: pageSize,
+                sortname: sortname, 
+                sortorder: sortorder };
             
             //Call the webservice
             AjaxCall(baseURL + 'GetUsers', data, PopulateUserTableSuccess, null);
