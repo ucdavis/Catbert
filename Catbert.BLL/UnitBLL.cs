@@ -62,7 +62,7 @@ namespace CAESDO.Catbert.BLL
         /// </summary>
         public static List<Unit> GetVisibleByUser(string login, string application)
         {
-            return daoFactory.GetUnitDao().GetVisibleByUser(login, application);
+            return DaoFactory.GetUnitDao().GetVisibleByUser(login, application);
         }
 
         /// <summary>

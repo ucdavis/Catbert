@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using CAESArch.BLL;
 using CAESDO.Catbert.BLL;
 
 public partial class Units : System.Web.UI.Page
@@ -26,12 +27,12 @@ public partial class Units : System.Web.UI.Page
 
         bool success = false;
 
-        using (var ts = new Transaction())
+        using (var ts = new TransactionScope())
         {
             try
             {
                 success = UnitBLL.MakePersistent(unit);
-                ts.CommittTransaction();
+                ts.CommitTransaction();
             }
             catch
             {

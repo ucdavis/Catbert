@@ -4,6 +4,8 @@ using System.Linq;
 using System.Linq.Dynamic;
 using System.Text;
 using System.Web;
+using CAESArch.BLL;
+using CAESArch.Core.Utils;
 using CAESDO.Catbert.Core.Domain;
 using CAESDO.Catbert.Data;
 
@@ -35,7 +37,7 @@ namespace CAESDO.Catbert.BLL
         public static User InsertNewUser(User user, string trackingUserName)
         {
             //Make sure the user given in valid according to enlib validation
-            if (!ValidateBO<User>.isValid(user)) throw new ApplicationException(string.Format("User not valid: {0}", ValidateBO<User>.GetValidationResultsAsString(user)));
+            if (!ValidateBusinessObject<User>.IsValid(user)) throw new ApplicationException(string.Format("User not valid: {0}", ValidateBusinessObject<User>.GetValidationResultsAsString(user)));
 
             //If so, make sure there are no other users in the DB with the given login
             if (Queryable.Where(u => u.LoginID == user.LoginID).Any()) throw new ApplicationException(string.Format("User creation failed: LoginID already exists"));
@@ -52,7 +54,7 @@ namespace CAESDO.Catbert.BLL
                 EnsurePersistent( user);
                 TrackingBLL.EnsurePersistent( tracking);
 
-                ts.CommittTransaction();
+                ts.CommitTransaction();
             }
 
             return user; //return the newly created user's ID
@@ -107,7 +109,7 @@ namespace CAESDO.Catbert.BLL
             user.Email = email;
 
             //Check to see if the user is valid, if not return false
-            if (!ValidateBO<User>.isValid(user)) return false;
+            if (!ValidateBusinessObject<User>.IsValid(user)) return false;
 
             //We have a valid user, so get the tracking info and save
             Tracking tracking = TrackingBLL.GetTrackingInstance(login, TrackingTypes.User, TrackingActions.Change);
@@ -118,7 +120,7 @@ namespace CAESDO.Catbert.BLL
                 EnsurePersistent( user);
                 TrackingBLL.EnsurePersistent( tracking);
 
-                ts.CommittTransaction();
+                ts.CommitTransaction();
             }
 
             return true;
@@ -139,7 +141,7 @@ namespace CAESDO.Catbert.BLL
             user.Phone = phone;
 
             //Check to see if the user is valid, if not return false
-            if (!ValidateBO<User>.isValid(user)) return false;
+            if (!ValidateBusinessObject<User>.IsValid(user)) return false;
 
             //We have a valid user, so get the tracking info and save
             Tracking tracking = TrackingBLL.GetTrackingInstance(login, TrackingTypes.User, TrackingActions.Change);
@@ -150,7 +152,7 @@ namespace CAESDO.Catbert.BLL
                 EnsurePersistent( user);
                 TrackingBLL.EnsurePersistent( tracking);
 
-                ts.CommittTransaction();
+                ts.CommitTransaction();
             }
 
             return true;
@@ -192,7 +194,7 @@ namespace CAESDO.Catbert.BLL
 
         public static List<User> GetByApplication(string application, string currentLogin, string role, string unit, string searchToken, int page, int pageSize, string orderBy, out int totalUsers)
         {
-            return UserBLL.daoFactory.GetUserDao().GetByApplication(application, currentLogin, role, unit, searchToken, page, pageSize, orderBy, out totalUsers);
+            return DaoFactory.GetUserDao().GetByApplication(application, currentLogin, role, unit, searchToken, page, pageSize, orderBy, out totalUsers);
         }
 
         /*

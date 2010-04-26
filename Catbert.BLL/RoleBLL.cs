@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CAESArch.BLL;
 using CAESDO.Catbert.Core.Domain;
-using CAESDO.Catbert.Data;
 using System.Web;
 
 namespace CAESDO.Catbert.BLL
@@ -29,7 +29,7 @@ namespace CAESDO.Catbert.BLL
                     RoleBLL.MakePersistent(role);
                     TrackingBLL.MakePersistent(tracking);
 
-                    ts.CommittTransaction();
+                    ts.CommitTransaction();
                 }
             }
         }
@@ -56,7 +56,7 @@ namespace CAESDO.Catbert.BLL
 
         public static List<Role> GetVisibleByUser(string application, string login)
         {
-            return daoFactory.GetRoleDao().GetVisibleByUser(application, login);
+            return DaoFactory.GetRoleDao().GetVisibleByUser(application, login);
         }
 
         /// <summary>

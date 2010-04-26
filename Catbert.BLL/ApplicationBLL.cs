@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CAESArch.BLL;
 using CAESDO.Catbert.Core.Domain;
 using CAESDO.Catbert.Data;
 
@@ -109,7 +110,7 @@ namespace CAESDO.Catbert.BLL
                 ApplicationBLL.EnsurePersistent( application); //Persist the application
                 TrackingBLL.EnsurePersistent( tracking);
 
-                ts.CommittTransaction();
+                ts.CommitTransaction();
             }
         }
 
@@ -127,7 +128,7 @@ namespace CAESDO.Catbert.BLL
                 tracking.Comments = string.Format("Application {0} created", application.ID);
                 TrackingBLL.EnsurePersistent( tracking);
 
-                ts.CommittTransaction();
+                ts.CommitTransaction();
             }
         }
 
@@ -162,7 +163,7 @@ namespace CAESDO.Catbert.BLL
                 ApplicationBLL.EnsurePersistent( application);
                 TrackingBLL.EnsurePersistent( tracking);
 
-                ts.CommittTransaction();
+                ts.CommitTransaction();
             }
 
             return true;

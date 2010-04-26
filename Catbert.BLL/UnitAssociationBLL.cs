@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CAESArch.BLL;
 using CAESDO.Catbert.Core.Domain;
 using CAESDO.Catbert.Data;
 
@@ -60,7 +61,7 @@ namespace CAESDO.Catbert.BLL
                 EnsurePersistent( unitAssociation);  //persist the unitAssociation
                 TrackingBLL.EnsurePersistent( tracking);
 
-                ts.CommittTransaction();
+                ts.CommitTransaction();
             }
 
             return true;
@@ -102,7 +103,7 @@ namespace CAESDO.Catbert.BLL
                 EnsurePersistent(unitAssociation);
                 TrackingBLL.EnsurePersistent(tracking);
 
-                ts.CommittTransaction();
+                ts.CommitTransaction();
             }
 
             return true;

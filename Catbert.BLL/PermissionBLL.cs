@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CAESArch.BLL;
 using CAESDO.Catbert.Core.Domain;
 using CAESDO.Catbert.Data;
 
@@ -52,7 +53,7 @@ namespace CAESDO.Catbert.BLL
                 EnsurePersistent( permission);
                 TrackingBLL.EnsurePersistent( tracking);
 
-                ts.CommittTransaction();
+                ts.CommitTransaction();
             }
 
             return permission;
@@ -92,7 +93,7 @@ namespace CAESDO.Catbert.BLL
                 EnsurePersistent( permission);
                 TrackingBLL.EnsurePersistent( tracking);
 
-                ts.CommittTransaction();
+                ts.CommitTransaction();
             }
 
             return true;

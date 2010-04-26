@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
+using CAESArch.Core.Domain;
 using Microsoft.Practices.EnterpriseLibrary.Validation.Validators;
 
 namespace CAESDO.Catbert.Core.Domain

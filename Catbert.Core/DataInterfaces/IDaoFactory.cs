@@ -18,17 +18,17 @@ namespace CAESDO.Catbert.Core.DataInterfaces
     // But you're certainly welcome to put each declaration into its own file.
     #region Inline interface declarations
 
-    public interface IGenericDao<T, IdT> : IDao<T, IdT> { }
+    public interface IGenericDao<T, IdT> {}
 
-    public interface IUserDao : IDao<User, int> {
+    public interface IUserDao {
         List<User> GetByApplication(string application, string currentLogin, string role, string unit, string searchToken, int page, int pageSize, string orderBy, out int totalUsers);
     }
 
-    public interface IUnitDao : IDao<Unit, int>    {
+    public interface IUnitDao {
         List<Unit> GetVisibleByUser(string login, string application);
     }
 
-    public interface IRoleDao : IDao<Role, int>
+    public interface IRoleDao
     {
         List<Role> GetVisibleByUser(string application, string login);
     }

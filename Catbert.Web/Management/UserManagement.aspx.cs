@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using CAESArch.BLL;
 using CAESDO.Catbert.BLL;
 using CAESDO.Catbert.Core.Domain;
 
@@ -31,12 +32,12 @@ public partial class Management_UserManagement : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         //Retrieve the units and roles only once, in the same transaction
-        using (var ts = new Transaction())
+        using (var ts = new TransactionScope())
         {
             Units = UnitBLL.GetVisibleByUser(CurrentApplication);
             Roles = RoleBLL.GetVisibleByUser(CurrentApplication);
 
-            ts.CommittTransaction();
+            ts.CommitTransaction();
         }
 
         //Assign the units and roles to the different data bound objects as necessary

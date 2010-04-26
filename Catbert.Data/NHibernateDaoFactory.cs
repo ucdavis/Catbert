@@ -1,3 +1,4 @@
+using CAESArch.Data.NHibernate;
 using CAESDO.Catbert.Core.DataInterfaces;
 using CAESDO.Catbert.Core.Domain;
 using System.Collections.Generic;
@@ -40,9 +41,9 @@ namespace CAESDO.Catbert.Data
 
         #region Inline DAO implementations
 
-        public class GenericDao<T, IdT> : AbstractNHibernateDao<T, IdT>, IGenericDao<T, IdT> { }
+        public class GenericDao<T, IdT> : IGenericDao<T, IdT> { }
 
-        public class RoleDao : AbstractNHibernateDao<Role, int>, IRoleDao
+        public class RoleDao : IRoleDao
         {
             public List<Role> GetVisibleByUser(string application, string login)
             {
@@ -106,7 +107,7 @@ namespace CAESDO.Catbert.Data
             }
         }
 
-        public class UserDao : AbstractNHibernateDao<User, int>, IUserDao
+        public class UserDao : IUserDao
         {
             public List<User> GetByApplication(string application, string currentLogin, string role, string unit, string searchToken, int page, int pageSize, string orderBy, out int totalUsers)
             {                
@@ -229,7 +230,7 @@ namespace CAESDO.Catbert.Data
             }
         }
 
-        public class UnitDao : AbstractNHibernateDao<Unit, int>, IUnitDao
+        public class UnitDao : IUnitDao
         {
             /// <summary>
             /// Get all of the units associated with the given user, depending on role
