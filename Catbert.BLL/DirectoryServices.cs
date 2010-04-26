@@ -21,6 +21,7 @@ namespace CAESDO.Catbert.BLL
         const string STR_CN = "cn";
         const string STR_SN = "sn";
         const string STR_GivenName = "givenName";
+        const string STR_Telephone = "telephoneNumber";
 
         public static List<DirectoryUser> LDAPSearchUsers(string employeeID, string firstName, string lastName, string loginID)
         {
@@ -37,7 +38,7 @@ namespace CAESDO.Catbert.BLL
             lc.SessionOptions.SecureSocketLayer = true;
 
             //Configure the Search Request to Query the UCD OpenLDAP Server's People Search Base for a Specific User ID or Mail ID and Return the Requested Attributes 
-            string[] attributesToReturn = new string[] { STR_UID, STR_EmployeeNumber, STR_Mail, STR_DisplayName, STR_CN, STR_SN, STR_GivenName };
+            string[] attributesToReturn = new string[] { STR_UID, STR_EmployeeNumber, STR_Mail, STR_Telephone, STR_DisplayName, STR_CN, STR_SN, STR_GivenName };
 
             StringBuilder searchFilter = new StringBuilder("(&");
 
@@ -100,6 +101,9 @@ namespace CAESDO.Catbert.BLL
                         case STR_CN:
                             user.FullName = attr[0].ToString();
                             break;
+                        case STR_Telephone:
+                            user.PhoneNumber = attr[0].ToString();
+                            break;
                         default:
                             break;
                     }
@@ -148,6 +152,7 @@ namespace CAESDO.Catbert.BLL
         public string LastName { get; set; }
         public string FullName { get; set; }
         public string EmailAddress { get; set; }
+        public string PhoneNumber { get; set; }
 
         public DirectoryUser()
         {

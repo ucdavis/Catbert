@@ -50,7 +50,8 @@ public class CatbertWebService : System.Web.Services.WebService
                 FirstName = person.FirstName,
                 LastName = person.LastName,
                 Login = person.LoginID,
-                Email = person.EmailAddress
+                Email = person.EmailAddress,
+                Phone = person.PhoneNumber
             });
         }
 

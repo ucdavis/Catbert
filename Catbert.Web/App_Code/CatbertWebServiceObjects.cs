@@ -53,13 +53,14 @@ namespace Catbert.Services
         public ServiceUser()
         {
         }
-        public ServiceUser(string eid, string firstName, string lastName, string login, string email, string department)
+        public ServiceUser(string eid, string firstName, string lastName, string login, string email, string phone, string department)
         {
             EmployeeID = eid;
             FirstName = firstName;
             LastName = lastName;
             Login = login;
             Email = email;
+            Phone = phone;
             Department = department;
         }
 
@@ -68,6 +69,7 @@ namespace Catbert.Services
         public string LastName { get; set; }
         public string Login { get; set; }
         public string Email { get; set; }
+        public string Phone { get; set; }
         public string Department { get; set; }
     }
     public class CatbertUser : ServiceUser
@@ -77,8 +79,8 @@ namespace Catbert.Services
 
         }
 
-        public CatbertUser(int userID, string eid, string firstName, string lastName, string login, string email, string sid, string role, int roleID)
-            : base(eid, firstName, lastName, login, email, null)
+        public CatbertUser(int userID, string eid, string firstName, string lastName, string login, string email, string phone, string sid, string role, int roleID)
+            : base(eid, firstName, lastName, login, email, phone, null)
         {
             Roles = new List<ServiceRole>();
             Units = new List<ServiceUnit>();

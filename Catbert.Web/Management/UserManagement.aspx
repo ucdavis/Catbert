@@ -46,7 +46,47 @@
                 cssHeader: 'header',
                 widgets: ['zebra']
             });
+
+            $("#addUser").click(function() {
+                var findUserDialog = $("#dialogFindUser");
+
+                var buttons = {
+                    "Close": function() {
+                        $(this).dialog("close");
+                    }
+                }
+
+                OpenDialog(findUserDialog, buttons, "Add a User");
+            });
+
+            $("#btnSearchUser").click(function() {
+                $("#spanSearchProgress").show(0); //Show the loading dialog
+                $("#divSearchResultsSuccess").hide(0); //Hide the content
+
+                var data = { eid: null, firstName: null, lastName: null, login: $("#txtLoginID").val() };
+
+                //Call the search service
+                AjaxCall(baseURL + "SearchNewUser", data, SearchNewUserSuccess, null);
+            });
         });
+
+        function SearchNewUserSuccess(data) {
+                        
+            var divSearchResults = $("#divSearchResultsSuccess"); //Get the search results div
+            $("#spanSearchProgress").hide(0); //Hide the loading dialog
+            
+            if (data.length == 0) {                
+                return alert("No Users Found");                
+            }
+            else {
+                var user = data[0];
+                $("#spanNewUserName").html(user.FirstName + " " + user.LastName);
+                $("#txtNewUserEmail").val(user.Email);
+                $("#txtNewUserPhone").val(user.Phone);
+            }
+
+            divSearchResults.show();
+        }
 
         function PopulateUserTable(application, search, unit, role, sortname, sortorder) {
             ShowLoadingIndicator(true);
@@ -77,7 +117,7 @@
             if (on)
                 loadingDiv.show();
             else
-                loadingDiv.hide();                
+                loadingDiv.hide();
         }
 
         function RenderRow(index, row) {
@@ -121,9 +161,21 @@
         function Trim(str) {
             return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
         }
+
+        function OpenDialog(dialog /*The dialog DIV JQuery object*/, buttons /*Button collection */, title) {
+
+            dialog.dialog("destroy"); //Reset the dialog to its initial state
+            dialog.dialog({
+                autoOpen: true,
+                width: 600,
+                modal: true,
+                title: title,
+                buttons: buttons
+            });
+        }
     </script>
     
-    <a href="javascript:;" id="addApplication" class="dialog_link ui-state-default ui-corner-all">
+    <a href="javascript:;" id="addUser" class="dialog_link ui-state-default ui-corner-all">
         <span class="ui-icon ui-icon-newwin"></span>Add User
     </a>
 <br /><br />
@@ -151,6 +203,57 @@
             <%--Each row is a new person--%>
         </tbody>
     </table>
+    
+    <div id="dialogFindUser" title="Add a User" style="display: none;">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        Kerberos LoginID: <input type="text" id="txtLoginID" /><input type="button" id="btnSearchUser" value="Search" />
+        <span id="spanSearchProgress" style="display:none;">Searching...</span>
+        <div id="divSearchResultsSuccess" style="display:none;">
+            <span id="spanNewUserName"></span><br />
+            Email: <input type="text" id="txtNewUserEmail" /><br />
+            Phone: <input type="text" id="txtNewUserPhone" /><br />
+            Role:
+            <asp:ListView ID="lviewRoles" runat="server" DataSourceID="odsRoles">
+                <LayoutTemplate>
+                    <select id="applicationRoles">
+                        <option id="itemPlaceholder" runat="server"></option>
+                    </select>
+                </LayoutTemplate>
+                <ItemTemplate>
+                    <option>
+                        <%# Eval("Name") %>
+                    </option>
+                </ItemTemplate>
+            </asp:ListView>
+            <asp:ObjectDataSource ID="odsRoles" runat="server" OldValuesParameterFormatString="original_{0}"
+                SelectMethod="GetRolesByApplication" TypeName="CAESDO.Catbert.BLL.RoleBLL">
+                <SelectParameters>
+                    <asp:QueryStringParameter QueryStringField="app" Name="application" DefaultValue="Catbert" />
+                </SelectParameters>
+            </asp:ObjectDataSource>
+            <br />
+            Unit:
+            <asp:ListView ID="lviewUnits" runat="server" DataSourceID="odsUnits">
+                <LayoutTemplate>
+                    <select id="Units">
+                        <option id="itemPlaceholder" runat="server"></option>
+                    </select>
+                </LayoutTemplate>
+                <ItemTemplate>
+                    <option>
+                        <%# Eval("ShortName")%>
+                    </option>
+                </ItemTemplate>
+            </asp:ListView>
+            <asp:ObjectDataSource ID="odsUnits" runat="server" OldValuesParameterFormatString="original_{0}"
+                SelectMethod="GetAll" TypeName="CAESDO.Catbert.BLL.UnitBLL">
+                <SelectParameters>
+                    <asp:Parameter DefaultValue="ShortName" Name="propertyName" Type="String" />
+                    <asp:Parameter DefaultValue="true" Name="ascending" Type="Boolean" />
+                </SelectParameters>
+            </asp:ObjectDataSource>
+        </div>
+    </div>
         
 </asp:Content>
 
