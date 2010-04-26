@@ -19,10 +19,10 @@ namespace CAESDO.Catbert.Test.BLLTests
         [TestMethod]
         public void CanGetExampleStudent()
         {
-            var student = DirectoryServices.FindStudent("1096868");
+            var student = DirectoryServices.FindStudent("175580");
 
             Assert.IsNotNull(student);
-            Assert.AreEqual("login", student.LoginID);
+            Assert.AreEqual("azxnguye", student.LoginID);
         }
     }
 }

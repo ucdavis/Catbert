@@ -19,6 +19,7 @@ namespace CAESDO.Catbert.BLL
         private const string STR_SN = "sn";
         private const string STR_Telephone = "telephoneNumber";
         private const string STR_UID = "uid";
+        private const string STR_PIDM = "ucdPersonPIDM";
         private static readonly string LDAPPassword = WebConfigurationManager.AppSettings["LDAPPassword"];
         private static readonly string LDAPUser = WebConfigurationManager.AppSettings["LDAPUser"];
         private static readonly int STR_LDAPPort = 636;
@@ -38,11 +39,11 @@ namespace CAESDO.Catbert.BLL
             var attributesToReturn = new string[]
                                          {
                                              STR_UID, STR_EmployeeNumber, STR_Mail, STR_Telephone, STR_DisplayName, STR_CN,
-                                             STR_SN, STR_GivenName
+                                             STR_SN, STR_GivenName, STR_PIDM
                                          };
 
             var sRequest = new SearchRequest(searchBase, searchFilter, SearchScope.Subtree, attributesToReturn);
-
+            
             //Send the Request and Load the Response
             var sResponse = (SearchResponse) lc.SendRequest(sRequest);
 
@@ -171,6 +172,29 @@ namespace CAESDO.Catbert.BLL
         }
 
         /// <summary>
+        /// Builds a ldap search for student PIDM and then gets out the first returned user
+        /// </summary>
+        public static DirectoryUser LDAPFindStudent(string pidm)
+        {
+            if (string.IsNullOrEmpty(pidm)) return null;
+
+            var searchFilter = string.Format("(&({0}={1}))", STR_PIDM, pidm);
+            
+            SearchResponse sResponse = GetSearchResponse(searchFilter, STR_SearchBase);
+
+            List<DirectoryUser> foundUsers = GetUsersFromResponse(sResponse);
+
+            if (foundUsers.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                return foundUsers.First(); //Get the first returned user
+            }
+        }
+
+        /// <summary>
         /// Prepare the 
         /// </summary>
         public static List<DirectoryUser> SearchUsers(string employeeID, string firstName, string lastName,
@@ -189,7 +213,7 @@ namespace CAESDO.Catbert.BLL
 
         public static DirectoryUser FindStudent(string pidm)
         {
-            throw new NotImplementedException();
+            return LDAPFindStudent(pidm);
         }
     }
 
