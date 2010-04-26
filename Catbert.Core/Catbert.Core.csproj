@@ -66,6 +66,7 @@
     <Compile Include="Domain\UnitAssociation.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceObjects\ServiceObjects.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Domain\Unit.hbm.xml" />
