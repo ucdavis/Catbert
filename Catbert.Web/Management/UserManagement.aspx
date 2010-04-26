@@ -201,10 +201,9 @@
                 </ItemTemplate>
             </asp:ListView>
             <asp:ObjectDataSource ID="odsUnits" runat="server" OldValuesParameterFormatString="original_{0}"
-                SelectMethod="GetAllUnits" TypeName="CAESDO.Catbert.BLL.UnitBLL">
+                SelectMethod="GetVisibleByUser" TypeName="CAESDO.Catbert.BLL.UnitBLL">
                 <SelectParameters>
-                    <asp:Parameter DefaultValue="ShortName" Name="propertyName" Type="String" />
-                    <asp:Parameter DefaultValue="true" Name="ascending" Type="Boolean" />
+                    <asp:QueryStringParameter QueryStringField="app" Name="application" DefaultValue="Catbert" />
                 </SelectParameters>
             </asp:ObjectDataSource>
             <br /><br />

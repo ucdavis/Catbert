@@ -6,6 +6,7 @@ using CAESDO.Catbert.Core.Domain;
 using System.ComponentModel;
 using System.Web;
 using System.Web.Caching;
+using System.Web.Security;
 
 namespace CAESDO.Catbert.BLL
 {
@@ -42,6 +43,25 @@ namespace CAESDO.Catbert.BLL
         public static Unit GetByFIS(string unitFIS)
         {
             return Queryable.Where(u => u.FISCode == unitFIS).SingleOrDefault();
+        }
+
+        /// <summary>
+        /// Get all of the units that are visible to the current user in the context of the given application
+        /// </summary>
+        public static List<Unit> GetVisibleByUser(string application)
+        {
+            return GetVisibleByUser(HttpContext.Current.User.Identity.Name, application);
+        }
+
+        /// <summary>
+        /// Get all of the units associated with the given user, depending on role
+        /// ManageAll: GetAllUnits
+        /// ManageSchool: Get All Units which are associated with the user's schools
+        /// ManageUnit: Get Just the units you are associated with
+        /// </summary>
+        public static List<Unit> GetVisibleByUser(string login, string application)
+        {
+            return daoFactory.GetUnitDao().GetVisibleByUser(login, application);
         }
 
         /// <summary>

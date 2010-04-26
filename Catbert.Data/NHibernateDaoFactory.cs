@@ -5,6 +5,7 @@ using NHibernate;
 using System.ComponentModel;
 using System.Web;
 using NHibernate.Criterion;
+using System;
 
 namespace CAESDO.Catbert.Data
 {
@@ -24,6 +25,11 @@ namespace CAESDO.Catbert.Data
         public IUserDao GetUserDao()
         {
             return new UserDao();
+        }
+
+        public IUnitDao GetUnitDao()
+        {
+            return new UnitDao();
         }
 
         #endregion
@@ -123,9 +129,87 @@ namespace CAESDO.Catbert.Data
                 else
                     return Order.Desc(orderTerm);
             }
+
+            public List<string> GetRolesForUserInApplication(string login, string application)
+            {
+                //First we need to find out what kind of user management permissions the given user has in the application
+                ICriteria permissionsCriteria = NHibernateSessionManager.Instance.GetSession().CreateCriteria(typeof(Permission))
+                    .CreateAlias("Application", "Application")
+                    .CreateAlias("User", "User")
+                    .CreateAlias("Role", "Role")
+                    .Add(Expression.Eq("Application.Name", application))
+                    .Add(Expression.Eq("User.LoginID", login))
+                    .Add(Expression.Eq("Inactive", false))
+                    .Add(Expression.Like("Role.Name", "Manage", MatchMode.Start))
+                    .SetProjection(Projections.Distinct(Projections.Property("Role.Name")))
+                    .SetMaxResults(3); //ManageAll, ManageSchool, ManageUnit
+
+                return permissionsCriteria.List<string>() as List<string>;
+            }
         }
 
-        #endregion
-          
+        public class UnitDao : AbstractNHibernateDao<Unit, int>, IUnitDao
+        {
+            /// <summary>
+            /// Get all of the units associated with the given user, depending on role
+            /// ManageAll: GetAllUnits
+            /// ManageSchool: Get All Units which are associated with the user's schools
+            /// ManageUnit: Get Just the units you are associated with
+            /// </summary>
+            public List<Unit> GetVisibleByUser(string login, string application)
+            {
+                //First we need to find out what kind of user management permissions the given user has in the application                
+                var roles = new UserDao().GetRolesForUserInApplication(login, application);
+
+                if (roles.Contains("ManageAll"))
+                {
+                    return GetAll("ShortName", true);
+                }
+                else if (roles.Contains("ManageSchool"))
+                {
+                    //Find all schools that the given user has in the application
+                    DetachedCriteria schools = DetachedCriteria.For<UnitAssociation>()
+                        .CreateAlias("Application", "Application")
+                        .CreateAlias("User", "User")
+                        .CreateAlias("Unit", "Unit")
+                        .CreateAlias("Unit.School", "School")
+                        .Add(Expression.Eq("Application.Name", application))
+                        .Add(Expression.Eq("User.LoginID", login))
+                        .Add(Expression.Eq("Inactive", false))
+                        .SetProjection(Projections.Distinct(Projections.Property("School.id")));
+
+                    //Now get all units that are associated with these schools
+                    ICriteria units = NHibernateSessionManager.Instance.GetSession().CreateCriteria(typeof(Unit))
+                        .CreateAlias("School", "School")
+                        .Add(Subqueries.PropertyIn("School.id", schools));
+
+                    return units.List<Unit>() as List<Unit>;
+                }
+                else if (roles.Contains("ManageUnit"))
+                {
+                    //Just get all units that the user has in this application
+                    UnitAssociation ua = new UnitAssociation();
+
+                    DetachedCriteria associatedUnitIds = DetachedCriteria.For<UnitAssociation>()
+                        .CreateAlias("Application", "Application")
+                        .CreateAlias("User", "User")
+                        .CreateAlias("Unit", "Unit")
+                        .Add(Expression.Eq("Application.Name", application))
+                        .Add(Expression.Eq("User.LoginID", login))
+                        .Add(Expression.Eq("Inactive", false))
+                        .SetProjection(Projections.Property("Unit.id"));
+
+                    ICriteria units = NHibernateSessionManager.Instance.GetSession().CreateCriteria(typeof(Unit))
+                        .Add(Subqueries.PropertyIn("id", associatedUnitIds));
+                    
+                    return units.List<Unit>() as List<Unit>;                    
+                }
+                else //no roles
+                {
+                    throw new ArgumentException(string.Format("User {0} does not have access to this application", login));
+                }
+            }
+        }
+        #endregion          
     }
 }
