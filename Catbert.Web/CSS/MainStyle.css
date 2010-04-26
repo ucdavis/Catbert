@@ -22,7 +22,7 @@ h2 {margin-bottom: 0px;}
 /* =menu */
 
 .menu {width: 860px; position: absolute; bottom: 0px; left: 20%; margin: 0 auto; background: url(../Images/menu-left.jpg) bottom left no-repeat; height: 600px;}
-.menu p {font-family: monospace; font-size: 2.3em; font-weight: bold; float: left; width: 255px; height: 119px; margin: 85px 0 0 20px;}
+.menu p {font-family: Courier New, Courier, monospace; font-size: 1.9em; font-weight: bold; float: left; width: 255px; height: 140px; overflow: hidden; margin: 85px 0 0 20px;}
 .menu p span, .menu p a {color: #df070b; text-decoration: none;}
 .menu p a:hover {border-bottom: 3px #df070b dashed;}
 .menu ul {width: 420px; float: right; margin: 335px 0 0;}
