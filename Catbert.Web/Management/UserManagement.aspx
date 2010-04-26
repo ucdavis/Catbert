@@ -55,6 +55,8 @@
         });
 
         function PopulateUserTable(application, search, unit, role, sortname, sortorder) {
+            ShowLoadingIndicator(true);
+            
             //Setup the parameters
             var data = { application: application, search: search, unit: unit, role: role, sortname: sortname, sortorder: sortorder };
             
@@ -72,6 +74,16 @@
             $(data.rows).each(RenderRow);
 
             SortTable();
+            ShowLoadingIndicator(false);
+        }
+
+        function ShowLoadingIndicator(on) {
+            var loadingDiv = $("#divLoading");
+
+            if (on)
+                loadingDiv.show();
+            else
+                loadingDiv.hide();                
         }
 
         function RenderRow(index, row) {
@@ -132,6 +144,9 @@
                 <option>Email</option>
             </select>
         </span>
+    </div>
+    <div id="divLoading" style="display:none;">
+        Loading...
     </div>
     <table id="tblUsers" class="tablesorter">
         <thead>
