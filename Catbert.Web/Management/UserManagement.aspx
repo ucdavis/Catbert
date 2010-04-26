@@ -25,7 +25,7 @@
 
     <div id="divHeader">
         <span id="search" style="float:left;">
-            Search Users: <input type="text" id="txtSearch" /><input type="image" id="imgSearch" title="Clear Search" alt="Clear Search" src="../Images/clear-left.png" style="height: 15px;" />
+            <label>Search Users:</label> <input type="text" id="txtSearch" /><input type="image" id="imgSearch" title="Clear Search" alt="Clear Search" src="../Images/clear-left.png" style="height: 15px;" />
         </span>
         
         <span id="filter" style="float:right;">
@@ -64,10 +64,9 @@
     <table id="tblUsers" class="tablesorter">
         <thead>
             <tr>
-                <th ></th>
+                <th class="header Login" title="LoginID">Login</th>
                 <th class="header" title="FirstName">First Name</th>
                 <th class="header headerSortUp" title="LastName">Last Name</th>
-                <th class="header" title="LoginID">Login</th>
                 <th class="header" title="Email">Email</th>
                 <th >Departments</th>
                 <th >Roles</th>

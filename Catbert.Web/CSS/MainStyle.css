@@ -40,6 +40,16 @@ table.tablesorter thead tr .header {
 	cursor: pointer;
 	/* padding-left: 20px; */
 }
+
+table.tablesorter thead tr .header.Login {
+	background-image: url(../Images/arrow-both.png);
+	background-repeat: no-repeat;
+	background-position: 10px center;
+	padding: 0px 0px 0px 22px;
+	cursor: pointer;
+	/* padding-left: 20px; */
+}
+
 table.tablesorter tbody td {
 	color: #3D3D3D;
 	padding: 0px;
@@ -64,6 +74,8 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 table.tablesorter tfoot td {height: 35px; vertical-align: middle;}
 table.tablesorter span#spanPageInfo {position: relative; top: -3px;}
 
+table.tablesorter .Login {padding-left: 10px;}
+
 
 /* =form elements */
 
@@ -74,3 +86,6 @@ input#btnPrevious {background: url(../Images/a-prev.png) no-repeat; text-indent:
 input#btnNext {background: url(../Images/a-next.png) no-repeat; text-indent: -99999px; height: 15px; width: 0px; padding-right: 18px;}
 input#btnLast {background: url(../Images/a-last.png) no-repeat; text-indent: -99999px; height: 15px; width: 0px; padding-right: 16px;}
 
+input#imgSearch {position: relative; top: 5px;}
+input.ac_input {background: url(../Images/input-bg.jpg) no-repeat; height: 15px; width: 200px; padding: 5px 5px 4px; margin-right: 5px; border-right: solid #fff 1px; border-bottom: solid #fff 1px;}
+select {background: url(../Images/input-bg.jpg) no-repeat; height: 25px; width: 200px; padding: 5px 0px 0px 5px; margin-right: 5px; border-right: solid #fff 1px; border-bottom: solid #fff 1px;}

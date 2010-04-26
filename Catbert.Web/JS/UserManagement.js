@@ -459,10 +459,10 @@ function RenderRow(index, row) {
     rowEven == true ? newrow.addClass("even") : newrow.addClass("odd");
     rowEven = !rowEven;
 
-    newrow.append('<td class="ShowUser"><a href="javascript:;" class="ShowUserLink">' + row.Login + '</a></td>');
+    newrow.append('<td class="Login"><a href="javascript:;" class="ShowUserLink">' + row.Login + '</a></td>');
     newrow.append('<td class="FirstName">' + row.FirstName + '</td>');
     newrow.append('<td class="LastName">' + row.LastName + '</td>');
-    newrow.append('<td class="Login">' + row.Login + '</td>');
+    // newrow.append('<td class="Login">' + row.Login + '</td>');
     newrow.append('<td class="Email">' + row.Email + '</td>');
 
     var units = CreateDomFromUserInfoArray(row.Units);
