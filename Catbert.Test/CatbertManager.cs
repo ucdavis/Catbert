@@ -103,6 +103,27 @@ namespace CAESDO.Catbert.Test
         }
          */
 
+        public static CatbertUser GetUser(string login)
+        {
+            var sc = GetSecurityContext();
+
+            return catops.GetUser(ref sc, login, AppName);
+        }
+
+        public static bool SetEmail(string login, string emailAddress)
+        {
+            var sc = GetSecurityContext();
+
+            return catops.SetEmail(ref sc, login, emailAddress);
+        }
+
+        public static bool SetPhone(string login, string phoneNumber)
+        {
+            var sc = GetSecurityContext();
+
+            return catops.SetPhoneNumber(ref sc, login, phoneNumber);
+        }
+
         public static CatbertUser[] GetUserInApplicationRole(string role)
         {
             var sc = GetSecurityContext();

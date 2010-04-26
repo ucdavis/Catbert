@@ -86,6 +86,70 @@ namespace CAESDO.Catbert.Test
         }
 
         [TestMethod]
+        public void SetEmail()
+        {
+            //First get the user and check the email
+            var user = CatbertManager.GetUser(TestHelper.TestUser);
+            Assert.AreEqual(TestHelper.TestEmail, user.Email);
+
+            //Now set the email address 
+            var result = CatbertManager.SetEmail(TestHelper.TestUser, "fake@fake.com");
+            Assert.IsTrue(result);
+
+            //Get the user again and make sure the email has changed
+            user = CatbertManager.GetUser(TestHelper.TestUser);
+            Assert.AreEqual("fake@fake.com", user.Email);
+
+            //Now set the email address back
+            result = CatbertManager.SetEmail(TestHelper.TestUser, TestHelper.TestEmail);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void SetEmailBadUser()
+        {
+            var result = CatbertManager.SetEmail("nonexistant", TestHelper.TestEmail);
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void SetEmailBadAddress()
+        {
+            var result = CatbertManager.SetEmail(TestHelper.TestUser, "poorlyformatted@");
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void SetPhone()
+        {
+            //set the phone number
+            var result = CatbertManager.SetPhone(TestHelper.TestUser, "555-5555");
+            Assert.IsTrue(result);
+
+            //Now set the email address back
+            result = CatbertManager.SetPhone(TestHelper.TestUser, TestHelper.TestPhone);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void SetPhoneBadUser()
+        {
+            var result = CatbertManager.SetPhone("nonexistant", TestHelper.TestPhone);
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void SetPhoneBadNumber()
+        {
+            var result = CatbertManager.SetPhone(TestHelper.TestUser, "545-asd4");
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
         public void InsertNewUser()
         {
             Assert.Inconclusive("Test Not Developed");

@@ -77,6 +77,23 @@ public class CatbertWebService : System.Web.Services.WebService
         return UserBLL.VerifyUserExists(login);
     }
 
+    [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
+    public CatbertUser GetUser(string login, string application)
+    {
+        User user = UserBLL.GetUser(login);
+
+        if (user == null) return null; //make sure we have a real user
+
+        List<User> users = new List<User>();
+        users.Add(user);//Get the user, and add it to the user list
+
+        List<CatbertUser> catbertUsers = ConvertFromUserList(users, application);
+
+        if (catbertUsers.Count != 1) return null; //There should just be the one catbert user
+
+        return catbertUsers[0];
+    }
+
     #region Permissions
 
     /// <summary>
@@ -278,15 +295,15 @@ public class CatbertWebService : System.Web.Services.WebService
     #region Contact Information
 
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
-    public bool AddEmail(string login, string emailAddress, int emailTypeID)
+    public bool SetEmail(string login, string emailAddress)
     {
-        throw new NotImplementedException();
+        return UserBLL.SetEmail(login, emailAddress, secureCTX.UserID);
     }
 
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
-    public bool AddPhoneNumber(string login, string phoneNumber, int phoneType)
+    public bool SetPhoneNumber(string login, string phoneNumber)
     {
-        throw new NotImplementedException();
+        return UserBLL.SetPhone(login, phoneNumber, secureCTX.UserID);
     }
 
     #endregion

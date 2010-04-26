@@ -64,6 +64,72 @@ namespace CAESDO.Catbert.BLL
             return Queryable.Where(user => user.LoginID == login).Any();
         }
 
+        /// <summary>
+        /// Set the email address of the user indicated by login
+        /// </summary>
+        /// <returns>False if the user doesn't exist or the phone number is poorly formatted</returns>
+        public static bool SetEmail(string login, string email, string trackingUserName)
+        {
+            //First get the user identified by the login
+            var user = Queryable.Where(usr => usr.LoginID == login).SingleOrDefault();
+
+            if (user == null) return false;
+
+            //Set the email
+            user.Email = email;
+
+            //Check to see if the user is valid, if not return false
+            if (!ValidateBO<User>.isValid(user)) return false;
+
+            //We have a valid user, so get the tracking info and save
+            Tracking tracking = TrackingBLL.GetTrackingInstance(login, TrackingTypes.User, TrackingActions.Change);
+            tracking.Comments = string.Format("Email changed to {0} for user {1}", user.Email, user.ID);
+
+            using (var ts = new TransactionScope())
+            {
+                EnsurePersistent(ref user);
+                TrackingBLL.EnsurePersistent(ref tracking);
+
+                ts.CommittTransaction();
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Set the phone number of the user indicated by login.
+        /// </summary>
+        /// <returns>False if the user doesn't exist or the phone number is poorly formatted</returns>
+        public static bool SetPhone(string login, string phone, string trackingUserName)
+        {
+            //First get the user identified by the login
+            var user = Queryable.Where(usr => usr.LoginID == login).SingleOrDefault();
+
+            if (user == null) return false;
+
+            //Set the email
+            user.Phone = phone;
+
+            //Check to see if the user is valid, if not return false
+            if (!ValidateBO<User>.isValid(user)) return false;
+
+            //We have a valid user, so get the tracking info and save
+            Tracking tracking = TrackingBLL.GetTrackingInstance(login, TrackingTypes.User, TrackingActions.Change);
+            tracking.Comments = string.Format("Phone changed to {0} for user {1}", user.Email, user.ID);
+
+            using (var ts = new TransactionScope())
+            {
+                EnsurePersistent(ref user);
+                TrackingBLL.EnsurePersistent(ref tracking);
+
+                ts.CommittTransaction();
+            }
+
+            return true;
+        }
+
+        #region Applications
+        
         public static List<User> GetByApplication(string application)
         {
             //Grab all permissions in this application
@@ -74,7 +140,7 @@ namespace CAESDO.Catbert.BLL
 
             return users.ToList();
         }
-        
+
         /// <summary>
         /// Gets all users who are in the given application and role.
         /// </summary>
@@ -89,6 +155,8 @@ namespace CAESDO.Catbert.BLL
 
             return users.ToList();
         }
+ 
+        #endregion
 
         #region Units
 

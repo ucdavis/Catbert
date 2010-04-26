@@ -70,6 +70,55 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="GetUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="application" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetUserResult" type="tns:CatbertUser" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CatbertUser">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ServiceUser">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="Roles" type="tns:ArrayOfServiceRole" />
+              <s:element minOccurs="0" maxOccurs="1" name="Units" type="tns:ArrayOfServiceUnit" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfServiceRole">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ServiceRole" nillable="true" type="tns:ServiceRole" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ServiceRole">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfServiceUnit">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ServiceUnit" nillable="true" type="tns:ServiceUnit" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ServiceUnit">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UnitFIS" type="s:string" />
+        </s:sequence>
+      </s:complexType>
       <s:element name="AssignPermissions">
         <s:complexType>
           <s:sequence>
@@ -158,18 +207,6 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:complexType name="ArrayOfServiceUnit">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="ServiceUnit" nillable="true" type="tns:ServiceUnit" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="ServiceUnit">
-        <s:sequence>
-          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
-          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="UnitFIS" type="s:string" />
-        </s:sequence>
-      </s:complexType>
       <s:element name="GetUnitsByUser">
         <s:complexType>
           <s:sequence>
@@ -198,17 +235,6 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:complexType name="ArrayOfServiceRole">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="ServiceRole" nillable="true" type="tns:ServiceRole" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="ServiceRole">
-        <s:sequence>
-          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
-          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
-        </s:sequence>
-      </s:complexType>
       <s:element name="GetRolesByUser">
         <s:complexType>
           <s:sequence>
@@ -243,17 +269,6 @@
           <s:element minOccurs="0" maxOccurs="unbounded" name="CatbertUser" nillable="true" type="tns:CatbertUser" />
         </s:sequence>
       </s:complexType>
-      <s:complexType name="CatbertUser">
-        <s:complexContent mixed="false">
-          <s:extension base="tns:ServiceUser">
-            <s:sequence>
-              <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:int" />
-              <s:element minOccurs="0" maxOccurs="1" name="Roles" type="tns:ArrayOfServiceRole" />
-              <s:element minOccurs="0" maxOccurs="1" name="Units" type="tns:ArrayOfServiceUnit" />
-            </s:sequence>
-          </s:extension>
-        </s:complexContent>
-      </s:complexType>
       <s:element name="GetUsersByApplicationRole">
         <s:complexType>
           <s:sequence>
@@ -269,35 +284,33 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="AddEmail">
+      <s:element name="SetEmail">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
             <s:element minOccurs="0" maxOccurs="1" name="emailAddress" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="emailTypeID" type="s:int" />
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="AddEmailResponse">
+      <s:element name="SetEmailResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="AddEmailResult" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="SetEmailResult" type="s:boolean" />
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="AddPhoneNumber">
+      <s:element name="SetPhoneNumber">
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
             <s:element minOccurs="0" maxOccurs="1" name="phoneNumber" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="phoneType" type="s:int" />
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:element name="AddPhoneNumberResponse">
+      <s:element name="SetPhoneNumberResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="AddPhoneNumberResult" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="SetPhoneNumberResult" type="s:boolean" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -328,6 +341,15 @@
     <wsdl:part name="parameters" element="tns:VerifyUserResponse" />
   </wsdl:message>
   <wsdl:message name="VerifyUserSecurityContext">
+    <wsdl:part name="SecurityContext" element="tns:SecurityContext" />
+  </wsdl:message>
+  <wsdl:message name="GetUserSoapIn">
+    <wsdl:part name="parameters" element="tns:GetUser" />
+  </wsdl:message>
+  <wsdl:message name="GetUserSoapOut">
+    <wsdl:part name="parameters" element="tns:GetUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetUserSecurityContext">
     <wsdl:part name="SecurityContext" element="tns:SecurityContext" />
   </wsdl:message>
   <wsdl:message name="AssignPermissionsSoapIn">
@@ -429,22 +451,22 @@
   <wsdl:message name="GetUsersByApplicationRoleSecurityContext">
     <wsdl:part name="SecurityContext" element="tns:SecurityContext" />
   </wsdl:message>
-  <wsdl:message name="AddEmailSoapIn">
-    <wsdl:part name="parameters" element="tns:AddEmail" />
+  <wsdl:message name="SetEmailSoapIn">
+    <wsdl:part name="parameters" element="tns:SetEmail" />
   </wsdl:message>
-  <wsdl:message name="AddEmailSoapOut">
-    <wsdl:part name="parameters" element="tns:AddEmailResponse" />
+  <wsdl:message name="SetEmailSoapOut">
+    <wsdl:part name="parameters" element="tns:SetEmailResponse" />
   </wsdl:message>
-  <wsdl:message name="AddEmailSecurityContext">
+  <wsdl:message name="SetEmailSecurityContext">
     <wsdl:part name="SecurityContext" element="tns:SecurityContext" />
   </wsdl:message>
-  <wsdl:message name="AddPhoneNumberSoapIn">
-    <wsdl:part name="parameters" element="tns:AddPhoneNumber" />
+  <wsdl:message name="SetPhoneNumberSoapIn">
+    <wsdl:part name="parameters" element="tns:SetPhoneNumber" />
   </wsdl:message>
-  <wsdl:message name="AddPhoneNumberSoapOut">
-    <wsdl:part name="parameters" element="tns:AddPhoneNumberResponse" />
+  <wsdl:message name="SetPhoneNumberSoapOut">
+    <wsdl:part name="parameters" element="tns:SetPhoneNumberResponse" />
   </wsdl:message>
-  <wsdl:message name="AddPhoneNumberSecurityContext">
+  <wsdl:message name="SetPhoneNumberSecurityContext">
     <wsdl:part name="SecurityContext" element="tns:SecurityContext" />
   </wsdl:message>
   <wsdl:portType name="CatbertWebServiceSoap">
@@ -459,6 +481,10 @@
     <wsdl:operation name="VerifyUser">
       <wsdl:input message="tns:VerifyUserSoapIn" />
       <wsdl:output message="tns:VerifyUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUser">
+      <wsdl:input message="tns:GetUserSoapIn" />
+      <wsdl:output message="tns:GetUserSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="AssignPermissions">
       <wsdl:input message="tns:AssignPermissionsSoapIn" />
@@ -504,13 +530,13 @@
       <wsdl:input message="tns:GetUsersByApplicationRoleSoapIn" />
       <wsdl:output message="tns:GetUsersByApplicationRoleSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="AddEmail">
-      <wsdl:input message="tns:AddEmailSoapIn" />
-      <wsdl:output message="tns:AddEmailSoapOut" />
+    <wsdl:operation name="SetEmail">
+      <wsdl:input message="tns:SetEmailSoapIn" />
+      <wsdl:output message="tns:SetEmailSoapOut" />
     </wsdl:operation>
-    <wsdl:operation name="AddPhoneNumber">
-      <wsdl:input message="tns:AddPhoneNumberSoapIn" />
-      <wsdl:output message="tns:AddPhoneNumberSoapOut" />
+    <wsdl:operation name="SetPhoneNumber">
+      <wsdl:input message="tns:SetPhoneNumberSoapIn" />
+      <wsdl:output message="tns:SetPhoneNumberSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="CatbertWebServiceSoap" type="tns:CatbertWebServiceSoap">
@@ -546,6 +572,17 @@
       <wsdl:output>
         <soap:body use="literal" />
         <soap:header message="tns:VerifyUserSecurityContext" part="SecurityContext" use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUser">
+      <soap:operation soapAction="CAESDO.Services/GetUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetUserSecurityContext" part="SecurityContext" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="AssignPermissions">
@@ -669,26 +706,26 @@
         <soap:header message="tns:GetUsersByApplicationRoleSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="AddEmail">
-      <soap:operation soapAction="CAESDO.Services/AddEmail" style="document" />
+    <wsdl:operation name="SetEmail">
+      <soap:operation soapAction="CAESDO.Services/SetEmail" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
-        <soap:header message="tns:AddEmailSecurityContext" part="SecurityContext" use="literal" />
+        <soap:header message="tns:SetEmailSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal" />
-        <soap:header message="tns:AddEmailSecurityContext" part="SecurityContext" use="literal" />
+        <soap:header message="tns:SetEmailSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="AddPhoneNumber">
-      <soap:operation soapAction="CAESDO.Services/AddPhoneNumber" style="document" />
+    <wsdl:operation name="SetPhoneNumber">
+      <soap:operation soapAction="CAESDO.Services/SetPhoneNumber" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
-        <soap:header message="tns:AddPhoneNumberSecurityContext" part="SecurityContext" use="literal" />
+        <soap:header message="tns:SetPhoneNumberSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal" />
-        <soap:header message="tns:AddPhoneNumberSecurityContext" part="SecurityContext" use="literal" />
+        <soap:header message="tns:SetPhoneNumberSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
@@ -725,6 +762,17 @@
       <wsdl:output>
         <soap12:body use="literal" />
         <soap12:header message="tns:VerifyUserSecurityContext" part="SecurityContext" use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUser">
+      <soap12:operation soapAction="CAESDO.Services/GetUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetUserSecurityContext" part="SecurityContext" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetUserSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="AssignPermissions">
@@ -848,26 +896,26 @@
         <soap12:header message="tns:GetUsersByApplicationRoleSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="AddEmail">
-      <soap12:operation soapAction="CAESDO.Services/AddEmail" style="document" />
+    <wsdl:operation name="SetEmail">
+      <soap12:operation soapAction="CAESDO.Services/SetEmail" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
-        <soap12:header message="tns:AddEmailSecurityContext" part="SecurityContext" use="literal" />
+        <soap12:header message="tns:SetEmailSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
-        <soap12:header message="tns:AddEmailSecurityContext" part="SecurityContext" use="literal" />
+        <soap12:header message="tns:SetEmailSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="AddPhoneNumber">
-      <soap12:operation soapAction="CAESDO.Services/AddPhoneNumber" style="document" />
+    <wsdl:operation name="SetPhoneNumber">
+      <soap12:operation soapAction="CAESDO.Services/SetPhoneNumber" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
-        <soap12:header message="tns:AddPhoneNumberSecurityContext" part="SecurityContext" use="literal" />
+        <soap12:header message="tns:SetPhoneNumberSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
-        <soap12:header message="tns:AddPhoneNumberSecurityContext" part="SecurityContext" use="literal" />
+        <soap12:header message="tns:SetPhoneNumberSecurityContext" part="SecurityContext" use="literal" />
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>

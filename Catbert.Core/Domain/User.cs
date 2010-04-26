@@ -19,10 +19,12 @@ namespace CAESDO.Catbert.Core.Domain
         public virtual string LoginID { get; set; }
 
         [StringLengthValidator(50)]
+        [RegexValidator(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*")]
         [IgnoreNulls]
         public virtual string Email { get; set; }
 
         [StringLengthValidator(50)]
+        [RegexValidator(@"((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}")]
         [IgnoreNulls]
         public virtual string Phone { get; set; }
 

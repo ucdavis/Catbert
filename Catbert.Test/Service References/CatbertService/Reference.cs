@@ -30,6 +30,11 @@ namespace CAESDO.Catbert.Test.CatbertService {
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         CAESDO.Catbert.Test.CatbertService.VerifyUserResponse VerifyUser(CAESDO.Catbert.Test.CatbertService.VerifyUserRequest request);
         
+        // CODEGEN: Generating message contract since message GetUserRequest has headers
+        [System.ServiceModel.OperationContractAttribute(Action="CAESDO.Services/GetUser", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute()]
+        CAESDO.Catbert.Test.CatbertService.GetUserResponse GetUser(CAESDO.Catbert.Test.CatbertService.GetUserRequest request);
+        
         // CODEGEN: Generating message contract since message AssignPermissionsRequest has headers
         [System.ServiceModel.OperationContractAttribute(Action="CAESDO.Services/AssignPermissions", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
@@ -85,15 +90,15 @@ namespace CAESDO.Catbert.Test.CatbertService {
         [System.ServiceModel.XmlSerializerFormatAttribute()]
         CAESDO.Catbert.Test.CatbertService.GetUsersByApplicationRoleResponse GetUsersByApplicationRole(CAESDO.Catbert.Test.CatbertService.GetUsersByApplicationRoleRequest request);
         
-        // CODEGEN: Generating message contract since message AddEmailRequest has headers
-        [System.ServiceModel.OperationContractAttribute(Action="CAESDO.Services/AddEmail", ReplyAction="*")]
+        // CODEGEN: Generating message contract since message SetEmailRequest has headers
+        [System.ServiceModel.OperationContractAttribute(Action="CAESDO.Services/SetEmail", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
-        CAESDO.Catbert.Test.CatbertService.AddEmailResponse AddEmail(CAESDO.Catbert.Test.CatbertService.AddEmailRequest request);
+        CAESDO.Catbert.Test.CatbertService.SetEmailResponse SetEmail(CAESDO.Catbert.Test.CatbertService.SetEmailRequest request);
         
-        // CODEGEN: Generating message contract since message AddPhoneNumberRequest has headers
-        [System.ServiceModel.OperationContractAttribute(Action="CAESDO.Services/AddPhoneNumber", ReplyAction="*")]
+        // CODEGEN: Generating message contract since message SetPhoneNumberRequest has headers
+        [System.ServiceModel.OperationContractAttribute(Action="CAESDO.Services/SetPhoneNumber", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute()]
-        CAESDO.Catbert.Test.CatbertService.AddPhoneNumberResponse AddPhoneNumber(CAESDO.Catbert.Test.CatbertService.AddPhoneNumberRequest request);
+        CAESDO.Catbert.Test.CatbertService.SetPhoneNumberResponse SetPhoneNumber(CAESDO.Catbert.Test.CatbertService.SetPhoneNumberRequest request);
     }
     
     /// <remarks/>
@@ -545,6 +550,50 @@ namespace CAESDO.Catbert.Test.CatbertService {
         public VerifyUserResponse(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, bool VerifyUserResult) {
             this.SecurityContext = SecurityContext;
             this.VerifyUserResult = VerifyUserResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetUser", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    public partial class GetUserRequest {
+        
+        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
+        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
+        public string login;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=1)]
+        public string application;
+        
+        public GetUserRequest() {
+        }
+        
+        public GetUserRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string application) {
+            this.SecurityContext = SecurityContext;
+            this.login = login;
+            this.application = application;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetUserResponse", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    public partial class GetUserResponse {
+        
+        [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
+        public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
+        public CAESDO.Catbert.Test.CatbertService.CatbertUser GetUserResult;
+        
+        public GetUserResponse() {
+        }
+        
+        public GetUserResponse(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, CAESDO.Catbert.Test.CatbertService.CatbertUser GetUserResult) {
+            this.SecurityContext = SecurityContext;
+            this.GetUserResult = GetUserResult;
         }
     }
     
@@ -1026,8 +1075,8 @@ namespace CAESDO.Catbert.Test.CatbertService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="AddEmail", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
-    public partial class AddEmailRequest {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="SetEmail", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    public partial class SetEmailRequest {
         
         [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
         public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
@@ -1038,44 +1087,40 @@ namespace CAESDO.Catbert.Test.CatbertService {
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=1)]
         public string emailAddress;
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=2)]
-        public int emailTypeID;
-        
-        public AddEmailRequest() {
+        public SetEmailRequest() {
         }
         
-        public AddEmailRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string emailAddress, int emailTypeID) {
+        public SetEmailRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string emailAddress) {
             this.SecurityContext = SecurityContext;
             this.login = login;
             this.emailAddress = emailAddress;
-            this.emailTypeID = emailTypeID;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="AddEmailResponse", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
-    public partial class AddEmailResponse {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="SetEmailResponse", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    public partial class SetEmailResponse {
         
         [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
         public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public bool AddEmailResult;
+        public bool SetEmailResult;
         
-        public AddEmailResponse() {
+        public SetEmailResponse() {
         }
         
-        public AddEmailResponse(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, bool AddEmailResult) {
+        public SetEmailResponse(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, bool SetEmailResult) {
             this.SecurityContext = SecurityContext;
-            this.AddEmailResult = AddEmailResult;
+            this.SetEmailResult = SetEmailResult;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="AddPhoneNumber", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
-    public partial class AddPhoneNumberRequest {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="SetPhoneNumber", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    public partial class SetPhoneNumberRequest {
         
         [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
         public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
@@ -1086,37 +1131,33 @@ namespace CAESDO.Catbert.Test.CatbertService {
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=1)]
         public string phoneNumber;
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=2)]
-        public int phoneType;
-        
-        public AddPhoneNumberRequest() {
+        public SetPhoneNumberRequest() {
         }
         
-        public AddPhoneNumberRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string phoneNumber, int phoneType) {
+        public SetPhoneNumberRequest(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string phoneNumber) {
             this.SecurityContext = SecurityContext;
             this.login = login;
             this.phoneNumber = phoneNumber;
-            this.phoneType = phoneType;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="AddPhoneNumberResponse", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
-    public partial class AddPhoneNumberResponse {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="SetPhoneNumberResponse", WrapperNamespace="CAESDO.Services", IsWrapped=true)]
+    public partial class SetPhoneNumberResponse {
         
         [System.ServiceModel.MessageHeaderAttribute(Namespace="CAESDO.Services")]
         public CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="CAESDO.Services", Order=0)]
-        public bool AddPhoneNumberResult;
+        public bool SetPhoneNumberResult;
         
-        public AddPhoneNumberResponse() {
+        public SetPhoneNumberResponse() {
         }
         
-        public AddPhoneNumberResponse(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, bool AddPhoneNumberResult) {
+        public SetPhoneNumberResponse(CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, bool SetPhoneNumberResult) {
             this.SecurityContext = SecurityContext;
-            this.AddPhoneNumberResult = AddPhoneNumberResult;
+            this.SetPhoneNumberResult = SetPhoneNumberResult;
         }
     }
     
@@ -1190,6 +1231,21 @@ namespace CAESDO.Catbert.Test.CatbertService {
             CAESDO.Catbert.Test.CatbertService.VerifyUserResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).VerifyUser(inValue);
             SecurityContext = retVal.SecurityContext;
             return retVal.VerifyUserResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        CAESDO.Catbert.Test.CatbertService.GetUserResponse CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap.GetUser(CAESDO.Catbert.Test.CatbertService.GetUserRequest request) {
+            return base.Channel.GetUser(request);
+        }
+        
+        public CAESDO.Catbert.Test.CatbertService.CatbertUser GetUser(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string application) {
+            CAESDO.Catbert.Test.CatbertService.GetUserRequest inValue = new CAESDO.Catbert.Test.CatbertService.GetUserRequest();
+            inValue.SecurityContext = SecurityContext;
+            inValue.login = login;
+            inValue.application = application;
+            CAESDO.Catbert.Test.CatbertService.GetUserResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).GetUser(inValue);
+            SecurityContext = retVal.SecurityContext;
+            return retVal.GetUserResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1356,35 +1412,33 @@ namespace CAESDO.Catbert.Test.CatbertService {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        CAESDO.Catbert.Test.CatbertService.AddEmailResponse CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap.AddEmail(CAESDO.Catbert.Test.CatbertService.AddEmailRequest request) {
-            return base.Channel.AddEmail(request);
+        CAESDO.Catbert.Test.CatbertService.SetEmailResponse CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap.SetEmail(CAESDO.Catbert.Test.CatbertService.SetEmailRequest request) {
+            return base.Channel.SetEmail(request);
         }
         
-        public bool AddEmail(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string emailAddress, int emailTypeID) {
-            CAESDO.Catbert.Test.CatbertService.AddEmailRequest inValue = new CAESDO.Catbert.Test.CatbertService.AddEmailRequest();
+        public bool SetEmail(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string emailAddress) {
+            CAESDO.Catbert.Test.CatbertService.SetEmailRequest inValue = new CAESDO.Catbert.Test.CatbertService.SetEmailRequest();
             inValue.SecurityContext = SecurityContext;
             inValue.login = login;
             inValue.emailAddress = emailAddress;
-            inValue.emailTypeID = emailTypeID;
-            CAESDO.Catbert.Test.CatbertService.AddEmailResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).AddEmail(inValue);
+            CAESDO.Catbert.Test.CatbertService.SetEmailResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).SetEmail(inValue);
             SecurityContext = retVal.SecurityContext;
-            return retVal.AddEmailResult;
+            return retVal.SetEmailResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        CAESDO.Catbert.Test.CatbertService.AddPhoneNumberResponse CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap.AddPhoneNumber(CAESDO.Catbert.Test.CatbertService.AddPhoneNumberRequest request) {
-            return base.Channel.AddPhoneNumber(request);
+        CAESDO.Catbert.Test.CatbertService.SetPhoneNumberResponse CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap.SetPhoneNumber(CAESDO.Catbert.Test.CatbertService.SetPhoneNumberRequest request) {
+            return base.Channel.SetPhoneNumber(request);
         }
         
-        public bool AddPhoneNumber(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string phoneNumber, int phoneType) {
-            CAESDO.Catbert.Test.CatbertService.AddPhoneNumberRequest inValue = new CAESDO.Catbert.Test.CatbertService.AddPhoneNumberRequest();
+        public bool SetPhoneNumber(ref CAESDO.Catbert.Test.CatbertService.SecurityContext SecurityContext, string login, string phoneNumber) {
+            CAESDO.Catbert.Test.CatbertService.SetPhoneNumberRequest inValue = new CAESDO.Catbert.Test.CatbertService.SetPhoneNumberRequest();
             inValue.SecurityContext = SecurityContext;
             inValue.login = login;
             inValue.phoneNumber = phoneNumber;
-            inValue.phoneType = phoneType;
-            CAESDO.Catbert.Test.CatbertService.AddPhoneNumberResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).AddPhoneNumber(inValue);
+            CAESDO.Catbert.Test.CatbertService.SetPhoneNumberResponse retVal = ((CAESDO.Catbert.Test.CatbertService.CatbertWebServiceSoap)(this)).SetPhoneNumber(inValue);
             SecurityContext = retVal.SecurityContext;
-            return retVal.AddPhoneNumberResult;
+            return retVal.SetPhoneNumberResult;
         }
     }
 }
