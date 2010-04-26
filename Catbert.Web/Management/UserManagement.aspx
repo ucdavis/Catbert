@@ -171,7 +171,7 @@
                 </ItemTemplate>
             </asp:ListView>
             <asp:ObjectDataSource ID="odsUnits" runat="server" OldValuesParameterFormatString="original_{0}"
-                SelectMethod="GetAll" TypeName="CAESDO.Catbert.BLL.UnitBLL">
+                SelectMethod="GetAllUnits" TypeName="CAESDO.Catbert.BLL.UnitBLL">
                 <SelectParameters>
                     <asp:Parameter DefaultValue="ShortName" Name="propertyName" Type="String" />
                     <asp:Parameter DefaultValue="true" Name="ascending" Type="Boolean" />

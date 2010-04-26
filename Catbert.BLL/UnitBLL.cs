@@ -3,11 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CAESDO.Catbert.Core.Domain;
+using System.ComponentModel;
+using System.Web;
+using System.Web.Caching;
 
 namespace CAESDO.Catbert.BLL
 {
     public class UnitBLL : GenericBLL<Unit, int>
     {
+        private const string STR_Units = "Units";
+        static Cache cache = HttpContext.Current.Cache;
+
+        public static List<Unit> GetAllUnits()
+        {
+            return GetAllUnits("ShortName", true);
+        }
+
+        public static List<Unit> GetAllUnits(string propertyName, bool ascending) {
+            if ( cache.Get(STR_Units) == null)
+            {
+                //Add the units list to the cache and never expire it (units don't change often)
+                cache.Insert(STR_Units, GetAll(propertyName, ascending), null, DateTime.MaxValue, Cache.NoSlidingExpiration ); 
+            }
+            
+            return (List<Unit>)cache.Get(STR_Units);
+        }
+
         /// <summary>
         /// Get back the ID of the unit given by unitFIS
         /// </summary>

@@ -184,7 +184,7 @@ public class CatbertWebService : System.Web.Services.WebService
     {
         List<ServiceUnit> serviceUnits = new List<ServiceUnit>();
 
-        foreach (var unit in UnitBLL.GetAll())
+        foreach (var unit in UnitBLL.GetAllUnits())
         {
             serviceUnits.Add(new ServiceUnit() { ID = unit.ID, Name = unit.ShortName, UnitFIS = unit.FISCode });
         }
@@ -197,7 +197,7 @@ public class CatbertWebService : System.Web.Services.WebService
     {
         List<AutoCompleteData> auto = new List<AutoCompleteData>();
 
-        foreach (var unit in UnitBLL.GetAll())
+        foreach (var unit in UnitBLL.GetAllUnits())
         {
             if (unit.FISCode.ToLower().Contains(q) || unit.ShortName.ToLower().Contains(q))
             {
