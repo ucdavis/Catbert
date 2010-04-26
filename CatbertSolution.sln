@@ -46,9 +46,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{4F174C21-8C12-11D0-8340-0000F80270F8}") = "Catbert.DB", "Catbert.DB\Catbert.DB.dbp", "{931B79FE-467A-4511-BA08-7C2059CEE0A7}"
 EndProject
+Project("{2CFEAB61-6A3B-4EB8-B523-560B4BEEF521}") = "Catbert.Deployment", "Catbert.Deployment\Catbert.Deployment.wdproj", "{336C4603-F54E-4FBA-A51C-99C1EAEA4E22}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 7
+		SccNumberOfProjects = 8
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = http://1x:8080/
 		SccLocalPath0 = .
@@ -63,6 +65,7 @@ Global
 		SccLocalPath3 = Catbert.Data
 		SccWebProject4 = true
 		SccProjectUniqueName4 = Catbert.Web
+		SccProjectName4 = Catbert.Web
 		SccLocalPath4 = .
 		SccProjectFilePathRelativizedFromConnection4 = Catbert.Web\\
 		SccProjectEnlistmentChoice4 = 2
@@ -72,6 +75,9 @@ Global
 		SccProjectUniqueName6 = Catbert.DB\\Catbert.DB.dbp
 		SccProjectName6 = Catbert.DB
 		SccLocalPath6 = Catbert.DB
+		SccProjectUniqueName7 = Catbert.Deployment\\Catbert.Deployment.wdproj
+		SccProjectName7 = Catbert.Deployment
+		SccLocalPath7 = Catbert.Deployment
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = CatbertSolution.vsmdi
@@ -101,6 +107,10 @@ Global
 		{C6075B5F-2281-465B-BCA4-EE3E2F8CF013}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6075B5F-2281-465B-BCA4-EE3E2F8CF013}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6075B5F-2281-465B-BCA4-EE3E2F8CF013}.Release|Any CPU.Build.0 = Release|Any CPU
+		{336C4603-F54E-4FBA-A51C-99C1EAEA4E22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{336C4603-F54E-4FBA-A51C-99C1EAEA4E22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{336C4603-F54E-4FBA-A51C-99C1EAEA4E22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{336C4603-F54E-4FBA-A51C-99C1EAEA4E22}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

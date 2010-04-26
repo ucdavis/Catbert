@@ -1,0 +1,64 @@
+﻿<!-- 
+  Microsoft Visual Studio 2008 Web Deployment Project 
+  http://go.microsoft.com/fwlink/?LinkID=104956
+
+-->
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{336C4603-F54E-4FBA-A51C-99C1EAEA4E22}</ProjectGuid>
+    <SourceWebPhysicalPath>..\Catbert.Web</SourceWebPhysicalPath>
+    <SourceWebProject>{F72EF2F0-EF1F-47C4-925A-A3F1621ECA5C}|C:\Projects\Catbert3\Catbert.Web</SourceWebProject>
+    <SourceWebVirtualPath>/Catbert.Web</SourceWebVirtualPath>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>.\Debug</OutputPath>
+    <EnableUpdateable>true</EnableUpdateable>
+    <UseMerge>true</UseMerge>
+    <SingleAssemblyName>Catbert.Deployment</SingleAssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <OutputPath>.\Release</OutputPath>
+    <EnableUpdateable>true</EnableUpdateable>
+    <UseMerge>true</UseMerge>
+    <SingleAssemblyName>Catbert.Deployment</SingleAssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Catbert.BLL\Catbert.BLL.csproj">
+      <Project>{08264AE9-DFB6-4961-B704-3C3BB9E52904}</Project>
+      <Name>Catbert.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Catbert.Core\Catbert.Core.csproj">
+      <Project>{A7B433EA-F2D1-4BF3-93FB-0787C99F9870}</Project>
+      <Name>Catbert.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Catbert.Data\Catbert.Data.csproj">
+      <Project>{55DA8BF5-C31F-4C3B-AEE3-07FDF47DA6F0}</Project>
+      <Name>Catbert.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WebDeployment\v9.0\Microsoft.WebDeployment.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.WebDeployment.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="BeforeMerge">
+  </Target>
+  <Target Name="AfterMerge">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
