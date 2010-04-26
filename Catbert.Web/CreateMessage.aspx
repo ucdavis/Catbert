@@ -7,7 +7,7 @@
       var tbMessageID = '<%= tbMessage.ClientID %>';
       var tbBeginDisplayDateID = '<%= tbBeginDisplayDate.ClientID %>';
       var tbEndDisplayDateID = '<%= tbEndDisplayDate.ClientID %>';
-      var ddlApplicationsID = '<%= ddlApplications.ClientID %>';
+      var ddApplicationsID = '<%= ddApplications.ClientID %>';
 
       $(function() {
            $("#" + tbBeginDisplayDateID).datepicker();
@@ -15,6 +15,7 @@
       });
 
       function SubmitProject() {
+          debugger;
           var newMessage = new Message();
 
        }
@@ -34,6 +35,7 @@
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="body" Runat="Server">
+<a href="Messages.aspx">[Messages]</a><br /><br />
     <table>
     <tbody>
         <tr>
@@ -47,14 +49,14 @@
        
         </tr>
             <tr>
-            <td class="style1">BeginDisplayDate:</td>
+            <td class="style1">Begin Display Date:</td>
             <td class="style2">
                 <asp:TextBox ID="tbBeginDisplayDate" runat="server" ></asp:TextBox>
                 <asp:RequiredFieldValidator ID="valBeginDisplayDate" ControlToValidate="tbBeginDisplayDate" runat="server" ErrorMessage="Required Field"></asp:RequiredFieldValidator>
             </td>
             
             
-            <td>EndDisplayDate:</td>
+            <td>End Display Date:</td>
             <td>
                 <asp:TextBox ID="tbEndDisplayDate" runat="server" ></asp:TextBox>
                 <asp:CompareValidator ID="valEndDisplyDate" runat="server" ErrorMessage="End Date must be greater than Start Date" ControlToCompare="tbBeginDisplayDate" ControlToValidate="tbEndDisplayDate" Operator="GreaterThan" ></asp:CompareValidator>
@@ -70,7 +72,7 @@
         <tr>
            <td> Application:</td>
            <td class="style2">  
-               <asp:DropDownList ID="ddlApplications" runat="server" AppendDataBoundItems="true"
+               <asp:DropDownList ID="ddApplications" runat="server" AppendDataBoundItems="true"
                     DataSourceID="odsApplications" DataTextField="Name" DataValueField="ID" 
                    Height="25px" Width="274px">
                     <asp:ListItem Text="APPLY TO ALL APPLICATIONS" Value="-1"></asp:ListItem>
@@ -78,9 +80,10 @@
             </td>
         </tr>
            
-      <td class="style1"><asp:Button ID="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click" /></td>
-       
-
+        <tr>
+        <td><asp:Button ID="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click" /></td>
+        </tr>
+        
     </tbody>
 </table>
 <%--------------------------------------------------------------%>

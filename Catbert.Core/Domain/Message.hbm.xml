@@ -9,7 +9,7 @@
 
     <property name="MessageText" column="Message" />
     <property name="BeginDisplayDate" column="BeginDisplayDate" />
-    <property name="EndDisplyDate" column="EndDisplyDate" />
+    <property name="EndDisplayDate" column="EndDisplayDate" />
     <property name="IsActive" column="IsActive"></property>
     
     <many-to-one name="Application" class="CAESDO.Catbert.Core.Domain.Application, CAESDO.Catbert.Core" column="ApplicationID" cascade="none" />

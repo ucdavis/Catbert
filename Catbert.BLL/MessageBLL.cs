@@ -19,8 +19,20 @@ namespace CAESDO.Catbert.BLL
         [DataObjectMethod(DataObjectMethodType.Select)]
         public static IQueryable<Message> GetActive()
         {
-            return Queryable.Where(m => m.IsActive).OrderBy(m => m.MessageText);
+            return Queryable.Where(m => m.IsActive).OrderBy(m => m.Application);
         }
+
+        [DataObjectMethod(DataObjectMethodType.Select)]
+        public static IQueryable<Message> GetExpired()
+        {
+            return Queryable.Where(m => m.IsActive
+                        && (m.EndDisplayDate != null)
+                        && ((DateTime) m.EndDisplayDate< DateTime.Now)
+                            ).OrderBy(m => m.Application);
+        
+        }
+
+
     }
 }
 
