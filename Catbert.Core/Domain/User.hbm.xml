@@ -9,6 +9,11 @@
     
     <property name="FirstName" column="FirstName" />
     <property name="LastName" column="LastName" />
+
+    <property name="LoginID" column="LoginID" />
+    <property name="Phone" column="Phone" />
+    <property name="Email" column="Email" />
+    
     <property name="EmployeeID" column="EmployeeID" />
     <property name="StudentID" column="StudentID" />
     <property name="UserKey" column="UserKey"></property>
