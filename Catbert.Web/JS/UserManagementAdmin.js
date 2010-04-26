@@ -1,7 +1,6 @@
 ﻿///<reference path="jquery-1.3.1-vsdoc.js"/>
 
 var baseURL = '../Services/Admin/CatbertAdminService.asmx/';
-var autocompleteUnitsURL = '../Services/AutocompleteService.asmx/GetUsers';
 
 var application = null;
 var user = null;
@@ -24,7 +23,7 @@ $(document).ready(function() {
 
     PopulateUserTable(application, search, unit, role, sortname, sortorder); //Populate the user table
 
-    $("#txtSearch").autocomplete(autocompleteUnitsURL, {
+    $("#txtSearch").autocomplete(baseURL + 'GetUsersAutoComplete', {
         width: 260,
         minChars: 2,
         selectFirst: false,

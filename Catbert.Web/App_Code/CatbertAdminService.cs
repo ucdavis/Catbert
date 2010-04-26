@@ -46,6 +46,28 @@ public class CatbertAdminService : WebService
         return grid;
     }
 
+    [WebMethod]
+    public List<AutoCompleteData> GetUsersAutoComplete(string application, string q /*query*/, int limit)
+    {
+        var users = UserBLL.GetAllByCriteria(application, q, 1 /* Start at the first record */, limit);
+
+        var auto = new List<AutoCompleteData>();
+
+        foreach (var user in users)
+        {
+            auto.Add(new AutoCompleteData(user.LoginID, string.Empty,
+                new
+                {
+                    Name = string.Format("{0} {1}", user.FirstName, user.LastName),
+                    Login = user.LoginID,
+                    Email = user.Email
+                }
+            ));
+        }
+
+        return auto;
+    }
+
     /// <summary>
     /// Creates a list of service users with only the top level user information filled out.
     /// </summary>

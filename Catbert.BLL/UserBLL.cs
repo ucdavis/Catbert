@@ -176,29 +176,6 @@ namespace CAESDO.Catbert.BLL
             //return UserBLL.daoFactory.GetUserDao().GetByApplication(application, null, null, searchToken, page, pageSize, "LastName ASC", out totalUsers);
         }
 
-        /*
-        private static IQueryable<User> GetUserQueryableByApplication(string application, string role, string unit, string searchToken)
-        {
-            //Grab all permissions in this application
-            var permissions = PermissionBLL.Queryable.Where(perm => perm.Application.Name == application && perm.Inactive == false);
-
-            if (!string.IsNullOrEmpty(role))
-                permissions = permissions.Where(perm => perm.Role.Name == role && perm.Role.Inactive == false);
-
-            //Now get all users among these permissions
-            var users = permissions.ToList().Select(perm => perm.User).Distinct();
-            
-            if (string.IsNullOrEmpty(searchToken) == false)
-            {
-                searchToken = searchToken.ToLower(); //search should be lowercase
-
-                users = users.Where(u => u.Email.ToLower().Contains(searchToken) || u.FirstName.ToLower().Contains(searchToken)
-                    || u.LastName.ToLower().Contains(searchToken) || u.LoginID.ToLower().Contains(searchToken));
-            }
-
-            return users.AsQueryable<User>();
-        }*/
-
         public static List<User> GetByApplication(string application, string currentLogin, string role, string unit,
                                                   string searchToken, int page, int pageSize, string orderBy,
                                                   out int totalUsers)
@@ -206,23 +183,6 @@ namespace CAESDO.Catbert.BLL
             return DaoFactory.GetUserDao().GetByApplication(application, currentLogin, role, unit, searchToken, page,
                                                             pageSize, orderBy, out totalUsers);
         }
-
-        /*
-        /// <summary>
-        /// Gets all users who are in the given application and role.
-        /// </summary>
-        /// <remarks>Can be improved once joins are possible</remarks>
-        public static List<User> GetByApplicationRole(string application, string role)
-        {
-            //Grab all 'role' permissions in this application
-            var permissions = PermissionBLL.Queryable.Where(perm => perm.Application.Name == application && perm.Role.Name == role && perm.Inactive == false).ToList();
-
-            //Now get all users among these perms
-            var users = permissions.Select(perm => perm.User).Distinct();
-
-            return users.ToList();
-        }
-         */
 
         #endregion
 
@@ -251,6 +211,13 @@ namespace CAESDO.Catbert.BLL
         public static IQueryable<User> GetAllActive()
         {
             return UserBLL.Queryable.Where(user => user.Inactive == false);
+        }
+
+        public static List<User> GetAllByCriteria(string application, string search, int page, int pagesize)
+        {
+            int totalUsers;
+
+            return GetAllByCriteria(application, search, page, pagesize, "LastName ASC", out totalUsers);
         }
 
         public static List<User> GetAllByCriteria(string application, string search, int page, int pagesize, string orderBy, out int users)
