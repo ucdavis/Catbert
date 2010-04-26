@@ -347,18 +347,7 @@ public class CatbertWebService : System.Web.Services.WebService
 
     private bool ValidateApplicationPermission(SecurityContext secureCTX, string application)
     {
-        return true; //TODO: TESTING ONLY!!!
-        //throw new NotImplementedException();
-    }
-
-    /// <summary>
-    /// Finds the applicationID from a given application name
-    /// </summary>
-    /// <param name="application"></param>
-    /// <returns></returns>
-    private int GetApplicationID(string application)
-    {
-        return ApplicationBLL.GetID(application);
+        return PermissionBLL.AnyPermissionExists(application, secureCTX.UserID, false);
     }
 
     #endregion

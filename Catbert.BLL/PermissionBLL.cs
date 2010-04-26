@@ -111,6 +111,14 @@ namespace CAESDO.Catbert.BLL
             return Queryable.Any(perm => perm.Application.ID == applicationID && perm.Role.ID == roleID && perm.User.ID == userID && perm.Inactive == inactive);
         }
 
+        /// <summary>
+        /// Checks to see if the user has any permissions in the given application that are marked with the specific inactive status
+        /// </summary>
+        public static bool AnyPermissionExists(string application, string login, bool inactive)
+        {
+            return Queryable.Any(perm => perm.Application.Name == application && perm.User.LoginID == login && perm.Inactive == inactive);
+        }
+
         public static List<Role> GetRolesForUser(string application, string login)
         {
             var permissions = Queryable.Where(perm => perm.Application.Name == application && perm.User.LoginID == login && perm.Inactive == false).ToList();
