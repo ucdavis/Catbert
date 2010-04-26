@@ -48,6 +48,25 @@ Project("{4F174C21-8C12-11D0-8340-0000F80270F8}") = "Catbert.DB", "Catbert.DB\Ca
 EndProject
 Project("{2CFEAB61-6A3B-4EB8-B523-560B4BEEF521}") = "Catbert.Deployment", "Catbert.Deployment\Catbert.Deployment.wdproj", "{336C4603-F54E-4FBA-A51C-99C1EAEA4E22}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bin", "Bin", "{C6767C7B-D7FD-4231-BA5C-FA886A43E7DF}"
+	ProjectSection(SolutionItems) = preProject
+		Bin\CAESArch.BLL.dll = Bin\CAESArch.BLL.dll
+		Bin\CAESArch.Core.dll = Bin\CAESArch.Core.dll
+		Bin\CAESArch.Data.dll = Bin\CAESArch.Data.dll
+		Bin\CAESArch.Web.Providers.dll = Bin\CAESArch.Web.Providers.dll
+		Bin\CAESOps.dll = Bin\CAESOps.dll
+		Bin\Castle.Core.dll = Bin\Castle.Core.dll
+		Bin\Castle.DynamicProxy2.dll = Bin\Castle.DynamicProxy2.dll
+		Bin\Elmah.dll = Bin\Elmah.dll
+		Bin\HibernatingRhinos.NHibernate.Profiler.Appender.dll = Bin\HibernatingRhinos.NHibernate.Profiler.Appender.dll
+		Bin\Iesi.Collections.dll = Bin\Iesi.Collections.dll
+		Bin\log4net.dll = Bin\log4net.dll
+		Bin\NHibernate.dll = Bin\NHibernate.dll
+		Bin\NHibernate.Linq.dll = Bin\NHibernate.Linq.dll
+		Bin\NHibernate.ProxyGenerators.CastleDynamicProxy.dll = Bin\NHibernate.ProxyGenerators.CastleDynamicProxy.dll
+		Bin\System.Data.SQLite.DLL = Bin\System.Data.SQLite.DLL
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 8

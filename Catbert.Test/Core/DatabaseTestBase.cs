@@ -16,7 +16,7 @@ namespace CAESDO.Catbert.Test.Core
             Configuration config = new Configuration().Configure();
             //Create the DB using the schema export
             new NHibernate.Tool.hbm2ddl.SchemaExport(config).Execute(false, true, false, true, NHibernateSessionManager.Instance.GetSession().Connection, null);
-
+            
             LoadData();
         }
 
