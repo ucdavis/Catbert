@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace CAESDO.Catbert.Test
+﻿namespace CAESDO.Catbert.Test
 {
     public static class TestHelper
     {
