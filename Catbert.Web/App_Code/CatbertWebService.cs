@@ -4,6 +4,7 @@ using System.Web.Services;
 using System.Web.Services.Protocols;
 using CAESDO.Catbert.BLL;
 using Catbert.Services;
+using CAESDO.Catbert.Core.Domain;
 
 /// <summary>
 /// Summary description for CatbertWebService
@@ -49,15 +50,31 @@ public class CatbertWebService : System.Web.Services.WebService
     }
 
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
-    public int InsertNewUser(ServiceUser user)
+    public int InsertNewUser(ServiceUser serviceUser)
     {
-        throw new NotImplementedException(); 
+        EnsureCredentials(secureCTX);
+
+        User user = new User()
+        {
+            FirstName = serviceUser.FirstName,
+            LastName = serviceUser.LastName,
+            Email = serviceUser.Email,
+            LoginID = serviceUser.Login,
+            EmployeeID = serviceUser.EmployeeID
+        };
+
+        return UserBLL.InsertNewUser(user);
     }
 
+    /// <summary>
+    /// Verify that the given login exists in the database
+    /// </summary>
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
-    public bool VerifyUser(string loginID)
+    public bool VerifyUser(string login)
     {
-        throw new NotImplementedException();
+        EnsureCredentials(secureCTX);
+
+        return UserBLL.VerifyUserExists(login);
     }
 
     #region Permissions
