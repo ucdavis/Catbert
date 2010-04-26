@@ -45,7 +45,54 @@
     }
 
     function PopulateUserInfo(data) {
-        console.dir(data);
+    
+        var loginId = data.LoginId;
+        var roles = $("#tblPermissions tbody");
+        var units = $("#tblUnits tbody");
+
+        $(data.PermissionAssociations).each(function() {
+            var newRoleRow = CreateRoleRow(this.RoleName, loginId, this.ApplicationName);
+
+            roles.append(newRoleRow);
+        });
+
+        $(data.UnitAssociations).each(function() {
+            var newUnitRow = CreateUnitRow(this.UnitName, loginId, this.ApplicationName);
+
+            units.append(newUnitRow);
+        });
+    }
+
+    function CreateRoleRow(role, login, application) {
+        var newrow = $('<tr></tr>');
+
+        var deleteLink = $('<input type="button" value="X" />');
+        deleteLink.click(function() { alert('Not Implemented'); }); //TODO
+        //deleteLink.click(function() { DeleteRole(login, role, application, newrow); });
+
+        newrow.append('<td>' + application + '</td>');
+        newrow.append('<td>' + role + '</td>');
+
+        var deleteCol = $('<td>').append(deleteLink);
+        newrow.append(deleteCol);
+
+        return newrow;
+    }
+
+    function CreateUnitRow(unit, login, application) {
+        var newrow = $('<tr></tr>');
+
+        var deleteLink = $('<input type="button" value="X" />');
+        deleteLink.click(function() { alert('Not Implemented'); }); //TODO
+        //deleteLink.click(function() { DeleteUnit(login, unitFIS, application, newrow); });
+
+        newrow.append('<td>' + application + '</td>');
+        newrow.append('<td>' + unit + '</td>');
+
+        var deleteCol = $('<td>').append(deleteLink);
+        newrow.append(deleteCol);
+
+        return newrow;
     }
 
     function OpenDialog(dialog /*The dialog DIV JQuery object*/, buttons /*Button collection */, title, onClose) {
@@ -113,6 +160,18 @@
                 <li><a href="#tabInfo">Info</a></li>
             </ul>
             <div id="tabPermissions">
+                <table id="tblPermissions">
+                    <thead>
+                        <tr>
+                            <th>Application</th>
+                            <th>Role</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            
                 <p>
                     Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec
                     arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante.
@@ -123,6 +182,17 @@
                     Nunc tristique tempus lectus.</p>
             </div>
             <div id="tabUnits">
+                <table id="tblUnits">
+                    <thead>
+                        <tr>
+                            <th>Application</th>
+                            <th>Role</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
                 <p>
                     Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra
                     massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget
