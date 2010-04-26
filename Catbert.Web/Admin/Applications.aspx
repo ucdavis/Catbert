@@ -8,8 +8,8 @@
     
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" Runat="Server">
-    <script src="JS/jquery.tablesorter.min.js" type="text/javascript"></script>
-    <script src="JS/Applications.js" type="text/javascript"></script>
+    <script src="../JS/jquery.tablesorter.min.js" type="text/javascript"></script>
+    <script src="../JS/Applications.js" type="text/javascript"></script>
 
     <a href="javascript:;" id="addApplication" class="dialog_link ui-state-default ui-corner-all">
         <span class="ui-icon ui-icon-newwin"></span>Add Application
@@ -61,7 +61,7 @@
                 </td>
                 <td title="Active">
                     <input class="activeIndicator" type="image" style="border-width: 0;" value='<%# Eval("Name") %>'
-                        src='<%# (bool)Eval("Inactive") ? "Images/Inactive.gif" : "Images/Active.gif"%>' 
+                        src='<%# (bool)Eval("Inactive") ? "../Images/Inactive.gif" : "../Images/Active.gif"%>' 
                         alt='<%# (bool)Eval("Inactive") ? "Inactive" : "Active" %>' />
                 </td>
             </tr>

@@ -11,10 +11,10 @@ Logged in as: <asp:Label ID="lblLoginID" runat="server" EnableViewState="false">
 <br /><br />
 
     <ul>
-        <li><a href="Applications.aspx">Applications</a></li>
-        <li><a href="Units.aspx">Units</a></li>
-        <li><a href="Emulation.aspx">Emulation (Testing Only)</a></li>
-        <li><a href="UserAdministration.aspx">User Management (for all apps)</a></li>
+        <li><a href="Admin/Applications.aspx">Applications</a></li>
+        <li><a href="Admin/Units.aspx">Units</a></li>
+        <li><a href="Admin/Emulation.aspx">Emulation (Testing Only)</a></li>
+        <li><a href="Admin/UserAdministration.aspx">User Management (for all apps)</a></li>
     </ul>
 
 </asp:Content>

@@ -38,7 +38,7 @@
     </asp:ObjectDataSource>
 
     <asp:Panel ID="pnlShowUserManagement" runat="server" Visible="false" Width="100%" Height="100%">
-        <iframe id="frame" runat="server" frameborder="0" src="Management/UserManagement.aspx" scrolling="auto" name="frame" style="width:100%; height:100%;"></iframe>
+        <iframe id="frame" runat="server" frameborder="0" src="../Management/UserManagement.aspx" scrolling="auto" name="frame" style="width:100%; height:100%;"></iframe>
     </asp:Panel>
 </asp:Content>
 

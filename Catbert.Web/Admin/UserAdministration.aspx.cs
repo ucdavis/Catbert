@@ -8,7 +8,7 @@ public partial class UserAdministration : System.Web.UI.Page
         
         if (string.IsNullOrEmpty(applicationName) == false)
         {
-            frame.Attributes["src"] = string.Format("Management/UserManagement.aspx?app={0}", applicationName);
+            frame.Attributes["src"] = string.Format("../Management/UserManagement.aspx?app={0}", applicationName);
 
             pnlShowUserManagement.Visible = true;
         }

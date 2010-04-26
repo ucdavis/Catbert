@@ -5,7 +5,7 @@
     void Application_Start(object sender, EventArgs e) 
     {
         // Code that runs on application startup
-        HibernatingRhinos.NHibernate.Profiler.Appender.NHibernateProfiler.Initialize();
+        //HibernatingRhinos.NHibernate.Profiler.Appender.NHibernateProfiler.Initialize();
     }
     
     void Application_End(object sender, EventArgs e) 

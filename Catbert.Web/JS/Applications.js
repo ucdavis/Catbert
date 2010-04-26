@@ -1,6 +1,6 @@
 ﻿///<reference path="jquery-1.3.1-vsdoc.js"/>
 
-var baseUrl = 'Services/CatbertWebService.asmx/';
+var baseUrl = '../Services/CatbertWebService.asmx/';
 var roleList;
 
 $(document).ready(function() {
@@ -31,11 +31,11 @@ $(document).ready(function() {
         var inactiveText = 'Inactive';
 
         if (el.attr('alt') == activeText) {
-            el.attr('src', 'Images/Inactive.gif');
+            el.attr('src', '../Images/Inactive.gif');
             el.attr('alt', inactiveText);
         }
         else {
-            el.attr('src', 'Images/Active.gif');
+            el.attr('src', '../Images/Active.gif');
             el.attr('alt', activeText);
         }
 
