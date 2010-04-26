@@ -76,5 +76,13 @@ namespace CAESDO.Catbert.Test
             Assert.AreEqual("ADNO", units[1].UnitFIS);
             Assert.AreEqual("APLS", units[2].UnitFIS);
         }
+
+        [TestMethod]
+        public void GetAllUnits()
+        {
+            var units = CatbertManager.GetAllUnits().OrderBy(unit => unit.UnitFIS).ToList();
+
+            Assert.IsTrue(units.Count > 45, "There should be at least 45 units");
+        }
     }
 }

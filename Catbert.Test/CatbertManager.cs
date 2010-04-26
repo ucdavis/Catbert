@@ -129,6 +129,13 @@ namespace CAESDO.Catbert.Test
 
             return catops.GetUnitsByUser(ref sc, login);
         }
+
+        public static ServiceUnit[] GetAllUnits()
+        {
+            var sc = GetSecurityContext();
+
+            return catops.GetUnits(ref sc);
+        }
         
         public static bool AddUserToRole(CatbertService.ServiceUser user, CatbertService.ServiceRole role)
         {

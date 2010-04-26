@@ -135,7 +135,16 @@ public class CatbertWebService : System.Web.Services.WebService
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
     public List<ServiceUnit> GetUnits()
     {
-        throw new NotImplementedException();
+        EnsureCredentials(secureCTX);
+
+        List<ServiceUnit> serviceUnits = new List<ServiceUnit>();
+
+        foreach (var unit in UnitBLL.GetAll())
+        {
+            serviceUnits.Add(new ServiceUnit() { ID = unit.ID, Name = unit.ShortName, UnitFIS = unit.FISCode });
+        }
+
+        return serviceUnits;
     }
 
     [WebMethod, SoapHeader("secureCTX", Required = true, Direction = SoapHeaderDirection.InOut)]
