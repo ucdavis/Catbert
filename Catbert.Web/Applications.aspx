@@ -24,22 +24,17 @@
                 cssHeader: 'header',
                 widgets: ['zebra']
             });
-            
+
             //List selection TEST ONLY
             //$.fcbkListSelection(id[ul id],width,height[element height],row[elements in row]);
             //$.fcbkListSelection("#ulPermissions", 400, 50, 2);
-
-            $("#ulPermissions").mselect(
-                {
-                    name: "tester"
-                }
-            );
-
         });
 
         function ShowUserInfo(applicationID, name) {
-            $("#dialogUserInfo").dialog({
-                autoOpen: false,
+            var dialog = $("#dialogUserInfo"); //the dialog div
+
+            dialog.dialog({
+                autoOpen: true,
                 width: 600,
                 modal: true,
                 title: name,
@@ -49,11 +44,34 @@
                     }
                 }
             });
+
+            dialog.dialog('option', 'title', name); //Set the title
             
-            $("#dialogUserInfo").dialog('open');
+            /*
+            var inner = $('<li><input type="checkbox" checked="checked" value="RoleName" /></li>').append('Admin Role');
+            var inner2 = $('<li><input type="checkbox" checked="checked" value="RoleName" /></li>').append('Admin Role');
+            var inner3 = $('<li><input type="checkbox" checked="checked" value="RoleName" /></li>').append('Admin Role');
+            var inner4 = $('<li><input type="checkbox" checked="checked" value="RoleName" /></li>').append('Admin Role');
+            
+            var roleList = $('#ulRoles'); //roles list
+            roleList.append(inner);
+            roleList.append(inner2);
+            roleList.append(inner3);
+            roleList.append(inner4);
+            */
+            /*
+            $("#ulPermissions").mselect(
+                {
+                    name: "tester"
+                }
+            );
+            */
+            
+            dialog.dialog('open'); //show
         }
         
     </script>
+    
     <asp:ListView ID="lviewApplications" runat="server" DataSourceID="odsApplications">
         <LayoutTemplate>
             <table id="tblApplications" class="tablesorter">
@@ -121,18 +139,12 @@
 	<div id="dialogUserInfo" title="Application Information" style="display:none;">
 		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 		<br />
-        <ul id="ulPermissions" class="fcbklist">
-            <li>Admin
-                <input type="hidden" value="value" /></li>
-            <li>EmulationUser
-                <input type="hidden" value="value" checked="checked" /></li>
-            <li>Reader
-                <input type="hidden" value="value" /></li>
-            <li>RecruitmentManager
-                <input type="hidden" value="value" /></li>
-            <li>User
-                <input type="hidden" value="value" /></li>
-        </ul>
+
+        <div id="Roles">
+            Roles:
+            <ul id="ulRoles">
+            </ul>
+        </div>
 	</div>
 </asp:Content>
 
