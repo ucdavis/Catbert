@@ -97,7 +97,7 @@
 
             $("#tblUsers thead tr th.header").click(ChangeSortOrder);
 
-            $("#modifyUserTEST").click(function() { ShowUserInfo(application); });
+            $(".ShowUserLink").live("click", function() { ShowUserInfo(application, $(this).html()); });
 
             $("#addUser").click(function() {
                 var findUserDialog = $("#dialogFindUser");
@@ -240,7 +240,7 @@
             }
         }
 
-        function ShowUserInfo(applicationName) {
+        function ShowUserInfo(applicationName, Login) {
             var dialogUserInfo = $("#dialogUserInfo");
 
             var buttons = {
@@ -256,7 +256,7 @@
             
             AjaxCall(
                 baseUrl + 'GetUser',
-                { login: "postit", application: applicationName },
+                { login: Login, application: applicationName },
                 function(data) { PopulateUserInfo(data, applicationName); },
                 null //TODO: Error method
             );
@@ -417,6 +417,7 @@
         function RenderRow(index, row) {
             var newrow = $('<tr></tr>');
 
+            newrow.append('<td class="ShowUser"><a href="javascript:;" class="ShowUserLink">'+row.Login+'</a></td>');
             newrow.append('<td class="FirstName">' + row.FirstName + '</td>');
             newrow.append('<td class="LastName">' + row.LastName + '</td>');
             newrow.append('<td class="Login">' + row.Login + '</td>');
@@ -476,9 +477,7 @@
             });
         }
     </script>
-    
-    <a href="javascript:;" id="modifyUserTEST">Modify postit</a><br /><br />
-    
+       
     <a href="javascript:;" id="addUser" class="dialog_link ui-state-default ui-corner-all">
         <span class="ui-icon ui-icon-newwin"></span>Add User
     </a>
@@ -504,6 +503,7 @@
     <table id="tblUsers" class="tablesorter">
         <thead>
             <tr>
+                <th ></th>
                 <th class="header" title="FirstName">First Name</th>
                 <th class="header headerSortUp" title="LastName">Last Name</th>
                 <th class="header" title="LoginID">Login</th>
