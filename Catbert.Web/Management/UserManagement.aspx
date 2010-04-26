@@ -234,7 +234,7 @@
                 $(newrow).effect("highlight", {}, 3000);
 
                 AjaxCall(baseURL + "AddUnit",
-                    { login: login, unitFIS: newunit },
+                    { login: login, application: application, unitFIS: newunit },
                     null,
                     null
                 );
@@ -332,7 +332,7 @@
             $(rowToDelete).fadeOut('slow');
 
             AjaxCall(baseURL + "DeleteUnit",
-                { login: login, unitFIS: unit },
+                { login: login, application: application, unitFIS: unit },
                 null,
                 null
             );
