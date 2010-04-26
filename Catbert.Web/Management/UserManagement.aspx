@@ -159,14 +159,12 @@
             AjaxCall(
                 baseUrl + 'GetUser',
                 { login: "postit", application: applicationName },
-                function(data) { PopulateUserInfo(data); },
+                function(data) { PopulateUserInfo(data, applicationName); },
                 null //TODO: Error method
             );
         }
 
-        function PopulateUserInfo(data) {
-            //debugger;
-
+        function PopulateUserInfo(data, application) {
             $("#UserInfoName").html(data.FirstName + " " + data.LastName);
             $("#UserInfoLogin").html(data.Login);
 
@@ -179,8 +177,13 @@
             $(data.Roles).each(function(index, row) {
                 var newrow = $('<tr></tr>');
 
+                var deleteLink = $('<input type="button" value="X" />');
+                deleteLink.click(function() { DeleteRole(data.Login, row.Name, application, newrow); });
+
                 newrow.append('<td>' + row.Name + '</td>');
-                newrow.append('<td>' + row.ID + '</td>');
+
+                var deleteCol = $('<td>').append(deleteLink);
+                newrow.append(deleteCol);
 
                 roles.append(newrow);
             });
@@ -188,14 +191,33 @@
             $(data.Units).each(function(index, row) {
                 var newrow = $('<tr></tr>');
 
+                var deleteLink = $('<input type="button" value="X" />');
+                deleteLink.click(function() { DeleteUnit(data.Login, row.UnitFIS, application, newrow); });
+
                 newrow.append('<td>' + row.Name + '</td>');
                 newrow.append('<td>' + row.UnitFIS + '</td>');
-                newrow.append('<td>' + row.ID + '</td>');
+
+                var deleteCol = $('<td>').append(deleteLink);
+                newrow.append(deleteCol);
 
                 units.append(newrow);
             });
 
-            $("#divUserInfo").show(0); //Show the user information            
+            $("#divUserInfo").show(0); //Show the user information
+        }
+
+        function DeleteUnit(login, unit, application, rowToDelete) {
+            $(rowToDelete).fadeOut('slow');
+
+            AjaxCall(baseURL + "DeleteUnit",
+                { login: login, unitFIS: unit },
+                null,
+                null
+            );
+        }
+
+        function DeleteRole(login, role, application, rowToDelete) {
+            debugger;
         }
 
         function AddUserSuccess(application, search) {
