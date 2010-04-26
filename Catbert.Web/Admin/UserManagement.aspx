@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/CatbertMaster.master" AutoEventWireup="true" EnableViewState="false" CodeFile="UserManagement.aspx.cs" Inherits="Management_UserManagement" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/CatbertMaster.master" AutoEventWireup="true" EnableViewState="false" CodeFile="UserManagement.aspx.cs" Inherits="Admin_UserManagement" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <link href="../CSS/jquery.autocomplete.css" rel="stylesheet" type="text/css" />
