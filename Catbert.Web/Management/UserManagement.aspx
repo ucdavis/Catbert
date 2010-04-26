@@ -81,7 +81,7 @@
                 OpenDialog(findUserDialog, buttons, "Add a User");
             });
 
-            $("#btnAddUserRole").click(AddUserRole);
+            $("#btnAddUserRole").click(function() { AddUserRole(application); });
 
             $("#btnAddUserUnit").click(AddUserUnit);
 
@@ -123,15 +123,40 @@
             });
         });
 
-        function AddUserRole() {
+        function AddUserRole(application) {
             var login = $("#UserInfoLogin").html();
             var roles = $("#UserInfoRoles");
             var newrole = $("#UserRoles").val();
-            
-            //debugger;
+
+            //Find out if the role is already in the roles table
+            var existingRoleMatch = roles.find("tbody tr:visible td:contains(" + newrole + ")").filter(
+                function() {
+                    if ($(this).text() == newrole)
+                        return true;
+                    else
+                        return false;
+                }
+            );
+
+            if (existingRoleMatch.size() == 0) {
+                //Add this role
+                var newrow = CreateRoleRow(newrole, login, application);
+                roles.append(newrow);
+
+                $(newrow).effect("highlight", {}, 3000);
+
+                AjaxCall(baseURL + "AssociateRole",
+                    { login: login, role: newrole, application: application },
+                    null,
+                    null
+                );
+            }
+            else {
+                alert("User already has the role " + newrole);
+            }
         }
 
-        function AddUserUnit() {
+        function AddUserUnit(application) {
             var login = $("#UserInfoLogin").html();
             var units = $("#UserInfoUnits");
             var newunit = $("#UserUnits").val();
@@ -195,35 +220,47 @@
             units.empty();
 
             $(data.Roles).each(function(index, row) {
-                var newrow = $('<tr></tr>');
-
-                var deleteLink = $('<input type="button" value="X" />');
-                deleteLink.click(function() { DeleteRole(data.Login, row.Name, application, newrow); });
-
-                newrow.append('<td>' + row.Name + '</td>');
-
-                var deleteCol = $('<td>').append(deleteLink);
-                newrow.append(deleteCol);
-
+                var newrow = CreateRoleRow(row.Name, data.Login, application);
+                
                 roles.append(newrow);
             });
 
             $(data.Units).each(function(index, row) {
-                var newrow = $('<tr></tr>');
-
-                var deleteLink = $('<input type="button" value="X" />');
-                deleteLink.click(function() { DeleteUnit(data.Login, row.UnitFIS, application, newrow); });
-
-                newrow.append('<td>' + row.Name + '</td>');
-                newrow.append('<td>' + row.UnitFIS + '</td>');
-
-                var deleteCol = $('<td>').append(deleteLink);
-                newrow.append(deleteCol);
+                var newrow = CreateUnitRow(row.Name, row.UnitFIS, data.Login, application);
 
                 units.append(newrow);
             });
 
             $("#divUserInfo").show(0); //Show the user information
+        }
+
+        function CreateRoleRow(role, login, application) {
+            var newrow = $('<tr></tr>');
+
+            var deleteLink = $('<input type="button" value="X" />');
+            deleteLink.click(function() { DeleteRole(login, role, application, newrow); });
+
+            newrow.append('<td>' + role + '</td>');
+
+            var deleteCol = $('<td>').append(deleteLink);
+            newrow.append(deleteCol);
+
+            return newrow;
+        }
+
+        function CreateUnitRow(unit, unitFIS, login, application) {
+            var newrow = $('<tr></tr>');
+
+            var deleteLink = $('<input type="button" value="X" />');
+            deleteLink.click(function() { DeleteUnit(login, unitFIS, application, newrow); });
+
+            newrow.append('<td>' + unit + '</td>');
+            newrow.append('<td>' + unitFIS + '</td>');
+
+            var deleteCol = $('<td>').append(deleteLink);
+            newrow.append(deleteCol);
+
+            return newrow;
         }
 
         function DeleteUnit(login, unit, application, rowToDelete) {
