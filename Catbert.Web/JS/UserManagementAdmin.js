@@ -309,7 +309,7 @@ function AddUserUnit() {
                 );
     }
     else {
-        alert("User already has the unit " + $.trim(newunitname) + 'in ' + $.trim(app));
+        alert("User already has the unit " + $.trim(newunitname) + ' in ' + $.trim(app));
     }
 }
 

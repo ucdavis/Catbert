@@ -213,7 +213,7 @@
                                     </LayoutTemplate>
                                     <ItemTemplate>
                                         <option value='<%# Eval("FISCode") %>'>
-                                            <%# Eval("ShortName")%>
+                                            <%# string.Format("{0} ({1})", Eval("ShortName"), Eval("FISCode")) %>
                                         </option>
                                     </ItemTemplate>
                                 </asp:ListView>
