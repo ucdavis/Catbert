@@ -19,10 +19,10 @@
     <property name="UserKey" column="UserKey"></property>
     <property name="Inactive" column="Inactive"></property>
 
-    <bag name="Units" table="UserUnit" inverse="false">
+    <!--<bag name="Units" table="UserUnit" inverse="false">
       <key column="UserID" />
       <many-to-many column="UnitID" class="CAESDO.Catbert.Core.Domain.Unit, CAESDO.Catbert.Core" />
-    </bag>
+    </bag>-->
 
     <bag name="Permissions" table="Permissions" inverse="false" cascade="none">
       <key column="UserID" />

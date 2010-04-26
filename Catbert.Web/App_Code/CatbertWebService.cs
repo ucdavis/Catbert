@@ -168,15 +168,15 @@ public class CatbertWebService : System.Web.Services.WebService
     #region Units
 
     [WebMethod]
-    public bool AddUnit(string login, string unitFIS)
+    public bool AddUnit(string login, string application, string unitFIS)
     {
-        return UserBLL.AssociateUnit(login, unitFIS, CurrentServiceUser);
+        return UserBLL.AssociateUnit(login, application, unitFIS, CurrentServiceUser);
     }
 
     [WebMethod]
-    public bool DeleteUnit(string login, string unitFIS)
+    public bool DeleteUnit(string login, string application, string unitFIS)
     {
-        return UserBLL.UnassociateUnit(login, unitFIS, CurrentServiceUser);
+        return UserBLL.UnassociateUnit(login, application, unitFIS, CurrentServiceUser);
     }
 
     [WebMethod]
@@ -219,11 +219,11 @@ public class CatbertWebService : System.Web.Services.WebService
 
 
     [WebMethod]
-    public List<ServiceUnit> GetUnitsByUser(string login)
+    public List<ServiceUnit> GetUnitsByUser(string login, string application)
     {
         List<ServiceUnit> serviceUnits = new List<ServiceUnit>();
 
-        foreach (var unit in UnitBLL.GetByUser(login))
+        foreach (var unit in UnitBLL.GetByUser(login, application))
         {
             serviceUnits.Add(new ServiceUnit() { ID = unit.ID, Name = unit.ShortName, UnitFIS = unit.FISCode });
         }
@@ -399,7 +399,7 @@ public class CatbertWebService : System.Web.Services.WebService
             };
 
             //Add in the units
-            foreach (var unit in user.Units)
+            foreach (var unit in UnitBLL.GetByUser(user.LoginID, application))
             {
                 catbertUser.Units.Add(new ServiceUnit() { ID = unit.ID, Name = unit.ShortName, UnitFIS = unit.FISCode });
             }

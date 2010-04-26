@@ -26,11 +26,11 @@ namespace CAESDO.Catbert.BLL
         /// <summary>
         /// Get all of the units associated with the given user
         /// </summary>
-        public static List<Unit> GetByUser(string login)
+        public static List<Unit> GetByUser(string login, string application)
         {
-            List<Unit> units = new List<Unit>(UserBLL.GetUser(login).Units);
+            var unitAssociations = UnitAssociationBLL.Queryable.Where(assoc => assoc.User.LoginID == login && assoc.Application.Name == application);
 
-            return units;
+            return unitAssociations.Select(u => u.Unit).ToList();
         }
     }
 }

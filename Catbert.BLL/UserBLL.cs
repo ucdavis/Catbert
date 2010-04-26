@@ -78,7 +78,7 @@ namespace CAESDO.Catbert.BLL
             }
 
             PermissionBLL.InsertPermission(application, role, user.LoginID, trackingUserName); //Insert the permission
-            AssociateUnit(user.LoginID, unit, trackingUserName); //Associate the unit
+            AssociateUnit(user.LoginID, application, unit, trackingUserName); //Associate the unit
 
             return user;
         }
@@ -213,68 +213,21 @@ namespace CAESDO.Catbert.BLL
         #region Units
 
         /// <summary>
-        /// Associate the unit identified by unitFIS 
+        /// Associate the unit identified by unitFIS -- only within the context of the given application 
         /// </summary>
-        public static bool AssociateUnit(string login, string unitFIS, string trackingUserName)
+        /// <remarks>Deprecated -- use the unitAssociationBLL instead</remarks>
+        public static bool AssociateUnit(string login, string application, string unitFIS, string trackingUserName)
         {
-            //Get the user and unit and make sure they exist
-            User user = UserBLL.GetUser(login);
-            Unit unit = UnitBLL.GetByFIS(unitFIS);
-
-            if (user == null || unit == null) return false;
-
-            //Check to see if there is already an association between this unit and this unit
-            bool userUnitExists = user.Units.Contains(unit);
-
-            if (userUnitExists) return false;
-
-            //Add the unit to the user
-            user.Units.Add(unit);
-
-            Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.User, TrackingActions.Change);
-            tracking.Comments = string.Format("Unit {0} associated with user {1}", unit.ID, user.ID);
-
-            using (var ts = new TransactionScope())
-            {
-                EnsurePersistent(ref user);
-                TrackingBLL.EnsurePersistent(ref tracking);
-
-                ts.CommittTransaction();
-            }
-
-            return true;
+            return UnitAssociationBLL.AssociateUnit(login, application, unitFIS, trackingUserName);
         }
 
         /// <summary>
         /// Unassociate the identified unit
         /// </summary>
-        public static bool UnassociateUnit(string login, string unitFIS, string trackingUserName)
+        /// <remarks>Deprecated -- use the unitAssociationBLL instead</remarks>
+        public static bool UnassociateUnit(string login, string application, string unitFIS, string trackingUserName)
         {
-            //Get the user and unit and make sure they exist
-            User user = UserBLL.GetUser(login);
-            Unit unit = UnitBLL.GetByFIS(unitFIS);
-
-            if (user == null || unit == null) return false;
-
-            //Check to see if there is already an association between this unit and this unit
-            bool userUnitExists = user.Units.Contains(unit);
-
-            if (!userUnitExists) return false; //If there isn't, return false
-
-            user.Units.Remove(unit); //remove the unit association
-
-            Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.User, TrackingActions.Change);
-            tracking.Comments = string.Format("Unit {0} unassociated from user {1}", unit.ID, user.ID);
-
-            using (var ts = new TransactionScope())
-            {
-                EnsurePersistent(ref user);
-                TrackingBLL.EnsurePersistent(ref tracking);
-
-                ts.CommittTransaction();
-            }
-
-            return true;
+            return UnitAssociationBLL.UnassociateUnit(login, application, unitFIS, trackingUserName);
         }
 
         #endregion
