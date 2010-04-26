@@ -67,6 +67,10 @@ table.tablesorter tbody td {
 	font-size: 1.2em;
 	background: #fff;
 }
+
+#tabs table th {text-align: left; border-bottom: 1px solid #fff; padding: 0 2em .5em 0; font-size: .8em; text-transform: uppercase; letter-spacing: 1px;}
+#tabs table td {height: 30px; padding-right: 2em;} /* the tables in pop up things */
+
 table.tablesorter tbody tr.odd td {
 	background: #fff url(../Images/row-bg.png) repeat-x 0px 2px;
 }
@@ -83,6 +87,9 @@ table.tablesorter tfoot td {height: 35px; vertical-align: middle;}
 table.tablesorter span#spanPageInfo {position: relative; top: -3px;}
 
 table.tablesorter .Login {padding-left: 10px;}
+
+.tablesorter td:first-child a.dialog_link {margin-left: 1em;}
+
 
 
 /* =form elements */
@@ -123,6 +130,7 @@ select {background: url(../Images/input-bg.jpg) no-repeat; height: 25px; width: 
 }
 .ui-widget input {height: 17px; padding: 4px 5px 4px; margin-right: 5px;}
 .ui-widget input[type="text"] {background: url(../Images/input-bg.jpg) no-repeat; width: 200px; border-right: solid #fff 1px; border-bottom: solid #fff 1px;}
+#bodyDiv .ui-widget input[type="submit"],
 .ui-widget input[type="button"] {background: url(../Images/input-btn-bg.jpg) no-repeat; color: #fff; height: 27px; font-size: .8em; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;}
 .ui-widget select {background: url(../Images/input-bg.jpg) no-repeat; height: 25px; width: 200px; padding: 5px 0px 0px 5px; margin-right: 5px; border-right: solid #fff 1px; border-bottom: solid #fff 1px;}
 
@@ -132,4 +140,10 @@ select {background: url(../Images/input-bg.jpg) no-repeat; height: 25px; width: 
 .ui-tabs-nav li a {font-size: .75em; padding: 0.25em 1em 0;}
 
 .ui-widget #tblPermissions input[type="button"], .ui-widget #tblUnits input[type="button"] {margin-left: 3em;}
+
+
+/* ----- sortable tables ----- */
+
+#RoleChoice ul {}
+#RoleChoice ul li {}
 

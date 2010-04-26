@@ -2,8 +2,8 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <style type="text/css">
-        .connectedSortable { list-style-type: none; margin: 0; padding: 0; float: left; margin-right: 10px; background: #eee; padding: 5px; width: 143px;}
-	    .connectedSortable li { margin: 5px; padding: 5px; font-size: 1.2em; width: 120px; }
+        .connectedSortable { list-style-type: none; margin: 0; padding: 0; float: left; margin-right: 10px; background: #eee; padding: 5px; width: 163px;}
+	    .connectedSortable li { margin: 5px; padding: 5px; font-size: 1.2em; width: 140px; overflow: hidden;}
 	</style>
     
 </asp:Content>
@@ -81,10 +81,6 @@
     </asp:ObjectDataSource>
     <!-- ui-dialog -->
     <div id="dialogUserInfo" title="Application Information" style="display: none;">
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
         <div>
             <span id="spanLoading">Loading....</span>
         </div>
