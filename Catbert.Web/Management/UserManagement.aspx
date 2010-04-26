@@ -81,6 +81,10 @@
                 OpenDialog(findUserDialog, buttons, "Add a User");
             });
 
+            $("#btnAddUserRole").click(AddUserRole);
+
+            $("#btnAddUserUnit").click(AddUserUnit);
+
             $("#btnSearchUser").click(function() {
                 $("#spanSearchProgress").show(0); //Show the loading dialog
                 $("#divSearchResultsSuccess").hide(0); //Hide the content
@@ -118,6 +122,22 @@
                 null);
             });
         });
+
+        function AddUserRole() {
+            var login = $("#UserInfoLogin").html();
+            var roles = $("#UserInfoRoles");
+            var newrole = $("#UserRoles").val();
+            
+            //debugger;
+        }
+
+        function AddUserUnit() {
+            var login = $("#UserInfoLogin").html();
+            var units = $("#UserInfoUnits");
+            var newunit = $("#UserUnits").val();
+
+            debugger;
+        }
 
         function ShowUserInfo(applicationName) {
             var dialogUserInfo = $("#dialogUserInfo");
@@ -446,7 +466,7 @@
                     </select>
                 </LayoutTemplate>
                 <ItemTemplate>
-                    <option>
+                    <option value='<%# Eval("FISCode") %>'>
                         <%# Eval("ShortName") %>
                     </option>
                 </ItemTemplate>
