@@ -65,6 +65,10 @@ namespace CAESDO.Catbert.Test
             bool result = CatbertManager.RemoveUserFromUnit(TestHelper.TestUser, TestHelper.TestUnit);
 
             Assert.IsTrue(result);
+            
+            result = CatbertManager.RemoveUserFromUnit(TestHelper.TestUser, TestHelper.TestUnit);
+
+            Assert.IsFalse(result);
 
             result = CatbertManager.AddUserToUnit(TestHelper.TestUser, TestHelper.TestUnit);
 
