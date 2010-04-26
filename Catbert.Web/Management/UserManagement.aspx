@@ -129,6 +129,9 @@
         }
     </script>
     
+    <a href="javascript:;" id="addApplication" class="dialog_link ui-state-default ui-corner-all">
+        <span class="ui-icon ui-icon-newwin"></span>Add User
+    </a>
 <br /><br />
 
     <div id="divHeader">
