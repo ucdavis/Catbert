@@ -21,29 +21,27 @@ namespace CAESDO.Catbert.BLL
 
         public static bool SetActiveStatus(int applicationID, bool inactive, string trackingUserName)
         {
-            //Are there any applications that need to be changed fitting the criteria?
-            bool applicationExists = Queryable.Where(app => app.ID == applicationID && app.Inactive != inactive).Any();
+            //Get the application
+            Application application = ApplicationBLL.GetByID(applicationID);
+            
+            //Does this application's active status need to be changed?
+            if (application.Inactive == inactive)
+            {
+                return false;
+            }
+            else
+            {
+                application.Inactive = inactive; //make the change
+            }
 
-            if (!applicationExists) return false;
-
-            //The application exists, so make the change and track it
-            Application application = Queryable.Where(app => app.ID == applicationID).Single();
-
-            application.Inactive = inactive;
-
-            //Tracking tracking = new Tracking() { UserName = trackingUserName, ActionDate = DateTime.Now };
-
-            /*
-            ApplicationTracking appTracking = new ApplicationTracking() { Application = application, TrackingActionDate = DateTime.Now, TrackingUserName = trackingUserName };
-            appTracking.Comments = string.Format("Application {0} status changed to inactive={1}", applicationID, inactive);
-            appTracking.TrackingType = GetTrackingType(TrackingTypes.Change);
-
-            db.ApplicationTrackings.InsertOnSubmit(appTracking);
-            */
+            //Track the change
+            Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.Application, TrackingActions.Change);
+            tracking.Comments = string.Format("Application {0} status changed to inactive={1}", applicationID, inactive);
 
             using (TransactionScope ts = new TransactionScope())
             {
                 ApplicationBLL.EnsurePersistent(ref application);
+                TrackingBLL.EnsurePersistent(ref tracking);
 
                 ts.CommittTransaction();
             }

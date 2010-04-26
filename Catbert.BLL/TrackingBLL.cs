@@ -8,6 +8,16 @@ namespace CAESDO.Catbert.BLL
 {
     public class TrackingBLL : GenericBLL<Tracking, int>
     {
+        internal static Tracking GetTrackingInstance(string username, TrackingTypes type, TrackingActions action)
+        {
+            Tracking tracking = new Tracking() { UserName = username, ActionDate = DateTime.Now };
+
+            tracking.Action = TrackingBLL.GetTrackingAction(TrackingActions.Change);
+            tracking.Type = TrackingBLL.GetTrackingType(TrackingTypes.Application);
+
+            return tracking;
+        }
+
         public static TrackingType GetTrackingType(TrackingTypes type)
         {
             return TrackingTypeBLL.GetByName(type.ToString());
