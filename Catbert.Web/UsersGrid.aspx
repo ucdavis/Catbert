@@ -19,54 +19,24 @@
                 mtype: 'POST',
                 colNames: ['Login', 'First Name', 'Last Name', 'Email'],
                 colModel: [
-                    { name: 'Login', index: 'Login', width: 90 },
-                    { name: 'FirstName', index: 'FirstName', width: 100 },
-                    { name: 'LastName', index: 'LastName', width: 80 },
-                    { name: 'Email', index: 'Email', width: 130 }
+                    { name: 'Login', index: 'Login'},
+                    { name: 'FirstName', index: 'FirstName'},
+                    { name: 'LastName', index: 'LastName'},
+                    { name: 'Email', index: 'Email'}
                     ],
                 postData: { login: "postit", application: "Catbert" },
+                pager: $('#pjmap'),
+                rowNum: 10,
+                rowList: [10, 20, 30],
+                imgpath: 'CSS/images',
+                caption: "JSON Mapping",
+                height: '100%',
                 jsonReader: {
                     records: 'rows',
-                    repeatitems: false, 
-                    id: "0" 
+                    repeatitems: false,
+                    id: 'UserID'
                 }
             });
-
-            /*
-            var json = { login: "postit", application: "Catbert" };
-            var test = JSON2.stringify(json);
-            //debugger;
-            $("#tblUsers").flexigrid({
-            url: "Services/CatbertWebService.asmx/DataGetUsersByApplication",
-            dataType: 'json',
-            method: 'POST',
-            params: json,
-            colModel: [
-            { display: 'Login', name: 'login', width: 40, sortable: true, align: 'center' },
-            { display: 'FirstName', name: 'firstname', width: 180, sortable: true, align: 'left' },
-            { display: 'LastName', name: 'lastname', width: 120, sortable: true, align: 'left' },
-            { display: 'Email', name: 'email', width: 130, sortable: true, align: 'left', hide: false },
-            ],
-            searchitems: [
-            { display: 'Any', name: 'any', isdefault: true },
-            { display: 'FirstName', name: 'firstname' },
-            { display: 'LastName', name: 'lastname' }
-            ],
-            sortname: "lastname",
-            sortorder: "asc",
-            usepager: true,
-            title: 'Users',
-            useRp: true,
-            rp: 20,
-            showTableToggleBtn: false, //Seems to show anyway
-            width: 700,
-            height: 200,
-            onToggleCol: function() {
-            alert("Toggle Just Occurred");
-            }
-                
-            });
-            */
         });
     
         function ShowUserInfo(login, name) {
@@ -84,7 +54,9 @@
         }
     </script>
     
+    <div id="tblHeader" >Search: [//TODO]</div>
     <table id="tblUsers" class="scroll"></table>
+    <div id="pjmap" class="scroll" style="text-align:center;"></div> 
     
     <br /><br />
 

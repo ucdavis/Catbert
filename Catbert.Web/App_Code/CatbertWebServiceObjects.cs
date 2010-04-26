@@ -30,6 +30,7 @@ namespace Catbert.Services
     {
         public int page { get; set; }
         public int total { get; set; }
+        public int records { get; set; }
 
         public List<object> rows { get; set; }
 
