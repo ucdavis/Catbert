@@ -123,7 +123,6 @@ $(document).ready(function() {
 
         application = $(this).val();
 
-        console.info(application);
         PopulateUserTableDefault(application);
     });
 
@@ -151,12 +150,10 @@ function OnApplicationSelected(selectedApp, associatedRolesList) {
                 null
             );
 
-    console.info(selectedApp);
 }
 
 function PopulateRolesForApplication(data, rolesList) {
-    console.dir(data);
-
+    
     var appRoles = rolesList;
     appRoles.empty();
 
@@ -191,9 +188,6 @@ function AddUser() {
 
     if (applicationName == "") applicationName = null;
     if (applicationRole == "") applicationRole = null;
-
-    console.info(applicationName);
-    console.info(applicationRole);
 
     if (applicationName == null || applicationRole == null) {
         alert("Select an Application and Role");
@@ -259,8 +253,6 @@ function AddUserRole() {
         alert("You must select an application and a role to associate a new permission");
         return;
     }
-
-    console.info(app + "  " + newrole);
 
     //Find out if the role is already in associated
     var existingRoleMatch = existingRoles.find("tbody tr:visible").filter(
@@ -348,9 +340,6 @@ function ShowUserInfo() {
     //Clear out the old roles and units
     roles.empty();
     units.empty();
-
-    console.info(loginId);
-    //alert(loginId);
 
     var dialogUserInfo = $("#dialogUserInfo");
 
