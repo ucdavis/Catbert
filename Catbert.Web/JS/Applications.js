@@ -166,13 +166,13 @@ function PopulateApplication(app) {
         allRolesList.find("#" + roleName).hide(0);
 
         if (app.Roles[i].Level == null) {
-            console.info("Null Level", roleName);
+            LogMessage("Null Level", roleName);
             
             nonSortableRolesList.append(listElement);
         }
         else {
-            console.info("Has Level", roleName);
-
+            LogMessage("Has Level", roleName);
+            
             sortableRolesList.append(listElement);
         }
     }
@@ -185,8 +185,6 @@ function PopulateApplication(app) {
 function UpdateApplication(ID, name) {
     var application = CollectApplicationInformation();
 
-    console.dir(application);
-    
     //Now we have the update information, send it to the web service
     AjaxCall(baseUrl + 'UpdateApplication', {
         application: name,
@@ -252,8 +250,9 @@ function CollectApplicationInformation() {
 
     var sortableRoles = sortableList.sortable('toArray');
     var nonSortableRoles = nonSortableList.sortable("toArray");
-    console.log("Sortable", sortableRoles);
-    console.log("NonSortable", nonSortableRoles);
+
+    LogMessage("Sortable", sortableRoles);
+    LogMessage("NonSortable", nonSortableRoles);
 
     application.sortableRoles = sortableRoles;
     application.nonSortableRoles = nonSortableRoles;  
@@ -271,6 +270,15 @@ function ShowApplicationInformation(loaded) {
 
     $("#divApplicationInfo").css('visibility', infoVisible);
     $("#spanLoading").fadeTo('fast', loadingOpacity);
+}
+
+function LogMessage(message, data) {
+
+    var canDebug = typeof (window.console) != "undefined";
+
+    if (canDebug) {
+        console.log(message, data);
+    }
 }
 
 function OnError() {
