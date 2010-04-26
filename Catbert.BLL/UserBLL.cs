@@ -157,9 +157,13 @@ namespace CAESDO.Catbert.BLL
 
         #region Applications
         
-        public static List<User> GetByApplication(string application)
+        public static List<User> GetByApplication(string application, string searchToken, int page, int pageSize)
         {
-            return GetUserQueryableByApplication(application, null, null, null).ToList();
+            int totalUsers;
+
+            throw new NotImplementedException(); //still working on the implementation
+            
+            return UserBLL.daoFactory.GetUserDao().GetByApplication(application, null, null, searchToken, page, pageSize, "LastName ASC", out totalUsers);
         }
 
         private static IQueryable<User> GetUserQueryableByApplication(string application, string role, string unit, string searchToken)

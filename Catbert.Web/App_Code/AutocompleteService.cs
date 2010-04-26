@@ -56,25 +56,20 @@ public class AutocompleteService : System.Web.Services.WebService
     [WebMethod]
     public List<AutoCompleteData> GetUsers(string application, string q /*query*/, int limit)
     {
-        var users = UserBLL.GetByApplication(application);
+        var users = UserBLL.GetByApplication(application, q, 1 /* Start at the first record */, limit);
 
         List<AutoCompleteData> auto = new List<AutoCompleteData>();
 
         foreach (var user in users)
         {
-            string searchBAD = user.FirstName + user.LastName + user.LoginID;
-
-            if (searchBAD.ToLower().Contains(q))
-            {
-                auto.Add(new AutoCompleteData(user.LoginID, string.Empty,
-                    new
-                    {
-                        Name = string.Format("{0} {1}", user.FirstName, user.LastName),
-                        Login = user.LoginID,
-                        Email = user.Email
-                    }
-                ));
-            }
+            auto.Add(new AutoCompleteData(user.LoginID, string.Empty,
+                new
+                {
+                    Name = string.Format("{0} {1}", user.FirstName, user.LastName),
+                    Login = user.LoginID,
+                    Email = user.Email
+                }
+            ));
         }
 
         return auto;

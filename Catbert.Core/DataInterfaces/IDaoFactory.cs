@@ -9,6 +9,7 @@ namespace CAESDO.Catbert.Core.DataInterfaces
     public interface IDaoFactory 
     {
         IGenericDao<T, IdT> GetGenericDao<T, IdT>();
+        IUserDao GetUserDao();
     }
 
     // There's no need to declare each of the DAO interfaces in its own file, so just add them inline here.
@@ -16,6 +17,11 @@ namespace CAESDO.Catbert.Core.DataInterfaces
     #region Inline interface declarations
 
     public interface IGenericDao<T, IdT> : IDao<T, IdT> { }
+
+    public interface IUserDao : IDao<User, int> {
+        List<User> GetByApplication(string application, string role, string unit, string searchToken, int page, int pageSize, string orderBy, out int totalUsers);
+    }
+
 
     #endregion
 }

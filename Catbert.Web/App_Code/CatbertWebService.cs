@@ -331,13 +331,13 @@ public class CatbertWebService : System.Web.Services.WebService
         ApplicationBLL.SetActiveStatus(application, null, CurrentServiceUser);
     }
 
-    [WebMethod]
-    public List<CatbertUser> GetUsersByApplication(string application)
-    {
-        List<CatbertUser> users = ConvertFromUserList(UserBLL.GetByApplication(application), application);
+    //[WebMethod]
+    //public List<CatbertUser> GetUsersByApplication(string application)
+    //{
+    //    List<CatbertUser> users = ConvertFromUserList(UserBLL.GetByApplication(application), application);
 
-        return users;
-    }
+    //    return users;
+    //}
 
     /// <summary>
     /// Get all users in this application, filtered by query, unit and role
