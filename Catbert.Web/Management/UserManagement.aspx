@@ -39,6 +39,12 @@
                 }
             });
 
+            $("#txtLoginID").keypress(function(event) {
+                if (event.keyCode == 13) { //On enter, fire the search click event
+                    $("#btnSearchUser").click();
+                }
+            });
+
             $("#tblUsers").tablesorter({
                 headers: { 4: { sorter: false }, 5: { sorter: false} },
                 cssAsc: 'headerSortUp',
@@ -74,7 +80,7 @@
 
             $("#btnAddUser").click(function() {
                 $("#spanAddUserProgress").show(0); //First show the loading dialog
-                
+
                 //First fill in the user information
                 var user = new Object();
                 user.FirstName = $("#spanNewUserFirstName").html();
