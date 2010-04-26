@@ -33,6 +33,8 @@ namespace CAESDO.Catbert.BLL.Service
 
             var unitAssociations = from association in UnitAssociationBLL.EntitySet
                                     where association.User.LoginID == loginId && association.Inactive == false
+                                    orderby association.Application.Name ascending
+                                    orderby association.Unit.FISCode ascending 
                                     select
                                       new UnitAssociation
                                           {
@@ -52,6 +54,8 @@ namespace CAESDO.Catbert.BLL.Service
 
             var permissions = from perm in PermissionBLL.EntitySet
                               where perm.User.LoginID == loginId && perm.Inactive == false
+                              orderby perm.Application.Name ascending 
+                              orderby perm.Role.Name ascending 
                               select
                                   new PermissionAssociation
                                       {
