@@ -44,7 +44,17 @@
                 <td><%# Eval("Application.Name") %></td>
                 <td><%#Eval("BeginDisplayDateString")%></td>
                 <td><%#Eval("EndDisplayDateString") %></td>
-                <td><%%></td>
+                
+                <%--
+                 <td><asp:Button ID="btnDeactivate" runat="server" Text="" 
+                  />
+                 </td>
+                --%>
+                <%--onclick='SaveProperty("<%= Request.QueryString["mid"] %>","IsActive","0","Project");'--%>
+                
+                
+                
+                
             </tr>
       </ItemTemplate>
 

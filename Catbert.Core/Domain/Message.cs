@@ -32,7 +32,9 @@ namespace CAESDO.Catbert.Core.Domain
                 return EndDisplayDate.HasValue ? EndDisplayDate.Value.ToShortDateString() : "N/A";
             }
         }
-    
+
+
+   
 
     }
 }

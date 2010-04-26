@@ -16,6 +16,17 @@ namespace CAESDO.Catbert.BLL
             EnsurePersistent(message);
         }
 
+        /// <summary>
+        /// Message Update function.
+        /// </summary>
+        /// <param name="message">A Message that needs to be updated.</param>
+        [DataObjectMethod(DataObjectMethodType.Update)]
+        public static void Update(Message message)
+        {
+            EnsurePersistent(message);
+        }
+
+
         [DataObjectMethod(DataObjectMethodType.Select)]
         public static IQueryable<Message> GetActive()
         {
@@ -31,6 +42,8 @@ namespace CAESDO.Catbert.BLL
                             ).OrderBy(m => m.Application);
         
         }
+
+
 
 
     }
