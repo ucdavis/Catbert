@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Text;
+using System.Web;
 using CAESDO.Catbert.Core.Domain;
 using CAESDO.Catbert.Data;
 
@@ -159,9 +160,10 @@ namespace CAESDO.Catbert.BLL
         
         public static List<User> GetByApplication(string application, string searchToken, int page, int pageSize)
         {
+            string currentLogin = HttpContext.Current.User.Identity.Name;
             int totalUsers;
 
-            return GetByApplication(application, null, null, searchToken, page, pageSize, "LastName ASC", out totalUsers);
+            return GetByApplication(application, currentLogin, null, null, searchToken, page, pageSize, "LastName ASC", out totalUsers);
 
             //return UserBLL.daoFactory.GetUserDao().GetByApplication(application, null, null, searchToken, page, pageSize, "LastName ASC", out totalUsers);
         }
@@ -188,9 +190,9 @@ namespace CAESDO.Catbert.BLL
             return users.AsQueryable<User>();
         }*/
 
-        public static List<User> GetByApplication(string application, string role, string unit, string searchToken, int page, int pageSize, string orderBy, out int totalUsers)
+        public static List<User> GetByApplication(string application, string currentLogin, string role, string unit, string searchToken, int page, int pageSize, string orderBy, out int totalUsers)
         {
-            return UserBLL.daoFactory.GetUserDao().GetByApplication(application, role, unit, searchToken, page, pageSize, orderBy, out totalUsers);
+            return UserBLL.daoFactory.GetUserDao().GetByApplication(application, currentLogin, role, unit, searchToken, page, pageSize, orderBy, out totalUsers);
         }
 
         /*

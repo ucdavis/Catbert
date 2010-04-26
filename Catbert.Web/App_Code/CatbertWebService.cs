@@ -351,7 +351,7 @@ public class CatbertWebService : System.Web.Services.WebService
 
         int totalUsers = 0;
 
-        var users = UserBLL.GetByApplication(application, role, unit, search, page, pagesize, orderBy, out totalUsers);
+        var users = UserBLL.GetByApplication(application, CurrentServiceUser, role, unit, search, page, pagesize, orderBy, out totalUsers);
         var serviceUsers = ConvertFromUserList(users, application);
 
         RecordSet grid = new RecordSet() { page = page, total = (int)Math.Ceiling((double)totalUsers/pagesize), records = serviceUsers.Count };

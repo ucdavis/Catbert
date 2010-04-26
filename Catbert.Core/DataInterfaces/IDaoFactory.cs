@@ -20,7 +20,7 @@ namespace CAESDO.Catbert.Core.DataInterfaces
     public interface IGenericDao<T, IdT> : IDao<T, IdT> { }
 
     public interface IUserDao : IDao<User, int> {
-        List<User> GetByApplication(string application, string role, string unit, string searchToken, int page, int pageSize, string orderBy, out int totalUsers);
+        List<User> GetByApplication(string application, string currentLogin, string role, string unit, string searchToken, int page, int pageSize, string orderBy, out int totalUsers);
     }
 
     public interface IUnitDao : IDao<Unit, int>    {

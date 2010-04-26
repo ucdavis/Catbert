@@ -40,7 +40,7 @@ namespace CAESDO.Catbert.Data
 
         public class UserDao : AbstractNHibernateDao<User, int>, IUserDao
         {
-            public List<User> GetByApplication(string application, string role, string unit, string searchToken, int page, int pageSize, string orderBy, out int totalUsers)
+            public List<User> GetByApplication(string application, string currentLogin, string role, string unit, string searchToken, int page, int pageSize, string orderBy, out int totalUsers)
             {                
                 //Now filter out all of the users in this list by the role search criteria 
                 //Note: If no role is selected, we still need to filter and make sure the user has ANY role in the application
@@ -115,7 +115,7 @@ namespace CAESDO.Catbert.Data
                     return Order.Desc(orderTerm);
             }
 
-            public List<string> GetRolesForUserInApplication(string login, string application)
+            internal List<string> GetRolesForUserInApplication(string login, string application)
             {
                 //First we need to find out what kind of user management permissions the given user has in the application
                 ICriteria permissionsCriteria = NHibernateSessionManager.Instance.GetSession().CreateCriteria(typeof(Permission))
@@ -143,12 +143,27 @@ namespace CAESDO.Catbert.Data
             /// </summary>
             public List<Unit> GetVisibleByUser(string login, string application)
             {
+                return GetVisibleByUserCriteria(login, application)
+                    .GetExecutableCriteria(NHibernateSessionManager.Instance.GetSession())
+                    .List<Unit>() as List<Unit>;
+            }
+
+            /// <summary>
+            /// Get all of the units associated with the given user, depending on role
+            /// ManageAll: GetAllUnits
+            /// ManageSchool: Get All Units which are associated with the user's schools
+            /// ManageUnit: Get Just the units you are associated with
+            /// </summary>
+            internal DetachedCriteria GetVisibleByUserCriteria(string login, string application)
+            {
                 //First we need to find out what kind of user management permissions the given user has in the application                
                 var roles = new UserDao().GetRolesForUserInApplication(login, application);
+                Order defaultUnitOrder = Order.Asc("ShortName");
 
                 if (roles.Contains("ManageAll"))
                 {
-                    return GetAll("ShortName", true);
+                    return DetachedCriteria.For<Unit>()
+                        .AddOrder(defaultUnitOrder);
                 }
                 else if (roles.Contains("ManageSchool"))
                 {
@@ -164,18 +179,16 @@ namespace CAESDO.Catbert.Data
                         .SetProjection(Projections.Distinct(Projections.Property("School.id")));
 
                     //Now get all units that are associated with these schools
-                    ICriteria units = NHibernateSessionManager.Instance.GetSession().CreateCriteria(typeof(Unit))
+                    DetachedCriteria units = DetachedCriteria.For<Unit>()
                         .CreateAlias("School", "School")
                         .Add(Subqueries.PropertyIn("School.id", schools))
                         .AddOrder(Order.Asc("ShortName"));
 
-                    return units.List<Unit>() as List<Unit>;
+                    return units;
                 }
                 else if (roles.Contains("ManageUnit"))
                 {
                     //Just get all units that the user has in this application
-                    UnitAssociation ua = new UnitAssociation();
-
                     DetachedCriteria associatedUnitIds = DetachedCriteria.For<UnitAssociation>()
                         .CreateAlias("Application", "Application")
                         .CreateAlias("User", "User")
@@ -185,11 +198,11 @@ namespace CAESDO.Catbert.Data
                         .Add(Expression.Eq("Inactive", false))
                         .SetProjection(Projections.Property("Unit.id"));
 
-                    ICriteria units = NHibernateSessionManager.Instance.GetSession().CreateCriteria(typeof(Unit))
+                    DetachedCriteria units = DetachedCriteria.For<Unit>()
                         .Add(Subqueries.PropertyIn("id", associatedUnitIds))
                         .AddOrder(Order.Asc("ShortName"));
                     
-                    return units.List<Unit>() as List<Unit>;                    
+                    return units;       
                 }
                 else //no roles
                 {
