@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CAESDO.Catbert.Core.DataInterfaces
 {
     public interface IDao<T, IdT>
     {
+        IQueryable<T> GetQueryable();
         T GetById(IdT id, bool shouldLock);
         T GetNullableByID(IdT id);
         List<T> GetAll();

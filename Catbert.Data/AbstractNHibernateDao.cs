@@ -3,11 +3,19 @@ using System.Collections.Generic;
 using NHibernate;
 using CAESDO.Catbert.Core.DataInterfaces;
 using NHibernate.Criterion;
+using NHibernate.Linq;
+using System.Linq;
 
 namespace CAESDO.Catbert.Data
 {
     public abstract class AbstractNHibernateDao<T, IdT> : IDao<T, IdT>
     {
+        //Returns a queryable set of type T
+        public IQueryable<T> GetQueryable()
+        {
+            return (IQueryable<T>)NHibernateSession.Linq<T>();
+        }
+
         /// <summary>
         /// Loads an instance of type T from the DB based on its ID.
         /// </summary>

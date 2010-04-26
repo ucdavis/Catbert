@@ -5,6 +5,7 @@ using System.ComponentModel;
 using CAESDO.Catbert.Core.DataInterfaces;
 using CAESDO.Catbert.Core.Domain;
 using CAESDO.Catbert.Data;
+using System.Linq;
 
 namespace CAESDO.Catbert.BLL
 {
@@ -16,6 +17,14 @@ namespace CAESDO.Catbert.BLL
             get
             {
                 return new CAESDO.Catbert.Data.NHibernateDaoFactory();
+            }
+        }
+
+        protected static IQueryable<T> Queryable
+        {
+            get
+            {
+                return daoFactory.GetGenericDao<T, IdT>().GetQueryable();
             }
         }
 
