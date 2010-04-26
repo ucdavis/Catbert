@@ -11,7 +11,7 @@
 
     <many-to-one name="Application" column="ApplicationID" class="CAESDO.Catbert.Core.Domain.Application, CAESDO.Catbert.Core"></many-to-one>
     
-    <many-to-one name="Role" column="RoleID" class="CAESDO.Catbert.Core.Domain.Role, CAESDO.Catbert.Core"></many-to-one>
+    <many-to-one name="Role" column="RoleID" class="CAESDO.Catbert.Core.Domain.Role, CAESDO.Catbert.Core" fetch="join"></many-to-one>
 
   </class>
 </hibernate-mapping>
