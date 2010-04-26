@@ -9,8 +9,8 @@
     
     <property name="FullName" column="FullName" />
     <property name="ShortName" column="ShortName" />
-    <property name="PPSCode" column="PPSCode" />
-    <property name="FISCode" column="FISCode" />
+    <property name="PPSCode" column="PPS_Code" />
+    <property name="FISCode" column="FIS_Code" />
 
     <many-to-one name="School" column="SchoolCode" class="CAESDO.Catbert.Core.Domain.School, CAESDO.Catbert.Core"></many-to-one>
     
