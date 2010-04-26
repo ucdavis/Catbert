@@ -28,7 +28,7 @@ namespace CAESDO.Catbert.BLL
         /// </summary>
         public static List<Unit> GetByUser(string login, string application)
         {
-            var unitAssociations = UnitAssociationBLL.Queryable.Where(assoc => assoc.User.LoginID == login && assoc.Application.Name == application).ToList();
+            var unitAssociations = UnitAssociationBLL.Queryable.Where(assoc => assoc.User.LoginID == login && assoc.Application.Name == application && assoc.Inactive == false).ToList();
 
             return unitAssociations.Select(u => u.Unit).ToList();
         }
