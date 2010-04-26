@@ -99,7 +99,7 @@
                     $("#dialogFindUser").dialog("close");
                     $("#divNewUserNotification").show("slow");
                     $("#spanAddUserProgress").hide(0); //First hide the progress since we are done
-                    PopulateUserTable(application, null, null, null, null, null);
+                    PopulateUserTable(application, search, null, null, null, null);
                 },
                 null);
             });
@@ -176,10 +176,13 @@
 
         //Trigger a sort update, and sort on the last name column
         function SortTable() {
-            $("#tblUsers").trigger("update");
-            var sorting = [[1, 0]];
-            // sort on the first column 
-            $("#tblUsers").trigger("sorton", [sorting]);
+            if ($("#tblUsersBody tr").size() > 0) { //Only resort sort if there are rows to sort
+            
+                $("#tblUsers").trigger("update");
+                var sorting = [[1, 0]];
+                // sort on the first column 
+                $("#tblUsers").trigger("sorton", [sorting]);
+            }
         }
 
         function CreateDomFromUserInfoArray(array) {
