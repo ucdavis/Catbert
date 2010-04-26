@@ -413,6 +413,21 @@ function UpdateUserInfo() {
     user.Email = $("#UserInfoEmail").val();
     user.Phone = $("#UserInfoPhone").val();
 
+    //Validate the phone and email
+    var emaiRegularExpression = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+    var phoneRegularExpression = /((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}/;
+
+    if (emaiRegularExpression.test(user.Email) == false) {
+        alert("Email Format Is Invalid");
+        return;
+    }
+
+    //The phone can be empty
+    if (user.Phone != "" && phoneRegularExpression.test(user.Phone) == false) {
+        alert("Phone Format Is Invalid");
+        return;
+    }
+    
     if (user.LastName == '' || user.Email == '') {
         alert("Last Name and Email Required");        
         return;

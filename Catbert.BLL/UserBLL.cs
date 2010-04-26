@@ -182,10 +182,10 @@ namespace CAESDO.Catbert.BLL
             if (user == null) return false;
 
             //Set the userInfo
-            user.FirstName = firstName;
+            user.FirstName = string.IsNullOrEmpty(firstName) ? null : firstName;
             user.LastName = lastName;
             user.Email = email;
-            user.Phone = phone;
+            user.Phone = string.IsNullOrEmpty(phone) ? null : phone;
 
             //Check to see if the user is valid, if not return false
             if (!ValidateBusinessObject<User>.IsValid(user)) return false;
