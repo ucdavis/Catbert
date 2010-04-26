@@ -46,15 +46,35 @@ namespace CAESDO.Catbert.Data
         {
             public List<Role> GetVisibleByUser(string application, string login)
             {
-                var userRoles = GetRolesForUser(application, login);
+                var userRoles = GetRolesForUser(application, login); //Get all of the user roles
 
+                //Take the min role level for this application and then get all application roles with a higher level than this min
                 var minLevel = GetMinApplicationRole(userRoles, application);
+                var lowerApplicationRoles = GetApplicationRolesUnderLevel(minLevel, application);
 
-                var roles = userRoles.GetExecutableCriteria(NHibernateSessionManager.Instance.GetSession()).List();
+                //Now get all roles that either the user has or are in the lowerApplicationRoles
+                ICriteria roles = NHibernateSessionManager.Instance.GetSession().CreateCriteria(typeof(Role))
+                   .Add(
+                    Expression.Or(
+                        Subqueries.PropertyIn("id", userRoles),
+                        Subqueries.PropertyIn("id", lowerApplicationRoles)
+                        )
+                    );
 
-                var result = minLevel.GetExecutableCriteria(NHibernateSessionManager.Instance.GetSession()).List();
+                return roles.List<Role>() as List<Role>;
+            }
 
-                return null;
+            private DetachedCriteria GetApplicationRolesUnderLevel(DetachedCriteria minLevel, string application)
+            {
+                DetachedCriteria criteria = DetachedCriteria.For<ApplicationRole>()
+                    .Add(Expression.IsNotNull("Level"))
+                    .CreateAlias("Application", "Application")
+                    .CreateAlias("Role", "Role")
+                    .Add(Expression.Eq("Application.Name", application))
+                    .Add(Subqueries.PropertyGt("Level", minLevel))
+                    .SetProjection(Projections.Property("Role.id"));
+
+                return criteria;
             }
 
             private DetachedCriteria GetMinApplicationRole(DetachedCriteria roles, string application)
