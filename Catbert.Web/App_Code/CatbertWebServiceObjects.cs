@@ -14,20 +14,6 @@ using System.Collections.Specialized;
 
 namespace Catbert.Services
 {
-    public class AutoCompleteData
-    {
-        public string result { get; set; } //like key
-        public string value { get; set; }
-        public object data { get; set; }
-
-        public AutoCompleteData(string result, string value, object data)
-        {
-            this.result = result;
-            this.value = value;
-            this.data = data;
-        }
-    }
-
     public class GridData
     {
         public int page { get; set; }

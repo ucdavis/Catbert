@@ -40,7 +40,7 @@
             });
 
 
-            $("#auto").autocomplete('Services/CatbertWebService.asmx/GetUnitsAuto', {
+            $("#auto").autocomplete('Services/AutocompleteService.asmx/GetUnitsAuto', {
                 width: 260,
                 selectFirst: true,
                 autoFill: false,
