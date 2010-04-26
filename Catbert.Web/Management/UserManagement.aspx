@@ -39,6 +39,16 @@
                 }
             });
 
+            $("#imgSearch").click(function() {
+                search = "";
+                $("#txtSearch").val(search); //clear out the text
+                
+                PopulateUserTable(application, search, unit, role, sortname, sortorder);
+                $(".ac_results").hide(); //Hide the results whenever you hit enter
+
+                return false;
+            });
+
             $("#txtLoginID").keypress(function(event) {
                 if (event.keyCode == 13) { //On enter, fire the search click event
                     $("#btnSearchUser").click();
@@ -101,15 +111,19 @@
                     unit: unit,
                     application: application
                 },
-                function() {
-                    $("#dialogFindUser").dialog("close");
-                    $("#divNewUserNotification").show("slow");
-                    $("#spanAddUserProgress").hide(0); //First hide the progress since we are done
-                    PopulateUserTable(application, search, null, null, null, null);
-                },
+                function() { AddUserSuccess(application, search); },
                 null);
             });
         });
+
+        function AddUserSuccess(application, search) {
+            PopulateUserTable(application, search, null, null, null, null); //Repopulate the table
+
+            $("#dialogFindUser").dialog("close"); //Close the dialog
+            $("#divSearchResultsSuccess").hide(0); //Hide the search results
+            $("#divNewUserNotification").show("slow"); //Show the new user notification
+            $("#spanAddUserProgress").hide(0); //Hide the progress since we are done
+        }
 
         function SearchNewUserSuccess(data) {
                         
@@ -237,7 +251,7 @@
 
     <div id="divHeader">
         <span id="search">
-            Search Users: <input type="text" id="txtSearch" />
+            Search Users: <input type="text" id="txtSearch" /><input type="image" id="imgSearch" title="Clear Search" alt="Clear Search" src="../Images/checked.gif" />
         </span>
     </div>
     <div id="divLoading" style="display:none;">
