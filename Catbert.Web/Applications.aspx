@@ -76,6 +76,10 @@
                     $(this).attr('checked', false);
                 });
 
+                //Show all the checkboxes
+                ChangeRoleDisplay($("#allRolesLink"));
+                ShowActiveRolesOnly(false);
+
                 //Make sure the application info div is visible, and the loading span is hidden
                 $("#divApplicationInfo").css('visibility', 'visible');
                 $("#spanLoading").fadeTo(0, 0);
