@@ -103,14 +103,21 @@ namespace CAESDO.Catbert.BLL
                 }
             }
 
-            //Perform the requested operation
-            if (forceSave)
+            try
             {
-                entity = daoFactory.GetGenericDao<T, IdT>().Save(entity);
+                //Perform the requested operation
+                if (forceSave)
+                {
+                    entity = daoFactory.GetGenericDao<T, IdT>().Save(entity);
+                }
+                else
+                {
+                    entity = daoFactory.GetGenericDao<T, IdT>().SaveOrUpdate(entity);
+                }
             }
-            else
+            catch
             {
-                entity = daoFactory.GetGenericDao<T, IdT>().SaveOrUpdate(entity);
+                return false; //Save didn't complete
             }
 
             return true;
