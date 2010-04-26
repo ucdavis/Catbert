@@ -96,24 +96,28 @@ namespace CAESDO.Catbert.BLL
         /// <summary>
         /// Returns false if the application could not be found or if it doesn't need to change inactive status
         /// </summary>
-        public static bool SetActiveStatus(int applicationID, bool inactive, string trackingUserName)
+        /// <remarks>A null inactive parameter indicates that a status swap is desired instead of setting a hard value</remarks>
+        public static bool SetActiveStatus(string applicationName, bool? inactive, string trackingUserName)
         {
             //Get the application
-            Application application = ApplicationBLL.GetByID(applicationID);
-            
-            //Does this application's active status need to be changed?
-            if (application.Inactive == inactive)
+            Application application = ApplicationBLL.GetByName(applicationName);
+
+            if (inactive.HasValue == false)
+            {
+                application.Inactive = !application.Inactive;
+            }
+            else if (application.Inactive == inactive)//Does this application's active status need to be changed?
             {
                 return false;
             }
             else
             {
-                application.Inactive = inactive; //make the change
+                application.Inactive = inactive.Value; //make the change
             }
 
             //Track the change
             Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.Application, TrackingActions.Change);
-            tracking.Comments = string.Format("Application {0} status changed to inactive={1}", applicationID, inactive);
+            tracking.Comments = string.Format("Application {0} status changed to inactive={1}", applicationName, inactive);
 
             using (TransactionScope ts = new TransactionScope())
             {

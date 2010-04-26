@@ -17,7 +17,7 @@
         var roleList;
 
         $(document).ready(function() {
-             roleList = $('#ulRoles');
+            roleList = $('#ulRoles');
             //Sort table
             $("#tblApplications").tablesorter({
                 headers: { 0: { sorter: false} },
@@ -28,9 +28,31 @@
                 widgets: ['zebra']
             });
 
-            //List selection TEST ONLY
-            //$.fcbkListSelection(id[ul id],width,height[element height],row[elements in row]);
-            //$.fcbkListSelection("#ulPermissions", 400, 50, 2);
+            //Create a live binding to images with the activeIndicator class' click event
+            $(":image.activeIndicator").live("click", (function() {
+                //Swap the images
+                var el = $(this);
+                var activeText = 'Active';
+                var inactiveText = 'Inactive';
+
+                if (el.attr('alt') == activeText) {
+                    el.attr('src', 'Images/Inactive.gif');
+                    el.attr('alt', inactiveText);
+                }
+                else {
+                    el.attr('src', 'Images/Active.gif');
+                    el.attr('alt', activeText);
+                }
+
+                var containingRow = $(this).parents('tr');
+                containingRow.children("td").effect('highlight', {}, 300);
+
+                //Now call the webservice to do the active switching
+                AjaxCall(baseUrl + 'ChangeApplicationActiveStatus', { application: el.val() }, function() { }, OnError);
+
+                return false;
+            }));
+
         });
 
         function ShowUserInfo(applicationID, name) {
@@ -191,8 +213,10 @@
                 <td title="Location">
                     <a href='<%# Eval("Location") %>' target='_blank'><%# Eval("Location") %></a>
                 </td>
-                <td>
-                    <%# !(bool)Eval("Inactive") %>
+                <td title="Active">
+                    <input class="activeIndicator" type="image" style="border-width: 0;" value='<%# Eval("Name") %>'
+                        src='<%# (bool)Eval("Inactive") ? "Images/Inactive.gif" : "Images/Active.gif"%>' 
+                        alt='<%# (bool)Eval("Inactive") ? "Inactive" : "Active" %>' />
                 </td>
             </tr>
         </ItemTemplate>

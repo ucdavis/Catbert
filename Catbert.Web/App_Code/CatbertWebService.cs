@@ -278,6 +278,12 @@ public class CatbertWebService : System.Web.Services.WebService
     }
 
     [WebMethod]
+    public void ChangeApplicationActiveStatus(string application)
+    {
+        ApplicationBLL.SetActiveStatus(application, null, CurrentServiceUser);
+    }
+
+    [WebMethod]
     public List<CatbertUser> GetUsersByApplication(string application)
     {
         List<CatbertUser> users = ConvertFromUserList(UserBLL.GetByApplication(application), application);
