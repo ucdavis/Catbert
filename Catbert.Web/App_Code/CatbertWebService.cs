@@ -20,7 +20,8 @@ public class CatbertWebService : System.Web.Services.WebService
     {
         get
         {
-            return HttpContext.Current.User.Identity.Name;
+            return "postit"; //Testing Only
+            //return HttpContext.Current.User.Identity.Name;
         }
     }
 
@@ -120,9 +121,15 @@ public class CatbertWebService : System.Web.Services.WebService
         return PermissionBLL.DeletePermission(application, role, login, CurrentServiceUser);
     }
 
+    /// <summary>
+    /// Return true if the current service user has any permission on this application
+    /// </summary>
+    /// <param name="CurrentServiceUser"></param>
+    /// <param name="application"></param>
+    /// <returns></returns>
     private bool ValidateApplicationPermission(string CurrentServiceUser, string application)
     {
-        throw new NotImplementedException();
+        return PermissionBLL.AnyPermissionExists(application, CurrentServiceUser, false);
     }
 
     /// <summary>
