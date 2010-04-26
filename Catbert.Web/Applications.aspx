@@ -11,8 +11,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" Runat="Server">
     <script src="JS/jquery.tablesorter.min.js" type="text/javascript"></script>
-    <%--<script src="JS/fcbklistselection.js" type="text/javascript"></script>--%>
-    <script src="JS/multiselection.js" type="text/javascript"></script>
+    
     <script type="text/javascript">
         var baseUrl = 'Services/CatbertWebService.asmx/';
         var roleList;
@@ -50,9 +49,12 @@
             });
 
             dialog.dialog('option', 'title', name); //Set the title
+
+            ShowApplicationInformation(false);  //Don't show the information until it loads
             
-            //TODO: The loading options
             //Clear out the roles list checked options
+            $(":checked", roleList).attr('checked', false);
+
             
             AjaxCall(
                 baseUrl + 'GetApplication',
@@ -60,38 +62,33 @@
                 function(data) { PopulateApplication(data); },
                 null //TODO: Error method
             );
-            
-            /*
-            var inner = $('<li><input type="checkbox" checked="checked" value="RoleName" /></li>').append('Admin Role');
-            var inner2 = $('<li><input type="checkbox" checked="checked" value="RoleName" /></li>').append('Admin Role');
-            var inner3 = $('<li><input type="checkbox" checked="checked" value="RoleName" /></li>').append('Admin Role');
-            var inner4 = $('<li><input type="checkbox" checked="checked" value="RoleName" /></li>').append('Admin Role');
-            
-            var roleList = $('#ulRoles'); //roles list
-            roleList.append(inner);
-            roleList.append(inner2);
-            roleList.append(inner3);
-            roleList.append(inner4);
-            */
-            /*
-            $("#ulPermissions").mselect(
-                {
-                    name: "tester"
-                }
-            );
-            */
-            
+                        
             dialog.dialog('open'); //show
         }
-        
+
         function PopulateApplication(app) {
-            //Go through each role and check the corresonding box
+            //Populate the application info boxes
+            $("#txtApplicationName").val(app.Name);
+            $("#txtApplicationAbbr").val(app.Abbr);
+            $("#txtApplicationLocation").val(app.Location);
             
+            //Go through each role and check the corresonding box          
             for (var i in app.Roles) {
                 var roleName = app.Roles[i].Name;
                 var roleBox = $("input[value=" + roleName + "]", roleList); //Find the one role with the value of roleName                
                 roleBox.attr('checked', 'checked');//Check it
             }
+
+            //Application is populated, so show the information div
+            ShowApplicationInformation(true);
+        }
+
+        function ShowApplicationInformation(loaded) {
+            var infoVisible = loaded ? 'visible' : 'hidden';
+            var loadingOpacity = loaded ? 0 : 1; //go to invisible if we have loaded
+
+            $("#divApplicationInfo").css('visibility', infoVisible);
+            $("#spanLoading").fadeTo('fast', loadingOpacity);
         }
         
     </script>
@@ -162,8 +159,25 @@
     <!-- ui-dialog -->
 	<div id="dialogUserInfo" title="Application Information" style="display: none;">
 		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-		<br />
-
+		<div>
+		    <span id="spanLoading">Loading....</span>
+		</div>
+		<div id="divApplicationInfo" style="visibility:hidden">
+		<table>
+		    <tr>
+		        <td>Name</td>
+		        <td><input type="text" id="txtApplicationName" size="40" /></td>
+		    </tr>
+		    <tr>
+		        <td>Abbr</td>
+		        <td><input type="text" id="txtApplicationAbbr" size="40" /></td>
+		    </tr>
+		    <tr>
+		        <td>Location</td>
+		        <td><input type="text" id="txtApplicationLocation" size="40" /></td>
+		    </tr>
+		</table>
+        <br /><br />
         <div id="Roles">
             Roles:
             <asp:ListView ID="lviewRoles" runat="server" DataSourceID="odsRoles">
@@ -186,6 +200,7 @@
                     <asp:Parameter DefaultValue="true" Name="ascending" Type="Boolean" />
                 </SelectParameters>
             </asp:ObjectDataSource>
+        </div>
         </div>
 	</div>
 </asp:Content>
