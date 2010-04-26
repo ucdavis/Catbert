@@ -58,7 +58,7 @@
                 }
 
                 $("#divNewUserNotification").hide(0); //If there was a previous user added, hide the notification
-                
+
                 OpenDialog(findUserDialog, buttons, "Add a User");
             });
 
@@ -73,6 +73,28 @@
             });
 
             $("#btnAddUser").click(function() {
+                //First fill in the user information
+                var user = new Object();
+                user.FirstName = $("#spanNewUserFirstName").html();
+                user.LastName = $("#spanNewUserLastName").html();
+                user.Login = $("#spanNewUserLogin").html();
+                user.Email = $("#txtNewUserEmail").val();
+                user.Phone = $("#txtNewUserPhone").val();
+
+                //Now get the role
+                var role = $("#applicationRoles").val();
+
+                //Now the unit FIS code
+                var unit = $("#units").val();
+
+                AjaxCall(baseURL + "InsertUserWithRoleAndUnit", {
+                    serviceUser: user,
+                    role: role,
+                    unit: unit
+                },
+                null, 
+                null);
+
                 $("#dialogFindUser").dialog("close");
                 $("#divNewUserNotification").show("slow");
             });
@@ -88,7 +110,8 @@
             }
             else {
                 var user = data[0];
-                $("#spanNewUserName").html(user.FirstName + " " + user.LastName);
+                $("#spanNewUserFirstName").html(user.FirstName);
+                $("#spanNewUserLastName").html(user.LastName);
                 $("#spanNewUserLogin").html(user.Login);
                 $("#txtNewUserEmail").val(user.Email);
                 $("#txtNewUserPhone").val(user.Phone);
@@ -227,7 +250,7 @@
         Kerberos LoginID: <input type="text" id="txtLoginID" /><input type="button" id="btnSearchUser" value="Search" />
         <span id="spanSearchProgress" style="display:none;">Searching...</span>
         <div id="divSearchResultsSuccess" style="display:none;">
-            <span id="spanNewUserName"></span> (<span id="spanNewUserLogin"></span>)<br />
+            <span id="spanNewUserFirstName"></span> <span id="spanNewUserLastName"></span> (<span id="spanNewUserLogin"></span>)<br />
             Email: <input type="text" id="txtNewUserEmail" /><br />
             Phone: <input type="text" id="txtNewUserPhone" /><br />
             Role:
@@ -253,12 +276,12 @@
             Unit:
             <asp:ListView ID="lviewUnits" runat="server" DataSourceID="odsUnits">
                 <LayoutTemplate>
-                    <select id="Units">
+                    <select id="units">
                         <option id="itemPlaceholder" runat="server"></option>
                     </select>
                 </LayoutTemplate>
                 <ItemTemplate>
-                    <option>
+                    <option value='<%# Eval("FISCode") %>'>
                         <%# Eval("ShortName")%>
                     </option>
                 </ItemTemplate>

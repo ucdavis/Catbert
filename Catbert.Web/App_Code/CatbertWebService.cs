@@ -73,6 +73,12 @@ public class CatbertWebService : System.Web.Services.WebService
         return UserBLL.InsertNewUser(user, CurrentServiceUser);
     }
 
+    [WebMethod]
+    public void InsertUserWithRoleAndUnit(ServiceUser serviceUser, string role, string unit)
+    {
+        throw new NotImplementedException();
+    }
+
     /// <summary>
     /// Verify that the given login exists in the database
     /// </summary>
