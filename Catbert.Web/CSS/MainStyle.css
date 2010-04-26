@@ -1,0 +1,54 @@
+﻿body {
+}
+
+/* tables */
+table.tablesorter {
+	font-family:arial;
+	background-color: #CDCDCD;
+	margin:10px 0pt 15px;
+	font-size: 8pt;
+	width: 100%;
+	border: 0;
+	border-spacing: 2px;
+	border-collapse: collapse;
+	text-align: left;
+}
+table.tablesorter thead tr 
+{
+    background: url(Images/gridViewBg.gif) repeat-x;
+    height: 46px;
+}
+table.tablesorter thead tr th, table.tablesorter tfoot tr th {
+	background-color: transparent;
+	border: 0px none;
+	font-size: 1.2em;
+	padding: 4px;
+	height: 3em;
+}
+table.tablesorter thead tr .header {
+	background-image: url(Images/arrow-both.gif);
+	background-repeat: no-repeat;
+	background-position: 8px center;
+	cursor: pointer;
+	padding-left: 20px;
+}
+table.tablesorter tbody td {
+	color: #3D3D3D;
+	padding: 4px 4px 4px 20px;
+	background-color: #FFF;
+	vertical-align: middle;
+	border-bottom: 1px dotted #333333;
+	height: 50px;
+	font-size: 1.2em;
+}
+table.tablesorter tbody tr.odd td {
+	background-color:#EEEEEE;
+}
+table.tablesorter thead tr .headerSortUp {
+	background-image: url(Images/arrow-down.gif);
+}
+table.tablesorter thead tr .headerSortDown {
+	background-image: url(Images/arrow-up.gif);
+}
+table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
+}

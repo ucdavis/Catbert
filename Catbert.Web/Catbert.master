@@ -7,19 +7,58 @@
     <title>Catbert v3</title>
     <asp:ContentPlaceHolder id="head" runat="server">
     </asp:ContentPlaceHolder>
+    <link rel="Stylesheet" runat="server" href="~/CSS/MainStyle.css" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
     <AjaxControlToolkit:ToolkitScriptManager ID="scriptManager" runat="server">
         <Scripts>
             <asp:ScriptReference Path="~/JS/jquery-1.2.6.min.js" />
-            
-            <%-- <asp:ScriptReference Path="~/JS/jquery.tablesorter.min.js" />
-            <asp:ScriptReference Path="~/JS/jquery.quicksearch.js" />--%>
-            
+            <asp:ScriptReference Path="~/JS/jquery.tablesorter.min.js" />
+            <asp:ScriptReference Path="~/JS/jquery.quicksearch.js" />
         </Scripts>
     </AjaxControlToolkit:ToolkitScriptManager>
-    
+
+    <script type="text/javascript">
+        //Two custom table sorters for links and checkboxes
+        $.tablesorter.addParser({
+            id: 'link',
+            is: function(s) { return false; },
+            format: function(value, table, cell) {
+                return $("a", cell).html().toLowerCase(); //Get the links in this cell, and return the html inside the first one
+            },
+            type: 'text'
+        });
+
+        $.tablesorter.addParser({
+            id: 'checkbox',
+            is: function(s) { return false; },
+            format: function(value, table, cell) {
+                return $(":checked", cell).size(); //Returns the number of checked boxes in this cell
+            },
+            type: 'numeric'
+        });
+
+        $(document).ready(function() {
+            //Search any table that has the tablesorter class
+            $("table.tablesorter tbody tr").quicksearch({
+                labelText: 'Search: ',
+                attached: null,
+                attachType: 'table',
+                position: 'before',
+                delay: 100,
+                loaderText: 'Loading...',
+                onAfter: function() {
+                    var table = this.attached;
+                    if ($(table).filter("tbody tr:visible").length != 0) {
+                        $(table).trigger("update");
+                        $(table).trigger("appendCache");
+                    }
+                }
+            });
+        });
+    </script>
+
     <% if (false) //Load the vsdoc for intellisense only
        { %>
 
