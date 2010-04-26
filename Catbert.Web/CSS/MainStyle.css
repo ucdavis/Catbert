@@ -6,8 +6,12 @@
     margin: 50px;
 }
 
+h2 {margin-bottom: 0px;}
+
 .dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
-.dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
+.dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em; top: 50%;margin-top: -8px;}
+
+#divLoading {position: absolute; z-index: 5; top: 30%; left: 50%; text-indent: -99999px; height: 31px; padding-right: 31px; background: transparent url(../Images/loading.gif) no-repeat;}
 
 /* =tables */
 
@@ -88,3 +92,34 @@ input#btnLast {background: url(../Images/a-last.png) no-repeat; text-indent: -99
 input#imgSearch {position: relative; top: 5px;}
 input.ac_input {background: url(../Images/input-bg.jpg) no-repeat; height: 15px; width: 200px; padding: 5px 5px 4px; margin-right: 5px; border-right: solid #fff 1px; border-bottom: solid #fff 1px;}
 select {background: url(../Images/input-bg.jpg) no-repeat; height: 25px; width: 200px; padding: 5px 0px 0px 5px; margin-right: 5px; border-right: solid #fff 1px; border-bottom: solid #fff 1px;}
+
+#divSearchResultsSuccess {margin-top: 1em; line-height: 2.5em;}
+#divSearchResultsSuccess label {width: 60px; display: inline-block;}
+
+#divUserInfo table {min-width: 70%;}
+#divUserInfo th {text-align: left; border-bottom: 1px dotted #555555;}
+#UserInfoName {}
+
+
+/* =jquery ui overwrites */
+
+.ui-widget-content {
+ background: #222;
+ border: 0px;
+ color: #ddd;
+}
+.ui-widget-header {
+ background:transparent url(../Images/header-bg-tile.jpg) repeat-x scroll 0 -4px;
+ border: 0px;
+ color: #F6F6F6;
+ font-weight: bold;
+}
+.ui-widget input {height: 17px; padding: 4px 5px 4px; margin-right: 5px;}
+.ui-widget input[type="text"] {background: url(../Images/input-bg.jpg) no-repeat; width: 200px; border-right: solid #fff 1px; border-bottom: solid #fff 1px;}
+.ui-widget input[type="button"] {background: url(../Images/input-btn-bg.jpg) no-repeat; color: #fff; height: 27px; font-size: .8em; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;}
+.ui-widget select {background: url(../Images/input-bg.jpg) no-repeat; height: 25px; width: 200px; padding: 5px 0px 0px 5px; margin-right: 5px; border-right: solid #fff 1px; border-bottom: solid #fff 1px;}
+
+.ui-widget input#btnSearchUser {background: url(../Images/search.png) no-repeat; width: 0px; height: 21px; padding-right: 21px; margin-left: 5px; text-indent: -99999px;}
+.ui-widget #divSearchResultsSuccess #btnAddUser {margin-left: 63px;}
+
+

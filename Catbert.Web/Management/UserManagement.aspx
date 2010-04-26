@@ -64,12 +64,12 @@
     <table id="tblUsers" class="tablesorter">
         <thead>
             <tr>
-                <th class="header Login" title="LoginID">Login</th>
-                <th class="header" title="FirstName">First Name</th>
-                <th class="header headerSortUp" title="LastName">Last Name</th>
-                <th class="header" title="Email">Email</th>
-                <th >Departments</th>
-                <th >Roles</th>
+                <th style="width: 10%" class="header Login" title="LoginID">Login</th>
+                <th style="width: 10%" class="header" title="FirstName">First Name</th>
+                <th style="width: 10%" class="header headerSortUp" title="LastName">Last Name</th>
+                <th style="width: 20%" class="header" title="Email">Email</th>
+                <th style="width: 23%" >Departments</th>
+                <th style="width: 27%">Roles</th>
             </tr>
         </thead>
         <tbody id="tblUsersBody">
@@ -94,16 +94,13 @@
             incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
             exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
         <div id="divUserInfo" style="display:none;">
-            <span id="UserInfoName"></span> (<span id="UserInfoLogin"></span>)<br />
+            <h2><span id="UserInfoName"></span> (<span id="UserInfoLogin"></span>)</h2>
+            <br /><br />
             <table id="UserInfoRoles">
                 <thead>
                     <tr>
-                        <th>
-                            Role
-                        </th>
-                        <th>
-                            Remove
-                        </th>
+                        <th>Role</th>
+                        <th>Remove</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -123,7 +120,7 @@
                 </ItemTemplate>
             </asp:ListView>
             <input type="button" id="btnAddUserRole" value="Add Role" />
-            <br /><br />
+            <br /><br /><br /><br />
             <table id="UserInfoUnits">
                 <thead>
                     <tr>
@@ -163,10 +160,10 @@
         Kerberos or Email: <input type="text" id="txtLoginID" /><input type="button" id="btnSearchUser" value="Search" />
         <span id="spanSearchProgress" style="display:none;">Searching...</span>
         <div id="divSearchResultsSuccess" style="display:none;">
-            <span id="spanNewUserFirstName"></span> <span id="spanNewUserLastName"></span> (<span id="spanNewUserLogin"></span>)<br />
-            Email: <input type="text" id="txtNewUserEmail" /><br />
-            Phone: <input type="text" id="txtNewUserPhone" /><br />
-            Role:
+            <h2><span id="spanNewUserFirstName"></span> <span id="spanNewUserLastName"></span> (<span id="spanNewUserLogin"></span>)</h2>
+            <label>Email:</label> <input type="text" id="txtNewUserEmail" /><br />
+            <label>Phone:</label> <input type="text" id="txtNewUserPhone" /><br />
+            <label>Role:</label>
             <asp:ListView ID="lviewRoles" runat="server">
                 <LayoutTemplate>
                     <select id="applicationRoles">
@@ -186,7 +183,7 @@
                 </SelectParameters>
             </asp:ObjectDataSource>--%>
             <br />
-            Unit:
+            <label>Unit:</label>
             <asp:ListView ID="lviewUnits" runat="server">
                 <LayoutTemplate>
                     <select id="units">
@@ -205,8 +202,8 @@
                     <asp:QueryStringParameter QueryStringField="app" Name="application" DefaultValue="Catbert" />
                 </SelectParameters>
             </asp:ObjectDataSource>--%>
-            <br /><br />
-            <input type="button" id="btnAddUser" value="Add" /><span id="spanAddUserProgress" style="display:none;">Processing...</span>
+            <br />
+            <input type="button" id="btnAddUser" value="Add User" /><span id="spanAddUserProgress" style="display: none;">Processing...</span>
         </div>
     </div>
         
