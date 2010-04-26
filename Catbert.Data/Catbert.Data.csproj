@@ -37,7 +37,7 @@
   <ItemGroup>
     <Reference Include="CAESArch.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=667f3cb07abadf4b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Catbert.Web\Bin\CAESArch.Core.dll</HintPath>
+      <HintPath>..\Bin\CAESArch.Core.dll</HintPath>
     </Reference>
     <Reference Include="CAESArch.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=667f3cb07abadf4b, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
