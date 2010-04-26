@@ -87,6 +87,24 @@
                 OpenDialog(buttons, "Create New Application");
             });
 
+            //Bind the click method of the add role button
+            $("#btnAddRole").click(function() {
+                //Call the add role method, and add the role to the rolelist
+                var roleName = $("#txtAddRole").val();
+
+                var checkbox = $("<input type='checkbox' value='" + roleName + "' />");
+                var newListElement = $("<li></li>");
+
+                newListElement.append(checkbox).append(roleName);
+
+                $("#ulRoles").append(newListElement);
+
+                //Now flash the new element!
+                newListElement.effect("highlight", {}, 2000); //highlight the whole row that was changed
+
+                AjaxCall(baseUrl + 'AddRole', { role: roleName }, null, OnError);
+            });
+
             //Hook up a click handler for the 'active roles only' button
             $("#roleViewOptions li a").click(function() {
                 ChangeRoleDisplay($(this));
@@ -109,15 +127,18 @@
         }
 
         function ShowActiveRolesOnly(activeOnly) {
-            if ( typeof(rolelist) == undefined ) roleList = $("#ulRoles");
+            if (typeof (rolelist) == undefined) roleList = $("#ulRoles");
+            var addRoleButton = $("#addRole");
 
             if (activeOnly) {
                 //var checkedlist = $("li", roleList).filter(" :has(:checked)");
                 $("li", roleList).filter(" :has(:checked)").show();
                 $("li", roleList).filter(" :has(:not(:checked))").hide();
+                addRoleButton.hide(0); 
             }
             else {
                 $("li", roleList).show();
+                addRoleButton.show(0);
             }
         }
 
@@ -393,6 +414,14 @@
                         </asp:ObjectDataSource>
                     </div>
                 </div>
+            </div>
+            <div id="addRole" style="display: none">
+                <span id="spanAddRole">
+                    <input type="text" id="txtAddRole" />
+                </span>
+                <a href="javascript:;" id="btnAddRole" class="dialog_link ui-state-default ui-corner-all">
+                    <span class="ui-icon ui-icon-plusthick"></span>Add Role 
+                </a>
             </div>
         </div>
 	</div>

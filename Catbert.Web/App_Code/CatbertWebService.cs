@@ -217,6 +217,12 @@ public class CatbertWebService : System.Web.Services.WebService
     #region Roles
 
     [WebMethod]
+    public void AddRole(string role)
+    {
+        RoleBLL.CreateRole(role, CurrentServiceUser);
+    }
+
+    [WebMethod]
     public List<ServiceRole> GetRoles(string application)
     {
         List<ServiceRole> roles = new List<ServiceRole>();
