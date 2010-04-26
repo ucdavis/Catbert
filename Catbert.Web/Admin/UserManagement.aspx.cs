@@ -20,9 +20,7 @@ public partial class Management_UserManagement : System.Web.UI.Page
     /// </summary>
     protected void Page_Init(object sender, EventArgs e)
     {
-        CurrentApplication = Request.QueryString["app"];
-
-        Check.Require(CurrentApplication != null, "Application Required");
+        CurrentApplication = "Catbert";
 
         ClientScript.RegisterHiddenField("app", CurrentApplication); //Register a hidden field with the application name in it for use from JS
         ClientScript.RegisterHiddenField("user", User.Identity.Name); //Also a hidden field with the user's name in it for use from JS
@@ -33,9 +31,9 @@ public partial class Management_UserManagement : System.Web.UI.Page
         //Retrieve the units and roles only once, in the same transaction
         using (var ts = new TransactionScope())
         {
-            Units = UnitBLL.GetVisibleByUser(CurrentApplication);
-            Roles = RoleBLL.GetVisibleByUser(CurrentApplication);
-
+            Units = UnitBLL.GetAllUnits();
+            Roles = RoleBLL.GetAll();
+            
             ts.CommitTransaction();
         }
 
