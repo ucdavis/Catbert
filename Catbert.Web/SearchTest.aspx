@@ -52,19 +52,31 @@
                 }
             });
 
+            $("#users").autocomplete('Services/AutocompleteService.asmx/GetUsers', {
+                width: 260,
+                minChars: 2,
+                selectFirst: true,
+                autoFill: false,
+                //highlight: function(value, q) { debugger; },
+                extraParams: { application: "Catbert" },
+                formatItem: function(row, i, max) {
+                    return row.Name + " (" + row.Login + ")<br/>" + row.Email; //i + "/" + max + ": \"" + row.name + "\" [" + row.to + "]";
+                }
+            });
 
-            /*
-            $("#auto").result(function(event, data, formatted) {
-            debugger;
-            if (data)
-            $(this).parent().next().find("input").val(data[1]);
-            });*/
+            $("#users").keypress(function(event) {
+                if (event.keyCode == 13) {
+                    alert($(this).val());
+                    return false;
+                }
+            });
         });
 
     </script>  
 Local: <input type="text" id="suggest13" autocomplete="off" class="ac_input"/>
 <br />
-Search: <input type="text" id="auto" /><input type="submit" value="Find" />
+Search Units: <input type="text" id="auto" /><input type="submit" value="Find" /><br /><br />
+Search Users: <input type="text" id="users" /><input type="submit" value="Find" />
 <br />
 Results:
 <div id="results">

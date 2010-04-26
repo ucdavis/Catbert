@@ -23,7 +23,7 @@ public class AutocompleteService : System.Web.Services.WebService
     }
 
     /// <summary>
-    /// Unoptimized method for getting units by
+    /// Unoptimized method for getting units by query
     /// </summary>
     /// <param name="q"></param>
     /// <param name="limit"></param>
@@ -52,6 +52,34 @@ public class AutocompleteService : System.Web.Services.WebService
 
         return auto;
     }
+
+    [WebMethod]
+    public List<AutoCompleteData> GetUsers(string application, string q /*query*/, int limit)
+    {
+        var users = UserBLL.GetByApplication(application);
+
+        List<AutoCompleteData> auto = new List<AutoCompleteData>();
+
+        foreach (var user in users)
+        {
+            string searchBAD = user.FirstName + user.LastName + user.LoginID;
+
+            if (searchBAD.ToLower().Contains(q))
+            {
+                auto.Add(new AutoCompleteData(user.LoginID, string.Empty,
+                    new
+                    {
+                        Name = string.Format("{0} {1}", user.FirstName, user.LastName),
+                        Login = user.LoginID,
+                        Email = user.Email
+                    }
+                ));
+            }
+        }
+
+        return auto;
+    }
+
 }
 
 public class AutoCompleteData
