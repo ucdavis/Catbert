@@ -120,10 +120,11 @@
             var row = $("#row" + ID); //The changed row
             
             var nameCell = $("td[title=Name]", row);
-            var locationCell = $("td[title=Location]", row);
+            var locationCell = $("td[title=Location] a", row);
 
             nameCell.html(appName);
             locationCell.html(appLocation);
+            locationCell.attr('href', appLocation);
             
             $("td", row).effect("highlight", {}, 3000); //highlight the whole row that was changed
         }
@@ -188,7 +189,7 @@
                     <%# Eval("Abbr") %>
                 </td>
                 <td title="Location">
-                    <%# Eval("Location") %>
+                    <a href='<%# Eval("Location") %>' target='_blank'><%# Eval("Location") %></a>
                 </td>
                 <td>
                     <%# !(bool)Eval("Inactive") %>
