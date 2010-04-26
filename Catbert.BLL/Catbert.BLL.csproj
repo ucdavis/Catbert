@@ -39,6 +39,8 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.DirectoryServices.Protocols" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -50,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationBLL.cs" />
+    <Compile Include="DirectoryServices.cs" />
     <Compile Include="GenericBLL.cs" />
     <Compile Include="PermissionBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
