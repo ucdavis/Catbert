@@ -73,74 +73,7 @@
             </tr>
         </tfoot>
     </table>
-    
-    <div id="dialogUserInfo" title="User Information" style="display: none;">
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        <div id="divUserInfo" style="display:none;">
-            <h2><span id="UserInfoName"></span> (<span id="UserInfoLogin"></span>)</h2>
-            <br /><br />
-            <table id="UserInfoRoles">
-                <thead>
-                    <tr>
-                        <th>Role</th>
-                        <th>Remove</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-            <br />
-            <asp:ListView ID="lviewUserRoles" runat="server">
-                <LayoutTemplate>
-                    <select id="UserRoles">
-                        <option id="itemPlaceholder" runat="server"></option>
-                    </select>
-                </LayoutTemplate>
-                <ItemTemplate>
-                    <option>
-                        <%# Eval("Name") %>
-                    </option>
-                </ItemTemplate>
-            </asp:ListView>
-            <input type="button" id="btnAddUserRole" value="Add Role" />
-            <br /><br /><br /><br />
-            <table id="UserInfoUnits">
-                <thead>
-                    <tr>
-                        <th>
-                            Unit
-                        </th>
-                        <th>
-                            FISCode
-                        </th>
-                        <th>
-                            Remove
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-            <br />
-            <asp:ListView ID="lviewUserUnits" runat="server">
-                <LayoutTemplate>
-                    <select id="UserUnits">
-                        <option id="itemPlaceholder" runat="server"></option>
-                    </select>
-                </LayoutTemplate>
-                <ItemTemplate>
-                    <option value='<%# Eval("FISCode") %>'>
-                        <%# Eval("ShortName") %>
-                    </option>
-                </ItemTemplate>
-            </asp:ListView>
-            <input type="button" id="btnAddUserUnit" value="Add Unit" />
-        </div>
-    </div>
-    
+        
     <div id="dialogFindUser" title="Add a User" style="display: none;">
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
         Kerberos or Email: <input type="text" id="txtLoginID" /><input type="button" id="btnSearchUser" value="Search" />
@@ -199,6 +132,52 @@
             </asp:ObjectDataSource>--%>
             <br />
             <input type="button" id="btnAddUser" value="Add User" /><span id="spanAddUserProgress" style="display: none;">Processing...</span>
+        </div>
+    </div>
+    
+    <div id="dialogUserInfo" title="User Information" style="display: none;">
+        <div id="tabs">
+            <ul>
+                <li><a href="#tabPermissions">Permissions</a></li>
+                <li><a href="#tabUnits">Units</a></li>
+                <li><a href="#tabInfo">Info</a></li>
+            </ul>
+            <div id="tabPermissions">
+                <table id="tblPermissions">
+                    <thead>
+                        <tr>
+                            <th>Application</th>
+                            <th>Role</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div id="tabUnits">
+                <table id="tblUnits">
+                    <thead>
+                        <tr>
+                            <th>Application</th>
+                            <th>Role</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div id="tabInfo">
+                <p>
+                    Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate,
+                    pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem.
+                    Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia
+                    nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo
+                    pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem
+                    enim, pretium nec, feugiat nec, luctus a, lacus.
+                </p>
+            </div>
         </div>
     </div>
         

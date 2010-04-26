@@ -17,11 +17,15 @@ var sortorder = "ASC";
 var userTableDirty = false;
 var rowEven = true;
 
+var tabs;
+    
 $(document).ready(function() {
     user = $("#user").val();
 
     PopulateUserTable(application, search, unit, role, sortname, sortorder); //Populate the user table
 
+    tabs = $('#tabs').tabs();
+    
     $("#txtSearch").autocomplete(baseURL + 'GetUsersAutoComplete', {
         width: 260,
         minChars: 2,
@@ -79,7 +83,7 @@ $(document).ready(function() {
 
     $("#tblUsers thead tr th.header").click(ChangeSortOrder);
 
-    $(".ShowUserLink").live("click", function() { ShowUserInfo(application, $(this).html()); });
+    $(".ShowUserLink").live("click", ShowUserInfo);
 
     $("#addUser").click(function() {
         var findUserDialog = $("#dialogFindUser");
@@ -255,72 +259,73 @@ function AddUserUnit(application) {
     }
 }
 
-function ShowUserInfo(applicationName, Login) {
+function ShowUserInfo() {
+    var loginId = $(this).html();
+
+    var roles = $("#tblPermissions tbody");
+    var units = $("#tblUnits tbody");
+
+    //Clear out the old roles and units
+    roles.empty();
+    units.empty();
+
+    console.info(loginId);
+    //alert(loginId);
+
     var dialogUserInfo = $("#dialogUserInfo");
 
     var buttons = {
         "Close": function() {
-            $("#divUserInfo").hide(0);
+            //$("#divUserInfo").hide(0);
             $(this).dialog("close");
         }
     }
 
-    OpenDialog(dialogUserInfo, buttons, "User Information",
-                function() {
-                    if (userTableDirty) {
-                        if (Login == user) {
-                            //We must repopulate the page since the currently logged in user changed their account
-                            window.location.reload();
-                        }
-                        else {
-                            //We can just repopulate the user's table since someone else was modified
-                            PopulateUserTableDefault(applicationName);
-                        }
-                    }
-                }
-            );
+    tabs.tabs('select', 0); //select the first tab by default when viewing a new user
 
-    var baseUrl = baseURL;
+    OpenDialog(dialogUserInfo, buttons, "User Information", null);
+
+    var url = baseURL + 'GetUserInfo';
 
     AjaxCall(
-                baseUrl + 'GetUser',
-                { login: Login, application: applicationName },
-                function(data) { PopulateUserInfo(data, applicationName); },
+                url,
+                { loginId: loginId },
+                function(data) { PopulateUserInfo(data); },
                 null //TODO: Error method
             );
 }
 
-function PopulateUserInfo(data, application) {
-    $("#UserInfoName").html(data.FirstName + " " + data.LastName);
-    $("#UserInfoLogin").html(data.Login);
+function PopulateUserInfo(data) {
 
-    var roles = $("#UserInfoRoles tbody");
-    var units = $("#UserInfoUnits tbody");
+    var loginId = data.LoginId;
+    var roles = $("#tblPermissions tbody");
+    var units = $("#tblUnits tbody");
 
+    //Clear out the old roles and units
     roles.empty();
     units.empty();
 
-    $(data.Roles).each(function(index, row) {
-        var newrow = CreateRoleRow(row.Name, data.Login, application);
+    $(data.PermissionAssociations).each(function() {
+        var newRoleRow = CreateRoleRow(this.RoleName, loginId, this.ApplicationName);
 
-        roles.append(newrow);
+        roles.append(newRoleRow);
     });
 
-    $(data.Units).each(function(index, row) {
-        var newrow = CreateUnitRow(row.Name, row.UnitFIS, data.Login, application);
+    $(data.UnitAssociations).each(function() {
+        var newUnitRow = CreateUnitRow(this.UnitFIS, loginId, this.ApplicationName);
 
-        units.append(newrow);
+        units.append(newUnitRow);
     });
-
-    $("#divUserInfo").show(0); //Show the user information
 }
 
 function CreateRoleRow(role, login, application) {
     var newrow = $('<tr></tr>');
 
     var deleteLink = $('<input type="button" value="X" />');
-    deleteLink.click(function() { DeleteRole(login, role, application, newrow); });
+    deleteLink.click(function() { alert('Not Implemented'); }); //TODO
+    //deleteLink.click(function() { DeleteRole(login, role, application, newrow); });
 
+    newrow.append('<td>' + application + '</td>');
     newrow.append('<td>' + role + '</td>');
 
     var deleteCol = $('<td>').append(deleteLink);
@@ -329,14 +334,15 @@ function CreateRoleRow(role, login, application) {
     return newrow;
 }
 
-function CreateUnitRow(unit, unitFIS, login, application) {
+function CreateUnitRow(unit, login, application) {
     var newrow = $('<tr></tr>');
 
     var deleteLink = $('<input type="button" value="X" />');
-    deleteLink.click(function() { DeleteUnit(login, unitFIS, application, newrow); });
+    deleteLink.click(function() { alert('Not Implemented'); }); //TODO
+    //deleteLink.click(function() { DeleteUnit(login, unitFIS, application, newrow); });
 
+    newrow.append('<td>' + application + '</td>');
     newrow.append('<td>' + unit + '</td>');
-    newrow.append('<td>' + unitFIS + '</td>');
 
     var deleteCol = $('<td>').append(deleteLink);
     newrow.append(deleteCol);

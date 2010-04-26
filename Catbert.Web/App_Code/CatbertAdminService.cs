@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Services;
 using CAESDO.Catbert.BLL;
+using CAESDO.Catbert.BLL.Service;
 using CAESDO.Catbert.Core.Domain;
+using CAESDO.Catbert.Core.ServiceObjects;
 using Catbert.Services;
 
 /// <summary>
@@ -89,6 +91,12 @@ public class CatbertAdminService : WebService
         };
 
         return serviceUser;
+    }
+
+    [WebMethod]
+    public UserInformation GetUserInfo(string loginId)
+    {
+        return UserInformationServiceBLL.GetInformationByLoginId(loginId);
     }
 
     /// <summary>
