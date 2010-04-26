@@ -82,7 +82,40 @@
 
                 OpenDialog(buttons, "Create New Application");
             });
+
+            //Hook up a click handler for the 'active roles only' button
+            $("#roleViewOptions li a").click(function() {
+                ChangeRoleDisplay($(this));
+
+                //Now if this is the allRoles button, show all, else just show checked roles
+                if (this.id == "activeRolesLink")
+                    ShowActiveRolesOnly(true); //just active roles
+                else
+                    ShowActiveRolesOnly(false);
+            });
         });
+
+        function ChangeRoleDisplay(el) {
+            var activeState = "ui-state-active";
+            var defaultState = "ui-state-default";
+
+            //Reset all of the anchors to their default classes
+            $("#roleViewOptions li a").removeClass(activeState).addClass(defaultState);
+            el.removeClass(defaultState).addClass(activeState);
+        }
+
+        function ShowActiveRolesOnly(activeOnly) {
+            if ( typeof(rolelist) == undefined ) roleList = $("#ulRoles");
+
+            if (activeOnly) {
+                //var checkedlist = $("li", roleList).filter(" :has(:checked)");
+                $("li", roleList).filter(" :has(:checked)").show();
+                $("li", roleList).filter(" :has(:not(:checked))").hide();
+            }
+            else {
+                $("li", roleList).show();
+            }
+        }
 
         function ShowApplicationInfo() {
             var row = $(this).parents("tr");
@@ -140,6 +173,10 @@
                 var roleBox = $("input[value=" + roleName + "]", roleList); //Find the one role with the value of roleName                
                 roleBox.attr('checked', 'checked');//Check it
             }
+
+            //Now show only the checked ones
+            ChangeRoleDisplay($("#activeRolesLink"));
+            ShowActiveRolesOnly(true);
 
             //Application is populated, so show the information div
             ShowApplicationInformation(true);
@@ -324,29 +361,35 @@
 		    </tr>
 		</table>
         <br /><br />
-        <div id="Roles">
-            Roles:
-            <asp:ListView ID="lviewRoles" runat="server" DataSourceID="odsRoles">
-                <LayoutTemplate>
-                    <ul id="ulRoles">
-                        <li id="itemPlaceholder" runat="server"></li>
+            <div id="Roles">
+                <div id="roletabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
+                    <ul id="roleViewOptions" class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+                        <li id="activeRoles" class="ui-corner-top"><a id="activeRolesLink" href="javascript:;" class="ui-state-active"><span>Active Roles:</span></a></li>
+                        <li id="allRoles" class="ui-corner-top"><a id="allRolesLink" href="javascript:;" class="ui-state-default"><span>All Roles:</span></a></li>
                     </ul>
-                </LayoutTemplate>
-                <ItemTemplate>
-                    <li>
-                        <input type="checkbox" value="<%# Eval("Name") %>" /><%# Eval("Name") %>
-                    </li>
-                </ItemTemplate>
-            </asp:ListView>
-            <asp:ObjectDataSource ID="odsRoles" runat="server" 
-                OldValuesParameterFormatString="original_{0}" SelectMethod="GetAll" 
-                TypeName="CAESDO.Catbert.BLL.RoleBLL">
-                <SelectParameters>
-                    <asp:Parameter DefaultValue="Name" Name="propertyName" Type="String" />
-                    <asp:Parameter DefaultValue="true" Name="ascending" Type="Boolean" />
-                </SelectParameters>
-            </asp:ObjectDataSource>
-        </div>
+                    <div class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+                        <asp:ListView ID="lviewRoles" runat="server" DataSourceID="odsRoles">
+                            <LayoutTemplate>
+                                <ul id="ulRoles">
+                                    <li id="itemPlaceholder" runat="server"></li>
+                                </ul>
+                            </LayoutTemplate>
+                            <ItemTemplate>
+                                <li>
+                                    <input type="checkbox" value="<%# Eval("Name") %>" /><%# Eval("Name") %>
+                                </li>
+                            </ItemTemplate>
+                        </asp:ListView>
+                        <asp:ObjectDataSource ID="odsRoles" runat="server" OldValuesParameterFormatString="original_{0}"
+                            SelectMethod="GetAll" TypeName="CAESDO.Catbert.BLL.RoleBLL">
+                            <SelectParameters>
+                                <asp:Parameter DefaultValue="Name" Name="propertyName" Type="String" />
+                                <asp:Parameter DefaultValue="true" Name="ascending" Type="Boolean" />
+                            </SelectParameters>
+                        </asp:ObjectDataSource>
+                    </div>
+                </div>
+            </div>
         </div>
 	</div>
 </asp:Content>
