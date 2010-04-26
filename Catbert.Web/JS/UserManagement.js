@@ -206,7 +206,7 @@ function AddUserRole(application) {
         var newrow = CreateRoleRow(newrole, login, application);
         roles.append(newrow);
 
-        $(newrow).effect("highlight", {}, 3000);
+        $(newrow).effect("highlight", {color: "#555555"}, 3000);
 
         AjaxCall(baseURL + "AssociateRole",
                     { login: login, role: newrole, application: application },
@@ -242,7 +242,7 @@ function AddUserUnit(application) {
         var newrow = CreateUnitRow(newunitname, newunit, login, application);
         units.append(newrow);
 
-        $(newrow).effect("highlight", {}, 3000);
+        $(newrow).effect("highlight", {color: "#555555"}, 3000);
 
         AjaxCall(baseURL + "AddUnit",
                     { login: login, application: application, unitFIS: newunit },

@@ -11,7 +11,9 @@ h2 {margin-bottom: 0px;}
 .dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
 .dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em; top: 50%;margin-top: -8px;}
 
-#divLoading {position: absolute; z-index: 5; top: 30%; left: 50%; text-indent: -99999px; height: 31px; padding-right: 31px; background: transparent url(../Images/loading.gif) no-repeat;}
+/* #divLoading {position: absolute; display: inline-block; z-index: 5; top: 5%; left: 41%; text-indent: -99999px; height: 19px; padding-right: 220px; background: transparent url(../Images/loading-bar.gif) no-repeat 50% 50%;} */
+#divLoading {position: absolute; display: inline-block; z-index: 5; top: 45%; left: 48.5%; text-indent: -99999px; height: 31px; padding-right: 31px; background: transparent url(../Images/loading.gif) no-repeat 50% 50%;}
+
 
 /* =tables */
 
