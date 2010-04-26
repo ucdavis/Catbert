@@ -6,6 +6,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="body" Runat="Server">
     <script src="../JS/jquery.ajaxQueue.js" type="text/javascript"></script>
     <script src="../JS/jquery.autocomplete.js" type="text/javascript"></script>
+    <script src="../JS/jquery.tablesorter.min.js" type="text/javascript"></script>
     
     <script type="text/javascript">
         var baseURL = '../Services/CatbertWebService.asmx/';
@@ -40,8 +41,16 @@
 
             $("#selectSort").change(function(even, other) {
                 sortname = this.value; //set the new sortname
-                
+
                 PopulateUserTable(application, search, unit, role, sortname, "ASC");
+            });
+
+            $("#tblUsers").tablesorter({
+                headers: { 4: { sorter: false }, 5: { sorter: false} },
+                cssAsc: 'headerSortUp',
+                cssDesc: 'headerSortDown',
+                cssHeader: 'header',
+                widgets: ['zebra']
             });
         });
 
@@ -61,6 +70,8 @@
             
             //Render out each row
             $(data.rows).each(RenderRow);
+
+            SortTable();
         }
 
         function RenderRow(index, row) {
@@ -78,6 +89,14 @@
             newrow.append('<td class="Roles">' + roles + '</td>');
 
             $("#tblUsersBody").append(newrow);
+        }
+
+        //Trigger a sort update, and sort on the last name column
+        function SortTable() {
+            $("#tblUsers").trigger("update");
+            var sorting = [[1, 0]];
+            // sort on the first column 
+            $("#tblUsers").trigger("sorton", [sorting]);
         }
 
         function CreateDomFromUserInfoArray(array) {
@@ -117,12 +136,12 @@
     <table id="tblUsers" class="tablesorter">
         <thead>
             <tr>
-                <th class="header">First Name</th>
-                <th class="header">Last Name</th>
-                <th class="header">Login</th>
-                <th class="header">Email</th>
-                <th class="header">Departments</th>
-                <th class="header">Roles</th>
+                <th >First Name</th>
+                <th >Last Name</th>
+                <th >Login</th>
+                <th >Email</th>
+                <th >Departments</th>
+                <th >Roles</th>
             </tr>
         </thead>
         <tbody id="tblUsersBody">
