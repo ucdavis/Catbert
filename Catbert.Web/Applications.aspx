@@ -36,6 +36,7 @@
         function ShowUserInfo(applicationID, name) {
             var dialog = $("#dialogUserInfo"); //the dialog div
 
+            dialog.dialog("destroy"); //Reset the dialog to its initial state
             dialog.dialog({
                 autoOpen: true,
                 width: 600,
@@ -44,11 +45,16 @@
                 buttons: {
                     "Close": function() {
                         $(this).dialog("close");
+                    },
+                    "Update": function() {
+                        UpdateApplication(applicationID, name);
+                        $(this).dialog("close");
                     }
                 }
             });
 
-            dialog.dialog('option', 'title', name); //Set the title
+            //var buttons = $(dialog.dialog('option', 'buttons').Update).attr('disabled', true);
+            //debugger;
 
             ShowApplicationInformation(false);  //Don't show the information until it loads
             
@@ -83,12 +89,28 @@
             ShowApplicationInformation(true);
         }
 
+        ///Update the given application, which resides in the row identified by the ID
+        function UpdateApplication(ID, name) {
+            
+            
+        
+            var row = $("#row" + ID); //The changed row
+            var nameCell = $("td[title=Name]", row);
+
+            $("td", row).effect("highlight", {}, 3000); //highlight the whole row that was changed
+        }
+
         function ShowApplicationInformation(loaded) {
             var infoVisible = loaded ? 'visible' : 'hidden';
             var loadingOpacity = loaded ? 0 : 1; //go to invisible if we have loaded
+            var updateButton = $(":button:contains('Update')"); //.attr("disabled", "disabled");
 
+            if (loaded) updateButton.attr('disabled', false);
+            else updateButton.attr('disabled', 'disabled');
+            
             $("#divApplicationInfo").css('visibility', infoVisible);
             $("#spanLoading").fadeTo('fast', loadingOpacity);
+            
         }
         
     </script>
@@ -121,20 +143,20 @@
             </table>
         </LayoutTemplate>
         <ItemTemplate>
-            <tr>
+            <tr id='row<%# Eval("ID") %>'>
                 <td>
                     <a href="javascript:;" id="dialog_link" class="ui-state-default ui-corner-all" onclick='ShowUserInfo(<%# Eval("ID") %>, "<%# Eval("Name") %>");'>
                         <span class="ui-icon ui-icon-newwin"></span>
                         Select 
                     </a>
                 </td>
-                <td>
+                <td title="Name">
                     <%# Eval("Name") %>
                 </td>
-                <td>
+                <td title="Abbr">
                     <%# Eval("Abbr") %>
                 </td>
-                <td>
+                <td title="Location">
                     <%# Eval("Location") %>
                 </td>
                 <td>
