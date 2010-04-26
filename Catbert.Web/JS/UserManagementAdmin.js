@@ -8,7 +8,7 @@ var user = null;
 var search = null, unit = null, role = null; //start with no search, unit, or role filters
 
 var page = 1;
-var pageSize = 3;
+var pageSize = 20;
 var totalPages = 1;
 
 var sortname = "LastName";
