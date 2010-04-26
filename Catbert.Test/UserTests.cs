@@ -155,5 +155,12 @@ namespace CAESDO.Catbert.Test
             Assert.Inconclusive("Test Not Developed");
         }
 
+        [TestMethod]
+        public void GetUserBadLogin()
+        {
+            var result = CatbertManager.GetUser("nonexistant");
+
+            Assert.IsNull(result);
+        }
     }
 }
