@@ -349,10 +349,12 @@ public class CatbertWebService : System.Web.Services.WebService
     {
         if (page <= 0 || pagesize <= 0) throw new ArgumentException("Page variables must be positive integers");
 
+        string orderBy = string.IsNullOrEmpty(sortname) ? "LastName DESC" : string.Format("{0} {1}", sortname, sortorder);
+
         int totalUsers = 0;
 
         //var users = ConvertFromUserList(UserBLL.GetByApplication(application), application);
-        var users = ConvertFromUserList(UserBLL.GetByApplication(application, search, page, pagesize, ref totalUsers), application);
+        var users = ConvertFromUserList(UserBLL.GetByApplication(application, search, page, pagesize, orderBy, ref totalUsers), application);
 
         RecordSet grid = new RecordSet() { page = page, total = totalUsers/pagesize, records = users.Count };
 
@@ -360,13 +362,6 @@ public class CatbertWebService : System.Web.Services.WebService
         {
             grid.rows.Add(user);
         }
-
-        //foreach (var user in users)
-        //{
-        //    var badSearch = user.Email + user.FirstName + user.LastName + user.Login + user.EmployeeID;
-
-        //    if ( search == null || badSearch.ToLower().Contains(search) ) grid.rows.Add(user);
-        //}
 
         return grid;
     }

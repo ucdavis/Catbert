@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Text;
 using CAESDO.Catbert.Core.Domain;
 using CAESDO.Catbert.Data;
@@ -161,14 +162,14 @@ namespace CAESDO.Catbert.BLL
             return GetUserQueryableByApplication(application, null).ToList();
         }
 
-        private static IEnumerable<User> GetUserQueryableByApplication(string application, string searchToken)
+        private static IQueryable<User> GetUserQueryableByApplication(string application, string searchToken)
         {
             //Grab all permissions in this application
             var permissions = PermissionBLL.Queryable.Where(perm => perm.Application.Name == application && perm.Inactive == false).ToList();
 
             //Now get all users among these permissions
             var users = permissions.Select(perm => perm.User).Distinct();
-
+            
             if (string.IsNullOrEmpty(searchToken) == false)
             {
                 searchToken = searchToken.ToLower(); //search should be lowercase
@@ -177,12 +178,12 @@ namespace CAESDO.Catbert.BLL
                     || u.LastName.ToLower().Contains(searchToken) || u.LoginID.ToLower().Contains(searchToken));
             }
 
-            return users;
+            return users.AsQueryable<User>();
         }
 
-        public static List<User> GetByApplication(string application, string searchToken, int page, int pageSize, ref int totalUsers)
+        public static List<User> GetByApplication(string application, string searchToken, int page, int pageSize, string orderBy, ref int totalUsers)
         {
-            IEnumerable<User> users = GetUserQueryableByApplication(application, searchToken);
+            IQueryable<User> users = GetUserQueryableByApplication(application, searchToken).OrderBy(orderBy);
 
             totalUsers = users.Count();
 

@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="ApplicationBLL.cs" />
     <Compile Include="DirectoryServices.cs" />
+    <Compile Include="Dynamic.cs" />
     <Compile Include="GenericBLL.cs" />
     <Compile Include="PermissionBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

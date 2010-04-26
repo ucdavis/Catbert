@@ -12,6 +12,8 @@
         var baseURL = '../Services/CatbertWebService.asmx/';
         var autocompleteUnitsURL = '../Services/AutocompleteService.asmx/GetUsers';
 
+        var application = null;
+        
         var search = null, unit = null, role = null; //start with no search, unit, or role filters
         
         var page = 1;
@@ -21,7 +23,7 @@
         var sortorder = "ASC";
 
         $(document).ready(function() {
-            var application = $("#app").val();
+            application = $("#app").val();
 
             PopulateUserTable(application, search, unit, role, sortname, sortorder); //Populate the user table
 
@@ -131,9 +133,20 @@
         });
 
         function ChangeSortOrder() {
-            var sortName = $(this).attr("title");
-            var sortOrder = $(this).hasClass("headerSortUp") ? "DESC" : "ASC";
-            debugger;
+            sortname = $(this).attr("title");
+            sortorder = $(this).hasClass("headerSortUp") ? "DESC" : "ASC";
+
+            var sortableHeaders = $(".header");
+            sortableHeaders.removeClass("headerSortUp").removeClass("headerSortDown"); //remove the sort direction classes from each sortable col
+
+            //add the sort direction class back into the current header object
+            if (sortorder == "ASC")
+                $(this).addClass("headerSortUp");
+            else
+                $(this).addClass("headerSortDown");
+
+            //After changing the sortvars, repopulate the grid
+            PopulateUserTableDefault(application);
         }
 
         function AddUserRole(application) {
@@ -464,7 +477,7 @@
             <tr>
                 <th class="header" title="FirstName">First Name</th>
                 <th class="header headerSortUp" title="LastName">Last Name</th>
-                <th class="header" title="Login">Login</th>
+                <th class="header" title="LoginID">Login</th>
                 <th class="header" title="Email">Email</th>
                 <th >Departments</th>
                 <th >Roles</th>
