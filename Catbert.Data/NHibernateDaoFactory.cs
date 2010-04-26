@@ -120,8 +120,13 @@ namespace CAESDO.Catbert.Data
                             .Add(Expression.Like("FirstName", searchToken, MatchMode.Anywhere))
                             .Add(Expression.Like("LastName", searchToken, MatchMode.Anywhere))
                             .Add(Expression.Like("LoginID", searchToken, MatchMode.Anywhere))
-                        )
-                    .Add(Subqueries.PropertyIn("id", GetUsersInAnyRoleInApplication(application))); //Include just users within an application
+                        );
+
+                //Only filter on application if one is given
+                if (!string.IsNullOrEmpty(application))
+                {
+                    criteria.Add(Subqueries.PropertyIn("id", GetUsersInAnyRoleInApplication(application))); //Include just users within an application
+                }
 
                 totalUsers = CriteriaTransformer.TransformToRowCount(criteria).UniqueResult<int>();
 
