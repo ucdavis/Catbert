@@ -149,7 +149,7 @@ namespace CAESDO.Catbert.Test
 
         public static CatbertService.SecurityContext GetSecurityContext()
         {
-            return new CAESDO.Catbert.Test.CatbertService.SecurityContext() { UserID = "", Password = "" };
+            return new CAESDO.Catbert.Test.CatbertService.SecurityContext() { UserID = "postit", Password = "CA0C898E-0287-40FE-AE76-554039B932FD" };
         }
 
         public static void SetSecurityContext()
