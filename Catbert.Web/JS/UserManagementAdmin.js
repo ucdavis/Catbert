@@ -144,6 +144,7 @@ $(document).ready(function() {
 
         application = $(this).val();
 
+        console.info(application);
         PopulateUserTableDefault(application);
     });
 });
@@ -153,11 +154,9 @@ function SearchUsers() {
     page = 1; //Change the page when a new search is executed
 
     //Clear unit and role filters
-    $("#filterRoles option:nth(0)").attr("selected", true);
-    $("#filterUnits option:nth(0)").attr("selected", true);
+    $("#filterApplications option:nth(0)").attr("selected", true);
 
-    role = null;
-    unit = null;
+    application = null;
     
     PopulateUserTable(application, search, unit, role, sortname, sortorder);
 
