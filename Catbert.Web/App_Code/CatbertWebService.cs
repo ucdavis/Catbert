@@ -8,6 +8,7 @@ using CAESDO.Catbert.Core.Domain;
 using System.Web;
 using System.Collections.Specialized;
 using System.Linq;
+using CAESArch.Core.Utils;
 
 /// <summary>
 /// Summary description for CatbertWebService
@@ -73,6 +74,8 @@ public class CatbertWebService : System.Web.Services.WebService
     [WebMethod]
     public CatbertUser GetUser(string login, string application)
     {
+        EnsureCurrentUserCanManageLogin(application, login);
+
         User user = UserBLL.GetUser(login);
 
         if (user == null) return null; //make sure we have a real user
@@ -90,24 +93,32 @@ public class CatbertWebService : System.Web.Services.WebService
     [WebMethod]
     public bool AddUnit(string login, string application, string unitFIS)
     {
+        EnsureCurrentUserCanManageLogin(application, login);
+
         return UserBLL.AssociateUnit(login, application, unitFIS, CurrentServiceUser);
     }
 
     [WebMethod]
     public bool DeleteUnit(string login, string application, string unitFIS)
     {
+        EnsureCurrentUserCanManageLogin(application, login);
+
         return UserBLL.UnassociateUnit(login, application, unitFIS, CurrentServiceUser);
     }
 
     [WebMethod]
     public void AssociateRole(string login, string role, string application)
     {
+        EnsureCurrentUserCanManageLogin(application, login);
+
         PermissionBLL.InsertPermission(application, role, login, CurrentServiceUser);
     }
 
     [WebMethod]
     public void DissociateRole(string login, string role, string application)
     {
+        EnsureCurrentUserCanManageLogin(application, login);
+
         PermissionBLL.DeletePermission(application, role, login, CurrentServiceUser);
     }
 
@@ -143,6 +154,13 @@ public class CatbertWebService : System.Web.Services.WebService
         }
 
         return grid;
+    }
+
+    private void EnsureCurrentUserCanManageLogin(string application, string loginToManage)
+    {
+        Check.Require(UserBLL.CanUserManageGivenLogin(application, CurrentServiceUser, loginToManage),
+                      string.Format("{0} does not have access to manage {1} within the {2} application",
+                                    CurrentServiceUser, loginToManage, application));
     }
 
     #endregion
