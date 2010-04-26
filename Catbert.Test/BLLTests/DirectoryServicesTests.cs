@@ -17,12 +17,21 @@ namespace CAESDO.Catbert.Test.BLLTests
         }
 
         [TestMethod]
-        public void CanGetExampleStudent()
+        public void CanGetExampleStudentPostit()
         {
-            var student = DirectoryServices.FindStudent("175580");
+            var student = DirectoryServices.FindStudent("991333530");
 
             Assert.IsNotNull(student);
-            Assert.AreEqual("azxnguye", student.LoginID);
+            Assert.AreEqual("postit", student.LoginID);
+        }
+
+        [TestMethod]
+        public void CanGetExampleStudentAnlai()
+        {
+            var student = DirectoryServices.FindStudent("992631147");
+
+            Assert.IsNotNull(student);
+            Assert.AreEqual("anlai", student.LoginID);
         }
     }
 }

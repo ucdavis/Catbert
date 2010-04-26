@@ -20,6 +20,7 @@ namespace CAESDO.Catbert.BLL
         private const string STR_Telephone = "telephoneNumber";
         private const string STR_UID = "uid";
         private const string STR_PIDM = "ucdPersonPIDM";
+        private const string STR_StudentId = "ucdStudentSID";
         private static readonly string LDAPPassword = WebConfigurationManager.AppSettings["LDAPPassword"];
         private static readonly string LDAPUser = WebConfigurationManager.AppSettings["LDAPUser"];
         private static readonly int STR_LDAPPort = 636;
@@ -174,11 +175,11 @@ namespace CAESDO.Catbert.BLL
         /// <summary>
         /// Builds a ldap search for student PIDM and then gets out the first returned user
         /// </summary>
-        public static DirectoryUser LDAPFindStudent(string pidm)
+        public static DirectoryUser LDAPFindStudent(string studentId)
         {
-            if (string.IsNullOrEmpty(pidm)) return null;
+            if (string.IsNullOrEmpty(studentId)) return null;
 
-            var searchFilter = string.Format("(&({0}={1}))", STR_PIDM, pidm);
+            var searchFilter = string.Format("(&({0}={1}))", STR_StudentId, studentId);
             
             SearchResponse sResponse = GetSearchResponse(searchFilter, STR_SearchBase);
 
@@ -211,9 +212,9 @@ namespace CAESDO.Catbert.BLL
             return LDAPFindUser(searchTerm);
         }
 
-        public static DirectoryUser FindStudent(string pidm)
+        public static DirectoryUser FindStudent(string studentId)
         {
-            return LDAPFindStudent(pidm);
+            return LDAPFindStudent(studentId);
         }
     }
 
