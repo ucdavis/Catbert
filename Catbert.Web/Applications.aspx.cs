@@ -9,7 +9,6 @@ public partial class Applications : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        //Always bind when loading the page
-        lviewApplications.DataBind();
+
     }
 }

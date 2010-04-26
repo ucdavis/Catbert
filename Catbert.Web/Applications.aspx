@@ -191,8 +191,7 @@
                     location: application.appLocation,
                     roles: application.roles
                 },
-                //OnCreateApplicationComplete,
-                function() { $("form").submit(); },
+                function() { window.location.reload(); },
                 OnError
             );
         }
