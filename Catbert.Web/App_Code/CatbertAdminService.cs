@@ -69,6 +69,29 @@ public class CatbertAdminService : WebService
     }
 
     /// <summary>
+    /// We are going to search for the user with the given term, currently can be email or loginID
+    /// </summary>
+    [WebMethod]
+    public ServiceUser FindUser(string searchTerm)
+    {
+        var foundUser = DirectoryServices.FindUser(searchTerm);
+
+        if (foundUser == null) return null;
+
+        var serviceUser = new ServiceUser()
+        {
+            EmployeeID = foundUser.EmployeeID,
+            FirstName = foundUser.FirstName,
+            LastName = foundUser.LastName,
+            Login = foundUser.LoginID,
+            Email = foundUser.EmailAddress,
+            Phone = foundUser.PhoneNumber
+        };
+
+        return serviceUser;
+    }
+
+    /// <summary>
     /// Creates a list of service users with only the top level user information filled out.
     /// </summary>
     private static List<ServiceUser> ConvertFromUserList(List<User> users)
