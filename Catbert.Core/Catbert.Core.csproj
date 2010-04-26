@@ -58,6 +58,7 @@
     <Compile Include="Domain\Permission.cs" />
     <Compile Include="Domain\Role.cs" />
     <Compile Include="Domain\School.cs" />
+    <Compile Include="Domain\Tracking.cs" />
     <Compile Include="Domain\Unit.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Domain\ValidateBO.cs" />
@@ -81,6 +82,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Domain\Permission.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Domain\Tracking.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
