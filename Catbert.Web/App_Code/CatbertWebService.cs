@@ -299,6 +299,29 @@ public class CatbertWebService : System.Web.Services.WebService
         return grid;
     }
 
+    /// <summary>
+    /// Get all users in this application, filtered by query, unit and role
+    /// </summary>
+    [WebMethod]
+    public jqGridData jqGetUsers(string application, string search, string unit, string role)
+    {
+        var users = ConvertFromUserList(UserBLL.GetByApplication(application), application);
+        search = search == null ? null : search.ToLower();
+
+        jqGridData grid = new jqGridData() { page = 1, total = 2, records = 20 };
+
+        foreach (var user in users)
+        {
+            var badSearch = user.Email + user.FirstName + user.LastName + user.Login + user.EmployeeID;
+
+            if ( search == null || badSearch.ToLower().Contains(search) ) grid.rows.Add(user);
+        }
+
+        grid.records = grid.rows.Count;
+
+        return grid;
+    }
+
     [WebMethod]
     public List<CatbertUser> GetUsersByApplicationRole(string application, string role)
     {

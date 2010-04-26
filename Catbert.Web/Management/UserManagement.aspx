@@ -13,14 +13,13 @@
         $(document).ready(function() {
             var application = $("#app").val();
 
-            PopulateUserTable(application); //Populate the user table
+            PopulateUserTable(application, null); //Populate the user table
 
             $("#txtSearch").autocomplete(autocompleteUnitsURL, {
                 width: 260,
                 minChars: 2,
                 selectFirst: false,
                 autoFill: false,
-                //highlight: function(value, q) { debugger; },
                 extraParams: { application: application },
                 formatItem: function(row, i, max) {
                     return row.Name + " (" + row.Login + ")<br/>" + row.Email; //i + "/" + max + ": \"" + row.name + "\" [" + row.to + "]";
@@ -30,6 +29,7 @@
             $("#txtSearch").keypress(function(event) {
                 if (event.keyCode == 13) {
                     PopulateUserTable(application, $(this).val() /*textbox value*/);
+                    $(".ac_results").hide(); //Hide the results whenever you hit enter
                     return false; //Don't post back
                 }
             });
@@ -37,18 +37,18 @@
 
         function PopulateUserTable(application, search) {
             //Setup the parameters
-            var data = { application: application, search: search };
-
-            //Clear the usertable
-            $("#tblUsersBody").empty();
+            var data = { application: application, search: search, unit: null, role: null };
             
             //Call the webservice
-            AjaxCall('jqGetUsersByApplication', data, PopulateUserTableSuccess, null);
+            AjaxCall('jqGetUsers', data, PopulateUserTableSuccess, null);
         }
 
         function PopulateUserTableSuccess(data) {
             data = data.d; //Grab the inner container of data
 
+            //Clear the usertable
+            $("#tblUsersBody").empty();
+            
             //Render out each row
             $(data.rows).each(RenderRow);
         }
