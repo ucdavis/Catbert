@@ -217,7 +217,13 @@
         }
 
         function DeleteRole(login, role, application, rowToDelete) {
-            debugger;
+            $(rowToDelete).fadeOut('slow');
+
+            AjaxCall(baseURL + "DissociateRole",
+                { login: login, role: role, application: application },
+                null,
+                null
+            );            
         }
 
         function AddUserSuccess(application, search) {

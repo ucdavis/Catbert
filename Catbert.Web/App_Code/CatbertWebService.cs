@@ -242,6 +242,18 @@ public class CatbertWebService : System.Web.Services.WebService
     }
 
     [WebMethod]
+    public void AssociateRole(string login, string role, string application)
+    {
+        PermissionBLL.InsertPermission(application, role, login, CurrentServiceUser);
+    }
+
+    [WebMethod]
+    public void DissociateRole(string login, string role, string application)
+    {
+        PermissionBLL.DeletePermission(application, role, login, CurrentServiceUser);
+    }
+
+    [WebMethod]
     public List<ServiceRole> GetRoles(string application)
     {
         List<ServiceRole> roles = new List<ServiceRole>();
