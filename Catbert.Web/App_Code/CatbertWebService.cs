@@ -7,6 +7,7 @@ using Catbert.Services;
 using CAESDO.Catbert.Core.Domain;
 using System.Web;
 using System.Collections.Specialized;
+using System.Linq;
 
 /// <summary>
 /// Summary description for CatbertWebService
@@ -303,7 +304,7 @@ public class CatbertWebService : System.Web.Services.WebService
     /// Get all users in this application, filtered by query, unit and role
     /// </summary>
     [WebMethod]
-    public jqGridData jqGetUsers(string application, string search, string unit, string role)
+    public jqGridData jqGetUsers(string application, string search, string unit, string role, string sortname, string sortorder)
     {
         var users = ConvertFromUserList(UserBLL.GetByApplication(application), application);
         search = search == null ? null : search.ToLower();
@@ -316,8 +317,6 @@ public class CatbertWebService : System.Web.Services.WebService
 
             if ( search == null || badSearch.ToLower().Contains(search) ) grid.rows.Add(user);
         }
-
-        grid.records = grid.rows.Count;
 
         return grid;
     }

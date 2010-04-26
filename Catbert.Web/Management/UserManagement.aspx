@@ -12,8 +12,11 @@
         var autocompleteUnitsURL = '../Services/AutocompleteService.asmx/GetUsers';
         $(document).ready(function() {
             var application = $("#app").val();
+            var search = null, unit = null, role = null; //start with no search, unit, or role filters
+            var sortname = "LastName";
+            var sortorder = "ASC";
 
-            PopulateUserTable(application, null); //Populate the user table
+            PopulateUserTable(application, search, unit, role, sortname, sortorder); //Populate the user table
 
             $("#txtSearch").autocomplete(autocompleteUnitsURL, {
                 width: 260,
@@ -28,16 +31,23 @@
 
             $("#txtSearch").keypress(function(event) {
                 if (event.keyCode == 13) {
-                    PopulateUserTable(application, $(this).val() /*textbox value*/);
+                    search = $(this).val() /*textbox value*/;
+                    PopulateUserTable(application, search, unit, role, sortname, sortorder);
                     $(".ac_results").hide(); //Hide the results whenever you hit enter
                     return false; //Don't post back
                 }
             });
+
+            $("#selectSort").change(function(even, other) {
+                sortname = this.value; //set the new sortname
+                
+                PopulateUserTable(application, search, unit, role, sortname, "ASC");
+            });
         });
 
-        function PopulateUserTable(application, search) {
+        function PopulateUserTable(application, search, unit, role, sortname, sortorder) {
             //Setup the parameters
-            var data = { application: application, search: search, unit: null, role: null };
+            var data = { application: application, search: search, unit: unit, role: role, sortname: sortname, sortorder: sortorder };
             
             //Call the webservice
             AjaxCall('jqGetUsers', data, PopulateUserTableSuccess, null);
@@ -108,6 +118,15 @@
     <div id="divHeader">
         <span id="search">
             Search Users: <input type="text" id="txtSearch" />
+        </span>
+        <span id="sort">
+            Sort by 
+            <select id="selectSort">
+                <option value="LastName" selected="selected">Last Name</option>
+                <option value="FirstName">First Name</option>
+                <option>Login</option>
+                <option>Email</option>
+            </select>
         </span>
     </div>
     <table id="tblUsers">
