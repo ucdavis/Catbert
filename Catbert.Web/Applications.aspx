@@ -48,7 +48,7 @@
                 containingRow.children("td").effect('highlight', {}, 300);
 
                 //Now call the webservice to do the active switching
-                AjaxCall(baseUrl + 'ChangeApplicationActiveStatus', { application: el.val() }, function() { }, OnError);
+                AjaxCall(baseUrl + 'ChangeApplicationActiveStatus', { application: el.val() }, null, OnError);
 
                 return false;
             }));

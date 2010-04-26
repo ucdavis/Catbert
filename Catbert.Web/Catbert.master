@@ -31,7 +31,7 @@
                 dataType: 'json', //JSON
                 contentType: 'application/json',
                 processData: true,
-                success: function(data) { return onSuccess(data.d); },
+                success: function(data) { if (onSuccess) onSuccess(data.d); },
                 error: onError
             });
         }
