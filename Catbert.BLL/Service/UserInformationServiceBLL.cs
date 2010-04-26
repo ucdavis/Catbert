@@ -8,7 +8,9 @@ namespace CAESDO.Catbert.BLL.Service
     {
         public static UserInformation GetInformationByLoginId(string loginId)
         {
-            Check.Require(!string.IsNullOrEmpty(loginId));
+            var user = UserBLL.GetUser(loginId);
+
+            Check.Require(user != null);
 
             throw new NotImplementedException();
         }

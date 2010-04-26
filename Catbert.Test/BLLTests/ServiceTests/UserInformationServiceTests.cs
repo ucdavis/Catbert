@@ -13,14 +13,14 @@ namespace CAESDO.Catbert.Test.BLLTests.ServiceTests
         [ExpectedException(typeof(PreconditionException))]
         public void GettingUserInformationShouldThrowPreconditionExceptionIfNoLoginIdGiven()
         {
-            var userinfo = UserInformationServiceBLL.GetInformationByLoginId(null);
+            UserInformationServiceBLL.GetInformationByLoginId(null);
         }
 
         [TestMethod]
         [ExpectedException(typeof(PreconditionException))]
         public void GettingUserInformationShouldThrowPreconditionExceptionIfLoginIdGivenIsEmpty()
         {
-            var userinfo = UserInformationServiceBLL.GetInformationByLoginId(string.Empty);
+            UserInformationServiceBLL.GetInformationByLoginId(string.Empty);
         }
 
         [TestMethod]
@@ -29,7 +29,7 @@ namespace CAESDO.Catbert.Test.BLLTests.ServiceTests
         {
             const string invalidUserId = "BADUSER";
 
-            var userinfo = UserInformationServiceBLL.GetInformationByLoginId(invalidUserId);
+            UserInformationServiceBLL.GetInformationByLoginId(invalidUserId);
         }
 
         [TestInitialize]
