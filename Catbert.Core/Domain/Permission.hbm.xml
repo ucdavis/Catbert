@@ -15,7 +15,7 @@
     <many-to-one name="Application" column="ApplicationID"
       class="CAESDO.Catbert.Core.Domain.Application, CAESDO.Catbert.Core" not-null="true" />
 
-    <many-to-one name="Role" column="RoleID"
+    <many-to-one name="Role" column="RoleID" fetch="join"
       class="CAESDO.Catbert.Core.Domain.Role, CAESDO.Catbert.Core" not-null="true" />
     
   </class>

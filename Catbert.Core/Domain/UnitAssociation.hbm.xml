@@ -16,7 +16,7 @@
       class="CAESDO.Catbert.Core.Domain.Application, CAESDO.Catbert.Core" not-null="true" />
 
     <many-to-one name="Unit" column="UnitID"
-      class="CAESDO.Catbert.Core.Domain.Unit, CAESDO.Catbert.Core" not-null="true" />
+      class="CAESDO.Catbert.Core.Domain.Unit, CAESDO.Catbert.Core" not-null="true" fetch="join" />
     
   </class>
 </hibernate-mapping>
