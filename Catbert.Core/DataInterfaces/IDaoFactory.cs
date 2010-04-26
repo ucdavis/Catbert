@@ -31,6 +31,7 @@ namespace CAESDO.Catbert.Core.DataInterfaces
         List<User> GetByCriteria(string application, string searchToken, int page, int pageSize, string orderBy,
                                  out int totalUsers);
 
+        List<string> GetManagementRolesForUserInApplication(string application, string login);
         bool CanUserManageGivenLogin(string application, string currentUserLogin, string loginToManage);
     }
 

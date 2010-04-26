@@ -282,7 +282,7 @@ namespace CAESDO.Catbert.Data
                     return Order.Desc(orderTerm);
             }
 
-            public List<string> GetManagementRolesForUserInApplication(string login, string application)
+            public List<string> GetManagementRolesForUserInApplication(string application, string login)
             {
                 //First we need to find out what kind of user management permissions the given user has in the application
                 ICriteria permissionsCriteria = NHibernateSessionManager.Instance.GetSession().CreateCriteria(typeof(Permission))
@@ -325,7 +325,7 @@ namespace CAESDO.Catbert.Data
             internal DetachedCriteria GetVisibleByUserCriteria(string login, string application)
             {
                 //First we need to find out what kind of user management permissions the given user has in the application                
-                var roles = new UserDao().GetManagementRolesForUserInApplication(login, application);
+                var roles = new UserDao().GetManagementRolesForUserInApplication(application, login);
                 Order defaultUnitOrder = Order.Asc("ShortName");
 
                 if (roles.Contains("ManageAll"))

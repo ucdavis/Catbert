@@ -58,6 +58,8 @@ public class CatbertWebService : System.Web.Services.WebService
     [WebMethod]
     public void InsertUserWithRoleAndUnit(ServiceUser serviceUser, string role, string unit, string application)
     {
+        Check.Require(UserBLL.UserHasManagementRoleInApplication(application, CurrentServiceUser));
+
         User user = new User()
                         {
                             FirstName = serviceUser.FirstName,
