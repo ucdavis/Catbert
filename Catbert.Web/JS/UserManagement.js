@@ -15,6 +15,7 @@ var sortname = "LastName";
 var sortorder = "ASC";
 
 var userTableDirty = false;
+var rowEven = true;
 
 $(document).ready(function() {
     application = $("#app").val();
@@ -409,6 +410,9 @@ function PopulateUserTableSuccess(data) {
     //Clear the usertable
     $("#tblUsersBody").empty();
 
+    //Reset the rowEven to true since the first row will be 0
+    rowEven = true;
+
     //Render out each row
     $(data.rows).each(RenderRow);
 
@@ -433,6 +437,9 @@ function ShowLoadingIndicator(on) {
 
 function RenderRow(index, row) {
     var newrow = $('<tr></tr>');
+
+    rowEven == true ? newrow.addClass("even") : newrow.addClass("odd");
+    rowEven = !rowEven;
 
     newrow.append('<td class="ShowUser"><a href="javascript:;" class="ShowUserLink">' + row.Login + '</a></td>');
     newrow.append('<td class="FirstName">' + row.FirstName + '</td>');
