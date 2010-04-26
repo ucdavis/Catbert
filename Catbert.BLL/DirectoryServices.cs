@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.DirectoryServices.Protocols;
 using System.Linq;
 using System.Net;
@@ -184,6 +185,11 @@ namespace CAESDO.Catbert.BLL
         public static DirectoryUser FindUser(string searchTerm)
         {
             return LDAPFindUser(searchTerm);
+        }
+
+        public static DirectoryUser FindStudent(string pidm)
+        {
+            throw new NotImplementedException();
         }
     }
 
