@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 public partial class UserAdministration : System.Web.UI.Page
 {
@@ -11,6 +6,15 @@ public partial class UserAdministration : System.Web.UI.Page
     {
         var applicationName = dlistApplications.SelectedValue;
         
-        frame.Attributes["src"] = string.Format("Management/UserManagement.aspx?app={0}", applicationName);
+        if (string.IsNullOrEmpty(applicationName) == false)
+        {
+            frame.Attributes["src"] = string.Format("Management/UserManagement.aspx?app={0}", applicationName);
+
+            pnlShowUserManagement.Visible = true;
+        }
+        else
+        {
+            pnlShowUserManagement.Visible = false;
+        }
     }
 }
