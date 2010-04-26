@@ -19,6 +19,44 @@ namespace CAESDO.Catbert.BLL
             return query.ToList<Application>();
         }
 
+        /// <summary>
+        /// Updates an existing application
+        /// </summary>
+        public static void Update(Application application, string trackingUserName)
+        {
+            Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.Application, TrackingActions.Change);
+            tracking.Comments = string.Format("Application {0} updated", application.ID);
+
+            using (TransactionScope ts = new TransactionScope())
+            {
+                ApplicationBLL.EnsurePersistent(ref application); //Persist the application
+                TrackingBLL.EnsurePersistent(ref tracking);
+
+                ts.CommittTransaction();
+            }
+        }
+
+        /// <summary>
+        /// Creates a new application from the given instance
+        /// </summary>
+        public static void Create(Application application, string trackingUserName)
+        {
+            Tracking tracking = TrackingBLL.GetTrackingInstance(trackingUserName, TrackingTypes.Application, TrackingActions.Add);
+            
+            using (TransactionScope ts = new TransactionScope())
+            {
+                ApplicationBLL.EnsurePersistent(ref application); //Persist the application
+
+                tracking.Comments = string.Format("Application {0} created", application.ID);
+                TrackingBLL.EnsurePersistent(ref tracking);
+
+                ts.CommittTransaction();
+            }
+        }
+
+        /// <summary>
+        /// Returns false if the application could not be found or if it doesn't need to change inactive status
+        /// </summary>
         public static bool SetActiveStatus(int applicationID, bool inactive, string trackingUserName)
         {
             //Get the application
