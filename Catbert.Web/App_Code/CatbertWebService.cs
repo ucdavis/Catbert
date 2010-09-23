@@ -67,7 +67,7 @@ public class CatbertWebService : System.Web.Services.WebService
                             Email = serviceUser.Email,
                             LoginID = serviceUser.Login,
                             EmployeeID = serviceUser.EmployeeID,
-                            Phone = serviceUser.Phone
+                            Phone = serviceUser.Phone.AsNullIfWhiteSpace()
                         };
 
         UserBLL.InsertNewUserWithRoleAndUnit(user, role, unit, application, CurrentServiceUser);
