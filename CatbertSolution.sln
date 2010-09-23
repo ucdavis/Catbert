@@ -65,7 +65,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catbert.Test", "Catbert.Tes
 EndProject
 Project("{C8D11400-126E-41CD-887F-60BD40844F9E}") = "Catbert.DB", "Catbert.DB\Catbert.DB.dbproj", "{67CBC824-A49E-4E9B-A947-360F3DFE65C3}"
 EndProject
-Project("{2CFEAB61-6A3B-4EB8-B523-560B4BEEF521}") = "Catbert.Deployment", "Catbert.Deployment\Catbert.Deployment.wdproj", "{336C4603-F54E-4FBA-A51C-99C1EAEA4E22}"
+Project("{2CFEAB61-6A3B-4EB8-B523-560B4BEEF521}") = "Catbert.Deploy", "Catbert.Deploy\Catbert.Deploy.wdproj", "{4F1170A1-AC03-422A-B50F-C066D5B95E2E}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
@@ -90,12 +90,12 @@ Global
 		SccProjectUniqueName5 = Catbert.Test\\Catbert.Test.csproj
 		SccProjectName5 = Catbert.Test
 		SccLocalPath5 = Catbert.Test
-		SccProjectUniqueName6 = Catbert.Deployment\\Catbert.Deployment.wdproj
-		SccProjectName6 = Catbert.Deployment
-		SccLocalPath6 = Catbert.Deployment
-		SccProjectUniqueName7 = Catbert.DB\\Catbert.DB.dbproj
-		SccProjectName7 = Catbert.DB
-		SccLocalPath7 = Catbert.DB
+		SccProjectUniqueName6 = Catbert.DB\\Catbert.DB.dbproj
+		SccProjectName6 = Catbert.DB
+		SccLocalPath6 = Catbert.DB
+		SccProjectUniqueName7 = Catbert.Deploy\\Catbert.Deploy.wdproj
+		SccProjectName7 = Catbert.Deploy
+		SccLocalPath7 = Catbert.Deploy
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = CatbertSolution.vsmdi
@@ -127,9 +127,10 @@ Global
 		{C6075B5F-2281-465B-BCA4-EE3E2F8CF013}.Release|Any CPU.Build.0 = Release|Any CPU
 		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{336C4603-F54E-4FBA-A51C-99C1EAEA4E22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{336C4603-F54E-4FBA-A51C-99C1EAEA4E22}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{336C4603-F54E-4FBA-A51C-99C1EAEA4E22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F1170A1-AC03-422A-B50F-C066D5B95E2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F1170A1-AC03-422A-B50F-C066D5B95E2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F1170A1-AC03-422A-B50F-C066D5B95E2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F1170A1-AC03-422A-B50F-C066D5B95E2E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
