@@ -131,6 +131,8 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RouteConfigurator.asax.cs" />
+    <Compile Include="Services\AuditInterceptor.cs" />
+    <Compile Include="Services\WebPrincipal.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />

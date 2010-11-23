@@ -1,8 +1,14 @@
-﻿using Castle.Windsor;
+﻿using System;
+using Castle.Windsor;
 using UCDArch.Core.CommonValidator;
 using UCDArch.Core.NHibernateValidator.CommonValidatorAdapter;
 using UCDArch.Core.PersistanceSupport;
 using UCDArch.Data.NHibernate;
+using System.Security.Principal;
+using System.Web;
+using NHibernate;
+using Catbert4.Services;
+using System.Web.Security;
 
 namespace Catbert4
 {
@@ -14,6 +20,10 @@ namespace Catbert4
             container.AddComponent("validator", typeof(IValidator), typeof(Validator));
             container.AddComponent("dbContext", typeof(IDbContext), typeof(DbContext));
 
+            container.AddComponent("interceptor", typeof (IInterceptor), typeof (AuditInterceptor));
+
+            container.AddComponent("principal", typeof (IPrincipal), typeof (WebPrincipal));
+            
             AddRepositoriesTo(container);
         }
 

@@ -4,6 +4,7 @@ using Catbert4.Core.Domain;
 using Microsoft.Practices.ServiceLocation;
 using MvcContrib.Castle;
 using Castle.Windsor;
+using NHibernate;
 using UCDArch.Data.NHibernate;
 using UCDArch.Web.IoC;
 using UCDArch.Web.ModelBinder;
@@ -32,7 +33,7 @@ namespace Catbert4
 
             NHibernateSessionConfiguration.Mappings.UseFluentMappings(typeof(Application).Assembly);
 
-            //NHibernateSessionManager.Instance.RegisterInterceptor(container.Resolve<IInterceptor>());
+            NHibernateSessionManager.Instance.RegisterInterceptor(container.Resolve<IInterceptor>());
         }
 
         private static IWindsorContainer InitializeServiceLocator()
