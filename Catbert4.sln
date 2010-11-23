@@ -43,9 +43,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bin", "Bin", "{33390886-40A
 		Bin\xVal.dll = Bin\xVal.dll
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catbert4.Core", "Catbert4.Core\Catbert4.Core.csproj", "{A5876BBC-2054-4B62-8DFF-F2E948434EBB}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
+		SccNumberOfProjects = 4
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.caes.ucdavis.edu:8088/tfs/defaultcollection
 		SccLocalPath0 = .
@@ -55,6 +57,9 @@ Global
 		SccProjectUniqueName2 = Catbert4\\Catbert4.csproj
 		SccProjectName2 = Catbert4
 		SccLocalPath2 = Catbert4
+		SccProjectUniqueName3 = Catbert4.Core\\Catbert4.Core.csproj
+		SccProjectName3 = Catbert4.Core
+		SccLocalPath3 = Catbert4.Core
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +74,10 @@ Global
 		{A5B889D9-47E1-435C-AA85-76092074B236}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5B889D9-47E1-435C-AA85-76092074B236}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5B889D9-47E1-435C-AA85-76092074B236}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5876BBC-2054-4B62-8DFF-F2E948434EBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5876BBC-2054-4B62-8DFF-F2E948434EBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5876BBC-2054-4B62-8DFF-F2E948434EBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5876BBC-2054-4B62-8DFF-F2E948434EBB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
