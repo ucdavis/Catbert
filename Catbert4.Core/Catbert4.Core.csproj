@@ -74,6 +74,7 @@
     <Compile Include="Mappings\PermissionMap.cs" />
     <Compile Include="Mappings\RoleMap.cs" />
     <Compile Include="Mappings\SchoolMap.cs" />
+    <Compile Include="Mappings\TrackingMaps.cs" />
     <Compile Include="Mappings\UnitAssociationMap.cs" />
     <Compile Include="Mappings\UnitMap.cs" />
     <Compile Include="Mappings\UserMap.cs" />

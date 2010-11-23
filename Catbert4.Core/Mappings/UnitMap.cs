@@ -7,6 +7,8 @@ namespace Catbert4.Core.Mappings
     {
         public UnitMap()
         {
+            Table("Unit");
+
             Id(x => x.Id).Column("UnitID");
 
             Map(x => x.ShortName);
@@ -14,7 +16,7 @@ namespace Catbert4.Core.Mappings
             Map(x => x.FisCode).Column("FIS_Code");
             Map(x => x.PpsCode).Column("PPS_Code");
 
-            References(x => x.School);
+            References(x => x.School).Column("SchoolCode");
         }
     }
 }
