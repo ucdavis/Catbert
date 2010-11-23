@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using Catbert4;
 using Catbert4.Controllers;
+using Catbert4.Core.Domain;
 using Microsoft.Practices.ServiceLocation;
 using MvcContrib.Castle;
 using Castle.Windsor;
@@ -30,7 +31,7 @@ namespace Commencement
 
             IWindsorContainer container = InitializeServiceLocator();
 
-            NHibernateSessionConfiguration.Mappings.UseFluentMappings(typeof(Catbert4.Core.Class1).Assembly);
+            NHibernateSessionConfiguration.Mappings.UseFluentMappings(typeof(Application).Assembly);
 
             //NHibernateSessionManager.Instance.RegisterInterceptor(container.Resolve<IInterceptor>());
         }
