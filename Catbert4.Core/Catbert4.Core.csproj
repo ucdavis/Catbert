@@ -70,6 +70,8 @@
     <Compile Include="Domain\UnitAssociation.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Mappings\ApplicationMap.cs" />
+    <Compile Include="Mappings\ApplicationRoleMap.cs" />
+    <Compile Include="Mappings\RoleMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

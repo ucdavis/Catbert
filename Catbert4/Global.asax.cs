@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-using Catbert4;
 using Catbert4.Controllers;
 using Catbert4.Core.Domain;
 using Microsoft.Practices.ServiceLocation;
@@ -10,7 +9,7 @@ using UCDArch.Web.IoC;
 using UCDArch.Web.ModelBinder;
 using UCDArch.Web.Validator;
 
-namespace Commencement
+namespace Catbert4
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
