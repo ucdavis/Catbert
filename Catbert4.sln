@@ -1,0 +1,76 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catbert4", "Catbert4\Catbert4.csproj", "{B8863513-F3B6-4F72-8076-2DCC3F479E80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catbert4.Tests", "Catbert4.Tests\Catbert4.Tests.csproj", "{A5B889D9-47E1-435C-AA85-76092074B236}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bin", "Bin", "{33390886-40A5-4CFF-97E2-8A99DE3A515A}"
+	ProjectSection(SolutionItems) = preProject
+		Bin\AutoMapper.dll = Bin\AutoMapper.dll
+		Bin\Castle.Core.dll = Bin\Castle.Core.dll
+		Bin\Castle.DynamicProxy2.dll = Bin\Castle.DynamicProxy2.dll
+		Bin\Castle.MicroKernel.dll = Bin\Castle.MicroKernel.dll
+		Bin\Castle.Windsor.dll = Bin\Castle.Windsor.dll
+		Bin\Common.Logging.dll = Bin\Common.Logging.dll
+		Bin\Elmah.dll = Bin\Elmah.dll
+		Bin\FluentNHibernate.dll = Bin\FluentNHibernate.dll
+		Bin\HibernatingRhinos.Profiler.Appender.dll = Bin\HibernatingRhinos.Profiler.Appender.dll
+		Bin\Iesi.Collections.dll = Bin\Iesi.Collections.dll
+		Bin\log4net.dll = Bin\log4net.dll
+		Bin\Microsoft.Practices.ServiceLocation.dll = Bin\Microsoft.Practices.ServiceLocation.dll
+		Bin\Microsoft.Web.Mvc.dll = Bin\Microsoft.Web.Mvc.dll
+		Bin\MvcContrib.Castle.dll = Bin\MvcContrib.Castle.dll
+		Bin\MvcContrib.dll = Bin\MvcContrib.dll
+		Bin\MvcContrib.FluentHtml.dll = Bin\MvcContrib.FluentHtml.dll
+		Bin\MvcContrib.TestHelper.dll = Bin\MvcContrib.TestHelper.dll
+		Bin\Newtonsoft.Json.dll = Bin\Newtonsoft.Json.dll
+		Bin\NHibernate.ByteCode.Spring.dll = Bin\NHibernate.ByteCode.Spring.dll
+		Bin\NHibernate.dll = Bin\NHibernate.dll
+		Bin\NHibernate.Linq.dll = Bin\NHibernate.Linq.dll
+		Bin\NHibernate.Validator.dll = Bin\NHibernate.Validator.dll
+		Bin\Rhino.Mocks.dll = Bin\Rhino.Mocks.dll
+		Bin\Spring.Aop.dll = Bin\Spring.Aop.dll
+		Bin\Spring.Core.dll = Bin\Spring.Core.dll
+		Bin\System.Data.SQLite.DLL = Bin\System.Data.SQLite.DLL
+		Bin\Telerik.Web.Mvc.dll = Bin\Telerik.Web.Mvc.dll
+		Bin\UCDArch.Core.dll = Bin\UCDArch.Core.dll
+		Bin\UCDArch.Core.NHibernateValidator.dll = Bin\UCDArch.Core.NHibernateValidator.dll
+		Bin\UCDArch.Data.dll = Bin\UCDArch.Data.dll
+		Bin\UCDArch.Testing.dll = Bin\UCDArch.Testing.dll
+		Bin\UCDArch.Web.dll = Bin\UCDArch.Web.dll
+		Bin\UCDArch.Web.Providers.dll = Bin\UCDArch.Web.Providers.dll
+		Bin\xVal.dll = Bin\xVal.dll
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.caes.ucdavis.edu:8088/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Catbert4.Tests\\Catbert4.Tests.csproj
+		SccProjectName1 = Catbert4.Tests
+		SccLocalPath1 = Catbert4.Tests
+		SccProjectUniqueName2 = Catbert4\\Catbert4.csproj
+		SccProjectName2 = Catbert4
+		SccLocalPath2 = Catbert4
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B8863513-F3B6-4F72-8076-2DCC3F479E80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8863513-F3B6-4F72-8076-2DCC3F479E80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8863513-F3B6-4F72-8076-2DCC3F479E80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8863513-F3B6-4F72-8076-2DCC3F479E80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5B889D9-47E1-435C-AA85-76092074B236}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5B889D9-47E1-435C-AA85-76092074B236}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5B889D9-47E1-435C-AA85-76092074B236}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5B889D9-47E1-435C-AA85-76092074B236}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
