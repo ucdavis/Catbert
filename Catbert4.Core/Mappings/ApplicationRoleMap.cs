@@ -7,7 +7,7 @@ namespace Catbert4.Core.Mappings
     {
         public ApplicationRoleMap()
         {
-            Id(x => x.Id);
+            Id(x => x.Id).Column("ApplicationRoleID");
 
             Map(x => x.Level);
 

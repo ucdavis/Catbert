@@ -7,9 +7,9 @@ namespace Catbert4.Core.Mappings
     {
         public RoleMap()
         {
-            Id(x => x.Id);
+            Id(x => x.Id).Column("RoleID");
 
-            Map(x => x.Name);
+            Map(x => x.Name).Column("Role");
             Map(x => x.Inactive);
         }
     }

@@ -7,7 +7,7 @@ namespace Catbert4.Core.Mappings
     {
         public ApplicationMap()
         {
-            Id(x => x.Id);
+            Id(x => x.Id).Column("ApplicationID");
 
             Map(x => x.Name);
             Map(x => x.Abbr);

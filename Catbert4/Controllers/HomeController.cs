@@ -9,7 +9,6 @@ namespace Catbert4.Controllers
     {
         //
         // GET: /Home/
-
         public ActionResult Index()
         {
             var apps = Repository.OfType<Application>().GetAll();
