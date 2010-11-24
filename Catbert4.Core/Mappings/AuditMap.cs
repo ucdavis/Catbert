@@ -10,7 +10,7 @@ namespace Catbert4.Core.Mappings
             Id(x => x.Id).GeneratedBy.GuidComb();
             Map(x => x.ObjectName);
             Map(x => x.ObjectId);
-            Map(x => x.AuditActionTypeId);
+            Map(x => x.AuditAction);
             Map(x => x.Username);
             Map(x => x.AuditDate);
         }

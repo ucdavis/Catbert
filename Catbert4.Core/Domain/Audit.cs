@@ -16,7 +16,7 @@ namespace Catbert4.Core.Domain
 
         [Length(1)]
         [Required]
-        public virtual string AuditActionTypeId { get; set; }
+        public virtual string AuditAction { get; set; }
 
         [Length(256)]
         [Required]
@@ -29,13 +29,13 @@ namespace Catbert4.Core.Domain
             switch (auditActionType)
             {
                 case AuditActionType.Create:
-                    AuditActionTypeId = "C";
+                    AuditAction = "C";
                     break;
                 case AuditActionType.Update:
-                    AuditActionTypeId = "U";
+                    AuditAction = "U";
                     break;
                 case AuditActionType.Delete:
-                    AuditActionTypeId = "D";
+                    AuditAction = "D";
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("auditActionType");
