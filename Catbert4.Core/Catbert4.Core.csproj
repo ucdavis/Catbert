@@ -62,11 +62,9 @@
     <Compile Include="Domain\Application.cs" />
     <Compile Include="Domain\ApplicationRole.cs" />
     <Compile Include="Domain\Audit.cs" />
-    <Compile Include="Domain\ITrackable.cs" />
     <Compile Include="Domain\Permission.cs" />
     <Compile Include="Domain\Role.cs" />
     <Compile Include="Domain\School.cs" />
-    <Compile Include="Domain\Tracking.cs" />
     <Compile Include="Domain\Unit.cs" />
     <Compile Include="Domain\UnitAssociation.cs" />
     <Compile Include="Domain\User.cs" />
@@ -76,7 +74,6 @@
     <Compile Include="Mappings\PermissionMap.cs" />
     <Compile Include="Mappings\RoleMap.cs" />
     <Compile Include="Mappings\SchoolMap.cs" />
-    <Compile Include="Mappings\TrackingMaps.cs" />
     <Compile Include="Mappings\UnitAssociationMap.cs" />
     <Compile Include="Mappings\UnitMap.cs" />
     <Compile Include="Mappings\UserMap.cs" />
