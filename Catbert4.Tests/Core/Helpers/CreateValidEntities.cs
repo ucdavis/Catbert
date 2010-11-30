@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Catbert4.Core.Domain;
+using Catbert4.Tests.Core.Extensions;
 
 namespace Catbert4.Tests.Core.Helpers
 {
@@ -20,6 +22,21 @@ namespace Catbert4.Tests.Core.Helpers
         }
 
         #endregion Helper Extension
+
+        public static Application Application(int? counter, bool populateAllFields = false)
+        {
+            var rtValue = new Application();
+            rtValue.Name = "Name" + counter.Extra();
+            if (populateAllFields)
+            {
+                rtValue.Abbr = "x".RepeatTimes(50);
+                rtValue.Location = "x".RepeatTimes(256);
+                rtValue.WebServiceHash = "x".RepeatTimes(100);
+                rtValue.Salt = "x".RepeatTimes(20);
+            }
+
+            return rtValue;
+        }
 
         //Sample:
         /*
