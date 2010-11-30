@@ -55,5 +55,18 @@ namespace Catbert4.Tests.Core.Helpers
             return rtValue;
         }
 
+        public static Audit Audit(int? counter, bool populateAllFields = false)
+        {
+            var rtValue = new Audit();
+            rtValue.ObjectName = "ObjectName" + counter.Extra();
+            rtValue.SetActionCode(AuditActionType.Create);
+            rtValue.Username = "Username" + counter.Extra();
+            rtValue.AuditDate = DateTime.Now;
+            if (populateAllFields)
+            { 
+                rtValue.ObjectId = "x".RepeatTimes(50);
+            }
+            return rtValue;
+        }
     }
 }

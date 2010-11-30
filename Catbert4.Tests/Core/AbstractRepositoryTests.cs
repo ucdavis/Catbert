@@ -23,6 +23,7 @@ namespace Catbert4.Tests.Core
         protected int? IntRestoreValue;
         private readonly IRepository<T> _intRepository;
         private readonly IRepositoryWithTypedId<T, string> _stringRepository;
+        private readonly IRepositoryWithTypedId<T, Guid> _guidRepository;
 
         #region Init
 
@@ -32,6 +33,10 @@ namespace Catbert4.Tests.Core
             if (typeof(IdT) == typeof(int))
             {
                 _intRepository = new Repository<T>();
+            }
+            if (typeof(IdT) == typeof(Guid))
+            {
+                _guidRepository = new RepositoryWithTypedId<T, Guid>();
             }
             if (typeof(IdT) == typeof(string))
             {
@@ -82,6 +87,10 @@ namespace Catbert4.Tests.Core
                 {
                     _intRepository.EnsurePersistent(validEntity);
                 }
+                else if (typeof(IdT) == typeof(Guid))
+                {
+                    _guidRepository.EnsurePersistent(validEntity, true);
+                }
                 else
                 {
                     _stringRepository.EnsurePersistent(validEntity);
@@ -103,6 +112,10 @@ namespace Catbert4.Tests.Core
             if (typeof(IdT) == typeof(int))
             {
                 _intRepository.EnsurePersistent(validEntity);
+            }
+            else if (typeof(IdT) == typeof(Guid))
+            {
+                _guidRepository.EnsurePersistent(validEntity, true);
             }
             else
             {
@@ -127,6 +140,13 @@ namespace Catbert4.Tests.Core
                 Assert.IsFalse(validEntity.IsTransient());
                 _intRepository.DbContext.CommitTransaction();
             }
+            else if (typeof(IdT) == typeof(Guid))
+            {
+                _guidRepository.DbContext.BeginTransaction();
+                _guidRepository.EnsurePersistent(validEntity, true);
+                Assert.IsFalse(validEntity.IsTransient());
+                _guidRepository.DbContext.CommitTransaction();
+            }
             else
             {
                 _stringRepository.DbContext.BeginTransaction();
@@ -148,6 +168,10 @@ namespace Catbert4.Tests.Core
             if (typeof(IdT) == typeof(int))
             {
                 foundEntities = _intRepository.GetAll().ToList();
+            }
+            else if (typeof(IdT) == typeof(Guid))
+            {
+                foundEntities = _guidRepository.GetAll().ToList();
             }
             else
             {
@@ -184,6 +208,13 @@ namespace Catbert4.Tests.Core
                 var foundEntity = Repository.OfType<T>().GetById(2);
                 FoundEntityComparison(foundEntity, 2);
             }
+            else if (typeof(IdT) == typeof(Guid))
+            {
+                Assert.IsTrue(EntriesAdded >= 2, "There are not enough entries to complete this test.");
+                var guidFor2 = _guidRepository.GetAll()[1].Id.ToString();
+                var foundEntity = _guidRepository.GetById(new Guid(guidFor2));
+                FoundEntityComparison(foundEntity, 2);
+            }
             else
             {
                 Assert.IsTrue(EntriesAdded >= 2, "There are not enough entries to complete this test.");
@@ -205,6 +236,13 @@ namespace Catbert4.Tests.Core
                 var foundEntity = _intRepository.GetNullableById(2);
                 FoundEntityComparison(foundEntity, 2);
             }
+            else if (typeof(IdT) == typeof(Guid))
+            {
+                Assert.IsTrue(EntriesAdded >= 2, "There are not enough entries to complete this test.");
+                var guidFor2 = _guidRepository.GetAll()[1].Id.ToString();
+                var foundEntity = _guidRepository.GetNullableById(new Guid(guidFor2));
+                FoundEntityComparison(foundEntity, 2);
+            }
             else
             {
                 Assert.IsTrue(EntriesAdded >= 2, "There are not enough entries to complete this test.");
@@ -224,6 +262,11 @@ namespace Catbert4.Tests.Core
                 var foundEntity = _intRepository.GetNullableById(EntriesAdded + 1);
                 Assert.IsNull(foundEntity);
             }
+            else if (typeof(IdT) == typeof(Guid))
+            {
+                var foundEntity = _guidRepository.GetNullableById(Guid.NewGuid());
+                Assert.IsNull(foundEntity);
+            }
             else
             {
                 var foundEntity = _stringRepository.GetNullableById((EntriesAdded + 1).ToString());
@@ -239,6 +282,10 @@ namespace Catbert4.Tests.Core
             {
                 foundEntity = _intRepository.GetAll()[2];
             }
+            else if (typeof(IdT) == typeof(Guid))
+            {
+                foundEntity = _guidRepository.GetAll()[2];
+            }
             else
             {
                 foundEntity = _stringRepository.GetAll()[2];
@@ -252,6 +299,13 @@ namespace Catbert4.Tests.Core
                 UpdateUtility(foundEntity, ARTAction.Update);
                 _intRepository.EnsurePersistent(foundEntity);
                 _intRepository.DbContext.CommitTransaction();
+            }
+            else if (typeof(IdT) == typeof(Guid))
+            {
+                _guidRepository.DbContext.BeginTransaction();
+                UpdateUtility(foundEntity, ARTAction.Update);
+                _guidRepository.EnsurePersistent(foundEntity, true);
+                _guidRepository.DbContext.CommitTransaction();
             }
             else
             {
@@ -271,6 +325,10 @@ namespace Catbert4.Tests.Core
                 {
                     compareEntity = _intRepository.GetAll()[2];
                 }
+                else if (typeof(IdT) == typeof(Guid))
+                {
+                    compareEntity = _guidRepository.GetAll()[2];
+                }
                 else
                 {
                     compareEntity = _stringRepository.GetAll()[2];
@@ -286,6 +344,10 @@ namespace Catbert4.Tests.Core
                 {
                     checkNotUpdatedEntity = _intRepository.GetAll()[2];
                 }
+                else if (typeof(IdT) == typeof(Guid))
+                {
+                    checkNotUpdatedEntity = _guidRepository.GetAll()[2];
+                }
                 else
                 {
                     checkNotUpdatedEntity = _stringRepository.GetAll()[2];
@@ -299,6 +361,10 @@ namespace Catbert4.Tests.Core
                 if (typeof(IdT) == typeof(int))
                 {
                     compareEntity = _intRepository.GetAll()[2];
+                }
+                else if (typeof(IdT) == typeof(Guid))
+                {
+                    compareEntity = _guidRepository.GetAll()[2];
                 }
                 else
                 {
@@ -337,6 +403,19 @@ namespace Catbert4.Tests.Core
                 _intRepository.DbContext.CommitTransaction();
                 Assert.AreEqual(count - 1, _intRepository.GetAll().ToList().Count());
                 foundEntity = Repository.OfType<T>().GetNullableById(3);
+                Assert.IsNull(foundEntity);
+            }
+            else if (typeof(IdT) == typeof(Guid))
+            {
+                var count = _guidRepository.GetAll().ToList().Count();
+                var foundEntity = _guidRepository.GetAll().ToList()[2];
+
+                //Update and commit entity
+                _guidRepository.DbContext.BeginTransaction();
+                _guidRepository.Remove(foundEntity);
+                _guidRepository.DbContext.CommitTransaction();
+                Assert.AreEqual(count - 1, _guidRepository.GetAll().ToList().Count());
+                foundEntity = _guidRepository.GetNullableById(SpecificGuid.GetGuid(3));
                 Assert.IsNull(foundEntity);
             }
             else

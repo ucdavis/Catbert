@@ -82,9 +82,11 @@
     <Compile Include="Core\Helpers\AttributeAndFieldValidation.cs" />
     <Compile Include="Core\Helpers\CreateValidEntities.cs" />
     <Compile Include="Core\Helpers\NameAndType.cs" />
+    <Compile Include="Core\Helpers\SpecificGuid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ApplicationRepositoryTests.cs" />
     <Compile Include="Repositories\ApplicationRoleRepositoryTests.cs" />
+    <Compile Include="Repositories\AuditRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
