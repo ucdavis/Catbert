@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Catbert4.Core.Domain;
 using Catbert4.Tests.Core.Helpers;
@@ -391,5 +392,14 @@ namespace Catbert4.Tests.Core
             CompareNotUpdated
         }
         #endregion Utilities
+
+        protected void LoadRoles(int entriesToAdd)
+        {
+            for (int i = 0; i < entriesToAdd; i++)
+            {
+                var validEntity = CreateValidEntities.Role(i + 1);
+                Repository.OfType<Role>().EnsurePersistent(validEntity);
+            }
+        }
     }
 }

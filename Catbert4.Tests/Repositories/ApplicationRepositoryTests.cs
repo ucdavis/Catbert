@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Catbert4.Core.Domain;
@@ -6,9 +7,11 @@ using Catbert4.Core.Mappings;
 using Catbert4.Tests.Core;
 using Catbert4.Tests.Core.Extensions;
 using Catbert4.Tests.Core.Helpers;
+using FluentNHibernate.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UCDArch.Core.PersistanceSupport;
 using UCDArch.Data.NHibernate;
+using UCDArch.Testing;
 using UCDArch.Testing.Extensions;
 
 namespace Catbert4.Tests.Repositories
@@ -25,6 +28,8 @@ namespace Catbert4.Tests.Repositories
         /// </summary>
         /// <value>The Application repository.</value>
         public IRepository<Application> ApplicationRepository { get; set; }
+        public IRepository<Role> RoleRepository { get; set; }
+        public IRepository<ApplicationRole> ApplicationRoleRepository { get; set; }
 		
         #region Init and Overrides
 
@@ -34,6 +39,8 @@ namespace Catbert4.Tests.Repositories
         public ApplicationRepositoryTests()
         {
             ApplicationRepository = new Repository<Application>();
+            RoleRepository = new Repository<Role>();
+            ApplicationRoleRepository = new Repository<ApplicationRole>();
         }
 
         /// <summary>
@@ -603,322 +610,6 @@ namespace Catbert4.Tests.Repositories
         #endregion Valid Tests
         #endregion Location Tests
 
-        #region WebServiceHash Tests
-        #region Invalid Tests
-
-        /// <summary>
-        /// Tests the WebServiceHash with too long value does not save.
-        /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(ApplicationException))]
-        public void TestWebServiceHashWithTooLongValueDoesNotSave()
-        {
-            Application application = null;
-            try
-            {
-                #region Arrange
-                application = GetValid(9);
-                application.WebServiceHash = "x".RepeatTimes((100 + 1));
-                #endregion Arrange
-
-                #region Act
-                ApplicationRepository.DbContext.BeginTransaction();
-                ApplicationRepository.EnsurePersistent(application);
-                ApplicationRepository.DbContext.CommitTransaction();
-                #endregion Act
-            }
-            catch (Exception)
-            {
-                Assert.IsNotNull(application);
-                Assert.AreEqual(100 + 1, application.WebServiceHash.Length);
-                var results = application.ValidationResults().AsMessageList();
-                results.AssertErrorsAre("WebServiceHash: length must be between 0 and 100");
-                Assert.IsTrue(application.IsTransient());
-                Assert.IsFalse(application.IsValid());
-                throw;
-            }
-        }
-        #endregion Invalid Tests
-
-        #region Valid Tests
-
-        /// <summary>
-        /// Tests the WebServiceHash with null value saves.
-        /// </summary>
-        [TestMethod]
-        public void TestWebServiceHashWithNullValueSaves()
-        {
-            #region Arrange
-            var application = GetValid(9);
-            application.WebServiceHash = null;
-            #endregion Arrange
-
-            #region Act
-            ApplicationRepository.DbContext.BeginTransaction();
-            ApplicationRepository.EnsurePersistent(application);
-            ApplicationRepository.DbContext.CommitTransaction();
-            #endregion Act
-
-            #region Assert
-            Assert.IsFalse(application.IsTransient());
-            Assert.IsTrue(application.IsValid());
-            #endregion Assert
-        }
-
-        /// <summary>
-        /// Tests the WebServiceHash with empty string saves.
-        /// </summary>
-        [TestMethod]
-        public void TestWebServiceHashWithEmptyStringSaves()
-        {
-            #region Arrange
-            var application = GetValid(9);
-            application.WebServiceHash = string.Empty;
-            #endregion Arrange
-
-            #region Act
-            ApplicationRepository.DbContext.BeginTransaction();
-            ApplicationRepository.EnsurePersistent(application);
-            ApplicationRepository.DbContext.CommitTransaction();
-            #endregion Act
-
-            #region Assert
-            Assert.IsFalse(application.IsTransient());
-            Assert.IsTrue(application.IsValid());
-            #endregion Assert
-        }
-
-        /// <summary>
-        /// Tests the WebServiceHash with one space saves.
-        /// </summary>
-        [TestMethod]
-        public void TestWebServiceHashWithOneSpaceSaves()
-        {
-            #region Arrange
-            var application = GetValid(9);
-            application.WebServiceHash = " ";
-            #endregion Arrange
-
-            #region Act
-            ApplicationRepository.DbContext.BeginTransaction();
-            ApplicationRepository.EnsurePersistent(application);
-            ApplicationRepository.DbContext.CommitTransaction();
-            #endregion Act
-
-            #region Assert
-            Assert.IsFalse(application.IsTransient());
-            Assert.IsTrue(application.IsValid());
-            #endregion Assert
-        }
-
-        /// <summary>
-        /// Tests the WebServiceHash with one character saves.
-        /// </summary>
-        [TestMethod]
-        public void TestWebServiceHashWithOneCharacterSaves()
-        {
-            #region Arrange
-            var application = GetValid(9);
-            application.WebServiceHash = "x";
-            #endregion Arrange
-
-            #region Act
-            ApplicationRepository.DbContext.BeginTransaction();
-            ApplicationRepository.EnsurePersistent(application);
-            ApplicationRepository.DbContext.CommitTransaction();
-            #endregion Act
-
-            #region Assert
-            Assert.IsFalse(application.IsTransient());
-            Assert.IsTrue(application.IsValid());
-            #endregion Assert
-        }
-
-        /// <summary>
-        /// Tests the WebServiceHash with long value saves.
-        /// </summary>
-        [TestMethod]
-        public void TestWebServiceHashWithLongValueSaves()
-        {
-            #region Arrange
-            var application = GetValid(9);
-            application.WebServiceHash = "x".RepeatTimes(100);
-            #endregion Arrange
-
-            #region Act
-            ApplicationRepository.DbContext.BeginTransaction();
-            ApplicationRepository.EnsurePersistent(application);
-            ApplicationRepository.DbContext.CommitTransaction();
-            #endregion Act
-
-            #region Assert
-            Assert.AreEqual(100, application.WebServiceHash.Length);
-            Assert.IsFalse(application.IsTransient());
-            Assert.IsTrue(application.IsValid());
-            #endregion Assert
-        }
-
-        #endregion Valid Tests
-        #endregion WebServiceHash Tests
-
-        #region Salt Tests
-        #region Invalid Tests
-
-        /// <summary>
-        /// Tests the Salt with too long value does not save.
-        /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(ApplicationException))]
-        public void TestSaltWithTooLongValueDoesNotSave()
-        {
-            Application application = null;
-            try
-            {
-                #region Arrange
-                application = GetValid(9);
-                application.Salt = "x".RepeatTimes((20 + 1));
-                #endregion Arrange
-
-                #region Act
-                ApplicationRepository.DbContext.BeginTransaction();
-                ApplicationRepository.EnsurePersistent(application);
-                ApplicationRepository.DbContext.CommitTransaction();
-                #endregion Act
-            }
-            catch (Exception)
-            {
-                Assert.IsNotNull(application);
-                Assert.AreEqual(20 + 1, application.Salt.Length);
-                var results = application.ValidationResults().AsMessageList();
-                results.AssertErrorsAre("Salt: length must be between 0 and 20");
-                Assert.IsTrue(application.IsTransient());
-                Assert.IsFalse(application.IsValid());
-                throw;
-            }
-        }
-        #endregion Invalid Tests
-
-        #region Valid Tests
-
-        /// <summary>
-        /// Tests the Salt with null value saves.
-        /// </summary>
-        [TestMethod]
-        public void TestSaltWithNullValueSaves()
-        {
-            #region Arrange
-            var application = GetValid(9);
-            application.Salt = null;
-            #endregion Arrange
-
-            #region Act
-            ApplicationRepository.DbContext.BeginTransaction();
-            ApplicationRepository.EnsurePersistent(application);
-            ApplicationRepository.DbContext.CommitTransaction();
-            #endregion Act
-
-            #region Assert
-            Assert.IsFalse(application.IsTransient());
-            Assert.IsTrue(application.IsValid());
-            #endregion Assert
-        }
-
-        /// <summary>
-        /// Tests the Salt with empty string saves.
-        /// </summary>
-        [TestMethod]
-        public void TestSaltWithEmptyStringSaves()
-        {
-            #region Arrange
-            var application = GetValid(9);
-            application.Salt = string.Empty;
-            #endregion Arrange
-
-            #region Act
-            ApplicationRepository.DbContext.BeginTransaction();
-            ApplicationRepository.EnsurePersistent(application);
-            ApplicationRepository.DbContext.CommitTransaction();
-            #endregion Act
-
-            #region Assert
-            Assert.IsFalse(application.IsTransient());
-            Assert.IsTrue(application.IsValid());
-            #endregion Assert
-        }
-
-        /// <summary>
-        /// Tests the Salt with one space saves.
-        /// </summary>
-        [TestMethod]
-        public void TestSaltWithOneSpaceSaves()
-        {
-            #region Arrange
-            var application = GetValid(9);
-            application.Salt = " ";
-            #endregion Arrange
-
-            #region Act
-            ApplicationRepository.DbContext.BeginTransaction();
-            ApplicationRepository.EnsurePersistent(application);
-            ApplicationRepository.DbContext.CommitTransaction();
-            #endregion Act
-
-            #region Assert
-            Assert.IsFalse(application.IsTransient());
-            Assert.IsTrue(application.IsValid());
-            #endregion Assert
-        }
-
-        /// <summary>
-        /// Tests the Salt with one character saves.
-        /// </summary>
-        [TestMethod]
-        public void TestSaltWithOneCharacterSaves()
-        {
-            #region Arrange
-            var application = GetValid(9);
-            application.Salt = "x";
-            #endregion Arrange
-
-            #region Act
-            ApplicationRepository.DbContext.BeginTransaction();
-            ApplicationRepository.EnsurePersistent(application);
-            ApplicationRepository.DbContext.CommitTransaction();
-            #endregion Act
-
-            #region Assert
-            Assert.IsFalse(application.IsTransient());
-            Assert.IsTrue(application.IsValid());
-            #endregion Assert
-        }
-
-        /// <summary>
-        /// Tests the Salt with long value saves.
-        /// </summary>
-        [TestMethod]
-        public void TestSaltWithLongValueSaves()
-        {
-            #region Arrange
-            var application = GetValid(9);
-            application.Salt = "x".RepeatTimes(20);
-            #endregion Arrange
-
-            #region Act
-            ApplicationRepository.DbContext.BeginTransaction();
-            ApplicationRepository.EnsurePersistent(application);
-            ApplicationRepository.DbContext.CommitTransaction();
-            #endregion Act
-
-            #region Assert
-            Assert.AreEqual(20, application.Salt.Length);
-            Assert.IsFalse(application.IsTransient());
-            Assert.IsTrue(application.IsValid());
-            #endregion Assert
-        }
-
-        #endregion Valid Tests
-        #endregion Salt Tests
-
         #region Inactive Tests
 
         /// <summary>
@@ -983,10 +674,288 @@ namespace Catbert4.Tests.Repositories
 
         #endregion Inactive Tests
 
-        //TODO: List tests
-        //Mapping tests (Salt and WebServiceHash?)
-        //Constructor tests
-        //All fields filled out?
+        #region Application Roles Tests
+
+        [TestMethod]
+        public void TestApplicationWithNullApplicationRolesSaves()
+        {
+            #region Arrange
+            var application = GetValid(9);
+            application.ApplicationRoles = null;
+            #endregion Arrange
+
+            #region Act
+            ApplicationRepository.DbContext.BeginTransaction();
+            ApplicationRepository.EnsurePersistent(application);
+            ApplicationRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.IsNull(application.ApplicationRoles);
+            Assert.IsFalse(application.IsTransient());
+            Assert.IsTrue(application.IsValid());
+            #endregion Assert		
+        }
+
+        [TestMethod]
+        public void TestApplicationWithEmptyListApplicationRolesSaves()
+        {
+            #region Arrange
+            var application = GetValid(9);
+            application.ApplicationRoles = new List<ApplicationRole>();
+            #endregion Arrange
+
+            #region Act
+            ApplicationRepository.DbContext.BeginTransaction();
+            ApplicationRepository.EnsurePersistent(application);
+            ApplicationRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.IsNotNull(application.ApplicationRoles);
+            Assert.AreEqual(0, application.ApplicationRoles.Count);
+            Assert.IsFalse(application.IsTransient());
+            Assert.IsTrue(application.IsValid());
+            #endregion Assert
+        }
+        [TestMethod]
+        public void TestApplicationWithOneApplicationRolesSaves()
+        {
+            #region Arrange
+            var application = GetValid(9);
+            application.ApplicationRoles.Add(CreateValidEntities.ApplicationRole(1));
+            #endregion Arrange
+
+            #region Act
+            ApplicationRepository.DbContext.BeginTransaction();
+            ApplicationRepository.EnsurePersistent(application);
+            ApplicationRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.IsNotNull(application.ApplicationRoles);
+            Assert.AreEqual(1, application.ApplicationRoles.Count);
+            Assert.IsFalse(application.IsTransient());
+            Assert.IsTrue(application.IsValid());
+            #endregion Assert
+        }
+
+        [TestMethod]
+        public void TestApplicationWithPopulatedApplicationRolesSaves()
+        {
+            #region Arrange
+            var application = GetValid(9);
+            application.ApplicationRoles.Add(CreateValidEntities.ApplicationRole(1));
+            application.ApplicationRoles.Add(CreateValidEntities.ApplicationRole(2));
+            application.ApplicationRoles.Add(CreateValidEntities.ApplicationRole(3));
+            #endregion Arrange
+
+            #region Act
+            ApplicationRepository.DbContext.BeginTransaction();
+            ApplicationRepository.EnsurePersistent(application);
+            ApplicationRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.IsNotNull(application.ApplicationRoles);
+            Assert.AreEqual(3, application.ApplicationRoles.Count);
+            Assert.IsFalse(application.IsTransient());
+            Assert.IsTrue(application.IsValid());
+            #endregion Assert
+        }
+
+        [TestMethod]
+        public void TestApplicationCascadesAddToApplicationRoles()
+        {
+            #region Arrange
+            RoleRepository.DbContext.BeginTransaction();
+            LoadRoles(3);
+            RoleRepository.DbContext.CommitTransaction();
+            var applicationRoleCount = ApplicationRoleRepository.Queryable.Count();
+            var application = GetValid(9);                      
+            application.ApplicationRoles.Add(CreateValidEntities.ApplicationRole(1));
+            application.ApplicationRoles.Add(CreateValidEntities.ApplicationRole(2));
+            application.ApplicationRoles.Add(CreateValidEntities.ApplicationRole(3));
+            application.ApplicationRoles[0].Role = RoleRepository.GetById(1);
+            application.ApplicationRoles[1].Role = RoleRepository.GetById(2);
+            application.ApplicationRoles[2].Role = RoleRepository.GetById(3);
+            #endregion Arrange
+
+            #region Act
+            ApplicationRepository.DbContext.BeginTransaction();
+            ApplicationRepository.EnsurePersistent(application);
+            ApplicationRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.IsNotNull(application.ApplicationRoles);
+            Assert.AreEqual(3, application.ApplicationRoles.Count);
+            Assert.IsFalse(application.IsTransient());
+            Assert.IsTrue(application.IsValid());
+            Assert.AreEqual(applicationRoleCount + 3, ApplicationRoleRepository.Queryable.Count());
+            #endregion Assert
+        }
+
+        [TestMethod]
+        public void TestApplicationCascadesDeleteToApplicationRoles()
+        {
+            #region Arrange
+            RoleRepository.DbContext.BeginTransaction();
+            LoadRoles(3);
+            RoleRepository.DbContext.CommitTransaction();
+            var applicationRoleCount = ApplicationRoleRepository.Queryable.Count();
+            var application = GetValid(9);
+            application.ApplicationRoles.Add(CreateValidEntities.ApplicationRole(1));
+            application.ApplicationRoles.Add(CreateValidEntities.ApplicationRole(2));
+            application.ApplicationRoles.Add(CreateValidEntities.ApplicationRole(3));
+            application.ApplicationRoles[0].Role = RoleRepository.GetById(1);
+            application.ApplicationRoles[1].Role = RoleRepository.GetById(2);
+            application.ApplicationRoles[2].Role = RoleRepository.GetById(3);
+
+            ApplicationRepository.DbContext.BeginTransaction();
+            ApplicationRepository.EnsurePersistent(application);
+            ApplicationRepository.DbContext.CommitTransaction();
+
+            Assert.IsNotNull(application.ApplicationRoles);
+            Assert.AreEqual(3, application.ApplicationRoles.Count);
+            Assert.IsFalse(application.IsTransient());
+            Assert.IsTrue(application.IsValid());
+            Assert.AreEqual(applicationRoleCount + 3, ApplicationRoleRepository.Queryable.Count());
+            var saveId = application.Id;
+            Assert.IsTrue(ApplicationRepository.Queryable.Where(a => a.Id == saveId).Any());
+            #endregion Arrange
+
+            #region Act
+            ApplicationRepository.DbContext.BeginTransaction();
+            ApplicationRepository.Remove(application);
+            ApplicationRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.IsFalse(ApplicationRepository.Queryable.Where(a => a.Id == saveId).Any());
+            Assert.AreEqual(applicationRoleCount, ApplicationRoleRepository.Queryable.Count());
+            #endregion Assert
+        }
+
+        #endregion Application Roles Tests
+
+        #region Fluent Mapping Tests
+        [TestMethod]
+        public void TestCanCorrectlyMapApplication1()
+        {
+            #region Arrange
+            var id = ApplicationRepository.Queryable.Max(x => x.Id) + 1;
+            var session = NHibernateSessionManager.Instance.GetSession();
+            #endregion Arrange
+
+            #region Act/Assert
+            new PersistenceSpecification<Application>(session)
+                .CheckProperty(c => c.Id, id)
+                .CheckProperty(c => c.Abbr, "Abbr")
+                .CheckProperty(c => c.Inactive, true)
+                .CheckProperty(c => c.Location, "Location")
+                .CheckProperty(c => c.Name, "Name")
+                //.CheckProperty(c => c.ApplicationRoles, applicationRoles)
+                .VerifyTheMappings();
+            #endregion Act/Assert
+        }
+
+        [TestMethod]
+        public void TestCanCorrectlyMapApplication2()
+        {
+            #region Arrange
+            var id = ApplicationRepository.Queryable.Max(x => x.Id) + 1;
+            var session = NHibernateSessionManager.Instance.GetSession();
+            #endregion Arrange
+
+            #region Act/Assert
+            new PersistenceSpecification<Application>(session)
+                .CheckProperty(c => c.Id, id)
+                .CheckProperty(c => c.Abbr, "Abbr")
+                .CheckProperty(c => c.Inactive, false)
+                .CheckProperty(c => c.Location, "Location")
+                .CheckProperty(c => c.Name, "Name")
+                //.CheckProperty(c => c.ApplicationRoles, applicationRoles)
+                .VerifyTheMappings();
+            #endregion Act/Assert
+        }
+
+        [TestMethod]
+        public void TestCanCorrectlyMapApplication3()
+        {
+            #region Arrange
+            var id = ApplicationRepository.Queryable.Max(x => x.Id) + 1;
+            var application = new Application();
+            application.SetIdTo(id);
+            var session = NHibernateSessionManager.Instance.GetSession();
+            RoleRepository.DbContext.BeginTransaction();
+            LoadRoles(3);
+            RoleRepository.DbContext.CommitTransaction();
+            var applicationRoles = new List<ApplicationRole>();
+            applicationRoles.Add(CreateValidEntities.ApplicationRole(1));
+            applicationRoles.Add(CreateValidEntities.ApplicationRole(2));
+            applicationRoles.Add(CreateValidEntities.ApplicationRole(3));
+            applicationRoles[0].Role = RoleRepository.GetById(1);            
+            applicationRoles[1].Role = RoleRepository.GetById(2);
+            applicationRoles[2].Role = RoleRepository.GetById(3);
+            applicationRoles[0].Application = application;
+            applicationRoles[1].Application = application;
+            applicationRoles[2].Application = application;
+            #endregion Arrange
+
+            #region Act/Assert
+            new PersistenceSpecification<Application>(session, new ApplicationEqualityComparer())
+                .CheckProperty(c => c.Id, id)
+                .CheckProperty(c => c.ApplicationRoles, applicationRoles)
+                .VerifyTheMappings();
+            #endregion Act/Assert
+        }
+
+        #endregion Fluent Mapping Tests
+
+        #region Misc Tests
+
+        [TestMethod]
+        public void TestConstructorPopulatesExpectedValues()
+        {
+            #region Arrange
+            var application = new Application();
+            #endregion Arrange
+
+            #region Act
+
+            #endregion Act
+
+            #region Assert
+            Assert.IsNotNull(application.ApplicationRoles);
+            Assert.IsNull(application.Abbr);
+            Assert.IsNull(application.Location);
+            Assert.IsNull(application.Name);
+            Assert.IsFalse(application.Inactive);
+            #endregion Assert		
+        }
+
+        [TestMethod]
+        public void TestAllValuesPopulatedSaves()
+        {
+            #region Arrange
+            Application application = CreateValidEntities.Application(9, true);
+            #endregion Arrange
+
+            #region Act
+            ApplicationRepository.DbContext.BeginTransaction();
+            ApplicationRepository.EnsurePersistent(application);
+            ApplicationRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.IsFalse(application.Inactive);
+            Assert.IsFalse(application.IsTransient());
+            Assert.IsTrue(application.IsValid());
+            #endregion Assert	
+        }
+
+        #endregion Misc Tests
         
         #region Reflection of Database.
 
@@ -1003,6 +972,7 @@ namespace Catbert4.Tests.Repositories
             {
                  "[NHibernate.Validator.Constraints.LengthAttribute((Int32)50)]"
             }));
+            expectedFields.Add(new NameAndType("ApplicationRoles", "System.Collections.Generic.IList`1[Catbert4.Core.Domain.ApplicationRole]", new List<string>()));
             expectedFields.Add(new NameAndType("Id", "System.Int32", new List<string>
             {
                 "[Newtonsoft.Json.JsonPropertyAttribute()]", 
@@ -1018,14 +988,7 @@ namespace Catbert4.Tests.Repositories
                  "[NHibernate.Validator.Constraints.LengthAttribute((Int32)50)]", 
                  "[UCDArch.Core.NHibernateValidator.Extensions.RequiredAttribute()]"
             }));
-            expectedFields.Add(new NameAndType("Salt", "System.String", new List<string>
-            {
-                 "[NHibernate.Validator.Constraints.LengthAttribute((Int32)20)]"
-            }));
-            expectedFields.Add(new NameAndType("WebServiceHash", "System.String", new List<string>
-            {
-                 "[NHibernate.Validator.Constraints.LengthAttribute((Int32)100)]"
-            }));
+            
             #endregion Arrange
 
             AttributeAndFieldValidation.ValidateFieldsAndAttributes(expectedFields, typeof(Application));
@@ -1034,6 +997,34 @@ namespace Catbert4.Tests.Repositories
 
         #endregion Reflection of Database.	
 		
-		
+        public class ApplicationEqualityComparer : IEqualityComparer
+        {
+            public bool Equals(object x, object y)
+            {
+                if (x == null || y == null)
+                {
+                    return false;
+                }
+
+                if (x is IList<ApplicationRole> && y is IList<ApplicationRole>)
+                {
+                    var xVal = (IList<ApplicationRole>)x;
+                    var yVal = (IList<ApplicationRole>)y;
+                    Assert.AreEqual(xVal.Count, yVal.Count);
+                    for (int i = 0; i < xVal.Count; i++)
+                    {
+                        Assert.AreEqual(xVal[i].Level, yVal[i].Level);
+                        Assert.AreEqual(xVal[i].Role.Name, yVal[i].Role.Name);
+                    }
+                    return true;
+                }
+                return x.Equals(y);
+            }
+
+            public int GetHashCode(object obj)
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

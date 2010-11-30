@@ -23,11 +23,11 @@ namespace Catbert4.Core.Domain
         [Length(256)]
         public virtual string Location { get; set; }
 
-        [Length(100)]
-        public virtual string WebServiceHash { get; set; }
+        //[Length(100)]
+        //public virtual string WebServiceHash { get; set; }
 
-        [Length(20)]
-        public virtual string Salt { get; set; }
+        //[Length(20)]
+        //public virtual string Salt { get; set; }
 
         public virtual bool Inactive { get; set; }
 

@@ -31,24 +31,29 @@ namespace Catbert4.Tests.Core.Helpers
             {
                 rtValue.Abbr = "x".RepeatTimes(50);
                 rtValue.Location = "x".RepeatTimes(256);
-                rtValue.WebServiceHash = "x".RepeatTimes(100);
-                rtValue.Salt = "x".RepeatTimes(20);
+                //rtValue.WebServiceHash = "x".RepeatTimes(100);
+                //rtValue.Salt = "x".RepeatTimes(20);
             }
 
             return rtValue;
         }
 
-        //Sample:
-        /*
-        public static User User(int? counter)
+        public static ApplicationRole ApplicationRole(int? counter)
         {
-            var rtValue = new User();
-            rtValue.Email = "Email" + counter.Extra();
-            rtValue.LoginId = "LoginId" + counter.Extra();
-            rtValue.FirstName = "FirstName" + counter.Extra();
-            rtValue.LastName = "LastName" + counter.Extra();
+            var rtValue = new ApplicationRole();
+            rtValue.Level = counter;
+
             return rtValue;
         }
-         */
+
+        public static Role Role(int? counter)
+        {
+            var rtValue = new Role();
+            rtValue.Name = "Name" + counter.Extra();
+            rtValue.Inactive = false;
+
+            return rtValue;
+        }
+
     }
 }
