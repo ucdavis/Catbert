@@ -84,6 +84,7 @@
     <Compile Include="Core\Helpers\NameAndType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ApplicationRepositoryTests.cs" />
+    <Compile Include="Repositories\ApplicationRoleRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />

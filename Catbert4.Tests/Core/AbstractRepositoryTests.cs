@@ -20,6 +20,7 @@ namespace Catbert4.Tests.Core
         protected int EntriesAdded;
         protected string RestoreValue;
         protected bool BoolRestoreValue;
+        protected int? IntRestoreValue;
         private readonly IRepository<T> _intRepository;
         private readonly IRepositoryWithTypedId<T, string> _stringRepository;
 
@@ -399,6 +400,15 @@ namespace Catbert4.Tests.Core
             {
                 var validEntity = CreateValidEntities.Role(i + 1);
                 Repository.OfType<Role>().EnsurePersistent(validEntity);
+            }
+        }
+
+        protected void LoadApplication(int entriesToAdd)
+        {
+            for (int i = 0; i < entriesToAdd; i++)
+            {
+                var validEntity = CreateValidEntities.Application(i + 1);
+                Repository.OfType<Application>().EnsurePersistent(validEntity);
             }
         }
     }
