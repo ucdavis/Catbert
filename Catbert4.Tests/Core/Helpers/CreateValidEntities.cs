@@ -131,5 +131,17 @@ namespace Catbert4.Tests.Core.Helpers
             }
             return rtValue;
         }
+
+        public static UnitAssociation UnitAssociation(int? counter)
+        {
+            var rtValue = new UnitAssociation();
+            rtValue.User = new User();
+            rtValue.Application = new Application();
+            rtValue.Unit = new Unit();
+            rtValue.Inactive = false;
+
+
+            return rtValue;
+        }
     }
 }

@@ -90,6 +90,7 @@
     <Compile Include="Repositories\PermissionRepositoryTests.cs" />
     <Compile Include="Repositories\RoleRepositoryTests.cs" />
     <Compile Include="Repositories\SchoolRepositoryTests.cs" />
+    <Compile Include="Repositories\UnitAssociationRepositoryTests.cs" />
     <Compile Include="Repositories\UnitRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>

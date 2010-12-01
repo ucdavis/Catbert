@@ -509,5 +509,16 @@ namespace Catbert4.Tests.Core
                 schoolRepository.EnsurePersistent(validEntity);
             }
         }
+
+        protected void LoadUnits(int entriesToAdd)
+        {
+            var schoolRepository = new RepositoryWithTypedId<School, string>();
+            for (int i = 0; i < entriesToAdd; i++)
+            {
+                var validEntity = CreateValidEntities.Unit(i + 1);
+                validEntity.School = schoolRepository.GetById("1"); 
+                Repository.OfType<Unit>().EnsurePersistent(validEntity);
+            }
+        }
     }
 }
