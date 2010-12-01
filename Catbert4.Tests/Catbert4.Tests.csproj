@@ -88,6 +88,7 @@
     <Compile Include="Repositories\ApplicationRoleRepositoryTests.cs" />
     <Compile Include="Repositories\AuditRepositoryTests.cs" />
     <Compile Include="Repositories\PermissionRepositoryTests.cs" />
+    <Compile Include="Repositories\RoleRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
