@@ -89,6 +89,7 @@
     <Compile Include="Repositories\AuditRepositoryTests.cs" />
     <Compile Include="Repositories\PermissionRepositoryTests.cs" />
     <Compile Include="Repositories\RoleRepositoryTests.cs" />
+    <Compile Include="Repositories\SchoolRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />

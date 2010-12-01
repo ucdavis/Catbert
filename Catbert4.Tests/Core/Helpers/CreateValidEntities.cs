@@ -102,5 +102,20 @@ namespace Catbert4.Tests.Core.Helpers
 
             return rtValue;
         }
+
+        public static School School(int? counter)
+        {
+            var rtValue = new School();
+            rtValue.Abbreviation = "Abbr" + counter.Extra();
+            rtValue.LongDescription = "LongDescription" + counter.Extra();
+            rtValue.ShortDescription = "ShortDescription" + counter.Extra();
+            var stringId = "99";
+            if (counter != null)
+            {
+                stringId = counter.ToString();
+            }
+            rtValue.SetId(stringId);
+            return rtValue;
+        }
     }
 }
