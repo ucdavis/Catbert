@@ -33,7 +33,7 @@ namespace Catbert4.Core.Domain
         public virtual string StudentId { get; set; }
 
         [NotNull]
-        public virtual Guid UserKey { get; set; }
+        public virtual Guid UserKey { get; set; } //Test that an empty guid is invalid?
 
         public virtual bool Inactive { get; set; }
 

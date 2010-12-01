@@ -482,12 +482,21 @@ namespace Catbert4.Tests.Core
             }
         }
 
-        protected void LoadApplication(int entriesToAdd)
+        protected void LoadApplications(int entriesToAdd)
         {
             for (int i = 0; i < entriesToAdd; i++)
             {
                 var validEntity = CreateValidEntities.Application(i + 1);
                 Repository.OfType<Application>().EnsurePersistent(validEntity);
+            }
+        }
+
+        protected void LoadUsers(int entriesToAdd)
+        {
+            for (int i = 0; i < entriesToAdd; i++)
+            {
+                var validEntity = CreateValidEntities.User(i + 1);
+                Repository.OfType<User>().EnsurePersistent(validEntity);
             }
         }
     }

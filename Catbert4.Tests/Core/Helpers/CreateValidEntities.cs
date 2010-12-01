@@ -68,5 +68,39 @@ namespace Catbert4.Tests.Core.Helpers
             }
             return rtValue;
         }
+
+        public static Permission Permission(int? counter)
+        {
+            var rtValue = new Permission();
+            rtValue.User = new User();
+            rtValue.Application = new Application();
+            rtValue.Role = new Role();
+            rtValue.Inactive = false;
+            
+
+            return rtValue;
+        }
+
+        public static User User(int? counter, bool populateAllFields = false)
+        {
+            var rtValue = new User();
+            rtValue.LoginId = "LoginId" + counter.Extra();
+            var localCounter = 99;
+            if (counter != null)
+                localCounter = (int)counter;
+            rtValue.UserKey = SpecificGuid.GetGuid(localCounter);
+            rtValue.Inactive = false;
+            if (populateAllFields)
+            {
+                rtValue.Email = "test@testy.com";
+                rtValue.EmployeeId = "x".RepeatTimes(9);
+                rtValue.FirstName = "x".RepeatTimes(50);
+                rtValue.LastName = "x".RepeatTimes(50);
+                //rtValue.Phone = "555-555-5555"; //Not Sure
+                rtValue.StudentId = "x".RepeatTimes(9);
+            }
+
+            return rtValue;
+        }
     }
 }

@@ -167,7 +167,7 @@ namespace Catbert4.Tests.Repositories
         {
             #region Arrange
             ApplicationRepository.DbContext.BeginTransaction();
-            base.LoadApplication(1);
+            base.LoadApplications(1);
             ApplicationRepository.DbContext.CommitTransaction();
             var applicationRole = GetValid(9);
             applicationRole.Application = ApplicationRepository.GetById(1);
@@ -196,7 +196,7 @@ namespace Catbert4.Tests.Repositories
         {
             #region Arrange
             ApplicationRepository.DbContext.BeginTransaction();
-            LoadApplication(3);
+            LoadApplications(3);
             ApplicationRepository.DbContext.CommitTransaction();
             var applicationRole = GetValid(9);
             applicationRole.Application = ApplicationRepository.GetById(2);
@@ -463,7 +463,7 @@ namespace Catbert4.Tests.Repositories
             var id = ApplicationRoleRepository.Queryable.Max(x => x.Id) + 1;
             var session = NHibernateSessionManager.Instance.GetSession();
             ApplicationRepository.DbContext.BeginTransaction();
-            LoadApplication(1);
+            LoadApplications(1);
             ApplicationRepository.DbContext.CommitTransaction();
             RoleRepository.DbContext.BeginTransaction();
             LoadRoles(1);
