@@ -117,5 +117,19 @@ namespace Catbert4.Tests.Core.Helpers
             rtValue.SetId(stringId);
             return rtValue;
         }
+
+        public static Unit Unit(int? counter, bool populateAllFields = false)
+        {
+            var rtValue = new Unit();
+            rtValue.FullName = "FullName" + counter.Extra();
+            rtValue.FisCode = "F" + counter.Extra();
+            rtValue.School = new School();
+            if (populateAllFields)
+            {
+                rtValue.ShortName = "x".RepeatTimes(50);
+                rtValue.PpsCode = counter.Extra();
+            }
+            return rtValue;
+        }
     }
 }
