@@ -51,11 +51,15 @@
     <Reference Include="NHibernate.ByteCode.Spring">
       <HintPath>..\Bin\NHibernate.ByteCode.Spring.dll</HintPath>
     </Reference>
+    <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <HintPath>..\Bin\Rhino.Mocks.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite">
       <HintPath>..\Bin\System.Data.SQLite.DLL</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml.Linq" />
@@ -72,9 +76,13 @@
     <Reference Include="UCDArch.Testing">
       <HintPath>..\Bin\UCDArch.Testing.dll</HintPath>
     </Reference>
+    <Reference Include="UCDArch.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=667f3cb07abadf4b, processorArchitecture=MSIL">
+      <HintPath>..\Bin\UCDArch.Web.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContinuousDeploymentIntegrationHack.cs" />
+    <Compile Include="Controllers\HomeControllerTests.cs" />
     <Compile Include="Core\AbstractRepositoryTests.cs" />
     <Compile Include="Core\Extensions\AssertExtensions.cs" />
     <Compile Include="Core\Extensions\RouteTestingExtensions.cs" />
@@ -95,13 +103,16 @@
     <Compile Include="Repositories\UserRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Catbert4.Core\Catbert4.Core.csproj">
       <Project>{A5876BBC-2054-4B62-8DFF-F2E948434EBB}</Project>
       <Name>Catbert4.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Catbert4\Catbert4.csproj">
+      <Project>{B8863513-F3B6-4F72-8076-2DCC3F479E80}</Project>
+      <Name>Catbert4</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
