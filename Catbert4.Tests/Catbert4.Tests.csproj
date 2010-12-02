@@ -92,6 +92,7 @@
     <Compile Include="Repositories\SchoolRepositoryTests.cs" />
     <Compile Include="Repositories\UnitAssociationRepositoryTests.cs" />
     <Compile Include="Repositories\UnitRepositoryTests.cs" />
+    <Compile Include="Repositories\UserRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />

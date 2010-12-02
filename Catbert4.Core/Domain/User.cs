@@ -26,14 +26,15 @@ namespace Catbert4.Core.Domain
         [Pattern(@"((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}")]
         public virtual string Phone { get; set; }
 
-        [Length(9)]
-        public virtual string EmployeeId { get; set; }
+        //Comment out to match mapping JCS
+        //[Length(9)]
+        //public virtual string EmployeeId { get; set; }
 
-        [Length(9)]
-        public virtual string StudentId { get; set; }
+        //[Length(9)]
+        //public virtual string StudentId { get; set; }
 
-        [NotNull]
-        public virtual Guid UserKey { get; set; } //Test that an empty guid is invalid?
+        //[NotNull]
+        //public virtual Guid UserKey { get; set; }
 
         public virtual bool Inactive { get; set; }
 
