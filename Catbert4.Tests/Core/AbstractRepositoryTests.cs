@@ -509,7 +509,10 @@ namespace Catbert4.Tests.Core
                 schoolRepository.EnsurePersistent(validEntity);
             }
         }
-
+        /// <summary>
+        /// Needs Schools
+        /// </summary>
+        /// <param name="entriesToAdd"></param>
         protected void LoadUnits(int entriesToAdd)
         {
             var schoolRepository = new RepositoryWithTypedId<School, string>();
@@ -518,6 +521,35 @@ namespace Catbert4.Tests.Core
                 var validEntity = CreateValidEntities.Unit(i + 1);
                 validEntity.School = schoolRepository.GetById("1"); 
                 Repository.OfType<Unit>().EnsurePersistent(validEntity);
+            }
+        }
+
+        /// <summary>
+        /// Needs units, applications, and passed user
+        /// </summary>
+        /// <param name="entriesToAdd"></param>
+        /// <param name="user"></param>
+        protected void LoadUnitAssociations(int entriesToAdd, User user)
+        {
+            for (int i = 0; i < entriesToAdd; i++)
+            {
+                var validEntity = CreateValidEntities.UnitAssociation(i + 1);
+                validEntity.User = user;
+                validEntity.Unit = Repository.OfType<Unit>().GetById(1);
+                validEntity.Application = Repository.OfType<Application>().GetById(1);
+                Repository.OfType<UnitAssociation>().EnsurePersistent(validEntity);
+            }
+        }
+
+        protected void LoadPermissions(int entriesToAdd, User user)
+        {
+            for (int i = 0; i < entriesToAdd; i++)
+            {
+                var validEntity = CreateValidEntities.Permission(i + 1);
+                validEntity.User = user;
+                validEntity.Role = Repository.OfType<Role>().GetById(1);
+                validEntity.Application = Repository.OfType<Application>().GetById(1);
+                Repository.OfType<Permission>().EnsurePersistent(validEntity);
             }
         }
     }
