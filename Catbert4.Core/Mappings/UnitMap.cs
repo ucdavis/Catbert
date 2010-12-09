@@ -16,7 +16,7 @@ namespace Catbert4.Core.Mappings
             Map(x => x.FisCode).Column("FIS_Code");
             Map(x => x.PpsCode).Column("PPS_Code");
 
-            References(x => x.School).Column("SchoolCode");
+            References(x => x.School).Column("SchoolCode").Fetch.Join();
         }
     }
 }
