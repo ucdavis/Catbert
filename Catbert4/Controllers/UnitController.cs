@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using AutoMapper;
 using Catbert4.Core.Domain;
 using UCDArch.Core.PersistanceSupport;
 using UCDArch.Web.Controller;
@@ -32,7 +33,7 @@ namespace Catbert4.Controllers
             return View(unitList.ToList());
         }
 
-        //
+/*
         // GET: /Unit/Create
         public ActionResult Create()
         {
@@ -68,7 +69,7 @@ namespace Catbert4.Controllers
                 return View(viewModel);
             }
         }
-
+*/
         //
         // GET: /Unit/Edit/5
         public ActionResult Edit(int id)
@@ -92,7 +93,9 @@ namespace Catbert4.Controllers
 
             if (unitToEdit == null) return RedirectToAction("Index");
 
-            TransferValues(unit, unitToEdit);
+            Mapper.Map(unit, unitToEdit);
+
+            //TransferValues(unit, unitToEdit);
 
             unitToEdit.TransferValidationMessagesTo(ModelState);
 
