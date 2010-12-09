@@ -103,20 +103,8 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="UCDArch.Core">
-      <HintPath>..\Bin\UCDArch.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="UCDArch.Core.NHibernateValidator">
-      <HintPath>..\Bin\UCDArch.Core.NHibernateValidator.dll</HintPath>
-    </Reference>
-    <Reference Include="UCDArch.Data">
-      <HintPath>..\Bin\UCDArch.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="UCDArch.Web">
-      <HintPath>..\Bin\UCDArch.Web.dll</HintPath>
-    </Reference>
-    <Reference Include="UCDArch.Web.Providers">
-      <HintPath>..\Bin\UCDArch.Web.Providers.dll</HintPath>
+    <Reference Include="UCDArch">
+      <HintPath>..\Bin\UCDArch.dll</HintPath>
     </Reference>
     <Reference Include="xVal">
       <HintPath>..\Bin\xVal.dll</HintPath>
