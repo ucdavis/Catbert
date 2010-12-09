@@ -67,17 +67,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="UCDArch.Core">
-      <HintPath>..\Bin\UCDArch.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="UCDArch.Data">
-      <HintPath>..\Bin\UCDArch.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="UCDArch.Testing">
-      <HintPath>..\Bin\UCDArch.Testing.dll</HintPath>
-    </Reference>
-    <Reference Include="UCDArch.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=667f3cb07abadf4b, processorArchitecture=MSIL">
-      <HintPath>..\Bin\UCDArch.Web.dll</HintPath>
+    <Reference Include="UCDArch">
+      <HintPath>..\Bin\UCDArch.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
