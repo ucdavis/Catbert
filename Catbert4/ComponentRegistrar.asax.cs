@@ -3,6 +3,7 @@ using Castle.Windsor;
 using UCDArch.Core.CommonValidator;
 using UCDArch.Core.NHibernateValidator.CommonValidatorAdapter;
 using UCDArch.Core.PersistanceSupport;
+using UCDArch.Data;
 using UCDArch.Data.NHibernate;
 using System.Security.Principal;
 using System.Web;
@@ -19,6 +20,8 @@ namespace Catbert4
             //Add your components here
             container.AddComponent("validator", typeof(IValidator), typeof(Validator));
             container.AddComponent("dbContext", typeof(IDbContext), typeof(DbContext));
+            container.AddComponent("queryExtensionProvider", typeof (IQueryExtensionProvider),
+                                   typeof(NHibernateQueryExtensionProvider));
 
             container.AddComponent("interceptor", typeof (IInterceptor), typeof (AuditInterceptor));
 
