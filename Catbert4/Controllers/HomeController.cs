@@ -8,9 +8,13 @@ namespace Catbert4.Controllers
     [HandleTransactionsManually]
     public class HomeController : ApplicationController
     {
+        public ActionResult Index()
+        {
+            return View();
+        }
         //
         // GET: /Home/
-        public ActionResult Index()
+        public ActionResult Dev()
         {
             var apps = Repository.OfType<Application>().GetAll();
             var perm = Repository.OfType<Permission>().Queryable.Where(x => x.Inactive == false).First();
