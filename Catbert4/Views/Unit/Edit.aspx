@@ -8,12 +8,12 @@
 
     <h2>Edit</h2>
 
-	<%= Html.ClientSideValidation<Unit>("Unit") %>
+	<%= Html.ClientSideValidation<Catbert4.Core.Domain.Unit>("Unit") %>
 
     <% using (Html.BeginForm()) {%>
         <%= Html.AntiForgeryToken() %>
         <%: Html.ValidationSummary(true) %>
-
+        
         <fieldset>
             <legend>Fields</legend>
             

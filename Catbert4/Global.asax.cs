@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using Catbert4.Controllers;
 using Catbert4.Core.Domain;
+using Catbert4.Helpers;
 using Microsoft.Practices.ServiceLocation;
 using MvcContrib.Castle;
 using Castle.Windsor;
@@ -24,6 +25,8 @@ namespace Catbert4
 #endif
 
             xVal.ActiveRuleProviders.Providers.Add(new ValidatorRulesProvider());
+
+            AutomapperConfig.Configure();
 
             new RouteConfigurator().RegisterRoutes();
 

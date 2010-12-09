@@ -148,7 +148,10 @@ namespace Catbert4.Controllers
         /// </summary>
         private static void TransferValues(Unit source, Unit destination)
         {
-            throw new NotImplementedException();
+            destination.FisCode = source.FisCode;
+            destination.PpsCode = source.PpsCode;
+            destination.ShortName = source.ShortName;
+            destination.FullName = source.FullName;
         }
 
     }
