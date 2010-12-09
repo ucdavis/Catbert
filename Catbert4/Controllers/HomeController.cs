@@ -6,7 +6,7 @@ using Catbert4.Core.Domain;
 namespace Catbert4.Controllers
 {
     [HandleTransactionsManually]
-    public class HomeController : ApplicationController
+    public class HomeController : ApplicationControllerBase
     {
         public ActionResult Index()
         {

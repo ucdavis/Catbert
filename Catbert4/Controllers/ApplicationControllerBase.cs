@@ -2,7 +2,7 @@
 
 namespace Catbert4.Controllers
 {
-    public class ApplicationController : SuperController
+    public class ApplicationControllerBase : SuperController
     {
     }
 }

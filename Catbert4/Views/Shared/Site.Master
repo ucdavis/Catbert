@@ -13,8 +13,8 @@
     
     <script src="https://www.google.com/jsapi" type="text/javascript"></script>
     <script type="text/javascript">
-        google.load("jquery", "1.4.2");
-        google.load("jqueryui", "1.8.2");
+        google.load("jquery", "1.4.4");
+        google.load("jqueryui", "1.8.6");
     </script>
     <script src="https://ajax.microsoft.com/ajax/jquery.validate/1.5.5/jquery.validate.min.js"></script>
     <script src="<%= Url.Script("xVal.jquery.validate.js") %>" type="text/javascript"></script>

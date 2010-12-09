@@ -9,7 +9,7 @@ namespace Catbert4.Controllers
     /// <summary>
     /// Controller for the Account class
     /// </summary>
-    public class AccountController : ApplicationController
+    public class AccountController : ApplicationControllerBase
     {
         public ActionResult LogOn(string returnUrl)
         {

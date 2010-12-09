@@ -110,7 +110,7 @@ namespace Catbert4.Tests.Controllers
             #endregion Act
 
             #region Assert
-            Assert.AreEqual("ApplicationController", result);
+            Assert.AreEqual("ApplicationControllerBase", result);
             #endregion Assert
         }
 
