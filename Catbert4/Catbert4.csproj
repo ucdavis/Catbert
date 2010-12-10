@@ -147,6 +147,7 @@
     <Content Include="Views\Shared\DisplayTemplates\Object.ascx" />
     <Content Include="Views\Shared\EditorTemplates\DisplayComplexValues.ascx" />
     <Content Include="Views\Shared\EditorTemplates\Object.ascx" />
+    <Content Include="Views\Shared\Message.ascx" />
     <Content Include="Views\Unit\Create.aspx" />
     <Content Include="Views\Unit\Delete.aspx" />
     <Content Include="Views\Unit\Edit.aspx" />
