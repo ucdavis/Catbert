@@ -1,24 +1,27 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<Catbert4.Core.Domain.School>>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<Catbert4.Core.Domain.Application>>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Schools
+	Applications
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Schools</h2>
+    <h2>Applications</h2>
 
     <table>
         <tr>
             <th></th>
             <th>
-                ShortDescription
+                Name
             </th>
             <th>
-                LongDescription
+                Abbr
             </th>
             <th>
-                Abbreviation
+                Location
+            </th>
+            <th>
+                Active
             </th>
         </tr>
 
@@ -31,13 +34,16 @@
                 <%: Html.ActionLink("Delete", "Delete", new { id = item.Id })%>
             </td>
             <td>
-                <%: item.ShortDescription %>
+                <%: item.Name %>
             </td>
             <td>
-                <%: item.LongDescription %>
+                <%: item.Abbr %>
             </td>
             <td>
-                <%: item.Abbreviation %>
+                <%: Html.DisplayFor(x=> item.Location) %>
+            </td>
+            <td>
+                <%: !item.Inactive %>
             </td>
         </tr>
     
@@ -46,7 +52,7 @@
     </table>
 
     <p>
-        <%: Html.ActionLink("Create New School", "Create") %>
+        <%: Html.ActionLink("Create New Application", "Create") %>
     </p>
 
 </asp:Content>

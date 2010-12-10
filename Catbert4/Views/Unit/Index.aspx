@@ -4,7 +4,7 @@
 <asp:Content runat="server" ID="Header" ContentPlaceHolderID="HeaderContent"></asp:Content>
 <asp:Content runat="server" ID="Main" ContentPlaceHolderID="MainContent">
 
-<%: Html.ActionLink<UnitController>(x=>x.Create(), "Create New Unit") %>
+    <h2>Units</h2>
 
 <table id="tblUnits">
     <thead>
@@ -34,5 +34,10 @@
         <% } %>
     </tbody>
 </table>
+
+    <p>
+    <%: Html.ActionLink<UnitController>(x=>x.Create(), "Create New Unit") %>
+    </p>
+
 
 </asp:Content>

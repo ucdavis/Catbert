@@ -13,7 +13,6 @@ namespace Catbert4.Core.Mappings
 
             References(x => x.Application);
             References(x => x.Role).Fetch.Join();
-
         }
     }
 }

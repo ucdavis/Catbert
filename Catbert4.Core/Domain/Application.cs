@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using NHibernate.Validator.Constraints;
 using UCDArch.Core.DomainModel;
-using UCDArch.Core.NHibernateValidator.Extensions;
 
 namespace Catbert4.Core.Domain
 {
@@ -14,13 +14,14 @@ namespace Catbert4.Core.Domain
         }
 
         [Length(50)]
-        [Required]
+        [UCDArch.Core.NHibernateValidator.Extensions.Required]
         public virtual string Name { get; set; }
 
         [Length(50)]
         public virtual string Abbr { get; set; }
 
         [Length(256)]
+        [DataType(DataType.Url)]
         public virtual string Location { get; set; }
 
         //[Length(100)]
