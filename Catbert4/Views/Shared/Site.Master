@@ -4,8 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>
-        <asp:ContentPlaceHolder ID="TitleContent" runat="server">
-            Catbert v4:Home - College of Agricultural & Environmental Sciences</asp:ContentPlaceHolder>
+        Catbert v4:<asp:ContentPlaceHolder ID="TitleContent" runat="server"></asp:ContentPlaceHolder>
+         - College of Agricultural & Environmental Sciences        
     </title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
