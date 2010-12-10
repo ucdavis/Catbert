@@ -7,6 +7,8 @@ namespace Catbert4.Core.Mappings
     {
         public RoleMap()
         {
+            Where("Inactive = 0"); //active roles only
+
             Id(x => x.Id).Column("RoleID");
 
             Map(x => x.Name).Column("Role");

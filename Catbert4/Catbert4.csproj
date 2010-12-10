@@ -140,6 +140,7 @@
     <Content Include="Images\logo-caes.png" />
     <Content Include="Scripts\xVal.jquery.validate.js" />
     <Content Include="Views\Application\Details.aspx" />
+    <Content Include="Views\Application\Edit.aspx" />
     <Content Include="Views\Application\Index.aspx" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\School\Create.aspx" />

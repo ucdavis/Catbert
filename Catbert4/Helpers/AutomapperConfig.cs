@@ -19,6 +19,11 @@ namespace Catbert4.Helpers
                 .ForMember(x => x.Id, x => x.Ignore());
 
             CreateMap<School, School>();
+
+            CreateMap<Application, Application>()
+                .ForMember(x => x.Id, x => x.Ignore())
+                .ForMember(x => x.ApplicationRoles, x => x.Ignore());
+            
         }
     }
 }

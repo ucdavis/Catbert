@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Catbert4.Core.Domain;
 using UCDArch.Core.PersistanceSupport;
 using UCDArch.Web.Helpers;
 using UCDArch.Core.Utils;
+using AutoMapper;
 
 namespace Catbert4.Controllers
 {
@@ -102,8 +104,8 @@ namespace Catbert4.Controllers
 
             if (applicationToEdit == null) return RedirectToAction("Index");
 
-            TransferValues(application, applicationToEdit);
-
+            Mapper.Map(application, applicationToEdit);
+            
             applicationToEdit.TransferValidationMessagesTo(ModelState);
 
             if (ModelState.IsValid)
@@ -123,33 +125,6 @@ namespace Catbert4.Controllers
             }
         }
         
-        //
-        // GET: /Application/Delete/5 
-        public ActionResult Delete(int id)
-        {
-			var application = _applicationRepository.GetNullableById(id);
-
-            if (application == null) return RedirectToAction("Index");
-
-            return View(application);
-        }
-
-        //
-        // POST: /Application/Delete/5
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Delete(int id, Application application)
-        {
-			var applicationToDelete = _applicationRepository.GetNullableById(id);
-
-            if (applicationToDelete == null) return RedirectToAction("Index");
-
-            _applicationRepository.Remove(applicationToDelete);
-
-            Message = "Application Removed Successfully";
-
-            return RedirectToAction("Index");
-        }
-        
         /// <summary>
         /// Transfer editable values from source to destination
         /// </summary>
@@ -159,21 +134,26 @@ namespace Catbert4.Controllers
         }
 
     }
-
+        
 	/// <summary>
     /// ViewModel for the Application class
     /// </summary>
     public class ApplicationViewModel
 	{
 		public Application Application { get; set; }
+	    public List<Role> Roles { get; set; }
  
 		public static ApplicationViewModel Create(IRepository repository)
 		{
 			Check.Require(repository != null, "Repository must be supplied");
 			
-			var viewModel = new ApplicationViewModel {Application = new Application()};
- 
-			return viewModel;
+			var viewModel = new ApplicationViewModel
+			                    {
+			                        Application = new Application(),
+			                        Roles = repository.OfType<Role>().Queryable.OrderBy(x=>x.Name).ToList()
+			                    };
+            
+		    return viewModel;
 		}
 	}
 }
