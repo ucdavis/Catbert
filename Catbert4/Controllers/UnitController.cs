@@ -33,7 +33,6 @@ namespace Catbert4.Controllers
             return View(unitList.ToList());
         }
 
-/*
         // GET: /Unit/Create
         public ActionResult Create()
         {
@@ -49,7 +48,7 @@ namespace Catbert4.Controllers
         {
             var unitToCreate = new Unit();
 
-            TransferValues(unit, unitToCreate);
+            Mapper.Map(unit, unitToCreate);
 
             unitToCreate.TransferValidationMessagesTo(ModelState);
 
@@ -69,7 +68,7 @@ namespace Catbert4.Controllers
                 return View(viewModel);
             }
         }
-*/
+
         //
         // GET: /Unit/Edit/5
         public ActionResult Edit(int id)
@@ -94,8 +93,6 @@ namespace Catbert4.Controllers
             if (unitToEdit == null) return RedirectToAction("Index");
 
             Mapper.Map(unit, unitToEdit);
-
-            //TransferValues(unit, unitToEdit);
 
             unitToEdit.TransferValidationMessagesTo(ModelState);
 

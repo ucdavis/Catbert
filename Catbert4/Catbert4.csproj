@@ -139,6 +139,7 @@
     <Content Include="Scripts\xVal.jquery.validate.js" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Shared\EditorTemplates\Object.ascx" />
+    <Content Include="Views\Unit\Create.aspx" />
     <Content Include="Views\Unit\Edit.aspx" />
     <Content Include="Views\Unit\Index.aspx" />
     <Content Include="Web.config" />
