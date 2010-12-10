@@ -11,6 +11,7 @@ namespace Catbert4.Core.Domain
         public virtual string FullName { get; set; }
 
         [Length(50)]
+        [Required]
         public virtual string ShortName { get; set; }
 
         [Length(6)]

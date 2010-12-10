@@ -9,12 +9,12 @@
 
     <% using (Html.BeginForm()) {%>
         <%= Html.AntiForgeryToken() %>
-        <%: Html.ValidationSummary(true) %>
+        <%: Html.ValidationSummary(false) %>
         
         <fieldset>
             <legend>Fields</legend>
             
-            <%: Html.EditorFor(x=>x.Unit) %>
+            <% Html.RenderPartial("UnitForm"); %>
 
             <p>
                 <input type="submit" value="Create" />

@@ -138,10 +138,14 @@
     <Content Include="Images\logo-caes.png" />
     <Content Include="Scripts\xVal.jquery.validate.js" />
     <Content Include="Views\Home\Index.aspx" />
+    <Content Include="Views\Shared\DisplayTemplates\Object.ascx" />
+    <Content Include="Views\Shared\EditorTemplates\DisplayComplexValues.ascx" />
     <Content Include="Views\Shared\EditorTemplates\Object.ascx" />
     <Content Include="Views\Unit\Create.aspx" />
+    <Content Include="Views\Unit\Delete.aspx" />
     <Content Include="Views\Unit\Edit.aspx" />
     <Content Include="Views\Unit\Index.aspx" />
+    <Content Include="Views\Unit\UnitForm.ascx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -174,31 +178,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CodeTemplates\AddController\Controller.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Controller.cs</LastGenOutput>
     </None>
     <None Include="CodeTemplates\AddView\UCDDelete.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>UCDDelete.cs</LastGenOutput>
     </None>
     <None Include="CodeTemplates\AddView\UCDDetails.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>UCDDetails.cs</LastGenOutput>
     </None>
     <None Include="CodeTemplates\AddView\UCDEmpty.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>UCDEmpty.cs</LastGenOutput>
     </None>
     <None Include="CodeTemplates\AddView\UCDList.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>UCDList.cs</LastGenOutput>
     </None>
     <None Include="CodeTemplates\AddView\UCDListExtended.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>UCDListExtended.cs</LastGenOutput>
     </None>
     <None Include="CodeTemplates\AddView\UCDModify.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>UCDModify.cs</LastGenOutput>
     </None>
     <Content Include="packages.config" />

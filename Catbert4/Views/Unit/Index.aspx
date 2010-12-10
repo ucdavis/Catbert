@@ -4,7 +4,8 @@
 <asp:Content runat="server" ID="Header" ContentPlaceHolderID="HeaderContent"></asp:Content>
 <asp:Content runat="server" ID="Main" ContentPlaceHolderID="MainContent">
 
-		
+<%: Html.ActionLink<UnitController>(x=>x.Create(), "Create New Unit") %>
+
 <table id="tblUnits">
     <thead>
         <tr>
@@ -20,7 +21,10 @@
         <% foreach (var unit in Model)
            { %>
            <tr>
-            <td><%: Html.ActionLink<UnitController>(x=>x.Edit(unit.Id), "Edit") %></td>
+            <td>
+                <%: Html.ActionLink<UnitController>(x=>x.Edit(unit.Id), "Edit") %> |
+                <%: Html.ActionLink<UnitController>(x=>x.Delete(unit.Id), "Delete") %>
+            </td>
             <td><%: unit.FisCode %></td>
             <td><%: unit.PpsCode %></td>
             <td><%: unit.FullName %></td>

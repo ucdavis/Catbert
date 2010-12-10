@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
 using Catbert4.Core.Domain;
 using UCDArch.Core.PersistanceSupport;
-using UCDArch.Web.Controller;
 using UCDArch.Web.Helpers;
 using UCDArch.Core.Utils;
-using System.Diagnostics.Contracts;
 
 namespace Catbert4.Controllers
 {
@@ -18,12 +15,14 @@ namespace Catbert4.Controllers
     public class UnitController : ApplicationControllerBase
     {
 	    private readonly IRepository<Unit> _unitRepository;
+        private readonly IRepository<UnitAssociation> _unitAssociationRepository;
 
-        public UnitController(IRepository<Unit> unitRepository)
+        public UnitController(IRepository<Unit> unitRepository, IRepository<UnitAssociation> unitAssociationRepository)
         {
             _unitRepository = unitRepository;
+            _unitAssociationRepository = unitAssociationRepository;
         }
-    
+
         //
         // GET: /Unit/
         public ActionResult Index()
@@ -49,7 +48,7 @@ namespace Catbert4.Controllers
             var unitToCreate = new Unit();
 
             Mapper.Map(unit, unitToCreate);
-
+            
             unitToCreate.TransferValidationMessagesTo(ModelState);
 
             if (ModelState.IsValid)
@@ -121,6 +120,13 @@ namespace Catbert4.Controllers
 
             if (unit == null) return RedirectToAction("Index");
 
+            //Can not delete if there are any unit associations related to this unit
+            if (_unitAssociationRepository.Queryable.Any(x => x.Unit.Id == id))
+            {
+                Message = string.Format("Can not remove {0} ({1}) because it is associated with existing users", unit.ShortName, unit.FisCode);
+                return RedirectToAction("Index");
+            }
+            
             return View(unit);
         }
 
@@ -138,19 +144,7 @@ namespace Catbert4.Controllers
             Message = "Unit Removed Successfully";
 
             return RedirectToAction("Index");
-        }
-        
-        /// <summary>
-        /// Transfer editable values from source to destination
-        /// </summary>
-        private static void TransferValues(Unit source, Unit destination)
-        {
-            destination.FisCode = source.FisCode;
-            destination.PpsCode = source.PpsCode;
-            destination.ShortName = source.ShortName;
-            destination.FullName = source.FullName;
-        }
-
+        }        
     }
 
 	/// <summary>

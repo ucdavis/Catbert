@@ -17,7 +17,7 @@
         <fieldset>
             <legend>Fields</legend>
             
-            <%: Html.EditorFor(x=>x.Unit) %>
+            <% Html.RenderPartial("UnitForm"); %>
 
             <p>
                 <input type="submit" value="Edit" />
