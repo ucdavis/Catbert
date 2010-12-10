@@ -18,6 +18,20 @@ namespace Catbert4.Core.Domain
         [Required]
         public virtual string Abbreviation { get; set; }
 
+        [Required]
+        [Length(2)]
+        public override string Id
+        {
+            get
+            {
+                return base.Id;
+            }
+            protected set
+            {
+                base.Id = value;
+            }
+        }
+
         public virtual void SetId(string newId)
         {
             Id = newId;

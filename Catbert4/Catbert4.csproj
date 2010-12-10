@@ -121,6 +121,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationControllerBase.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SchoolController.cs" />
     <Compile Include="Controllers\UnitController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -138,6 +139,11 @@
     <Content Include="Images\logo-caes.png" />
     <Content Include="Scripts\xVal.jquery.validate.js" />
     <Content Include="Views\Home\Index.aspx" />
+    <Content Include="Views\School\Create.aspx" />
+    <Content Include="Views\School\Delete.aspx" />
+    <Content Include="Views\School\Details.aspx" />
+    <Content Include="Views\School\Edit.aspx" />
+    <Content Include="Views\School\Index.aspx" />
     <Content Include="Views\Shared\DisplayTemplates\Object.ascx" />
     <Content Include="Views\Shared\EditorTemplates\DisplayComplexValues.ascx" />
     <Content Include="Views\Shared\EditorTemplates\Object.ascx" />

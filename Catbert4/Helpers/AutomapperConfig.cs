@@ -17,6 +17,8 @@ namespace Catbert4.Helpers
         {
             CreateMap<Unit, Unit>()
                 .ForMember(x => x.Id, x => x.Ignore());
+
+            CreateMap<School, School>();
         }
     }
 }
