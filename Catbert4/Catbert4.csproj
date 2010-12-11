@@ -139,6 +139,8 @@
     <Content Include="Css\Site.css" />
     <Content Include="Images\logo-caes.png" />
     <Content Include="Scripts\xVal.jquery.validate.js" />
+    <Content Include="Views\Application\ApplicationForm.ascx" />
+    <Content Include="Views\Application\ApplicationFormHeaderContent.ascx" />
     <Content Include="Views\Application\Details.aspx" />
     <Content Include="Views\Application\Edit.aspx" />
     <Content Include="Views\Application\Index.aspx" />
