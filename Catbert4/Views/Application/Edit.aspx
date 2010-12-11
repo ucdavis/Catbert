@@ -86,7 +86,7 @@
 
             CollectRoleData(data);
 
-            var jsonEditUrl = '<%: Url.Action("Edit", new { id = Model.Application.Id}) %>';
+            var jsonEditUrl = '<%: Request.Url %>';
 
             $.post(
                 jsonEditUrl,
