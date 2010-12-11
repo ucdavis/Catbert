@@ -68,8 +68,9 @@
 
 <asp:Content ID="Content3" ContentPlaceHolderID="HeaderContent" runat="server">
 <style type="text/css">
-    .connectedSortable { list-style-type: none; margin: 0; padding: 0; margin-right: 10px; }
-	.connectedSortable li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; width: 220px; }	
+    .connectedSortable { list-style-type: none; margin: 0; padding: 0; margin-right: 10px; background: #eee; padding: 5px; width: 220px;}
+	.connectedSortable li { margin: 5px; padding: 5px; font-size: 1.2em;  }
+		
 </style>
 
 <script type="text/javascript">
