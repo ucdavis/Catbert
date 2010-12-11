@@ -15,16 +15,48 @@
         <%: Html.ValidationSummary(true) %>
 
         <fieldset>
-            <legend>Fields</legend>
+            <legend>Application Details</legend>
             
              <table>
                 <%: Html.EditorFor(x=>x.Application) %>
              </table>
 
-            <p>
-                <input type="submit" value="Edit" />
-            </p>
         </fieldset>
+
+        <fieldset>
+            <legend>Roles</legend>
+            <h3>Ordered:</h3>
+            <ul id="ordered-roles" class="connectedSortable">
+                <% foreach (var role in Model.Application.ApplicationRoles.Where(x=>x.Level != null).OrderBy(x=>x.Level)) { %>
+                    <li class="ui-state-default" id="<%: role.Role.Name %>">
+                        (<%: role.Level %>): <%: role.Role.Name %>
+                    </li>
+                <% } %>
+            </ul>
+
+            <h3>Unordered:</h3>
+            <ul id="unordered-roles" class="connectedSortable">
+                <% foreach (var role in Model.Application.ApplicationRoles.Where(x=>x.Level == null)) { %>
+                    <li class="ui-state-default" id="<%: role.Role.Name %>">
+                        <%: role.Role.Name %>
+                    </li>
+                <% } %>
+            </ul>
+
+            <h3>Available:</h3>
+
+            <ul class="connectedSortable">
+                <% foreach (var role in Model.GetAvailableRoles()) { %>
+                    <li class="ui-state-default" id="<%: role.Name %>">
+                        <%: role.Name %>
+                    </li>
+                <% } %>
+            </ul>
+    </fieldset>
+
+            <p>
+                <input id="edit" type="submit" value="Edit" />
+            </p>
 
     <% } %>
 
@@ -35,5 +67,52 @@
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="HeaderContent" runat="server">
+<style type="text/css">
+    .connectedSortable { list-style-type: none; margin: 0; padding: 0; margin-right: 10px; }
+	.connectedSortable li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; width: 220px; }	
+</style>
+
+<script type="text/javascript">
+    $(function () {
+        $(".connectedSortable").sortable({
+            connectWith: ".connectedSortable"
+        }).disableSelection();
+
+        $("form").submit(function (e) {
+            e.preventDefault();
+
+            var data = $(this).serializeArray();
+
+            CollectRoleData(data);
+
+            var jsonEditUrl = '<%: Url.Action("Edit", new { id = Model.Application.Id}) %>';
+
+            $.post(
+                jsonEditUrl,
+                data,
+                function (result) {
+                    if (result.success) {
+                        window.location = '<%: Url.Action("Index") %>';
+                    }
+                },
+                'json');
+        });
+    });
+
+    //Get all of the roles, serialize them into string arrays and then push them into the data
+    function CollectRoleData(data) {
+        var ordered = $('#ordered-roles').sortable('toArray');
+        var unordered = $('#unordered-roles').sortable('toArray');
+
+        $(ordered).each(function (index, value) {
+            data.push({name:'orderedRoles', value: value});
+        });
+
+        $(unordered).each(function (index, value) {
+            data.push({ name: 'unorderedRoles', value: value });
+        });
+    }
+</script>
+
 </asp:Content>
 
