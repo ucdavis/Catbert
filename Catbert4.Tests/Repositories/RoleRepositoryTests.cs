@@ -354,7 +354,11 @@ namespace Catbert4.Tests.Repositories
         #endregion Inactive Tests
 
         #region Fluent Mapping Tests
+        /// <summary>
+        /// The mapping has a where clause that hides inacive roles. So this trows an exception.
+        /// </summary>
         [TestMethod]
+        [ExpectedException(typeof(System.Reflection.TargetException))]
         public void TestCanCorrectlyMapApplicationRole1()
         {
             #region Arrange
@@ -362,13 +366,23 @@ namespace Catbert4.Tests.Repositories
             var session = NHibernateSessionManager.Instance.GetSession();
             #endregion Arrange
 
-            #region Act/Assert
-            new PersistenceSpecification<Role>(session)
-                .CheckProperty(c => c.Id, id)
-                .CheckProperty(c => c.Name, "Name")
-                .CheckProperty(c => c.Inactive, true)
-                .VerifyTheMappings();
-            #endregion Act/Assert
+            try
+            {
+                #region Act/Assert
+                new PersistenceSpecification<Role>(session)
+                    .CheckProperty(c => c.Id, id)
+                    .CheckProperty(c => c.Name, "Name")
+                    .CheckProperty(c => c.Inactive, true)
+                    .VerifyTheMappings();
+                #endregion Act/Assert
+            }
+            catch (Exception ex)
+            {
+                Assert.IsNotNull(ex);
+                Assert.AreEqual("Non-static method requires a target.", ex.Message);
+                throw;
+            }
+
         }
 
         [TestMethod]
