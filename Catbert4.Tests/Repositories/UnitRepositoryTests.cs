@@ -298,6 +298,102 @@ namespace Catbert4.Tests.Repositories
         #region Invalid Tests
 
         /// <summary>
+        /// Tests the ShortName with null value does not save.
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
+        public void TestShortNameWithNullValueDoesNotSave()
+        {
+            Unit unit = null;
+            try
+            {
+                #region Arrange
+                unit = GetValid(9);
+                unit.ShortName = null;
+                #endregion Arrange
+
+                #region Act
+                UnitRepository.DbContext.BeginTransaction();
+                UnitRepository.EnsurePersistent(unit);
+                UnitRepository.DbContext.CommitTransaction();
+                #endregion Act
+            }
+            catch (Exception)
+            {
+                Assert.IsNotNull(unit);
+                var results = unit.ValidationResults().AsMessageList();
+                results.AssertErrorsAre("ShortName: may not be null or empty");
+                Assert.IsTrue(unit.IsTransient());
+                Assert.IsFalse(unit.IsValid());
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tests the ShortName with empty string does not save.
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
+        public void TestShortNameWithEmptyStringDoesNotSave()
+        {
+            Unit unit = null;
+            try
+            {
+                #region Arrange
+                unit = GetValid(9);
+                unit.ShortName = string.Empty;
+                #endregion Arrange
+
+                #region Act
+                UnitRepository.DbContext.BeginTransaction();
+                UnitRepository.EnsurePersistent(unit);
+                UnitRepository.DbContext.CommitTransaction();
+                #endregion Act
+            }
+            catch (Exception)
+            {
+                Assert.IsNotNull(unit);
+                var results = unit.ValidationResults().AsMessageList();
+                results.AssertErrorsAre("ShortName: may not be null or empty");
+                Assert.IsTrue(unit.IsTransient());
+                Assert.IsFalse(unit.IsValid());
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tests the ShortName with spaces only does not save.
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ApplicationException))]
+        public void TestShortNameWithSpacesOnlyDoesNotSave()
+        {
+            Unit unit = null;
+            try
+            {
+                #region Arrange
+                unit = GetValid(9);
+                unit.ShortName = " ";
+                #endregion Arrange
+
+                #region Act
+                UnitRepository.DbContext.BeginTransaction();
+                UnitRepository.EnsurePersistent(unit);
+                UnitRepository.DbContext.CommitTransaction();
+                #endregion Act
+            }
+            catch (Exception)
+            {
+                Assert.IsNotNull(unit);
+                var results = unit.ValidationResults().AsMessageList();
+                results.AssertErrorsAre("ShortName: may not be null or empty");
+                Assert.IsTrue(unit.IsTransient());
+                Assert.IsFalse(unit.IsValid());
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Tests the ShortName with too long value does not save.
         /// </summary>
         [TestMethod]
@@ -332,75 +428,6 @@ namespace Catbert4.Tests.Repositories
         #endregion Invalid Tests
 
         #region Valid Tests
-
-        /// <summary>
-        /// Tests the ShortName with null value saves.
-        /// </summary>
-        [TestMethod]
-        public void TestShortNameWithNullValueSaves()
-        {
-            #region Arrange
-            var unit = GetValid(9);
-            unit.ShortName = null;
-            #endregion Arrange
-
-            #region Act
-            UnitRepository.DbContext.BeginTransaction();
-            UnitRepository.EnsurePersistent(unit);
-            UnitRepository.DbContext.CommitTransaction();
-            #endregion Act
-
-            #region Assert
-            Assert.IsFalse(unit.IsTransient());
-            Assert.IsTrue(unit.IsValid());
-            #endregion Assert
-        }
-
-        /// <summary>
-        /// Tests the ShortName with empty string saves.
-        /// </summary>
-        [TestMethod]
-        public void TestShortNameWithEmptyStringSaves()
-        {
-            #region Arrange
-            var unit = GetValid(9);
-            unit.ShortName = string.Empty;
-            #endregion Arrange
-
-            #region Act
-            UnitRepository.DbContext.BeginTransaction();
-            UnitRepository.EnsurePersistent(unit);
-            UnitRepository.DbContext.CommitTransaction();
-            #endregion Act
-
-            #region Assert
-            Assert.IsFalse(unit.IsTransient());
-            Assert.IsTrue(unit.IsValid());
-            #endregion Assert
-        }
-
-        /// <summary>
-        /// Tests the ShortName with one space saves.
-        /// </summary>
-        [TestMethod]
-        public void TestShortNameWithOneSpaceSaves()
-        {
-            #region Arrange
-            var unit = GetValid(9);
-            unit.ShortName = " ";
-            #endregion Arrange
-
-            #region Act
-            UnitRepository.DbContext.BeginTransaction();
-            UnitRepository.EnsurePersistent(unit);
-            UnitRepository.DbContext.CommitTransaction();
-            #endregion Act
-
-            #region Assert
-            Assert.IsFalse(unit.IsTransient());
-            Assert.IsTrue(unit.IsValid());
-            #endregion Assert
-        }
 
         /// <summary>
         /// Tests the ShortName with one character saves.
@@ -451,6 +478,7 @@ namespace Catbert4.Tests.Repositories
 
         #endregion Valid Tests
         #endregion ShortName Tests
+
 
         #region PpsCode Tests
         #region Invalid Tests
@@ -988,7 +1016,8 @@ namespace Catbert4.Tests.Repositories
             }));
             expectedFields.Add(new NameAndType("ShortName", "System.String", new List<string>
             {
-                 "[NHibernate.Validator.Constraints.LengthAttribute((Int32)50)]"
+                 "[NHibernate.Validator.Constraints.LengthAttribute((Int32)50)]", 
+                 "[UCDArch.Core.NHibernateValidator.Extensions.RequiredAttribute()]"
             }));
             #endregion Arrange
 

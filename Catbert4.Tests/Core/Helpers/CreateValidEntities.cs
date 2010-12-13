@@ -124,9 +124,10 @@ namespace Catbert4.Tests.Core.Helpers
             rtValue.FullName = "FullName" + counter.Extra();
             rtValue.FisCode = "F" + counter.Extra();
             rtValue.School = new School();
+            rtValue.ShortName = "ShortName" + counter.Extra();
             if (populateAllFields)
             {
-                rtValue.ShortName = "x".RepeatTimes(50);
+                //rtValue.ShortName = "x".RepeatTimes(50);
                 rtValue.PpsCode = counter.Extra();
             }
             return rtValue;

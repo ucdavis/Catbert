@@ -981,7 +981,8 @@ namespace Catbert4.Tests.Repositories
             expectedFields.Add(new NameAndType("Inactive", "System.Boolean", new List<string>()));
             expectedFields.Add(new NameAndType("Location", "System.String", new List<string>
             {
-                 "[NHibernate.Validator.Constraints.LengthAttribute((Int32)256)]"
+                 "[NHibernate.Validator.Constraints.LengthAttribute((Int32)256)]",
+                 "[System.ComponentModel.DataAnnotations.DataTypeAttribute((System.ComponentModel.DataAnnotations.DataType)12)]"
             }));
             expectedFields.Add(new NameAndType("Name", "System.String", new List<string>
             {
