@@ -210,7 +210,7 @@ namespace Catbert4.Tests.Controllers
             #endregion Act
 
             #region Assert
-            Assert.AreEqual(1, result.Count(), "It looks like a method was added or removed from the controller.");
+            Assert.AreEqual(2, result.Count(), "It looks like a method was added or removed from the controller.");
             #endregion Assert
         }
 

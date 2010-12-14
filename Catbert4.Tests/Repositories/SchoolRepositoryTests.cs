@@ -697,8 +697,8 @@ namespace Catbert4.Tests.Repositories
             }));
             expectedFields.Add(new NameAndType("Id", "System.String", new List<string>
             {
-                "[Newtonsoft.Json.JsonPropertyAttribute()]", 
-                "[System.Xml.Serialization.XmlIgnoreAttribute()]"
+                "[NHibernate.Validator.Constraints.LengthAttribute((Int32)2)]", 
+                "[UCDArch.Core.NHibernateValidator.Extensions.RequiredAttribute()]"
             }));
             expectedFields.Add(new NameAndType("LongDescription", "System.String", new List<string>
             {

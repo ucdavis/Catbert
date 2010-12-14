@@ -18,6 +18,9 @@ namespace Catbert4.Core.Domain
         [Required]
         public virtual string Abbreviation { get; set; }
 
+        //Note, these two attributes are no longer on the id because it was overridden:
+                //"[Newtonsoft.Json.JsonPropertyAttribute()]", 
+                //"[System.Xml.Serialization.XmlIgnoreAttribute()]"
         [Required]
         [Length(2)]
         public override string Id
