@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Domain\Application.cs" />
     <Compile Include="Domain\ApplicationRole.cs" />
+    <Compile Include="Domain\AccessToken.cs" />
     <Compile Include="Domain\Audit.cs" />
     <Compile Include="Domain\Permission.cs" />
     <Compile Include="Domain\Role.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Domain\User.cs" />
     <Compile Include="Mappings\ApplicationMap.cs" />
     <Compile Include="Mappings\ApplicationRoleMap.cs" />
+    <Compile Include="Mappings\AccessTokenMap.cs" />
     <Compile Include="Mappings\AuditMap.cs" />
     <Compile Include="Mappings\PermissionMap.cs" />
     <Compile Include="Mappings\RoleMap.cs" />

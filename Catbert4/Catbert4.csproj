@@ -121,6 +121,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\ApplicationControllerBase.cs" />
+    <Compile Include="Controllers\AccessTokenController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SchoolController.cs" />
     <Compile Include="Controllers\UnitController.cs" />
@@ -139,6 +140,9 @@
     <Content Include="Css\Site.css" />
     <Content Include="Images\logo-caes.png" />
     <Content Include="Scripts\xVal.jquery.validate.js" />
+    <Content Include="Views\AccessToken\Create.aspx" />
+    <Content Include="Views\AccessToken\Details.aspx" />
+    <Content Include="Views\AccessToken\Index.aspx" />
     <Content Include="Views\Application\ApplicationForm.ascx" />
     <Content Include="Views\Application\ApplicationFormHeaderContent.ascx" />
     <Content Include="Views\Application\Create.aspx" />
