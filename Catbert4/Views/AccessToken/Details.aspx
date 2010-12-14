@@ -14,6 +14,17 @@
         <%: Html.DisplayForModel("DisplayComplexValues") %>
         
     </fieldset>
+
+    <% using (Html.BeginForm("SwitchActiveStatus", "AccessToken", new { id = Model.Id })) { %>
+    <%= Html.AntiForgeryToken()%>
+    
+    <fieldset>
+        <legend>Actions</legend>
+
+        <input type="submit" value="<%: Model.Active ? "Deactivate Token" : "Re-Activate Token" %>" />
+        
+    </fieldset>
+    <% } %>
     <p>
         <%: Html.ActionLink("Back to List", "Index") %>
     </p>

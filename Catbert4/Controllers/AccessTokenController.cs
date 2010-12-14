@@ -28,7 +28,7 @@ namespace Catbert4.Controllers
         public ActionResult Index()
         {
             var applicationtokenList = _accessTokenRepository.Queryable
-                .OrderBy(x=>x.Active)
+                .OrderByDescending(x=>x.Active)
                 .ThenBy(x=>x.Application.Name)
                 .ThenBy(x=>x.ContactEmail)
                 .Fetch(x=>x.Application);
@@ -89,42 +89,22 @@ namespace Catbert4.Controllers
                 return View(viewModel);
             }
         }
-        
-        //
-        // GET: /AccessToken/Delete/5 
-        public ActionResult Delete(int id)
+
+        [HttpPost]
+        public ActionResult SwitchActiveStatus(int id)
         {
-			var applicationtoken = _accessTokenRepository.GetNullableById(id);
+            var accessToken = _accessTokenRepository.GetNullableById(id);
 
-            if (applicationtoken == null) return RedirectToAction("Index");
+            if (accessToken == null) return RedirectToAction("Index");
 
-            return View(applicationtoken);
-        }
+            accessToken.Active = !accessToken.Active;  //swap active status
 
-        //
-        // POST: /AccessToken/Delete/5
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Delete(int id, AccessToken applicationtoken)
-        {
-			var applicationtokenToDelete = _accessTokenRepository.GetNullableById(id);
+            _accessTokenRepository.EnsurePersistent(accessToken);
 
-            if (applicationtokenToDelete == null) return RedirectToAction("Index");
-
-            _accessTokenRepository.Remove(applicationtokenToDelete);
-
-            Message = "AccessToken Removed Successfully";
+            Message = "Access Token Active Status Set Successfully";
 
             return RedirectToAction("Index");
         }
-        
-        /// <summary>
-        /// Transfer editable values from source to destination
-        /// </summary>
-        private static void TransferValues(AccessToken source, AccessToken destination)
-        {
-            throw new NotImplementedException();
-        }
-
     }
 
 	/// <summary>

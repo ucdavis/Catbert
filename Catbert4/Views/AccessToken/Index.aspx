@@ -8,6 +8,7 @@
 <table id="tokens">
     <thead>
         <tr>
+            <th></th>
             <th>Application</th>
             <th>Token</th>
             <th>Contact Email</th>
@@ -19,6 +20,7 @@
         <% foreach (var accessToken in Model)
            { %>
            <tr>
+            <td><%: Html.ActionLink<AccessTokenController>(x=>x.Details(accessToken.Id), "Edit/Details") %></td>
             <td><%: accessToken.Application.Name %></td>
             <td><%: accessToken.Token %></td>
             <td><%: Html.DisplayFor(x=> accessToken.ContactEmail) %></td>
