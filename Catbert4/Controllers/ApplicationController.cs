@@ -58,11 +58,13 @@ namespace Catbert4.Controllers
         //
         // POST: /Application/Create
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Create(Application application)
+        public ActionResult Create(ApplicationEditModel applicationEditModel)
         {
             var applicationToCreate = new Application();
 
-            TransferValues(application, applicationToCreate);
+            Mapper.Map(applicationEditModel.Application, applicationToCreate);
+            
+            SetApplicationRoles(applicationToCreate, applicationEditModel.OrderedRoles, applicationEditModel.UnorderedRoles);
 
             applicationToCreate.TransferValidationMessagesTo(ModelState);
 
@@ -71,13 +73,13 @@ namespace Catbert4.Controllers
                 _applicationRepository.EnsurePersistent(applicationToCreate);
 
                 Message = "Application Created Successfully";
-                
-                return RedirectToAction("Index");
+
+                return Json(new { success = true });
             }
             else
             {
 				var viewModel = ApplicationViewModel.Create(Repository);
-                viewModel.Application = application;
+                viewModel.Application = applicationEditModel.Application;
 
                 return View(viewModel);
             }
@@ -167,14 +169,6 @@ namespace Catbert4.Controllers
             }
 
             //Now we should have an application with reconciled roles
-        }
-
-        /// <summary>
-        /// Transfer editable values from source to destination
-        /// </summary>
-        private static void TransferValues(Application source, Application destination)
-        {
-            throw new NotImplementedException();
         }
 
     }
