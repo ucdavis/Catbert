@@ -6,6 +6,11 @@ namespace Catbert4.Core.Domain
 {
     public class Role : DomainObject
     {
+        public Role()
+        {
+            Inactive = false;
+        }
+
         [Length(50)]
         [Required]
         public virtual string Name { get; set; }

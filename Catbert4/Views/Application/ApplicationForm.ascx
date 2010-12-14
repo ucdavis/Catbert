@@ -11,6 +11,8 @@
 
 <fieldset>
     <legend>Roles</legend>
+    [<%: Html.ActionLink<RoleController>(x=>x.Index(), "Manage Roles") %>]
+
     <h3>Ordered:</h3>
     <ul id="ordered-roles" class="connectedSortable">
         <% foreach (var role in Model.Application.ApplicationRoles.Where(x=>x.Level != null).OrderBy(x=>x.Level)) { %>
@@ -30,7 +32,7 @@
     </ul>
 
     <h3>Available:</h3>
-
+    
     <ul class="connectedSortable">
         <% foreach (var role in Model.GetAvailableRoles()) { %>
             <li class="ui-state-default" id="<%: role.Name %>">

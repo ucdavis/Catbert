@@ -46,6 +46,7 @@
                     <li><%= Html.ActionLink("Home", "Index", "Home")%></li>
                     <li><%= Html.ActionLink("Access Tokens", "Index", "AccessToken")%></li>
                     <li><%= Html.ActionLink("Applications", "Index", "Application")%></li>
+                    <li><%= Html.ActionLink("Roles", "Index", "Role")%></li>
                     <li><%= Html.ActionLink("Schools", "Index", "School")%></li>
                     <li><%= Html.ActionLink("Units", "Index", "Unit")%></li>
                     <li><%= Html.ActionLink("Dev", "Dev", "Home")%></li>
