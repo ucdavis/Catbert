@@ -46,6 +46,17 @@ namespace Catbert4.Tests.Core.Helpers
             return rtValue;
         }
 
+        public static AccessToken AccessToken(int? counter)
+        {
+            var rtValue = new AccessToken();
+            rtValue.Reason = "Reason" + counter.Extra();
+            rtValue.SetNewToken();
+            rtValue.ContactEmail = "test" + counter.Extra() + "@testy.com";
+            rtValue.Application = new Application(); //Need to replace...
+
+            return rtValue;
+        }
+
         public static Role Role(int? counter)
         {
             var rtValue = new Role();
