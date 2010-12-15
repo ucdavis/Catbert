@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[Unit]
+    ADD CONSTRAINT [FK_Unit_Unit_Parent] FOREIGN KEY ([ParentID]) REFERENCES [dbo].[Unit] ([UnitID]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+

@@ -41,9 +41,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bin", "Bin", "{33390886-40A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catbert4.Core", "Catbert4.Core\Catbert4.Core.csproj", "{A5876BBC-2054-4B62-8DFF-F2E948434EBB}"
 EndProject
+Project("{C8D11400-126E-41CD-887F-60BD40844F9E}") = "Catbert4.Sql", "Catbert4.Sql\Catbert4.Sql.dbproj", "{67CBC824-A49E-4E9B-A947-360F3DFE65C3}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 4
+		SccNumberOfProjects = 5
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.caes.ucdavis.edu:8088/tfs/defaultcollection
 		SccLocalPath0 = .
@@ -56,6 +58,9 @@ Global
 		SccProjectUniqueName3 = Catbert4.Core\\Catbert4.Core.csproj
 		SccProjectName3 = Catbert4.Core
 		SccLocalPath3 = Catbert4.Core
+		SccProjectUniqueName4 = Catbert4.Sql\\Catbert4.Sql.dbproj
+		SccProjectName4 = Catbert4.Sql
+		SccLocalPath4 = Catbert4.Sql
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +79,12 @@ Global
 		{A5876BBC-2054-4B62-8DFF-F2E948434EBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5876BBC-2054-4B62-8DFF-F2E948434EBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5876BBC-2054-4B62-8DFF-F2E948434EBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67CBC824-A49E-4E9B-A947-360F3DFE65C3}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,3 @@
+﻿ALTER TABLE [dbo].[UserUnit]
+    ADD CONSTRAINT [FK_UserUnit_Unit] FOREIGN KEY ([UnitID]) REFERENCES [dbo].[Unit] ([UnitID]) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
