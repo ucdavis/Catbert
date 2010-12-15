@@ -48,7 +48,8 @@ namespace Catbert4.Controllers
             var unitToCreate = new Unit();
 
             Mapper.Map(unit, unitToCreate);
-            
+            unitToCreate.Parent = unit.Parent;
+
             unitToCreate.TransferValidationMessagesTo(ModelState);
 
             if (ModelState.IsValid)
@@ -92,6 +93,7 @@ namespace Catbert4.Controllers
             if (unitToEdit == null) return RedirectToAction("Index");
 
             Mapper.Map(unit, unitToEdit);
+            unitToEdit.Parent = unit.Parent;
 
             unitToEdit.TransferValidationMessagesTo(ModelState);
 
@@ -154,6 +156,7 @@ namespace Catbert4.Controllers
 	{
 		public Unit Unit { get; set; }
         public IList<School> Schools { get; set; }
+	    public IList<Unit> Units { get; set; }
 
 		public static UnitViewModel Create(IRepository repository)
 		{
@@ -162,7 +165,8 @@ namespace Catbert4.Controllers
 			var viewModel = new UnitViewModel
 			                    {
 			                        Unit = new Unit(),
-			                        Schools = repository.OfType<School>().Queryable.OrderBy(x => x.ShortDescription).ToList()
+			                        Schools = repository.OfType<School>().Queryable.OrderBy(x => x.ShortDescription).ToList(),
+                                    Units = repository.OfType<Unit>().Queryable.OrderBy(x=>x.ShortName).ToList()
 			                    };
 
 		    return viewModel;

@@ -21,7 +21,18 @@ namespace Catbert4.Core.Domain
         [Required]
         public virtual string FisCode { get; set; }
 
+        public virtual Unit Parent { get; set; }
+
         [NotNull]
         public virtual School School { get; set; }
+        
+        [NotNull(Message = "Fill it in")]
+        public virtual UnitType Type { get; set; }
+    }
+
+    public enum UnitType
+    {
+        Cluster,
+        Department
     }
 }

@@ -14,6 +14,8 @@
             <th>PPS Code</th>
             <th>Full Name</th>
             <th>Short Name</th>
+            <th>Type</th>
+            <th>Parent</th>
             <th>School</th>
         </tr>
     </thead>
@@ -29,6 +31,8 @@
             <td><%: unit.PpsCode %></td>
             <td><%: unit.FullName %></td>
             <td><%: unit.ShortName %></td>
+            <td><%: unit.Type %></td>
+            <td><%: unit.Parent == null ? "None" : unit.Parent.ShortName %></td>
             <td><%: unit.School.ShortDescription %></td>
            </tr>
         <% } %>

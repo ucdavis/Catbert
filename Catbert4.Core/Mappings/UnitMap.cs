@@ -16,7 +16,10 @@ namespace Catbert4.Core.Mappings
             Map(x => x.FisCode).Column("FIS_Code");
             Map(x => x.PpsCode).Column("PPS_Code");
 
+            Map(x => x.Type).Column("`Type`").CustomType(typeof(NHibernate.Type.EnumStringType<UnitType>)).Not.Nullable();
+
             References(x => x.School).Column("SchoolCode").Fetch.Join();
+            References(x => x.Parent).Column("ParentID").Cascade.None().Nullable();
         }
     }
 }
