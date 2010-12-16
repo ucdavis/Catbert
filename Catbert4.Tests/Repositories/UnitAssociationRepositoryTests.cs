@@ -81,18 +81,17 @@ namespace Catbert4.Tests.Repositories
         /// <param name="action">The action.</param>
         protected override void UpdateUtility(UnitAssociation entity, ARTAction action)
         {
-            const bool updateValue = true;
             switch (action)
             {
                 case ARTAction.Compare:
-                    Assert.AreEqual(updateValue, entity.Inactive);
+                    Assert.AreEqual(Repository.OfType<User>().GetNullableById(2).LoginId, entity.User.LoginId);
                     break;
                 case ARTAction.Restore:
-                    entity.Inactive = BoolRestoreValue;
+                    entity.User = UserRestoreValue;
                     break;
                 case ARTAction.Update:
-                    BoolRestoreValue = entity.Inactive;
-                    entity.Inactive = updateValue;
+                    UserRestoreValue = entity.User;
+                    entity.User = Repository.OfType<User>().GetNullableById(2);
                     break;
             }
         }
@@ -601,7 +600,7 @@ namespace Catbert4.Tests.Repositories
 
         #region Fluent Mapping Tests
         [TestMethod]
-        public void TestCanCorrectlyMapApplicationRole()
+        public void TestCanCorrectlyMapUnitAssociation1()
         {
             #region Arrange
             var id = UnitAssociationRepository.Queryable.Max(x => x.Id) + 1;
@@ -619,6 +618,81 @@ namespace Catbert4.Tests.Repositories
                 .CheckProperty(c => c.User, user)
                 .VerifyTheMappings();
             #endregion Act/Assert
+        }
+        [TestMethod]
+        public void TestCanCorrectlyMapUnitAssociation2()
+        {
+            #region Arrange
+            var id = UnitAssociationRepository.Queryable.Max(x => x.Id) + 1;
+            var session = NHibernateSessionManager.Instance.GetSession();
+            var application = Repository.OfType<Application>().GetById(2);
+            var unit = Repository.OfType<Unit>().GetById(2);
+            var user = Repository.OfType<User>().GetById(2);
+            #endregion Arrange
+
+            #region Act/Assert
+            new PersistenceSpecification<UnitAssociation>(session, new UnitAssociationEqualityComparer())
+                .CheckProperty(c => c.Id, id)
+                .CheckReference(c => c.Application, application)
+                .CheckReference(c => c.Unit, unit)
+                .CheckReference(c => c.User, user)
+                .VerifyTheMappings();
+            #endregion Act/Assert
+        }
+
+        [TestMethod]
+        public void TestCanCorrectlyMapUnitAssociation3()
+        {
+            #region Arrange
+            var id = UnitAssociationRepository.Queryable.Max(x => x.Id) + 1;
+            var session = NHibernateSessionManager.Instance.GetSession();
+            var application = Repository.OfType<Application>().GetById(2);
+            var unit = Repository.OfType<Unit>().GetById(2);
+            var user = Repository.OfType<User>().GetById(2);
+            #endregion Arrange
+
+            #region Act/Assert
+            new PersistenceSpecification<UnitAssociation>(session, new UnitAssociationEqualityComparer())
+                .CheckProperty(c => c.Id, id)
+                .CheckProperty(c => c.Application, application)
+                .CheckProperty(c => c.Unit, unit)
+                .CheckProperty(c => c.User, user)
+                .CheckProperty(c => c.Inactive, false)
+                .VerifyTheMappings();
+            #endregion Act/Assert
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.Reflection.TargetException))]
+        public void TestCanCorrectlyMapUnitAssociation4()
+        {           
+            #region Arrange
+            var id = UnitAssociationRepository.Queryable.Max(x => x.Id) + 1;
+            var session = NHibernateSessionManager.Instance.GetSession();
+            var application = Repository.OfType<Application>().GetById(2);
+            var unit = Repository.OfType<Unit>().GetById(2);
+            var user = Repository.OfType<User>().GetById(2);
+            #endregion Arrange
+
+            try
+            {
+                #region Act/Assert
+                new PersistenceSpecification<UnitAssociation>(session, new UnitAssociationEqualityComparer())
+                    .CheckProperty(c => c.Id, id)
+                    .CheckProperty(c => c.Application, application)
+                    .CheckProperty(c => c.Unit, unit)
+                    .CheckProperty(c => c.User, user)
+                    .CheckProperty(c => c.Inactive, true)
+                    .VerifyTheMappings();
+                #endregion Act/Assert
+            }
+            catch (Exception ex)
+            {
+                Assert.IsNotNull(ex);
+                Assert.AreEqual("Non-static method requires a target.", ex.Message);
+                throw;
+            }
+
         }
 
         #endregion Fluent Mapping Tests

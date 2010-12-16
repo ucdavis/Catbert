@@ -1118,6 +1118,47 @@ namespace Catbert4.Tests.Repositories
 
         #endregion Permissions Tests
 
+        #region FullNameAndLogin Tests
+
+        [TestMethod]
+        public void TestFullNameAndLoginReturnsExpectedResult1()
+        {
+            #region Arrange
+            var record = new User();
+            record.FirstName = null;
+            record.LastName = null;
+            record.LoginId = "1234567890";
+            #endregion Arrange
+
+            #region Act
+            var result = record.FullNameAndLogin;
+            #endregion Act
+
+            #region Assert
+            Assert.AreEqual("  (1234567890)", result);
+            #endregion Assert		
+        }
+        [TestMethod]
+        public void TestFullNameAndLoginReturnsExpectedResult2()
+        {
+            #region Arrange
+            var record = new User();
+            record.FirstName = "Philip";
+            record.LastName = "Fry";
+            record.LoginId = "1234567890";
+            #endregion Arrange
+
+            #region Act
+            var result = record.FullNameAndLogin;
+            #endregion Act
+
+            #region Assert
+            Assert.AreEqual("Philip Fry (1234567890)", result);
+            #endregion Assert
+        }
+
+        #endregion FullNameAndLogin Tests
+
         #region Fluent Mapping Tests
         [TestMethod]
         public void TestCanCorrectlyMapUser1()
@@ -1290,6 +1331,7 @@ namespace Catbert4.Tests.Repositories
             {
                  "[NHibernate.Validator.Constraints.LengthAttribute((Int32)50)]"
             }));
+            expectedFields.Add(new NameAndType("FullNameAndLogin", "System.String", new List<string>()));
             expectedFields.Add(new NameAndType("Id", "System.Int32", new List<string>
             {
                 "[Newtonsoft.Json.JsonPropertyAttribute()]", 
@@ -1309,7 +1351,7 @@ namespace Catbert4.Tests.Repositories
             expectedFields.Add(new NameAndType("Phone", "System.String", new List<string>
             {
                  "[NHibernate.Validator.Constraints.LengthAttribute((Int32)50)]", 
-                 "[NHibernate.Validator.Constraints.PatternAttribute(\"((\\+\\d{1,3}(-| )?\\(?\\d\\)?(-| )?\\d{1,5})|(\\(?\\d{2,6}\\)?))(-| )?(\\d{3,4})(-| )?(\\d{4})(( x| ext)\\d{1,5}){0,1}\")]"
+                 "[NHibernate.Validator.Constraints.PatternAttribute(\"((\\+\\d{1,3}(-| )?\\(?\\d\\)?(-| )?\\d{1,5})|(\\(?\\d{2,6}\\)?))(-| )?(\\d{3,4})(-| )?(\\d{4})(( x| ext)\\d{1,5}){0,1}\", Message = \"The Phone Number format is not valid\")]"               
             }));
             expectedFields.Add(new NameAndType("UnitAssociations", "System.Collections.Generic.IList`1[Catbert4.Core.Domain.UnitAssociation]", new List<string>()));
             #endregion Arrange
