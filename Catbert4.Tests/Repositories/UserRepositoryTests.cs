@@ -1120,7 +1120,7 @@ namespace Catbert4.Tests.Repositories
 
         #region Fluent Mapping Tests
         [TestMethod]
-        public void TestCanCorrectlyMapApplicationRole1()
+        public void TestCanCorrectlyMapUser1()
         {
             #region Arrange
             var id = UserRepository.Queryable.Max(x => x.Id) + 1;
@@ -1141,28 +1141,39 @@ namespace Catbert4.Tests.Repositories
         }
 
         [TestMethod]
-        public void TestCanCorrectlyMapApplicationRole2()
+        [ExpectedException(typeof(System.Reflection.TargetException))]
+        public void TestCanCorrectlyMapUser2()
         {
             #region Arrange
             var id = UserRepository.Queryable.Max(x => x.Id) + 1;
             var session = NHibernateSessionManager.Instance.GetSession();
             #endregion Arrange
 
-            #region Act/Assert
-            new PersistenceSpecification<User>(session)
-                .CheckProperty(c => c.Id, id)
-                .CheckProperty(c => c.Email, "test@tests.com")
-                .CheckProperty(c => c.FirstName, "FirstName")
-                .CheckProperty(c => c.Inactive, true)
-                .CheckProperty(c => c.LastName, "LastName")
-                .CheckProperty(c => c.LoginId, "LoginId")
-                .CheckProperty(c => c.Phone, "555-555-5555")
-                .VerifyTheMappings();
-            #endregion Act/Assert
+            try
+            {
+                #region Act/Assert
+                new PersistenceSpecification<User>(session)
+                    .CheckProperty(c => c.Id, id)
+                    .CheckProperty(c => c.Email, "test@tests.com")
+                    .CheckProperty(c => c.FirstName, "FirstName")
+                    .CheckProperty(c => c.Inactive, true)
+                    .CheckProperty(c => c.LastName, "LastName")
+                    .CheckProperty(c => c.LoginId, "LoginId")
+                    .CheckProperty(c => c.Phone, "555-555-5555")
+                    .VerifyTheMappings();
+                #endregion Act/Assert
+            }
+            catch (Exception ex)
+            {
+                Assert.IsNotNull(ex);
+                Assert.AreEqual("Non-static method requires a target.", ex.Message);
+                throw;
+            }
+
         }
 
         [TestMethod]
-        public void TestCanCorrectlyMapApplicationRole3()
+        public void TestCanCorrectlyMapUser3()
         {
             #region Arrange
             var id = UserRepository.Queryable.Max(x => x.Id) + 1;
@@ -1185,7 +1196,7 @@ namespace Catbert4.Tests.Repositories
         }
 
         [TestMethod]
-        public void TestCanCorrectlyMapApplication4()
+        public void TestCanCorrectlyMapUser4()
         {
             #region Arrange
             var id = UserRepository.Queryable.Max(x => x.Id) + 1;
@@ -1222,7 +1233,7 @@ namespace Catbert4.Tests.Repositories
         }
 
         [TestMethod]
-        public void TestCanCorrectlyMapApplication5()
+        public void TestCanCorrectlyMapUser5()
         {
             #region Arrange
             var id = UserRepository.Queryable.Max(x => x.Id) + 1;
