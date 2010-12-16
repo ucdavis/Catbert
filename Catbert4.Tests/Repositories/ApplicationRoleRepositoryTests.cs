@@ -133,7 +133,7 @@ namespace Catbert4.Tests.Repositories
             {
                 Assert.IsNotNull(applicationRole);
                 Assert.IsNotNull(ex);
-                Assert.AreEqual("object references an unsaved transient instance - save the transient instance before flushing. Type: Catbert4.Core.Domain.Application, Entity: Catbert4.Core.Domain.Application", ex.Message);
+                Assert.AreEqual("object references an unsaved transient instance - save the transient instance before flushing. Type: Catbert4.Core.Domain.Application, Entity: ", ex.Message);
                 throw;
             }
         }

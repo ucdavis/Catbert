@@ -747,7 +747,7 @@ namespace Catbert4.Tests.Repositories
             {
                 #region Arrange
                 accessToken = GetValid(9);
-                accessToken.Application = CreateValidEntities.Application(2);
+                accessToken.Application = CreateValidEntities.Application(7);
                 #endregion Arrange
 
                 #region Act
@@ -760,7 +760,7 @@ namespace Catbert4.Tests.Repositories
             {
                 Assert.IsNotNull(accessToken);
                 Assert.IsNotNull(ex);
-                Assert.AreEqual("object references an unsaved transient instance - save the transient instance before flushing. Type: Catbert4.Core.Domain.Application, Entity: Catbert4.Core.Domain.Application", ex.Message);
+                Assert.AreEqual("object references an unsaved transient instance - save the transient instance before flushing. Type: Catbert4.Core.Domain.Application, Entity: Name7", ex.Message);
                 throw;
             }
         }
