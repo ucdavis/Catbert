@@ -20,8 +20,8 @@
         <table>
             <thead>
                 <tr>
-                    <td>Application</td>
-                    <td>Role</td>
+                    <th>Application</th>
+                    <th>Role</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,8 +40,8 @@
         <table>
             <thead>
                 <tr>
-                    <td>Application</td>
-                    <td>Unit</td>
+                    <th>Application</th>
+                    <th>Unit</th>
                 </tr>
             </thead>
             <tbody>

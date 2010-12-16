@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
@@ -16,12 +17,19 @@ namespace Catbert4.Controllers
     public class UserAdministrationController : ApplicationControllerBase
     {
 	    private readonly IRepository<User> _userRepository;
+        private readonly IRepository<Permission> _permissionRepository;
+        private readonly IRepository<UnitAssociation> _unitAssociationRepository;
 
-        public UserAdministrationController(IRepository<User> userRepository)
+        public UserAdministrationController(
+            IRepository<User> userRepository, 
+            IRepository<Permission> permissionRepository, 
+            IRepository<UnitAssociation> unitAssociationRepository)
         {
             _userRepository = userRepository;
+            _permissionRepository = permissionRepository;
+            _unitAssociationRepository = unitAssociationRepository;
         }
-    
+
         //
         // GET: /User/
         public ActionResult Index()
@@ -99,6 +107,8 @@ namespace Catbert4.Controllers
 			var viewModel = UserViewModel.Create(Repository);
 			viewModel.User = user;
 
+            SetPermissionsAndUnitAssociations(id, viewModel.UserShowModel);
+            
 			return View(viewModel);
         }
         
@@ -158,6 +168,30 @@ namespace Catbert4.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public JsonResult RemovePermission(int id)
+        {
+            var permission = _permissionRepository.GetNullableById(id);
+
+            if (permission == null) return Json(new JsonStatusModel(success: false));
+
+            _permissionRepository.Remove(permission);
+
+            return Json(new JsonStatusModel(success: true));
+        }
+
+        [HttpPost]
+        public JsonResult RemoveAssociation(int id)
+        {
+            var association = _unitAssociationRepository.GetNullableById(id);
+
+            if (association == null) return Json(new JsonStatusModel(success: false));
+
+            _unitAssociationRepository.Remove(association);
+
+            return Json(new JsonStatusModel(success: true));
+        }
         
         /// <summary>
         /// Transfer editable values from source to destination
@@ -174,7 +208,7 @@ namespace Catbert4.Controllers
 
         private void SetPermissionsAndUnitAssociations(string id, UserShowModel model)
         {
-            model.Permissions = (from p in Repository.OfType<Permission>().Queryable
+            model.Permissions = (from p in _permissionRepository.Queryable
                                  where p.User.LoginId == id
                                  select
                                      new UserShowModel.PermissionModel
@@ -184,7 +218,7 @@ namespace Catbert4.Controllers
                                          RoleName = p.Role.Name
                                      }).ToList();
 
-            model.UnitAssociations = (from ua in Repository.OfType<UnitAssociation>().Queryable
+            model.UnitAssociations = (from ua in _unitAssociationRepository.Queryable
                                       where ua.User.LoginId == id
                                       select
                                           new UserShowModel.UnitAssociationModel
@@ -202,12 +236,13 @@ namespace Catbert4.Controllers
     public class UserViewModel
 	{
 		public User User { get; set; }
- 
+	    public UserShowModel UserShowModel { get; set; }
+	    
 		public static UserViewModel Create(IRepository repository)
 		{
 			Check.Require(repository != null, "Repository must be supplied");
 			
-			var viewModel = new UserViewModel {User = new User()};
+			var viewModel = new UserViewModel {User = new User(), UserShowModel = new UserShowModel()};
  
 			return viewModel;
 		}

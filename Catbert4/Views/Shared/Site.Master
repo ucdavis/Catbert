@@ -21,9 +21,14 @@
     <script src="<%= Url.Script("xVal.jquery.validate.js") %>" type="text/javascript"></script>
 
     <script type="text/javascript">
-    $(function() {
-        $(".datepicker").datepicker();
-    });
+        $(function () {
+            $(".datepicker").datepicker();
+            $(".button-trash").button({
+                icons: {
+                    primary: "ui-icon-trash"
+                }
+            });
+        });
     </script>
 
     <asp:ContentPlaceHolder ID="HeaderContent" runat="server">
