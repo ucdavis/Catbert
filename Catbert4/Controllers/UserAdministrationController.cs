@@ -237,14 +237,32 @@ namespace Catbert4.Controllers
 	{
 		public User User { get; set; }
 	    public UserShowModel UserShowModel { get; set; }
-	    
+	    public UserLookupModel UserLookupModel { get; set; }
+
 		public static UserViewModel Create(IRepository repository)
 		{
 			Check.Require(repository != null, "Repository must be supplied");
-			
-			var viewModel = new UserViewModel {User = new User(), UserShowModel = new UserShowModel()};
- 
+
+		    var viewModel = new UserViewModel
+		                        {
+		                            User = new User(),
+		                            UserShowModel = new UserShowModel(),
+		                            UserLookupModel = new UserLookupModel()
+		                        };
+
+		    SetLookups(viewModel.UserLookupModel, repository);
+            
 			return viewModel;
 		}
+
+        /// <summary>
+        /// Set the lookups efficiently which are in the userLookupModel
+        /// </summary>
+	    private static void SetLookups(UserLookupModel model, IRepository repository)
+	    {
+	        model.Applications = repository.OfType<Application>().Queryable.Select(x=> new {x.Id, x.Name}).ToLookup(x=>x.Id, x=>x.Name);
+	        model.Units = repository.OfType<Unit>().Queryable.Select(x=> new {x.Id, x.ShortName}).ToLookup(x=>x.Id, x=>x.ShortName);
+	        model.Roles = repository.OfType<Role>().Queryable.Select(x=> new {x.Id, x.Name}).ToLookup(x=>x.Id, x=>x.Name);
+	    }
 	}
 }

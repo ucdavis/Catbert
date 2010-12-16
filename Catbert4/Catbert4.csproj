@@ -134,6 +134,7 @@
     <Compile Include="Helpers\AutomapperConfig.cs" />
     <Compile Include="Models\JsonStatusModel.cs" />
     <Compile Include="Models\UserListModel.cs" />
+    <Compile Include="Models\UserLookupModel.cs" />
     <Compile Include="Models\UserShowModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RouteConfigurator.asax.cs" />
