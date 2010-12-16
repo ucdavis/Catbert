@@ -6,6 +6,10 @@ namespace Catbert4.Core.Domain
 {
     public class Unit : DomainObject
     {
+        public Unit()
+        {
+            Type = UnitType.Department;
+        }
         [Length(50)]
         [Required]
         public virtual string FullName { get; set; }
@@ -26,7 +30,6 @@ namespace Catbert4.Core.Domain
         [NotNull]
         public virtual School School { get; set; }
         
-        [NotNull(Message = "Fill it in")]
         public virtual UnitType Type { get; set; }
     }
 

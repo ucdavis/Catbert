@@ -956,9 +956,211 @@ namespace Catbert4.Tests.Repositories
         #endregion Cascade Tests
         #endregion Unit Tests
 
+        #region Parent Tests
+
+        #region Invalid Tests
+        /// <summary>
+        /// Tests the Parent with A value of new unit does not save.
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(NHibernate.TransientObjectException))]
+        public void TestParentWithAValueOfNewDoesNotSave()
+        {
+            Unit unit = null;
+            try
+            {
+                #region Arrange
+                unit = GetValid(9);
+                unit.Parent = CreateValidEntities.Unit(99);
+                #endregion Arrange
+
+                #region Act
+                UnitRepository.DbContext.BeginTransaction();
+                UnitRepository.EnsurePersistent(unit);
+                UnitRepository.DbContext.CommitTransaction();
+                #endregion Act
+            }
+            catch (Exception ex)
+            {
+                Assert.IsNotNull(unit);
+                Assert.IsNotNull(ex);
+                Assert.AreEqual("object references an unsaved transient instance - save the transient instance before flushing. Type: Catbert4.Core.Domain.Unit, Entity: Catbert4.Core.Domain.Unit", ex.Message);
+                throw;
+            }	
+        }
+        
+        #endregion Invalid Tests
+
+        #region Valid Tests
+
+        [TestMethod]
+        public void TestParentWithNullValueSaves()
+        {
+            #region Arrange
+            var unit = GetValid(9);
+            unit.Parent = null;
+            #endregion Arrange
+
+            #region Act
+            UnitRepository.DbContext.BeginTransaction();
+            UnitRepository.EnsurePersistent(unit);
+            UnitRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.IsNull(unit.Parent);
+            Assert.IsFalse(unit.IsTransient());
+            Assert.IsTrue(unit.IsValid());
+            #endregion Assert		
+        }
+
+        [TestMethod]
+        public void TestParentWithExistingValueSaves()
+        {
+            #region Arrange
+            var unit = GetValid(9);
+            unit.Parent = UnitRepository.GetNullableById(1);
+            #endregion Arrange
+
+            #region Act
+            UnitRepository.DbContext.BeginTransaction();
+            UnitRepository.EnsurePersistent(unit);
+            UnitRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.IsNotNull(unit.Parent);
+            Assert.AreEqual(1, unit.Parent.Id);
+            Assert.IsFalse(unit.IsTransient());
+            Assert.IsTrue(unit.IsValid());
+            #endregion Assert
+        }
+        #endregion Valid Tests
+
+        #region Cascade Tests
+
+        [TestMethod]
+        public void TestParentDoesNotCascadeDeleteWhenChildIsDeleted()
+        {
+            #region Arrange
+            var unit = GetValid(9);
+            unit.Parent = UnitRepository.GetNullableById(1);
+
+            UnitRepository.DbContext.BeginTransaction();
+            UnitRepository.EnsurePersistent(unit);
+            UnitRepository.DbContext.CommitTransaction();
+            var saveId = unit.Id;
+            #endregion Arrange
+
+            #region Act
+            UnitRepository.DbContext.BeginTransaction();
+            UnitRepository.Remove(unit);
+            UnitRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.IsNull(UnitRepository.GetNullableById(saveId));
+            Assert.IsNotNull(UnitRepository.GetNullableById(1));
+            #endregion Assert		
+        }
+
+        [TestMethod]
+        public void TestChildDoesNotCascadeDeleteWhenParentIsDeleted()
+        {
+            #region Arrange
+            var unit = GetValid(9);
+            unit.Parent = UnitRepository.GetNullableById(1);
+
+            UnitRepository.DbContext.BeginTransaction();
+            UnitRepository.EnsurePersistent(unit);
+            UnitRepository.DbContext.CommitTransaction();
+            var saveId = unit.Id;
+            #endregion Arrange
+
+            #region Act
+            UnitRepository.DbContext.BeginTransaction();
+            UnitRepository.Remove(UnitRepository.GetNullableById(1));
+            UnitRepository.DbContext.CommitTransaction();
+            NHibernateSessionManager.Instance.GetSession().Evict(unit);
+            unit = UnitRepository.GetNullableById(saveId);
+            #endregion Act
+
+            #region Assert
+            Assert.IsNotNull(unit);
+            //Assert.IsNull(unit.Parent); //Don't care, it would be done in the DB.
+            Assert.IsNull(UnitRepository.GetNullableById(1));
+            #endregion Assert
+        }
+        #endregion Cascade Tests
+
+        #endregion Parent Tests
+
+        #region Type Tests
+
+        [TestMethod]
+        public void TestTypeWithValidValueSaves1()
+        {
+            #region Arrange
+            var unit = GetValid(9);
+            unit.Type = UnitType.Cluster;
+            #endregion Arrange
+
+            #region Act
+            UnitRepository.DbContext.BeginTransaction();
+            UnitRepository.EnsurePersistent(unit);
+            UnitRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.AreEqual(UnitType.Cluster, unit.Type);
+            Assert.IsFalse(unit.IsTransient());
+            Assert.IsTrue(unit.IsValid());
+            #endregion Assert	
+        }
+        [TestMethod]
+        public void TestTypeWithValidValueSaves2()
+        {
+            #region Arrange
+            var unit = GetValid(9);
+            unit.Type = UnitType.Department;
+            #endregion Arrange
+
+            #region Act
+            UnitRepository.DbContext.BeginTransaction();
+            UnitRepository.EnsurePersistent(unit);
+            UnitRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.AreEqual(UnitType.Department, unit.Type);
+            Assert.IsFalse(unit.IsTransient());
+            Assert.IsTrue(unit.IsValid());
+            #endregion Assert
+        }
+
+        [TestMethod]
+        public void TestTypeWithValidValueSaves3()
+        {
+            #region Arrange
+            var unit = new Unit();
+            //Defaults to Department
+            #endregion Arrange
+
+            #region Act
+
+            #endregion Act
+
+            #region Assert
+            Assert.AreEqual(UnitType.Department, unit.Type);
+ 
+            #endregion Assert
+        }
+        
+        #endregion Type Tests
+
         #region Fluent Mapping Tests
         [TestMethod]
-        public void TestCanCorrectlyMapApplicationRole()
+        public void TestCanCorrectlyMapUnit1()
         {
             #region Arrange
             var id = UnitRepository.Queryable.Max(x => x.Id) + 1;
@@ -977,6 +1179,77 @@ namespace Catbert4.Tests.Repositories
                 .VerifyTheMappings();
             #endregion Act/Assert
         }
+
+        [TestMethod]
+        public void TestCanCorrectlyMapUnit2()
+        {
+            #region Arrange
+            var id = UnitRepository.Queryable.Max(x => x.Id) + 1;
+            var session = NHibernateSessionManager.Instance.GetSession();
+            var school = SchoolRepository.GetById("2");
+            var parent = UnitRepository.GetNullableById(1);
+            Assert.IsNotNull(parent);
+            #endregion Arrange
+
+            #region Act/Assert
+            new PersistenceSpecification<Unit>(session, new UnitEqualityComparer())
+                .CheckProperty(c => c.Id, id)
+                .CheckProperty(c => c.FisCode, "FIS")
+                .CheckProperty(c => c.FullName, "FullName")
+                .CheckProperty(c => c.PpsCode, "PPS")
+                .CheckProperty(c => c.ShortName, "ShortName")
+                .CheckProperty(c => c.School, school)
+                .CheckReference(c => c.Parent, parent)
+                .VerifyTheMappings();
+            #endregion Act/Assert
+        }
+
+        [TestMethod]
+        public void TestCanCorrectlyMapUnit3()
+        {
+            #region Arrange
+            var id = UnitRepository.Queryable.Max(x => x.Id) + 1;
+            var session = NHibernateSessionManager.Instance.GetSession();
+            var school = SchoolRepository.GetById("2");
+            var parent = UnitRepository.GetNullableById(1);
+            Assert.IsNotNull(parent);
+            #endregion Arrange
+
+            #region Act/Assert
+            new PersistenceSpecification<Unit>(session)
+                .CheckProperty(c => c.Id, id)
+                .CheckProperty(c => c.FisCode, "FIS")
+                .CheckProperty(c => c.FullName, "FullName")
+                .CheckProperty(c => c.PpsCode, "PPS")
+                .CheckProperty(c => c.ShortName, "ShortName")
+                .CheckProperty(c => c.Type, UnitType.Cluster)
+                .VerifyTheMappings();
+            #endregion Act/Assert
+        }
+
+        [TestMethod]
+        public void TestCanCorrectlyMapUnit4()
+        {
+            #region Arrange
+            var id = UnitRepository.Queryable.Max(x => x.Id) + 1;
+            var session = NHibernateSessionManager.Instance.GetSession();
+            var school = SchoolRepository.GetById("2");
+            var parent = UnitRepository.GetNullableById(1);
+            Assert.IsNotNull(parent);
+            #endregion Arrange
+
+            #region Act/Assert
+            new PersistenceSpecification<Unit>(session)
+                .CheckProperty(c => c.Id, id)
+                .CheckProperty(c => c.FisCode, "FIS")
+                .CheckProperty(c => c.FullName, "FullName")
+                .CheckProperty(c => c.PpsCode, "PPS")
+                .CheckProperty(c => c.ShortName, "ShortName")
+                .CheckProperty(c => c.Type, UnitType.Department)
+                .VerifyTheMappings();
+            #endregion Act/Assert
+        }
+
 
         #endregion Fluent Mapping Tests
 
@@ -1006,6 +1279,7 @@ namespace Catbert4.Tests.Repositories
                 "[Newtonsoft.Json.JsonPropertyAttribute()]", 
                 "[System.Xml.Serialization.XmlIgnoreAttribute()]"
             }));
+            expectedFields.Add(new NameAndType("Parent", "Catbert4.Core.Domain.Unit", new List<string>()));
             expectedFields.Add(new NameAndType("PpsCode", "System.String", new List<string>
             {
                  "[NHibernate.Validator.Constraints.LengthAttribute((Int32)6)]"
@@ -1019,6 +1293,7 @@ namespace Catbert4.Tests.Repositories
                  "[NHibernate.Validator.Constraints.LengthAttribute((Int32)50)]", 
                  "[UCDArch.Core.NHibernateValidator.Extensions.RequiredAttribute()]"
             }));
+            expectedFields.Add(new NameAndType("Type", "Catbert4.Core.Domain.UnitType", new List<string>()));
             #endregion Arrange
 
             AttributeAndFieldValidation.ValidateFieldsAndAttributes(expectedFields, typeof(Unit));
