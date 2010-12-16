@@ -7,6 +7,8 @@ namespace Catbert4.Core.Mappings
     {
         public PermissionMap()
         {
+            Where("Inactive = 0");
+
             Id(x => x.Id).Column("PermissionID");
 
             Map(x => x.Inactive);
