@@ -146,6 +146,8 @@
     <Content Include="Global.asax" />
     <Content Include="Css\Site.css" />
     <Content Include="Images\logo-caes.png" />
+    <Content Include="Scripts\jquery.jqcascade.js" />
+    <Content Include="Scripts\jquery.jqcascade.min.js" />
     <Content Include="Scripts\xVal.jquery.validate.js" />
     <Content Include="Views\AccessToken\Create.aspx" />
     <Content Include="Views\AccessToken\Details.aspx" />

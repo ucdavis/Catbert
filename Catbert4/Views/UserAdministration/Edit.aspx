@@ -98,6 +98,14 @@
             <% } %>
             </tbody>
         </table>
+        <div>
+            <%= this.Select("add-permission-application").Options(Model.UserLookupModel.Applications, x => x.Key, x => x.Value).FirstOption("--Select An Application--")%>
+            <select id='add-permission-roles' name='add-permission-roles'>
+                <option value="0">--Select A Role--</option>
+            </select>
+        
+            <a class="add-permission button-plus" href="#">Add</a>
+        </div>
     </fieldset>
         <fieldset>
         <legend>Unit Associations</legend>
@@ -133,6 +141,7 @@
     </div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="HeaderContent" runat="server">
+    <script src="<%: Url.Script("jquery.jqcascade.min.js") %>" type="text/javascript"></script>
 
 <script type="text/javascript">
     Catbert = { };
@@ -157,6 +166,12 @@
                 RemoveEntity(this, Catbert.Services.RemoveAssociation);
             });
 
+            $("#add-permission-roles").cascading({
+                dataUrl: '<%: Url.Action("GetRolesForApplication") %>',
+                parentDropDownId: 'add-permission-application',
+                noSelectionValue: '0',
+                noSelectionText: '--Select A Role--'
+            });
         });
 
         function RemoveEntity(element, removeUrl) {

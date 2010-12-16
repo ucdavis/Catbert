@@ -6,6 +6,7 @@ using AutoMapper;
 using Catbert4.Core.Domain;
 using Catbert4.Models;
 using UCDArch.Core.PersistanceSupport;
+using UCDArch.Web.Attributes;
 using UCDArch.Web.Helpers;
 using UCDArch.Core.Utils;
 
@@ -167,6 +168,21 @@ namespace Catbert4.Controllers
             Message = "User Removed Successfully";
 
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [BypassAntiForgeryToken]
+        public JsonResult GetRolesForApplication(int? val)
+        {
+            if (val.HasValue == false) return Json(new {});
+
+            var rolesForApp = from appRole in Repository.OfType<ApplicationRole>().Queryable
+                              where appRole.Application.Id == val
+                              orderby appRole.Role.Name
+                              orderby appRole.Level
+                              select new {Value = appRole.Role.Id, Text = appRole.Role.Name};
+
+            return Json(rolesForApp);
         }
 
         [HttpPost]
