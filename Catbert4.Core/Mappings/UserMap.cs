@@ -7,6 +7,8 @@ namespace Catbert4.Core.Mappings
     {
         public UserMap()
         {
+            Where("Inactive = 0");
+
             Id(x => x.Id).Column("UserID");
 
             Map(x => x.Email);
