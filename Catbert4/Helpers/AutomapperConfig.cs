@@ -28,7 +28,11 @@ namespace Catbert4.Helpers
             CreateMap<AccessToken, AccessToken>()
                 .ForMember(x => x.Id, x => x.Ignore())
                 .ForMember(x => x.Application, x => x.Ignore());
-            
+
+            CreateMap<Message, Message>()
+                .ForMember(x => x.Id, x => x.Ignore())
+                .ForMember(x => x.Application, x => x.Ignore());
+
         }
     }
 }

@@ -123,6 +123,7 @@
     <Compile Include="Controllers\ApplicationControllerBase.cs" />
     <Compile Include="Controllers\AccessTokenController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\SchoolController.cs" />
     <Compile Include="Controllers\UnitController.cs" />
@@ -151,6 +152,11 @@
     <Content Include="Views\Application\Edit.aspx" />
     <Content Include="Views\Application\Index.aspx" />
     <Content Include="Views\Home\Index.aspx" />
+    <Content Include="Views\Message\Create.aspx" />
+    <Content Include="Views\Message\Delete.aspx" />
+    <Content Include="Views\Message\Edit.aspx" />
+    <Content Include="Views\Message\Index.aspx" />
+    <Content Include="Views\Message\MessageForm.ascx" />
     <Content Include="Views\Role\Create.aspx" />
     <Content Include="Views\Role\Index.aspx" />
     <Content Include="Views\School\Create.aspx" />
@@ -160,6 +166,7 @@
     <Content Include="Views\School\Index.aspx" />
     <Content Include="Views\Shared\DisplayTemplates\DisplayComplexValues.ascx" />
     <Content Include="Views\Shared\DisplayTemplates\Object.ascx" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.ascx" />
     <Content Include="Views\Shared\EditorTemplates\EditComplexValues.ascx" />
     <Content Include="Views\Shared\EditorTemplates\Object.ascx" />
     <Content Include="Views\Shared\Message.ascx" />
