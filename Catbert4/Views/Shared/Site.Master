@@ -28,6 +28,11 @@
                     primary: "ui-icon-trash"
                 }
             });
+            $(".button-plus").button({
+                icons: {
+                    primary: "ui-icon-plus"
+                }
+            });
         });
     </script>
 

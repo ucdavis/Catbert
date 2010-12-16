@@ -120,6 +120,12 @@
             <% } %>
             </tbody>
         </table>
+
+        <div>
+            <%= this.Select("add-association-application").Options(Model.UserLookupModel.Applications, x=>x.Key, x=>x.Value).FirstOption("--Select An Application--") %>
+            <%= this.Select("add-association-unit").Options(Model.UserLookupModel.Units, x=>x.Key, x=>x.Value).FirstOption("--Select A Unit--") %>
+            <a class="add-association button-plus" href="#">Add</a>
+        </div>
     </fieldset>
 
     <div>

@@ -259,10 +259,14 @@ namespace Catbert4.Controllers
         /// Set the lookups efficiently which are in the userLookupModel
         /// </summary>
 	    private static void SetLookups(UserLookupModel model, IRepository repository)
-	    {
-	        model.Applications = repository.OfType<Application>().Queryable.Select(x=> new {x.Id, x.Name}).ToLookup(x=>x.Id, x=>x.Name);
-	        model.Units = repository.OfType<Unit>().Queryable.Select(x=> new {x.Id, x.ShortName}).ToLookup(x=>x.Id, x=>x.ShortName);
-	        model.Roles = repository.OfType<Role>().Queryable.Select(x=> new {x.Id, x.Name}).ToLookup(x=>x.Id, x=>x.Name);
-	    }
+        {
+            model.Applications =
+                repository.OfType<Application>().Queryable.OrderBy(x => x.Name).Select(
+                    x => new KeyValuePair<int, string>(x.Id, x.Name)).ToList();
+            model.Units =
+                repository.OfType<Unit>().Queryable.OrderBy(x => x.ShortName).Select(
+                    x => new KeyValuePair<int, string>(x.Id, x.ShortName)).ToList();
+            //model.Applications = repository.OfType<Application>().Queryable.Select(x => new KeyValuePair<int,string>(x.Id, x.Name)).ToList();
+        }
 	}
 }
