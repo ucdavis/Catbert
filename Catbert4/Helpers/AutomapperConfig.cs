@@ -38,7 +38,9 @@ namespace Catbert4.Helpers
                 .ForMember(x => x.Login, x => x.MapFrom(p => p.LoginId));
 
             CreateMap<User, UserShowModel>()
-                .ForMember(x => x.Login, x => x.MapFrom(p => p.LoginId));
+                .ForMember(x => x.Login, x => x.MapFrom(p => p.LoginId))
+                .ForMember(x => x.Permissions, x => x.Ignore())
+                .ForMember(x => x.UnitAssociations, x => x.Ignore());
 
             CreateMap<User, User>()
                 .ForMember(x => x.Permissions, x => x.Ignore())

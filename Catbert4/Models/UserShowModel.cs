@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
-using Catbert4.Core.Domain;
 
 namespace Catbert4.Models
 {
@@ -18,7 +17,21 @@ namespace Catbert4.Models
         public string Email { get; set; }
         public string Phone { get; set; }
 
-        public IList<Permission> Permissions { get; set; }
-        public IList<UnitAssociation> UnitAssociations { get; set; }
+        public IList<PermissionModel> Permissions { get; set; }
+        public IList<UnitAssociationModel> UnitAssociations { get; set; }
+
+        public class PermissionModel
+        {
+            public int Id { get; set; }
+            public string ApplicationName { get; set; }
+            public string RoleName { get; set; }
+        }
+
+        public class UnitAssociationModel
+        {
+            public int Id { get; set; }
+            public string ApplicationName { get; set; }
+            public string UnitName { get; set; }
+        }
     }
 }

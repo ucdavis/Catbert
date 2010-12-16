@@ -25,10 +25,10 @@
                 </tr>
             </thead>
             <tbody>
-            <% foreach(var perm in Model.Permissions.OrderBy(x=>x.Application.Name).ThenBy(x=>x.Role.Name)) { %>
+            <% foreach(var perm in Model.Permissions.OrderBy(x=>x.ApplicationName).ThenBy(x=>x.RoleName)) { %>
                 <tr>
-                    <td><%: perm.Application.Name %></td>
-                    <td><%: perm.Role.Name %></td>
+                    <td><%: perm.ApplicationName %></td>
+                    <td><%: perm.RoleName %></td>
                 </tr>    
             <% } %>
             </tbody>
@@ -45,10 +45,10 @@
                 </tr>
             </thead>
             <tbody>
-            <% foreach(var unitassociation in Model.UnitAssociations.OrderBy(x=>x.Application.Name).ThenBy(x=>x.Unit.ShortName)) { %>
+            <% foreach(var unitassociation in Model.UnitAssociations.OrderBy(x=>x.ApplicationName).ThenBy(x=>x.UnitName)) { %>
                 <tr>
-                    <td><%: unitassociation.Application.Name %></td>
-                    <td><%: unitassociation.Unit.ShortName %></td>
+                    <td><%: unitassociation.ApplicationName %></td>
+                    <td><%: unitassociation.UnitName %></td>
                 </tr>    
             <% } %>
             </tbody>

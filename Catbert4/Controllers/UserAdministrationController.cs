@@ -44,10 +44,11 @@ namespace Catbert4.Controllers
             
             if (user == null) return RedirectToAction("Index");
 
-            user.Permissions.ToList();
-            user.UnitAssociations.ToList();
-            
-            return View(Mapper.Map<User, UserShowModel>(user));
+            var model = Mapper.Map<User, UserShowModel>(user);
+
+            SetPermissionsAndUnitAssociations(id, model);
+
+            return View(model);
         }
 
         //
@@ -169,6 +170,29 @@ namespace Catbert4.Controllers
         private User GetUser(string login)
         {
             return _userRepository.Queryable.Where(x => x.LoginId == login).SingleOrDefault();
+        }
+
+        private void SetPermissionsAndUnitAssociations(string id, UserShowModel model)
+        {
+            model.Permissions = (from p in Repository.OfType<Permission>().Queryable
+                                 where p.User.LoginId == id
+                                 select
+                                     new UserShowModel.PermissionModel
+                                     {
+                                         Id = p.Id,
+                                         ApplicationName = p.Application.Name,
+                                         RoleName = p.Role.Name
+                                     }).ToList();
+
+            model.UnitAssociations = (from ua in Repository.OfType<UnitAssociation>().Queryable
+                                      where ua.User.LoginId == id
+                                      select
+                                          new UserShowModel.UnitAssociationModel
+                                          {
+                                              Id = ua.Id,
+                                              ApplicationName = ua.Application.Name,
+                                              UnitName = ua.Unit.ShortName
+                                          }).ToList();
         }
     }
 
