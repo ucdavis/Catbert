@@ -24,6 +24,7 @@ namespace Catbert4.Tests.Core
         private readonly IRepository<T> _intRepository;
         private readonly IRepositoryWithTypedId<T, string> _stringRepository;
         private readonly IRepositoryWithTypedId<T, Guid> _guidRepository;
+        protected User UserRestoreValue;
 
         #region Init
 

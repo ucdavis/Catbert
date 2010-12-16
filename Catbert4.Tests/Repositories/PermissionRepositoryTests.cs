@@ -80,18 +80,18 @@ namespace Catbert4.Tests.Repositories
         /// <param name="action">The action.</param>
         protected override void UpdateUtility(Permission entity, ARTAction action)
         {
-            const bool updateValue = true;
+            
             switch (action)
             {
                 case ARTAction.Compare:
-                    Assert.AreEqual(updateValue, entity.Inactive);
+                    Assert.AreEqual(Repository.OfType<User>().GetNullableById(2).LoginId, entity.User.LoginId);
                     break;
                 case ARTAction.Restore:
-                    entity.Inactive = BoolRestoreValue;
+                    entity.User = UserRestoreValue;
                     break;
                 case ARTAction.Update:
-                    BoolRestoreValue = entity.Inactive;
-                    entity.Inactive = updateValue;
+                    UserRestoreValue = entity.User;
+                    entity.User = Repository.OfType<User>().GetNullableById(2);
                     break;
             }
         }
@@ -597,7 +597,7 @@ namespace Catbert4.Tests.Repositories
 
         #region Fluent Mapping Tests
         [TestMethod]
-        public void TestCanCorrectlyMapApplicationRole()
+        public void TestCanCorrectlyMapPermission1()
         {
             #region Arrange
             var id = PermissionRepository.Queryable.Max(x => x.Id) + 1;
@@ -618,7 +618,63 @@ namespace Catbert4.Tests.Repositories
         }
 
 
+        [TestMethod]
+        public void TestCanCorrectlyMapPermission2()
+        {
+            #region Arrange
+            var id = PermissionRepository.Queryable.Max(x => x.Id) + 1;
+            var session = NHibernateSessionManager.Instance.GetSession();
+            var application = Repository.OfType<Application>().GetById(2);
+            var role = Repository.OfType<Role>().GetById(2);
+            var user = Repository.OfType<User>().GetById(2);
+            #endregion Arrange
 
+            #region Act/Assert
+            new PersistenceSpecification<Permission>(session, new PermissionEqualityComparer())
+                .CheckProperty(c => c.Id, id)
+                .CheckProperty(c => c.Inactive, false)
+                .CheckProperty(c => c.Application, application)
+                .CheckProperty(c => c.Role, role)
+                .CheckProperty(c => c.User, user)
+                .VerifyTheMappings();
+            #endregion Act/Assert
+        }
+
+        /// <summary>
+        /// Inactive hides record
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(System.Reflection.TargetException))]
+        public void TestCanCorrectlyMapPermission3()
+        {
+            #region Arrange
+            var id = PermissionRepository.Queryable.Max(x => x.Id) + 1;
+            var session = NHibernateSessionManager.Instance.GetSession();
+            var application = Repository.OfType<Application>().GetById(2);
+            var role = Repository.OfType<Role>().GetById(2);
+            var user = Repository.OfType<User>().GetById(2);
+            #endregion Arrange
+
+            try
+            {
+                #region Act/Assert
+                new PersistenceSpecification<Permission>(session, new PermissionEqualityComparer())
+                    .CheckProperty(c => c.Id, id)
+                    .CheckProperty(c => c.Inactive, true)
+                    .CheckProperty(c => c.Application, application)
+                    .CheckProperty(c => c.Role, role)
+                    .CheckProperty(c => c.User, user)
+                    .VerifyTheMappings();
+                #endregion Act/Assert
+            }
+            catch (Exception ex)
+            {
+                Assert.IsNotNull(ex);
+                Assert.AreEqual("Non-static method requires a target.", ex.Message);
+                throw;
+            }
+
+        }
 
         #endregion Fluent Mapping Tests
 
