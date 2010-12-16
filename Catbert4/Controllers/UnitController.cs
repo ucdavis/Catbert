@@ -129,6 +129,13 @@ namespace Catbert4.Controllers
                 return RedirectToAction("Index");
             }
             
+            //Can not delete if there are any units with this as its parent
+            if (_unitRepository.Queryable.Any(x =>x.Parent.Id == id))
+            {
+                Message = string.Format("Can not remove {0} ({1}) because it is the parent of another unit", unit.ShortName, unit.FisCode);
+                return RedirectToAction("Index");
+            }
+            
             return View(unit);
         }
 
