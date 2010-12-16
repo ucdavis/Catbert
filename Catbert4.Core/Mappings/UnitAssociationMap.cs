@@ -7,6 +7,8 @@ namespace Catbert4.Core.Mappings
     {
         public UnitAssociationMap()
         {
+            Where("Inactive = 0");
+
             Id(x => x.Id).Column("UnitAssociationID");
 
             Map(x => x.Inactive);

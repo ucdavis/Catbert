@@ -5,9 +5,11 @@ namespace Catbert4.Core.Mappings
 {
     public class UserMap : ClassMap<User>
     {
+        private const string InactiveConstraint = "Inactive = 0";
+
         public UserMap()
         {
-            Where("Inactive = 0");
+            Where(InactiveConstraint);
 
             Id(x => x.Id).Column("UserID");
 
@@ -23,8 +25,8 @@ namespace Catbert4.Core.Mappings
             //Map(x => x.StudentId);
             //Map(x => x.UserKey);
 
-            HasMany(x => x.Permissions).Not.Inverse().Cascade.None();
-            HasMany(x => x.UnitAssociations).Not.Inverse().Cascade.None();
+            HasMany(x => x.Permissions).Not.Inverse().Cascade.None().Where(InactiveConstraint);
+            HasMany(x => x.UnitAssociations).Not.Inverse().Cascade.None().Where(InactiveConstraint);
         }
     }
 }

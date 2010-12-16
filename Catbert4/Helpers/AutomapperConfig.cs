@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Catbert4.Core.Domain;
+using Catbert4.Models;
 
 namespace Catbert4.Helpers
 {
@@ -32,6 +33,16 @@ namespace Catbert4.Helpers
             CreateMap<Message, Message>()
                 .ForMember(x => x.Id, x => x.Ignore())
                 .ForMember(x => x.Application, x => x.Ignore());
+
+            CreateMap<User, UserListModel>()
+                .ForMember(x => x.Login, x => x.MapFrom(p => p.LoginId));
+
+            CreateMap<User, UserShowModel>()
+                .ForMember(x => x.Login, x => x.MapFrom(p => p.LoginId));
+
+            CreateMap<User, User>()
+                .ForMember(x => x.Permissions, x => x.Ignore())
+                .ForMember(x=>x.UnitAssociations, x=>x.Ignore());
 
         }
     }
