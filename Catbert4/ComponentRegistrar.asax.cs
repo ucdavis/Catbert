@@ -26,6 +26,8 @@ namespace Catbert4
             container.AddComponent("interceptor", typeof (IInterceptor), typeof (AuditInterceptor));
 
             container.AddComponent("principal", typeof (IPrincipal), typeof (WebPrincipal));
+            container.AddComponent("directorySearchService", typeof (IDirectorySearchService),
+                                   typeof (DirectoryServices));
             
             AddRepositoriesTo(container);
         }

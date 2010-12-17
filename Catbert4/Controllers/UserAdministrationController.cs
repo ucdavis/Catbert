@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using AutoMapper;
 using Catbert4.Core.Domain;
 using Catbert4.Models;
+using Catbert4.Services;
 using UCDArch.Core.PersistanceSupport;
 using UCDArch.Web.Attributes;
 using UCDArch.Web.Helpers;
@@ -17,17 +18,20 @@ namespace Catbert4.Controllers
     /// </summary>
     public class UserAdministrationController : ApplicationControllerBase
     {
-	    private readonly IRepository<User> _userRepository;
+        private readonly IDirectorySearchService _directorySearchService;
+        private readonly IRepository<User> _userRepository;
         private readonly IRepository<Permission> _permissionRepository;
         private readonly IRepository<UnitAssociation> _unitAssociationRepository;
         private readonly IRepository<ApplicationRole> _applicationRoleRepository;
 
         public UserAdministrationController(
+            IDirectorySearchService directorySearchService,
             IRepository<User> userRepository, 
             IRepository<Permission> permissionRepository, 
             IRepository<UnitAssociation> unitAssociationRepository,
             IRepository<ApplicationRole> applicationRoleRepository)
         {
+            _directorySearchService = directorySearchService;
             _userRepository = userRepository;
             _permissionRepository = permissionRepository;
             _unitAssociationRepository = unitAssociationRepository;
@@ -64,41 +68,69 @@ namespace Catbert4.Controllers
         }
 
         //
-        // GET: /User/Create
-        public ActionResult Create()
+        // GET: /User/Find
+        public ActionResult Find(string searchTerm)
         {
-			var viewModel = UserViewModel.Create(Repository);
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                return View();
+            }
             
-            return View(viewModel);
-        } 
+            var user = _directorySearchService.FindUser(searchTerm);
+
+            if (user == null)
+            {
+                ViewData["searchTerm"] = searchTerm;
+                Message = string.Format("No users found with email or kerberos Id = {0}", searchTerm);
+                return View();
+            }
+
+            //see if we already have the user in the db
+            var userExists = _userRepository.Queryable.Any(x => x.LoginId == user.LoginId);
+
+            if (userExists)
+            {
+                Message = string.Format("You have been redirected to the edit page for {0}", user.FullName);
+                return RedirectToAction("Edit", new {id = user.LoginId});
+            }
+
+            return RedirectToAction("Add", new {id = user.LoginId});
+        }
 
         //
-        // POST: /User/Create
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Create(User user)
+        // GET: /User/Add/login
+        public ActionResult Add(string id)
         {
-            var userToCreate = new User();
-
-            TransferValues(user, userToCreate);
-
-            userToCreate.TransferValidationMessagesTo(ModelState);
-
-            if (ModelState.IsValid)
-            {
-                _userRepository.EnsurePersistent(userToCreate);
-
-                Message = "User Created Successfully";
-
-                return RedirectToAction("Index");
-            }
-            else
-            {
-				var viewModel = UserViewModel.Create(Repository);
-                viewModel.User = user;
-
-                return View(viewModel);
-            }
+            throw new NotImplementedException();
         }
+
+        ////
+        //// POST: /User/Add
+        //[AcceptVerbs(HttpVerbs.Post)]
+        //public ActionResult Add(User user)
+        //{
+        //    var userToCreate = new User();
+
+        //    TransferValues(user, userToCreate);
+
+        //    userToCreate.TransferValidationMessagesTo(ModelState);
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        _userRepository.EnsurePersistent(userToCreate);
+
+        //        Message = "User Created Successfully";
+
+        //        return RedirectToAction("Index");
+        //    }
+        //    else
+        //    {
+        //        var viewModel = UserViewModel.Create(Repository);
+        //        viewModel.User = user;
+
+        //        return View(viewModel);
+        //    }
+        //}
 
         //
         // GET: /User/Edit/login

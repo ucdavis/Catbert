@@ -8,9 +8,15 @@
 
     <h2>Users List</h2>
 
+    <div>
+        <a id="add-user" href="<%: Url.Action("Find") %>">Add User</a>
+    </div>
+
     <div class="ui-widget">
 	    <label for="user-search">Search Users: </label>
 	    <input id="user-search" />
+        
+        <a id="clear-user-search" href="#">Clear</a>        
     </div>
 
     <table>
@@ -54,10 +60,6 @@
 
     </table>
 
-    <p>
-        <%: Html.ActionLink("Create New", "Create") %>
-    </p>
-
 <script id="search-user-template" type="text/x-jquery-tmpl">
     <li data-item.autocomplete="${value}">
         <a>${FirstName} ${LastName} (${value})
@@ -91,6 +93,21 @@
             return template.appendTo(ul);
 		};
 
+        $("#clear-user-search").button({ 
+            icons: {
+                    primary: "ui-icon-circle-close"
+                },
+            text: false
+        })
+        .click(function(e){
+            e.preventDefault();
+            
+            $("#user-search").val("");
+        });
+
+        $("#add-user").button({
+            icons: { primary: "ui-icon-person" }
+        });
     });
 </script>
     
