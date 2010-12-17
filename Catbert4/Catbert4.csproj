@@ -185,6 +185,7 @@
     <Content Include="Views\Unit\Edit.aspx" />
     <Content Include="Views\Unit\Index.aspx" />
     <Content Include="Views\Unit\UnitForm.ascx" />
+    <Content Include="Views\UserAdministration\Add.aspx" />
     <Content Include="Views\UserAdministration\Details.aspx" />
     <Content Include="Views\UserAdministration\Edit.aspx" />
     <Content Include="Views\UserAdministration\Find.aspx" />

@@ -1,4 +1,4 @@
-<%@ Page Title="" Language="C#" Inherits="System.Web.Mvc.ViewPage" MasterPageFile="~/Views/Shared/Site.Master" %>
+<%@ Page Title="" Language="C#" Inherits="System.Web.Mvc.ViewPage<Catbert4.Services.DirectoryUser>" MasterPageFile="~/Views/Shared/Site.Master" %>
 <asp:Content runat="server" ID="Title" ContentPlaceHolderID="TitleContent">Find User</asp:Content>
 <asp:Content runat="server" ID="Main" ContentPlaceHolderID="MainContent">
 <h2>Find User</h2>

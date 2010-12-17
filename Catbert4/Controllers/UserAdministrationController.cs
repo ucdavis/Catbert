@@ -69,6 +69,7 @@ namespace Catbert4.Controllers
 
         //
         // GET: /User/Find
+        [HandleTransactionsManually] //We are just using directory services
         public ActionResult Find(string searchTerm)
         {
             if (string.IsNullOrWhiteSpace(searchTerm))
@@ -85,52 +86,65 @@ namespace Catbert4.Controllers
                 return View();
             }
 
-            //see if we already have the user in the db
-            var userExists = _userRepository.Queryable.Any(x => x.LoginId == user.LoginId);
+            Message = string.Format("User {0} found.  Please verify the information below and then click add",
+                                    user.FullName);
 
-            if (userExists)
-            {
-                Message = string.Format("You have been redirected to the edit page for {0}", user.FullName);
-                return RedirectToAction("Edit", new {id = user.LoginId});
-            }
-
-            return RedirectToAction("Add", new {id = user.LoginId});
+            return RedirectToAction("Add", new { id = user.LoginId });
         }
 
         //
-        // GET: /User/Add/login
+        // GET /User/Add/login
         public ActionResult Add(string id)
         {
-            throw new NotImplementedException();
+            //see if we already have the user in the db
+            var userExists = _userRepository.Queryable.Any(x => x.LoginId == id);
+
+            if (userExists)
+            {
+                Message = string.Format("You have been redirected to the edit page for {0}", id);
+                return RedirectToAction("Edit", new { id = id });
+            }
+            
+            //get the user back from directory services
+            var user = _directorySearchService.FindUser(id);
+
+            if (user == null)
+            {
+                Message = string.Format("No users found with kerberos Id = {0}", id);
+                return RedirectToAction("Find");
+            }
+
+            var newUser = Mapper.Map<DirectoryUser, User>(user);
+            
+            return View(newUser);
         }
 
-        ////
-        //// POST: /User/Add
-        //[AcceptVerbs(HttpVerbs.Post)]
-        //public ActionResult Add(User user)
-        //{
-        //    var userToCreate = new User();
+        //
+        // POST: /User/Add
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Add(User user)
+        {
+            ModelState.Remove("Id"); //clear out the Id binding error when the binder tries to use user.Id 
 
-        //    TransferValues(user, userToCreate);
+            var userToCreate = new User();
 
-        //    userToCreate.TransferValidationMessagesTo(ModelState);
+            Mapper.Map(user, userToCreate);
+            
+            userToCreate.TransferValidationMessagesTo(ModelState);
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        _userRepository.EnsurePersistent(userToCreate);
+            if (ModelState.IsValid)
+            {
+                _userRepository.EnsurePersistent(userToCreate);
 
-        //        Message = "User Created Successfully";
+                Message = "User Created Successfully.  You can now add permissions and unit associations";
 
-        //        return RedirectToAction("Index");
-        //    }
-        //    else
-        //    {
-        //        var viewModel = UserViewModel.Create(Repository);
-        //        viewModel.User = user;
-
-        //        return View(viewModel);
-        //    }
-        //}
+                return RedirectToAction("Edit", new {id = user.LoginId});
+            }
+            else
+            {
+                return View(user);
+            }
+        }
 
         //
         // GET: /User/Edit/login
@@ -310,17 +324,9 @@ namespace Catbert4.Controllers
                 .Where(x => x.LoginId.Contains(term))
                 .Select(x => new { value = x.LoginId, x.FirstName, x.LastName, x.Email });
             
-            return Json(users, JsonRequestBehavior.AllowGet);
+            return Json(users.ToList(), JsonRequestBehavior.AllowGet);
         }
         
-        /// <summary>
-        /// Transfer editable values from source to destination
-        /// </summary>
-        private static void TransferValues(User source, User destination)
-        {
-            throw new NotImplementedException();
-        }
-
         private User GetUser(string login)
         {
             return _userRepository.Queryable.Where(x => x.LoginId == login).SingleOrDefault();
@@ -386,7 +392,6 @@ namespace Catbert4.Controllers
             model.Units =
                 repository.OfType<Unit>().Queryable.OrderBy(x => x.ShortName).Select(
                     x => new KeyValuePair<int, string>(x.Id, x.ShortName)).ToList();
-            //model.Applications = repository.OfType<Application>().Queryable.Select(x => new KeyValuePair<int,string>(x.Id, x.Name)).ToList();
         }
 	}
 }

@@ -8,6 +8,12 @@ namespace Catbert4.Core.Domain
 {
     public class User : DomainObject
     {
+        public User()
+        {
+            UnitAssociations = new List<UnitAssociation>();
+            Permissions = new List<Permission>();
+        }
+
         [Length(50)]
         public virtual string FirstName { get; set; }
 

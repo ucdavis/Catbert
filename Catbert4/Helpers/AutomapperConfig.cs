@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Catbert4.Core.Domain;
 using Catbert4.Models;
+using Catbert4.Services;
 
 namespace Catbert4.Helpers
 {
@@ -46,6 +47,9 @@ namespace Catbert4.Helpers
                 .ForMember(x => x.Permissions, x => x.Ignore())
                 .ForMember(x=>x.UnitAssociations, x=>x.Ignore());
 
+            CreateMap<DirectoryUser, User>()
+                .ForMember(x => x.Email, x => x.MapFrom(p => p.EmailAddress))
+                .ForMember(x => x.Phone, x => x.MapFrom(p => p.PhoneNumber));
         }
     }
 }
