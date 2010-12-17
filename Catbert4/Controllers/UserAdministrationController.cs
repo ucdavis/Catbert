@@ -20,15 +20,18 @@ namespace Catbert4.Controllers
 	    private readonly IRepository<User> _userRepository;
         private readonly IRepository<Permission> _permissionRepository;
         private readonly IRepository<UnitAssociation> _unitAssociationRepository;
+        private readonly IRepository<ApplicationRole> _applicationRoleRepository;
 
         public UserAdministrationController(
             IRepository<User> userRepository, 
             IRepository<Permission> permissionRepository, 
-            IRepository<UnitAssociation> unitAssociationRepository)
+            IRepository<UnitAssociation> unitAssociationRepository,
+            IRepository<ApplicationRole> applicationRoleRepository)
         {
             _userRepository = userRepository;
             _permissionRepository = permissionRepository;
             _unitAssociationRepository = unitAssociationRepository;
+            _applicationRoleRepository = applicationRoleRepository;
         }
 
         //
@@ -176,13 +179,13 @@ namespace Catbert4.Controllers
         {
             if (val.HasValue == false) return Json(new {});
 
-            var rolesForApp = from appRole in Repository.OfType<ApplicationRole>().Queryable
+            var rolesForApp = from appRole in _applicationRoleRepository.Queryable
                               where appRole.Application.Id == val
                               orderby appRole.Role.Name
                               orderby appRole.Level
                               select new {Value = appRole.Role.Id, Text = appRole.Role.Name};
 
-            return Json(rolesForApp);
+            return Json(rolesForApp.ToList());
         }
 
         [HttpPost]
@@ -207,6 +210,66 @@ namespace Catbert4.Controllers
             _unitAssociationRepository.Remove(association);
 
             return Json(new JsonStatusModel(success: true));
+        }        
+        
+        [HttpPost]
+        public JsonResult AddPermission(int userId, int applicationId, int roleId)
+        {
+            //First verify the role can be associated with this position
+            var roleIsAssociatedWithApplication = (from appRole in _applicationRoleRepository.Queryable
+                                                  where appRole.Application.Id == applicationId
+                                                        && appRole.Role.Id == roleId
+                                                  select appRole).Any();
+
+            //Now make sure the user doesn't already have this role
+            var userHasRole = (from perm in _permissionRepository.Queryable
+                              where perm.Application.Id == applicationId
+                                    && perm.Role.Id == roleId
+                                    && perm.User.Id == userId
+                              select perm).Any();
+
+            if (roleIsAssociatedWithApplication == false || userHasRole)
+            {
+                return Json(new JsonStatusModel(success: false) {Comment = "User already has this role"});
+            }
+
+            var newPermission = new Permission
+                                    {
+                                        Application = Repository.OfType<Application>().GetById(applicationId),
+                                        Role = Repository.OfType<Role>().GetById(roleId),
+                                        User = Repository.OfType<User>().GetById(userId)
+                                    };
+            
+            _permissionRepository.EnsurePersistent(newPermission);
+
+            return Json(new JsonStatusModel(success: true) {Identifier = newPermission.Id});
+        }
+
+        [HttpPost]
+        public JsonResult AddAssociation(int userId, int applicationId, int unitId)
+        {
+            //Now make sure the user doesn't already have this unit association
+            var userHasUnitAssociation = (from u in _unitAssociationRepository.Queryable
+                                         where u.Application.Id == applicationId
+                                               && u.Unit.Id == unitId
+                                               && u.User.Id == userId
+                                         select u).Any();
+
+            if (userHasUnitAssociation)
+            {
+                return Json(new JsonStatusModel(success: false) { Comment = "User already has this unit association" });
+            }
+
+            var newUnitAssociation = new UnitAssociation()
+            {
+                Application = Repository.OfType<Application>().GetById(applicationId),
+                Unit = Repository.OfType<Unit>().GetById(unitId),
+                User = Repository.OfType<User>().GetById(userId)
+            };
+            
+            _unitAssociationRepository.EnsurePersistent(newUnitAssociation);
+
+            return Json(new JsonStatusModel(success: true) {Identifier = newUnitAssociation.Id});
         }
         
         /// <summary>

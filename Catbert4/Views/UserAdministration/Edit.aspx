@@ -80,7 +80,7 @@
 <fieldset>
         <legend>Permissions</legend>
 
-        <table>
+        <table id="permissions">
             <thead>
                 <tr>
                     <th>Application</th>
@@ -104,13 +104,13 @@
                 <option value="0">--Select A Role--</option>
             </select>
         
-            <a class="add-permission button-plus" href="#">Add</a>
+            <a class="add-permission button-plus" href="#" data-table="permissions" data-application="add-permission-application" data-role="add-permission-roles">Add</a>
         </div>
     </fieldset>
         <fieldset>
         <legend>Unit Associations</legend>
 
-        <table>
+        <table id="unit-associations">
             <thead>
                 <tr>
                     <th>Application</th>
@@ -132,22 +132,35 @@
         <div>
             <%= this.Select("add-association-application").Options(Model.UserLookupModel.Applications, x=>x.Key, x=>x.Value).FirstOption("--Select An Application--") %>
             <%= this.Select("add-association-unit").Options(Model.UserLookupModel.Units, x=>x.Key, x=>x.Value).FirstOption("--Select A Unit--") %>
-            <a class="add-association button-plus" href="#">Add</a>
+            <a class="add-association button-plus" href="#" data-table="unit-associations" data-application="add-association-application" data-unit="add-association-unit">Add</a>
         </div>
     </fieldset>
 
     <div>
         <%: Html.ActionLink("Back to List", "Index") %>
     </div>
+
+    <script id="user-association-template" type="text/x-jquery-tmpl">
+    <tr>
+        <td>${ApplicationName}</td>
+        <td>${RoleOrUnitName}</td>
+        <td><a class="${CssClass} button-trash" href="#" data-id="${RoleOrUnitId}">Remove</a></td>
+    </tr>
+</script>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="HeaderContent" runat="server">
-    <script src="<%: Url.Script("jquery.jqcascade.min.js") %>" type="text/javascript"></script>
+
+<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
+<script src="<%: Url.Script("jquery.jqcascade.min.js") %>" type="text/javascript"></script>
 
 <script type="text/javascript">
     Catbert = { };
+    Catbert.UserId = <%: Model.User.Id %>;
     Catbert.Services = {
         RemovePermission: "<%: Url.Action("RemovePermission") %>",
-        RemoveAssociation: "<%: Url.Action("RemoveAssociation") %>"
+        RemoveAssociation: "<%: Url.Action("RemoveAssociation") %>",
+        AddPermission: "<%: Url.Action("AddPermission") %>",
+        AddAssociation: "<%: Url.Action("AddAssociation") %>"
         };
 
         $(function () {
@@ -164,6 +177,19 @@
                 e.preventDefault();
 
                 RemoveEntity(this, Catbert.Services.RemoveAssociation);
+            });
+
+            $(".add-permission").click(function (e) {
+                e.preventDefault();
+                        
+                AddEntity(this, Catbert.Services.AddPermission);
+
+            });
+
+            $(".add-association").click(function (e) {
+                e.preventDefault();
+
+                AddEntity(this, Catbert.Services.AddAssociation);
             });
 
             $("#add-permission-roles").cascading({
@@ -188,6 +214,66 @@
                     "__RequestVerificationToken": Catbert.AntiForgeryToken 
                 },
                 null
+            );
+        }
+
+        function AddEntity(element, addUrl) {
+            var wrappedElement = $(element);
+
+            var table = $("#" + wrappedElement.data("table")).find("tbody");
+            var applicationElement = $("#" + wrappedElement.data("application"));
+            var application = applicationElement.val();
+            var roleElement = $("#" + wrappedElement.data("role"));
+            var role = roleElement.val();
+            var unitElement = $("#" + wrappedElement.data("unit"));
+            var unit = unitElement.val();
+            
+            if (application == 0) {
+                alert("Please select an application");
+                return;
+            }
+            else if (role == 0) { 
+                alert("Please select a role");
+                return;
+            }
+            else if (unit == 0) { 
+                alert("Please select a unit");
+                return;
+            }
+
+            var data = { 
+                    userId: Catbert.UserId,
+                    applicationId: application,
+                    roleId: role,
+                    unitId: unit,
+                    "__RequestVerificationToken": Catbert.AntiForgeryToken 
+                };
+
+            $.post(
+                addUrl,
+                data,
+                function(data) {
+                    if (data.Success == false){
+                        alert(data.Comment);
+                        return false;
+                    }
+
+                    var useRole = unit === undefined;
+
+                    var tmplData = {
+                        ApplicationName: applicationElement.find('option:selected').text(),
+                        RoleOrUnitName: useRole ? roleElement.find('option:selected').text() : unitElement.find('option:selected').text(),
+                        RoleOrUnitId: data.Identifier,
+                        CssClass: useRole? 'remove-permission' : 'remove-association'
+                    };
+                    
+                    var newRow = $("#user-association-template").tmpl(tmplData);
+                    table.append(newRow);
+
+                    RenderButtons();
+                    newRow.effect('highlight', 2000);
+                },
+                'json'
             );
         }
 

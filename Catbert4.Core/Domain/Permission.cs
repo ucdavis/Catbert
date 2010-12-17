@@ -5,6 +5,11 @@ namespace Catbert4.Core.Domain
 {
     public class Permission : DomainObject
     {
+        public Permission()
+        {
+            Inactive = false;
+        }
+
         public virtual bool Inactive { get; set; }
 
         [NotNull]

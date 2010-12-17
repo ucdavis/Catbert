@@ -23,6 +23,11 @@
     <script type="text/javascript">
         $(function () {
             $(".datepicker").datepicker();
+
+            RenderButtons();
+        });
+
+        function RenderButtons() {
             $(".button-trash").button({
                 icons: {
                     primary: "ui-icon-trash"
@@ -33,7 +38,7 @@
                     primary: "ui-icon-plus"
                 }
             });
-        });
+        }
     </script>
 
     <asp:ContentPlaceHolder ID="HeaderContent" runat="server">
