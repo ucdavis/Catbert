@@ -150,7 +150,8 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="HeaderContent" runat="server">
 
-<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
+<%: Catbert4.Helpers.HtmlScriptHelpers.IncludeJqueryTemplate()%>
+
 <script src="<%: Url.Script("jquery.jqcascade.min.js") %>" type="text/javascript"></script>
 
 <script type="text/javascript">

@@ -271,6 +271,15 @@ namespace Catbert4.Controllers
 
             return Json(new JsonStatusModel(success: true) {Identifier = newUnitAssociation.Id});
         }
+
+        public JsonResult SearchUsers(string term)
+        {
+            var users = _userRepository.Queryable
+                .Where(x => x.LoginId.Contains(term))
+                .Select(x => new { value = x.LoginId, x.FirstName, x.LastName, x.Email });
+            
+            return Json(users, JsonRequestBehavior.AllowGet);
+        }
         
         /// <summary>
         /// Transfer editable values from source to destination

@@ -70,6 +70,7 @@
                     <li><%= Html.ActionLink("Messages", "Index", "Message")%></li>
                     <li><%= Html.ActionLink("Roles", "Index", "Role")%></li>
                     <li><%= Html.ActionLink("Schools", "Index", "School")%></li>
+                    <li><%= Html.ActionLink("Users (Admin)", "Index", "UserAdministration")%></li>
                     <li><%= Html.ActionLink("Units", "Index", "Unit")%></li>
                     <li><%= Html.ActionLink("Dev", "Dev", "Home")%></li>
                 </ul>

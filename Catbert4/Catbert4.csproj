@@ -132,6 +132,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AutomapperConfig.cs" />
+    <Compile Include="Helpers\HtmlScriptHelpers.cs" />
     <Compile Include="Models\JsonStatusModel.cs" />
     <Compile Include="Models\UserListModel.cs" />
     <Compile Include="Models\UserLookupModel.cs" />
