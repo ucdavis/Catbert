@@ -27,9 +27,9 @@ namespace Catbert4.Controllers
         // GET: /Message/
         public ActionResult Index()
         {
-            var messageList = _messageRepository.Queryable;
+            var messageList = _messageRepository.Queryable.Fetch(x=>x.Application);
 
-            return View(messageList);
+            return View(messageList.ToList());
         }
 
         //
