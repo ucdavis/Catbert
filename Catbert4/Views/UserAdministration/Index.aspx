@@ -88,7 +88,12 @@
             }
         })
         .data( "autocomplete" )._renderItem = function( ul, item ) {
-			var template = $("#search-user-template").tmpl(item);
+			
+            $.each(item, function(i,v) {
+                
+            });
+            
+            var template = $("#search-user-template").tmpl(item);
             
             return template.appendTo(ul);
 		};
@@ -109,6 +114,15 @@
             icons: { primary: "ui-icon-person" }
         });
     });
+
+	    // Helper function for the formatter 
+	    var highlightMatch = function(full, snippet, matchindex) { 
+	        return full.substring(0, matchindex) +  
+	                "<span class='match'>" +  
+	                full.substr(matchindex, snippet.length) +  
+	                "</span>" + 
+	                full.substring(matchindex + snippet.length); 
+	    }
 </script>
     
 </asp:Content>

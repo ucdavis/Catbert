@@ -194,23 +194,30 @@ namespace Catbert4.Controllers
         
         //
         // GET: /User/Delete/5 
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
-			var user = _userRepository.GetNullableById(id);
+            var user = GetUser(id);
 
             if (user == null) return RedirectToAction("Index");
 
-            return View(user);
+            var model = Mapper.Map<User, UserShowModel>(user);
+
+            SetPermissionsAndUnitAssociations(id, model);
+
+            return View(model);
         }
 
         //
         // POST: /User/Delete/5
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Delete(int id, User user)
+        public ActionResult Delete(string id, User user)
         {
-			var userToDelete = _userRepository.GetNullableById(id);
-
+            var userToDelete = GetUser(id);
+            
             if (userToDelete == null) return RedirectToAction("Index");
+
+            userToDelete.Permissions.Clear();
+            userToDelete.UnitAssociations.Clear();
 
             _userRepository.Remove(userToDelete);
 
@@ -321,7 +328,7 @@ namespace Catbert4.Controllers
         public JsonResult SearchUsers(string term)
         {
             var users = _userRepository.Queryable
-                .Where(x => x.LoginId.Contains(term))
+                .Where(x => x.LoginId.Contains(term) || x.FirstName.Contains(term) || x.LastName.Contains(term) || x.Email.Contains(term))
                 .Select(x => new { value = x.LoginId, x.FirstName, x.LastName, x.Email });
             
             return Json(users.ToList(), JsonRequestBehavior.AllowGet);

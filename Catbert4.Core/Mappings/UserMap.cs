@@ -25,8 +25,9 @@ namespace Catbert4.Core.Mappings
             //Map(x => x.StudentId);
             //Map(x => x.UserKey);
 
-            HasMany(x => x.Permissions).Not.Inverse().Cascade.None().Where(InactiveConstraint);
-            HasMany(x => x.UnitAssociations).Not.Inverse().Cascade.None().Where(InactiveConstraint);
+            HasMany(x => x.Permissions).Inverse().Cascade.AllDeleteOrphan().Where(InactiveConstraint);
+            HasMany(x => x.UnitAssociations).Inverse().Cascade.AllDeleteOrphan().Where(InactiveConstraint);
+
         }
     }
 }
