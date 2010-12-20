@@ -84,6 +84,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.DirectoryServices.Protocols" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
@@ -146,7 +147,10 @@
     <Compile Include="Services\AuditInterceptor.cs" />
     <Compile Include="Services\DirectoryService.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="Services\Wcf\ApplicationAuthorization.cs" />
     <Compile Include="Services\Wcf\IMessageService.cs" />
+    <Compile Include="Services\Wcf\RoleService.cs" />
+    <Compile Include="Services\Wcf\IRoleService.cs" />
     <Compile Include="Services\Wcf\MessageService.cs" />
     <Compile Include="Services\WebPrincipal.cs" />
   </ItemGroup>
@@ -158,6 +162,7 @@
     <Content Include="Scripts\jquery.jqcascade.min.js" />
     <Content Include="Scripts\xVal.jquery.validate.js" />
     <Content Include="Public\Message.svc" />
+    <Content Include="Public\Role.svc" />
     <Content Include="Views\AccessToken\Create.aspx" />
     <Content Include="Views\AccessToken\Details.aspx" />
     <Content Include="Views\AccessToken\Index.aspx" />

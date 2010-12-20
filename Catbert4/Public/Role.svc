@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="Catbert4.Services.Wcf.RoleService" CodeBehind="RoleService.cs" %>

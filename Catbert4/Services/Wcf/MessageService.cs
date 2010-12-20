@@ -8,9 +8,6 @@ namespace Catbert4.Services.Wcf
 {
     public class MessageService : IMessageService
     {
-        //Repository singleton
-        private static readonly IRepository<Message> MessageRepository = ServiceLocator.Current.GetInstance<IRepository<Message>>();
-
         /// <summary>
         /// Get the current message for a given application.  
         /// An active system message gets priority over individual application messages.
@@ -35,7 +32,7 @@ namespace Catbert4.Services.Wcf
         private static string GetMessageText(string appName)
         {
             //First check for any global messages active now
-            var globalMessage = (from m in MessageRepository.Queryable
+            var globalMessage = (from m in RepositoryFactory.MessageRepository.Queryable
                                  where m.Application == null
                                        && m.Active
                                        && m.BeginDisplayDate < DateTime.Now
@@ -47,7 +44,7 @@ namespace Catbert4.Services.Wcf
                 return globalMessage.Text;
             }
 
-            var applicationMessage = (from m in MessageRepository.Queryable
+            var applicationMessage = (from m in RepositoryFactory.MessageRepository.Queryable
                                       where m.Application.Name == appName
                                             && m.Active
                                             && m.BeginDisplayDate < DateTime.Now
@@ -61,6 +58,31 @@ namespace Catbert4.Services.Wcf
 
             //Neither an application nor a global message was found
             return string.Empty;
+        }
+
+        public class RepositoryFactory
+        {
+
+            // Private constructor prevents instantiation from other classes
+            private RepositoryFactory() { }
+
+            /**
+            * SingletonHolder is loaded on the first execution of RepositoryFactory.[Property] 
+            * or the first access to SingletonHolder.Instance, not before.
+            */
+            private static class SingletonHolder
+            {
+                public static readonly IRepository<Message> Instance = ServiceLocator.Current.GetInstance<IRepository<Message>>();
+            }
+
+            public static IRepository<Message> MessageRepository
+            {
+                get
+                {
+                    return SingletonHolder.Instance;
+                }
+            }
+
         }
     }
 }
