@@ -202,6 +202,7 @@
     <Content Include="Views\UserAdministration\Edit.aspx" />
     <Content Include="Views\UserAdministration\Find.aspx" />
     <Content Include="Views\UserAdministration\Index.aspx" />
+    <Content Include="Views\UserAdministration\List.ascx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

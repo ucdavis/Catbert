@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<Catbert4.Models.UserListModel>>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Users
@@ -19,46 +19,8 @@
         <a id="clear-user-search" href="#">Clear</a>        
     </div>
 
-    <table>
-        <tr>
-            <th></th>
-            <th>
-                Login
-            </th>
-            <th>
-                FirstName
-            </th>
-            <th>
-                LastName
-            </th>
-            <th>
-                Email
-            </th>
-        </tr>
-
-    <% foreach (var item in Model) { %>
-    
-        <tr>
-            <td>
-                <%: Html.ActionLink("Edit", "Edit", new { id=item.Login }) %>
-            </td>
-            <td>
-                <%: item.Login %>
-            </td>
-            <td>
-                <%: item.FirstName %>
-            </td>
-            <td>
-                <%: item.LastName %>
-            </td>
-            <td>
-                <%: item.Email %>
-            </td>
-        </tr>
-    
-    <% } %>
-
-    </table>
+    <h5><a id="load-users" href="#">View All Users</a></h5>
+    <div id="users-list"></div>
 
 <script id="search-user-template" type="text/x-jquery-tmpl">
     <li data-item.autocomplete="${value}">
@@ -108,6 +70,16 @@
             e.preventDefault();
             
             $("#user-search").val("");
+        });
+
+        $("#load-users").click(function(e){
+            e.preventDefault();
+
+            var button = $(this);
+
+            $("#users-list").load('<%: Url.Action("List") %>', null, function(){ 
+                button.hide(); //hide button on success
+            });
         });
 
         $("#add-user").button({

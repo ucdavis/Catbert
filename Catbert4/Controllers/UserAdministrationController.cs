@@ -40,15 +40,20 @@ namespace Catbert4.Controllers
 
         //
         // GET: /User/
+        [HandleTransactionsManually] //No data access required
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult List()
         {
             var userList = _userRepository.Queryable
                 .OrderBy(x => x.LastName)
                 .Select(
                     x =>
-                    new UserListModel
-                        {Email = x.Email, FirstName = x.FirstName, LastName = x.LastName, Login = x.LoginId});
-            
+                    new UserListModel { Email = x.Email, FirstName = x.FirstName, LastName = x.LastName, Login = x.LoginId });
+
             return View(userList.ToList());
         }
 
