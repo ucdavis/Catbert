@@ -8,6 +8,6 @@ namespace Catbert4.Services.Wcf
     {
         [OperationContract]
         [WebGet] //Allow this to be called via Ajax
-        string GetMessage(string appName);
+        string[] GetMessages(string appName);
     }
 }

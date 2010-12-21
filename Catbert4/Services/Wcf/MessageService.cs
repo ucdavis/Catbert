@@ -9,8 +9,7 @@ namespace Catbert4.Services.Wcf
     public class MessageService : IMessageService
     {
         /// <summary>
-        /// Get the current message for a given application.  
-        /// An active system message gets priority over individual application messages.
+        /// Get the current message for a given application, as well as system wide messages.  
         /// </summary>
         /// <example> Calling code example:
         /// From Javascript:
@@ -23,41 +22,24 @@ namespace Catbert4.Services.Wcf
         /// From C#:
         /// new ChannelFactory<IMessageService/>(new BasicHttpBinding(), "[url]/Message.svc"))
         /// </example>
-        /// <returns>Returns the system message, or string.empty if no message</returns>
-        public string GetMessage(string appName)
+        /// <returns>Returns the system messages or application messages that are active</returns>
+        public string[] GetMessages(string appName)
         {
-            return GetMessageText(appName);
-        }
-        
-        private static string GetMessageText(string appName)
-        {
-            //First check for any global messages active now
-            var globalMessage = (from m in RepositoryFactory.MessageRepository.Queryable
+            var globalMessages = from m in RepositoryFactory.MessageRepository.Queryable
                                  where m.Application == null
                                        && m.Active
                                        && m.BeginDisplayDate < DateTime.Now
                                        && m.EndDisplayDate > DateTime.Now
-                                 select m).FirstOrDefault();
+                                 select m.Text;
 
-            if (globalMessage != null)
-            {
-                return globalMessage.Text;
-            }
-
-            var applicationMessage = (from m in RepositoryFactory.MessageRepository.Queryable
+            var applicationMessages = from m in RepositoryFactory.MessageRepository.Queryable
                                       where m.Application.Name == appName
                                             && m.Active
                                             && m.BeginDisplayDate < DateTime.Now
                                             && m.EndDisplayDate > DateTime.Now
-                                      select m).FirstOrDefault();
+                                      select m.Text;
 
-            if (applicationMessage != null)
-            {
-                return applicationMessage.Text;
-            }
-
-            //Neither an application nor a global message was found
-            return string.Empty;
+            return Enumerable.Union(globalMessages, applicationMessages).ToArray();
         }
 
         public class RepositoryFactory
