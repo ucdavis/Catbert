@@ -1,11 +1,11 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.ServiceModel;
 using System.Web.Mvc;
 using Catbert4.Providers;
 using Catbert4.Services.Wcf;
 using UCDArch.Web.Attributes;
 using Catbert4.Core.Domain;
+using System.Web.Security;
 
 namespace Catbert4.Controllers
 {
@@ -40,17 +40,15 @@ namespace Catbert4.Controllers
             
             messageService.Close();
 
-            var roleProxy = roleService.CreateChannel();
-
-            var catbertRoles = roleProxy.GetAllRoles("Catbert");
             
-            roleService.Close();
-
             var provider = new CatbertServiceRoleProvider();
             provider.InitWithoutConfig("Catbert", GetAbsoluteUrl("~/Public/Role.svc"), "fake");
 
             var roles = provider.GetAllRoles();
 
+            var q = Roles.GetAllRoles();
+            var q2 = Roles.GetUsersInRole("Admin");
+            
             return Content("");
         }
 

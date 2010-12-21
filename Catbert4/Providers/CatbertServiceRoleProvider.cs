@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Specialized;
 using System.ServiceModel;
+using System.Web.Configuration;
 using System.Web.Security;
-using Catbert4.Services.Wcf;
 
 namespace Catbert4.Providers
 {
@@ -13,7 +13,6 @@ namespace Catbert4.Providers
     /// <see cref="http://msdn.microsoft.com/asp.net/downloads/providers/"/>
     public class CatbertServiceRoleProvider : RoleProvider
     {
-
         //Statics
         private const string StrUseCatbertWeb = "Use the Catbert Web UI for role modification";
         private const string StrServiceDataNotReadable = "Service Data Could Not Be Read";
@@ -43,8 +42,6 @@ namespace Catbert4.Providers
             ApplicationName = appName;
             ServiceUrl = serviceUrl;
             AuthToken = authToken;
-
-            CreateServiceFactory();
         }
 
         /// <summary>
@@ -81,11 +78,11 @@ namespace Catbert4.Providers
                     case "applicationname":
                         ApplicationName = config[key];
                         break;
-                    case "serviceurl":
-                        ServiceUrl = config[key];
+                    case "serviceurlkey":
+                        ServiceUrl = WebConfigurationManager.AppSettings[config[key]];
                         break;
-                    case "authtoken":
-                        AuthToken = config[key];
+                    case "authtokenkey":
+                        AuthToken = WebConfigurationManager.AppSettings[config[key]];
                         break;
                     case "description":
                         _description = config[key];
@@ -95,39 +92,31 @@ namespace Catbert4.Providers
             
             //The Application Name, ServiceUrl and AuthToken are required
             if (string.IsNullOrEmpty(ApplicationName)) throw new ArgumentException("Application Name Is Required");
-            if (string.IsNullOrEmpty(ServiceUrl)) throw new ArgumentException("A Valid Service Url Is Required");
-            if (string.IsNullOrEmpty(AuthToken)) throw new ArgumentException("A Valid Authorization Token Is Required");
-
-            CreateServiceFactory();
+            if (string.IsNullOrEmpty(ServiceUrl)) throw new ArgumentException("A Valid Service Url Is Required (Use ServiceUrlKey)");
+            if (string.IsNullOrEmpty(AuthToken)) throw new ArgumentException("A Valid Authorization Token Is Required (Use AuthTokenKey)");
         }
 
-        /// <summary>
-        /// Create a service factory which will be used to open proxy connections to the service
-        /// </summary>
-        private void CreateServiceFactory()
+        private RoleServiceClient GetClient()
         {
-            //Test version that doesn't use security
-            ServiceFactory = new ChannelFactory<IRoleService>(new BasicHttpBinding(), ServiceUrl);
-
             /*
             var binding = new BasicHttpBinding
-            {
-                SendTimeout = TimeSpan.FromMinutes(1),
-                Security =
-                {
-                    Mode = BasicHttpSecurityMode.TransportWithMessageCredential,
-                    Message = { ClientCredentialType = BasicHttpMessageCredentialType.UserName }
-                }
-            };
+                              {
+                                  SendTimeout = TimeSpan.FromMinutes(1),
+                                  Security =
+                                      {
+                                          Mode = BasicHttpSecurityMode.TransportWithMessageCredential,
+                                          Message = {ClientCredentialType = BasicHttpMessageCredentialType.UserName}
+                                      }
+                              };
+            var endpointAddress = new EndpointAddress(ServiceUrl);
 
-            ServiceFactory = new ChannelFactory<IRoleService>(new BasicHttpBinding(), ServiceUrl);
-
-            ServiceFactory.Credentials.UserName.UserName = ApplicationName;
-            ServiceFactory.Credentials.UserName.Password = AuthToken;
-             */
+            var client = new RoleServiceClient(binding, endpointAddress);
+            client.ClientCredentials.UserName.UserName = ApplicationName;
+            client.ClientCredentials.UserName.Password = AuthToken;
+            */
+ 
+            return new RoleServiceClient(new BasicHttpBinding(), new EndpointAddress(ServiceUrl));
         }
-
-        protected ChannelFactory<IRoleService> ServiceFactory { get; set; }
 
         /// <summary>
         /// Determine if a user is in the supplied role in this application.
@@ -137,9 +126,9 @@ namespace Catbert4.Providers
         /// <returns>True if the user is in the role, else false</returns>
         public override bool IsUserInRole(string username, string roleName)
         {
-            using (var client = ServiceFactory.GetClient())
+            using (var client = GetClient())
             {
-                return client.Service.IsUserInRole(ApplicationName, username, roleName);
+                return client.IsUserInRole(ApplicationName, username, roleName);
             }
         }
 
@@ -149,9 +138,9 @@ namespace Catbert4.Providers
         /// <returns>Roles</returns>
         public override string[] GetAllRoles()
         {
-            using (var client = ServiceFactory.GetClient())
+            using (var client = GetClient())
             {
-                return client.Service.GetAllRoles(ApplicationName);
+                return client.GetAllRoles(ApplicationName);
             }
         }
 
@@ -161,9 +150,9 @@ namespace Catbert4.Providers
         /// <param name="username">LoginID to get the roles for</param>
         public override string[] GetRolesForUser(string username)
         {
-            using (var client = ServiceFactory.GetClient())
+            using (var client = GetClient())
             {
-                return client.Service.GetRolesForUser(ApplicationName, username);
+                return client.GetRolesForUser(ApplicationName, username);
             }
         }
 
@@ -172,9 +161,9 @@ namespace Catbert4.Providers
         /// </summary>
         public override string[] GetUsersInRole(string roleName)
         {
-            using (var client = ServiceFactory.GetClient())
+            using (var client = GetClient())
             {
-                return client.Service.GetUsersInRole(ApplicationName, roleName);
+                return client.GetUsersInRole(ApplicationName, roleName);
             }
         }
 
@@ -187,9 +176,9 @@ namespace Catbert4.Providers
         /// exists withing the context of this application</remarks>
         public override bool RoleExists(string roleName)
         {
-            using (var client = ServiceFactory.GetClient())
+            using (var client = GetClient())
             {
-                return client.Service.RoleExists(ApplicationName, roleName);
+                return client.RoleExists(ApplicationName, roleName);
             }
         }
 

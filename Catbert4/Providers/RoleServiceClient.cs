@@ -1,23 +1,38 @@
-﻿using System;
-using System.ServiceModel;
+﻿using System.ServiceModel;
 using Catbert4.Services.Wcf;
 
 namespace Catbert4.Providers
 {
-    public class RoleServiceClient : IDisposable
+    public class RoleServiceClient : ClientBase<IRoleService>, IRoleService
     {
-        public IRoleService Service { get; set; }
-        private readonly ChannelFactory<IRoleService> _factory;
-
-        public RoleServiceClient(ChannelFactory<IRoleService> factory)
+        public RoleServiceClient(System.ServiceModel.Channels.Binding binding, EndpointAddress remoteAddress) :
+            base(binding, remoteAddress)
         {
-            _factory = factory;
-            Service = _factory.CreateChannel();
         }
 
-        public void Dispose()
+        public bool IsUserInRole(string application, string user, string role)
         {
-            _factory.Close();
+            return base.Channel.IsUserInRole(application, user, role);
+        }
+
+        public string[] GetAllRoles(string application)
+        {
+            return base.Channel.GetAllRoles(application);
+        }
+
+        public string[] GetRolesForUser(string application, string user)
+        {
+            return base.Channel.GetRolesForUser(application, user);
+        }
+
+        public string[] GetUsersInRole(string application, string roleName)
+        {
+            return base.Channel.GetUsersInRole(application, roleName);
+        }
+
+        public bool RoleExists(string application, string role)
+        {
+            return base.Channel.RoleExists(application, role);
         }
     }
 }
