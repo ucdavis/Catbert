@@ -7,7 +7,7 @@ namespace Catbert4.Helpers
     /// <summary>
     /// Used to keep the html script includes in one place in case they change
     /// </summary>
-    public static class HtmlScriptHelpers
+    public static class HtmlHelpers
     {
         public static HtmlString IncludeJqueryTemplate()
         {

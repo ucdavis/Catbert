@@ -46,6 +46,17 @@ namespace Catbert4.Controllers
             return View();
         }
 
+        public ActionResult Table()
+        {
+            var userList = _userRepository.Queryable
+                    .OrderBy(x => x.LastName)
+                    .Select(
+                        x =>
+                        new UserListModel { Email = x.Email, FirstName = x.FirstName, LastName = x.LastName, Login = x.LoginId });
+
+            return View(userList.ToList());
+        }
+
         public ActionResult List()
         {
             var userList = _userRepository.Queryable

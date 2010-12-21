@@ -1,5 +1,12 @@
-<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<System.Collections.Generic.List<Catbert4.Models.UserListModel>>" %>
-<table id="users" class="display">
+<%@ Page Title="" Language="C#" Inherits="System.Web.Mvc.ViewPage<System.Collections.Generic.List<Catbert4.Models.UserListModel>>"
+    MasterPageFile="~/Views/Shared/Site.Master" %>
+
+<asp:Content runat="server" ID="Title" ContentPlaceHolderID="TitleContent">
+</asp:Content>
+
+<asp:Content runat="server" ID="Main" ContentPlaceHolderID="MainContent">
+<div style="width: 60%">
+    <table id="users" class="display">
         <thead>
             <tr>
                 <th>
@@ -41,3 +48,18 @@
             <% } %>
         </tbody>
     </table>
+</div>
+</asp:Content>
+<asp:Content runat="server" ID="Header" ContentPlaceHolderID="HeaderContent">
+    <% Html.RenderPartial("IncludeDataTables"); %>
+    
+    <script type="text/javascript">
+        $(function () {
+            $("#users").dataTable({
+                "bJQueryUI": true,
+                "sPaginationType": "full_numbers",
+                "aaSorting": [[ 3, "asc" ]]
+            });
+        });
+    </script>>
+</asp:Content>

@@ -20,7 +20,7 @@
     </div>
 
     <h5><a id="load-users" href="#">View All Users</a></h5>
-    <div id="users-list"></div>
+    <div id="users-list" style="width:60%"></div>
 
 <script id="search-user-template" type="text/x-jquery-tmpl">
     <li data-item.autocomplete="${value}">
@@ -35,7 +35,9 @@
 
 <asp:Content ID="Content3" ContentPlaceHolderID="HeaderContent" runat="server">
 
-<%: Catbert4.Helpers.HtmlScriptHelpers.IncludeJqueryTemplate()%>
+<% Html.RenderPartial("IncludeDataTables"); %>
+
+<%: Catbert4.Helpers.HtmlHelpers.IncludeJqueryTemplate()%>
 
 <script type="text/javascript">
     $(function () {
@@ -79,6 +81,12 @@
 
             $("#users-list").load('<%: Url.Action("List") %>', null, function(){ 
                 button.hide(); //hide button on success
+                
+                $("#users").dataTable({
+                    "bJQueryUI": true,
+                    "sPaginationType": "full_numbers",
+                    "aaSorting": [[ 3, "asc" ]]
+                });
             });
         });
 

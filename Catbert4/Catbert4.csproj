@@ -137,7 +137,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AutomapperConfig.cs" />
-    <Compile Include="Helpers\HtmlScriptHelpers.cs" />
+    <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="Models\JsonStatusModel.cs" />
     <Compile Include="Models\UserListModel.cs" />
     <Compile Include="Models\UserLookupModel.cs" />
@@ -157,9 +157,12 @@
     <Compile Include="Services\WebPrincipal.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Css\demo_table_jui.css" />
     <Content Include="Global.asax" />
     <Content Include="Css\Site.css" />
     <Content Include="Images\logo-caes.png" />
+    <Content Include="Scripts\jquery.dataTables.js" />
+    <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.jqcascade.js" />
     <Content Include="Scripts\jquery.jqcascade.min.js" />
     <Content Include="Scripts\xVal.jquery.validate.js" />
@@ -192,6 +195,7 @@
     <Content Include="Views\Shared\EditorTemplates\DateTime.ascx" />
     <Content Include="Views\Shared\EditorTemplates\EditComplexValues.ascx" />
     <Content Include="Views\Shared\EditorTemplates\Object.ascx" />
+    <Content Include="Views\Shared\IncludeDataTables.ascx" />
     <Content Include="Views\Shared\Message.ascx" />
     <Content Include="Views\Unit\Create.aspx" />
     <Content Include="Views\Unit\Delete.aspx" />
@@ -205,6 +209,7 @@
     <Content Include="Views\UserAdministration\Find.aspx" />
     <Content Include="Views\UserAdministration\Index.aspx" />
     <Content Include="Views\UserAdministration\List.ascx" />
+    <Content Include="Views\UserAdministration\Table.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
