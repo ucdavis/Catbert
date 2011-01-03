@@ -13,6 +13,7 @@
     <% using (Html.BeginForm()) {%>
         <%= Html.AntiForgeryToken() %>
         <%: Html.ValidationSummary(true) %>
+        <%: Html.HiddenFor(x=>x.Application.Id) %>
 
         <% Html.RenderPartial("ApplicationForm"); %>
 

@@ -13,6 +13,7 @@
     <% using (Html.BeginForm()) {%>
         <%= Html.AntiForgeryToken() %>
         <%: Html.ValidationSummary(false) %>
+        <%: Html.HiddenFor(x=>x.Message.Id) %>
 
         <fieldset>
             <legend>Fields</legend>

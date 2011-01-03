@@ -60,7 +60,6 @@ namespace Catbert4.Controllers
             var messageToCreate = new Message();
 
             Mapper.Map(message, messageToCreate);
-            messageToCreate.Application = message.Application;
             
             messageToCreate.TransferValidationMessagesTo(ModelState);
 
@@ -105,7 +104,6 @@ namespace Catbert4.Controllers
             if (messageToEdit == null) return RedirectToAction("Index");
 
             Mapper.Map(message, messageToEdit);
-            messageToEdit.Application = message.Application;
             
             messageToEdit.TransferValidationMessagesTo(ModelState);
 

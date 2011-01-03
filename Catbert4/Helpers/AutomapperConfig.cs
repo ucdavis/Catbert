@@ -24,16 +24,13 @@ namespace Catbert4.Helpers
             CreateMap<School, School>();
 
             CreateMap<Application, Application>()
-                .ForMember(x => x.Id, x => x.Ignore())
                 .ForMember(x => x.ApplicationRoles, x => x.Ignore());
 
             CreateMap<AccessToken, AccessToken>()
                 .ForMember(x => x.Id, x => x.Ignore())
                 .ForMember(x => x.Application, x => x.Ignore());
 
-            CreateMap<Message, Message>()
-                .ForMember(x => x.Id, x => x.Ignore())
-                .ForMember(x => x.Application, x => x.Ignore());
+            CreateMap<Message, Message>();
 
             CreateMap<User, UserListModel>()
                 .ForMember(x => x.Login, x => x.MapFrom(p => p.LoginId));
