@@ -48,8 +48,7 @@ namespace Catbert4.Controllers
             var unitToCreate = new Unit();
 
             Mapper.Map(unit, unitToCreate);
-            unitToCreate.Parent = unit.Parent;
-
+            
             unitToCreate.TransferValidationMessagesTo(ModelState);
 
             if (ModelState.IsValid)
@@ -93,8 +92,7 @@ namespace Catbert4.Controllers
             if (unitToEdit == null) return RedirectToAction("Index");
 
             Mapper.Map(unit, unitToEdit);
-            unitToEdit.Parent = unit.Parent;
-
+            
             unitToEdit.TransferValidationMessagesTo(ModelState);
 
             if (ModelState.IsValid)

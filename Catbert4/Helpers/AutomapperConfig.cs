@@ -17,9 +17,7 @@ namespace Catbert4.Helpers
     {
         protected override void Configure()
         {
-            CreateMap<Unit, Unit>()
-                .ForMember(x => x.Id, x => x.Ignore())
-                .ForMember(x=>x.Parent, x=>x.Ignore());
+            CreateMap<Unit, Unit>();
 
             CreateMap<School, School>();
 
