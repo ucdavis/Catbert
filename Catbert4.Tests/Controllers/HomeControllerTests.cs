@@ -54,19 +54,8 @@ namespace Catbert4.Tests.Controllers
         [TestMethod]
         public void TestIndexReturnsExpectedView()
         {
-            #region Arrange
-            Assert.Inconclusive("It looks like this method is still under construction.");
-            
-
-            #endregion Arrange
-
-            #region Act
-
-            #endregion Act
-
-            #region Assert
-
-            #endregion Assert		
+            Controller.Index()
+                .AssertViewRendered();		
         }
 
         #endregion Index Tests
@@ -114,11 +103,30 @@ namespace Catbert4.Tests.Controllers
             #endregion Assert
         }
 
+        ///// <summary>
+        ///// Tests the controller has only three attributes.
+        ///// </summary>
+        //[TestMethod]
+        //public void TestControllerHasOnlyThreeAttributes()
+        //{
+        //    #region Arrange
+        //    var controllerClass = _controllerClass;
+        //    #endregion Arrange
+
+        //    #region Act
+        //    var result = controllerClass.GetCustomAttributes(true);
+        //    #endregion Act
+
+        //    #region Assert
+        //    Assert.AreEqual(3, result.Count());
+        //    #endregion Assert
+        //}
+
         /// <summary>
-        /// Tests the controller has only three attributes.
+        /// Tests the controller has only two attributes.
         /// </summary>
         [TestMethod]
-        public void TestControllerHasOnlyThreeAttributes()
+        public void TestControllerHasOnlyTwoAttributes()
         {
             #region Arrange
             var controllerClass = _controllerClass;
@@ -129,7 +137,7 @@ namespace Catbert4.Tests.Controllers
             #endregion Act
 
             #region Assert
-            Assert.AreEqual(3, result.Count());
+            Assert.AreEqual(2, result.Count());
             #endregion Assert
         }
 
@@ -172,24 +180,25 @@ namespace Catbert4.Tests.Controllers
         }
 
 
-        /// <summary>
-        /// Tests the controller has handle transactions manually attribute.
-        /// </summary>
-        [TestMethod]
-        public void TestControllerHasHandleTransactionsManuallyAttribute()
-        {
-            #region Arrange
-            var controllerClass = _controllerClass;
-            #endregion Arrange
+        //Only on Index because of the testing methods.
+        ///// <summary>
+        ///// Tests the controller has handle transactions manually attribute.
+        ///// </summary>
+        //[TestMethod]
+        //public void TestControllerHasHandleTransactionsManuallyAttribute()
+        //{
+        //    #region Arrange
+        //    var controllerClass = _controllerClass;
+        //    #endregion Arrange
 
-            #region Act
-            var result = controllerClass.GetCustomAttributes(true).OfType<HandleTransactionsManuallyAttribute>();
-            #endregion Act
+        //    #region Act
+        //    var result = controllerClass.GetCustomAttributes(true).OfType<HandleTransactionsManuallyAttribute>();
+        //    #endregion Act
 
-            #region Assert
-            Assert.IsTrue(result.Count() > 0, "HandleTransactionsManuallyAttribute not found.");
-            #endregion Assert
-        }
+        //    #region Assert
+        //    Assert.IsTrue(result.Count() > 0, "HandleTransactionsManuallyAttribute not found.");
+        //    #endregion Assert
+        //}
 
         #endregion Controller Class Tests
 
@@ -210,7 +219,7 @@ namespace Catbert4.Tests.Controllers
             #endregion Act
 
             #region Assert
-            Assert.AreEqual(2, result.Count(), "It looks like a method was added or removed from the controller.");
+            Assert.AreEqual(3, result.Count(), "It looks like a method was added or removed from the controller.");
             #endregion Assert
         }
 
@@ -223,11 +232,13 @@ namespace Catbert4.Tests.Controllers
             #endregion Arrange
 
             #region Act
+            var expectedAttribute = controllerMethod.GetCustomAttributes(true).OfType<HandleTransactionsManuallyAttribute>();
             var allAttributes = controllerMethod.GetCustomAttributes(true);
             #endregion Act
 
             #region Assert
-            Assert.AreEqual(0, allAttributes.Count(), "More than expected custom attributes found.");
+            Assert.AreEqual(1, expectedAttribute.Count(), "HandleTransactionsManuallyAttribute not found");
+            Assert.AreEqual(1, allAttributes.Count(), "More than expected custom attributes found.");
             #endregion Assert
         }
 
