@@ -68,7 +68,6 @@ namespace Catbert4.Controllers
 
             Mapper.Map(accessToken, accessTokenToCreate);
 
-            accessTokenToCreate.Application = accessToken.Application;
             accessTokenToCreate.SetNewToken();
 
             accessTokenToCreate.TransferValidationMessagesTo(ModelState);

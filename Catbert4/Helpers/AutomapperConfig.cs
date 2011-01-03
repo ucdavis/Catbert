@@ -24,12 +24,15 @@ namespace Catbert4.Helpers
             CreateMap<Application, Application>()
                 .ForMember(x => x.ApplicationRoles, x => x.Ignore());
 
-            CreateMap<AccessToken, AccessToken>()
-                .ForMember(x => x.Id, x => x.Ignore())
-                .ForMember(x => x.Application, x => x.Ignore());
+            CreateMap<AccessToken, AccessToken>();
 
             CreateMap<Message, Message>();
 
+            CreateUserMaps();
+        }
+
+        private void CreateUserMaps()
+        {
             CreateMap<User, UserListModel>()
                 .ForMember(x => x.Login, x => x.MapFrom(p => p.LoginId));
 
@@ -40,7 +43,7 @@ namespace Catbert4.Helpers
 
             CreateMap<User, User>()
                 .ForMember(x => x.Permissions, x => x.Ignore())
-                .ForMember(x=>x.UnitAssociations, x=>x.Ignore());
+                .ForMember(x => x.UnitAssociations, x => x.Ignore());
 
             CreateMap<DirectoryUser, User>()
                 .ForMember(x => x.Email, x => x.MapFrom(p => p.EmailAddress))
