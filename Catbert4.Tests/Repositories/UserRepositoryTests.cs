@@ -2,14 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Catbert4.Core.Domain;
 using Catbert4.Core.Mappings;
 using Catbert4.Tests.Core;
 using Catbert4.Tests.Core.Extensions;
 using Catbert4.Tests.Core.Helpers;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FluentNHibernate.Testing;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UCDArch.Core.PersistanceSupport;
 using UCDArch.Data.NHibernate;
 using UCDArch.Testing;
@@ -100,7 +99,10 @@ namespace Catbert4.Tests.Repositories
         protected override void LoadData()
         {
             UserRepository.DbContext.BeginTransaction();
+            LoadApplications(1);
+            LoadUnits(1);
             LoadRecords(5);
+            LoadRoles(1);
             UserRepository.DbContext.CommitTransaction();
         }
 
@@ -887,18 +889,24 @@ namespace Catbert4.Tests.Repositories
 
         #region Invalid Tests
         [TestMethod]
-        [ExpectedException(typeof(NHibernate.TransientObjectException))]
-        public void TestUserWithpopulatedNewUnitAssociationsDoesNotSave()
+        [ExpectedException(typeof(NHibernate.HibernateException))]
+        public void TestExistingUserWithPopulatedNewUnitAssociationsDoesNotSave()
         {
             User user = null;
             try
             {
                 #region Arrange
-                user = GetValid(9);
+                user = UserRepository.GetById(2);
                 user.UnitAssociations = new List<UnitAssociation>();
                 user.UnitAssociations.Add(CreateValidEntities.UnitAssociation(7));
                 user.UnitAssociations.Add(CreateValidEntities.UnitAssociation(8));
                 user.UnitAssociations.Add(CreateValidEntities.UnitAssociation(9));
+                foreach (var unitAssociation in user.UnitAssociations)
+                {
+                    unitAssociation.User = user;
+                    unitAssociation.Application = Repository.OfType<Application>().GetById(1);
+                    unitAssociation.Unit = Repository.OfType<Unit>().GetById(1);
+                }
                 #endregion Arrange
 
                 #region Act
@@ -912,7 +920,7 @@ namespace Catbert4.Tests.Repositories
                 Assert.IsNotNull(user);
                 Assert.AreEqual(3, user.UnitAssociations.Count);
                 Assert.IsNotNull(ex);
-                Assert.AreEqual("object references an unsaved transient instance - save the transient instance before flushing. Type: Catbert4.Core.Domain.UnitAssociation, Entity: Catbert4.Core.Domain.UnitAssociation", ex.Message);
+                Assert.AreEqual("A collection with cascade=\"all-delete-orphan\" was no longer referenced by the owning entity instance: Catbert4.Core.Domain.User.UnitAssociations", ex.Message);
                 throw;
             }
         }
@@ -968,12 +976,45 @@ namespace Catbert4.Tests.Repositories
             var user = UserRepository.GetById(1);
             Repository.OfType<UnitAssociation>().DbContext.BeginTransaction();
             LoadUnitAssociations(3, user);
-            Repository.OfType<UnitAssociation>().DbContext.CommitTransaction();            
-   
+            Repository.OfType<UnitAssociation>().DbContext.CommitTransaction();
+
+            //user.UnitAssociations = new List<UnitAssociation>();
+            //for (int i = 0; i < 3; i++)
+            //{
+            //    user.UnitAssociations.Add(Repository.OfType<UnitAssociation>().GetById(i + 1));
+            //}
+            NHibernateSessionManager.Instance.GetSession().Evict(user);
+            user = UserRepository.GetById(1);
+            #endregion Arrange
+
+            #region Act
+            UserRepository.DbContext.BeginTransaction();
+            UserRepository.EnsurePersistent(user);
+            UserRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.IsNotNull(user.UnitAssociations);
+            Assert.AreEqual(3, user.UnitAssociations.Count);
+            Assert.IsFalse(user.IsTransient());
+            Assert.IsTrue(user.IsValid());
+            #endregion Assert
+        }
+
+        [TestMethod]
+        public void TestUserWithNewUnitAssociationsSaves()
+        {
+            #region Arrange
+            //var user = UserRepository.GetById(1);
+            var user = GetValid(9);
+
             user.UnitAssociations = new List<UnitAssociation>();
             for (int i = 0; i < 3; i++)
             {
-                user.UnitAssociations.Add(Repository.OfType<UnitAssociation>().GetById(i+1));
+                user.UnitAssociations.Add(CreateValidEntities.UnitAssociation(i+1));
+                user.UnitAssociations[i].Unit = Repository.OfType<Unit>().GetById(1);
+                user.UnitAssociations[i].Application = Repository.OfType<Application>().GetById(1);
+                user.UnitAssociations[i].User = user;
             }
             #endregion Arrange
 
@@ -995,42 +1036,34 @@ namespace Catbert4.Tests.Repositories
         #endregion Valid Tests
 
         #region Cascade Tests
-        [TestMethod, Ignore] //This will not delete (because of the relations), but we never remove users anyway.
-        public void TestUserWithExistingUnitAssociationsDoesNotCascadeDeleteToUnitAssociations()
+        [TestMethod]
+        public void TestUserWithExistingUnitAssociationsDoesCascadeDeleteToUnitAssociations()
         {
             #region Arrange
             var user = UserRepository.GetById(1);
             Repository.OfType<UnitAssociation>().DbContext.BeginTransaction();
             LoadUnitAssociations(3, user);
-            Repository.OfType<UnitAssociation>().DbContext.CommitTransaction();
-            var unitAssociationsCount = Repository.OfType<UnitAssociation>().Queryable.Count();
-            Assert.IsTrue(unitAssociationsCount > 0);
-            user.UnitAssociations = new List<UnitAssociation>();
-            for (int i = 0; i < 3; i++)
-            {
-                user.UnitAssociations.Add(Repository.OfType<UnitAssociation>().GetById(i + 1));
-            }
-  
-            UserRepository.DbContext.BeginTransaction();
-            UserRepository.EnsurePersistent(user);
-            UserRepository.DbContext.CommitTransaction();
+            Repository.OfType<UnitAssociation>().DbContext.CommitTransaction();  
+            Assert.AreEqual(3, Repository.OfType<UnitAssociation>().Queryable.Count());
+
+            NHibernateSessionManager.Instance.GetSession().Evict(user);
+            user = UserRepository.GetById(1);
 
             Assert.IsNotNull(user.UnitAssociations);
             Assert.AreEqual(3, user.UnitAssociations.Count);
-            Assert.IsFalse(user.IsTransient());
-            Assert.IsTrue(user.IsValid());
 
             #endregion Arrange
 
             #region Act
             UserRepository.DbContext.BeginTransaction();
+            //user.UnitAssociations.Clear(); //Doesn't Matter
             UserRepository.Remove(user);
             UserRepository.DbContext.CommitTransaction();
             #endregion Act
 
             #region Assert
             Assert.IsNull(UserRepository.GetNullableById(1));
-            Assert.AreEqual(unitAssociationsCount, Repository.OfType<UnitAssociation>().Queryable.Count());
+            Assert.AreEqual(0, Repository.OfType<UnitAssociation>().Queryable.Count());
             #endregion Assert
         }
         
@@ -1040,18 +1073,25 @@ namespace Catbert4.Tests.Repositories
         #region Permissions Tests
         #region Invalid Tests
         [TestMethod]
-        [ExpectedException(typeof(NHibernate.TransientObjectException))]
-        public void TestUserWithPopulatedNewPermissionsDoesNotSave()
+        [ExpectedException(typeof(NHibernate.HibernateException))]
+        public void TestExistingUserWithPopulatedNewPermissionsDoesNotSave()
         {
             User user = null;
             try
             {
                 #region Arrange
-                user = GetValid(9);
+                //user = GetValid(9);
+                user = UserRepository.GetById(2);
                 user.Permissions = new List<Permission>();
                 user.Permissions.Add(CreateValidEntities.Permission(7));
                 user.Permissions.Add(CreateValidEntities.Permission(8));
                 user.Permissions.Add(CreateValidEntities.Permission(9));
+                foreach (var permission in user.Permissions)
+                {
+                    permission.User = user;
+                    permission.Application = Repository.OfType<Application>().GetById(1);
+                    permission.Role = Repository.OfType<Role>().GetById(1);
+                }
                 #endregion Arrange
 
                 #region Act
@@ -1065,7 +1105,7 @@ namespace Catbert4.Tests.Repositories
                 Assert.IsNotNull(user);
                 Assert.AreEqual(3, user.Permissions.Count);
                 Assert.IsNotNull(ex);
-                Assert.AreEqual("object references an unsaved transient instance - save the transient instance before flushing. Type: Catbert4.Core.Domain.Permission, Entity: Catbert4.Core.Domain.Permission", ex.Message);
+                Assert.AreEqual("A collection with cascade=\"all-delete-orphan\" was no longer referenced by the owning entity instance: Catbert4.Core.Domain.User.Permissions", ex.Message);
                 throw;
             }
         }
@@ -1114,7 +1154,98 @@ namespace Catbert4.Tests.Repositories
             Assert.IsTrue(user.IsValid());
             #endregion Assert
         }
+
+        [TestMethod]
+        public void TestUserWithExistingPermissionsSaves()
+        {
+            #region Arrange
+            var user = UserRepository.GetById(1);
+            Repository.OfType<Permission>().DbContext.BeginTransaction();
+            LoadPermissions(3, user);
+            Repository.OfType<Permission>().DbContext.CommitTransaction();
+
+            NHibernateSessionManager.Instance.GetSession().Evict(user);
+            user = UserRepository.GetById(1);
+            #endregion Arrange
+
+            #region Act
+            UserRepository.DbContext.BeginTransaction();
+            UserRepository.EnsurePersistent(user);
+            UserRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.IsNotNull(user.Permissions);
+            Assert.AreEqual(3, user.Permissions.Count);
+            Assert.IsFalse(user.IsTransient());
+            Assert.IsTrue(user.IsValid());
+            #endregion Assert
+        }
+
+        [TestMethod]
+        public void TestUserWithNewPermissionsSaves()
+        {
+            #region Arrange
+            //var user = UserRepository.GetById(1);
+            var user = GetValid(9);
+
+            user.Permissions = new List<Permission>();
+            for (int i = 0; i < 3; i++)
+            {
+                user.Permissions.Add(CreateValidEntities.Permission(i + 1));
+                user.Permissions[i].Role = Repository.OfType<Role>().GetById(1);
+                user.Permissions[i].Application = Repository.OfType<Application>().GetById(1);
+                user.Permissions[i].User = user;
+            }
+            #endregion Arrange
+
+            #region Act
+            UserRepository.DbContext.BeginTransaction();
+            UserRepository.EnsurePersistent(user);
+            UserRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.IsNotNull(user.Permissions);
+            Assert.AreEqual(3, user.Permissions.Count);
+            Assert.IsFalse(user.IsTransient());
+            Assert.IsTrue(user.IsValid());
+            #endregion Assert
+        }
         #endregion Valid Tests
+
+        #region CascadeTests
+        [TestMethod]
+        public void TestUserWithExistingPermissionsDoesCascadeDeleteToPermissions()
+        {
+            #region Arrange
+            var user = UserRepository.GetById(1);
+            Repository.OfType<Permission>().DbContext.BeginTransaction();
+            LoadPermissions(3, user);
+            Repository.OfType<Permission>().DbContext.CommitTransaction();
+            Assert.AreEqual(3, Repository.OfType<Permission>().Queryable.Count());
+
+            NHibernateSessionManager.Instance.GetSession().Evict(user);
+            user = UserRepository.GetById(1);
+
+            Assert.IsNotNull(user.Permissions);
+            Assert.AreEqual(3, user.Permissions.Count);
+
+            #endregion Arrange
+
+            #region Act
+            UserRepository.DbContext.BeginTransaction();
+            //user.Permissions.Clear(); //Doesn't Matter
+            UserRepository.Remove(user);
+            UserRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.IsNull(UserRepository.GetNullableById(1));
+            Assert.AreEqual(0, Repository.OfType<Permission>().Queryable.Count());
+            #endregion Assert
+        }
+        #endregion CascadeTests
 
         #endregion Permissions Tests
 
@@ -1364,7 +1495,7 @@ namespace Catbert4.Tests.Repositories
 		
         public class UserEqualityComparer : IEqualityComparer
         {
-            public bool Equals(object x, object y)
+            bool IEqualityComparer.Equals(object x, object y)
             {
                 if (x == null || y == null)
                 {
