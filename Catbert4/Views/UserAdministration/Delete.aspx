@@ -19,8 +19,10 @@
     <fieldset>
         <legend>User Properties</legend>
 
-        <%: Html.DisplayForModel() %>
-        
+        <table>
+            <%: Html.DisplayForModel() %>
+        </table>
+
     </fieldset>
     <fieldset>
         <legend>Permissions</legend>

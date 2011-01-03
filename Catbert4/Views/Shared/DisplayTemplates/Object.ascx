@@ -4,7 +4,6 @@
 <% } else if (ViewData.TemplateInfo.TemplateDepth > 1) { %>
     <%= ViewData.ModelMetadata.SimpleDisplayText %>
 <% } else { %>
-    <table cellpadding="0" cellspacing="0" border="0">
     <% foreach (var prop in ViewData.ModelMetadata.Properties.Where(pm => pm.ShowForDisplay && pm.PropertyName != "Id" && !ViewData.TemplateInfo.Visited(pm))) { %>
         <% if (!prop.IsComplexType)
            { %>
@@ -29,5 +28,4 @@
             <% } %>
         <% } %>
     <% } %>
-    </table>
 <% } %>

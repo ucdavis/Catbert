@@ -11,8 +11,10 @@
     <fieldset>
         <legend>Fields</legend>
         
-        <%: Html.DisplayForModel("DisplayComplexValues") %>
-        
+        <table>
+            <%: Html.DisplayForModel("DisplayComplexValues") %>
+        </table>
+
     </fieldset>
 
     <% using (Html.BeginForm("SwitchActiveStatus", "AccessToken", new { id = Model.Id })) { %>

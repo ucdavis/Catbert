@@ -12,9 +12,10 @@
     <fieldset>
         <legend>Fields</legend>
         
+        <table>
+            <%: Html.DisplayForModel("DisplayComplexValues") %>
+        </table>
 
-        <%: Html.DisplayForModel("DisplayComplexValues") %>
-        
     </fieldset>
     <% using (Html.BeginForm()) { %>
 		<%= Html.AntiForgeryToken() %>

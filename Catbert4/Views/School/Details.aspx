@@ -11,7 +11,9 @@
     <fieldset>
         <legend>School Info:</legend>
         
-        <%: Html.DisplayFor(x=>x.School) %>
+        <table>
+            <%: Html.DisplayFor(x=>x.School) %>
+        </table>
 
     </fieldset>
 
