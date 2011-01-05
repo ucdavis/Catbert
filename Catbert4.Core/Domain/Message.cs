@@ -21,7 +21,9 @@ namespace Catbert4.Core.Domain
         
         [Future]
         public virtual DateTime EndDisplayDate { get; set; }
-        
+
+        public virtual bool Critical { get; set; }
+
         public virtual bool Active { get; set; }
 
         public virtual Application Application { get; set; }

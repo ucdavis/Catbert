@@ -21,6 +21,9 @@
                 EndDisplayDate
             </th>
             <th>
+                Critical
+            </th>
+            <th>
                 Active
             </th>
             <th>
@@ -43,6 +46,9 @@
             </td>
             <td>
                 <%: String.Format("{0:d}", item.EndDisplayDate) %>
+            </td>
+            <td>
+                <%: item.Critical %>
             </td>
             <td>
                 <%: item.Active %>

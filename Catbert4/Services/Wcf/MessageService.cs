@@ -23,21 +23,21 @@ namespace Catbert4.Services.Wcf
         /// new ChannelFactory<IMessageService/>(new BasicHttpBinding(), "[url]/Message.svc"))
         /// </example>
         /// <returns>Returns the system messages or application messages that are active</returns>
-        public string[] GetMessages(string appName)
+        public ServiceMessage[] GetMessages(string appName)
         {
             var globalMessages = from m in RepositoryFactory.MessageRepository.Queryable
                                  where m.Application == null
                                        && m.Active
                                        && m.BeginDisplayDate < DateTime.Now
                                        && m.EndDisplayDate > DateTime.Now
-                                 select m.Text;
+                                 select new ServiceMessage {Message = m.Text, Critical = m.Critical};
 
             var applicationMessages = from m in RepositoryFactory.MessageRepository.Queryable
                                       where m.Application.Name == appName
                                             && m.Active
                                             && m.BeginDisplayDate < DateTime.Now
                                             && m.EndDisplayDate > DateTime.Now
-                                      select m.Text;
+                                      select new ServiceMessage {Message = m.Text, Critical = m.Critical};
 
             return Enumerable.Union(globalMessages, applicationMessages).ToArray();
         }

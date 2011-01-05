@@ -12,6 +12,7 @@ namespace Catbert4.Core.Mappings
             Map(x => x.Text).Column("Message");
             Map(x => x.BeginDisplayDate);
             Map(x => x.EndDisplayDate);
+            Map(x => x.Critical);
             Map(x => x.Active).Column("IsActive");
 
             References(x => x.Application).Cascade.None().Nullable();
