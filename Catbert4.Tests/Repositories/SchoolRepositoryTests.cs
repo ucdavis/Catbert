@@ -658,9 +658,175 @@ namespace Catbert4.Tests.Repositories
         #endregion Valid Tests
         #endregion Abbreviation Tests
 
+        #region Units Tests
+        #region Invalid Tests
+        /// <summary>
+        /// Tests the Units with A value of xxx does not save.
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(NullReferenceException))]
+        public void TestUnitsWithNewUnitValueDoesNotSave()
+        {
+            School school = null;
+            try
+            {
+                #region Arrange
+                school = GetValid(9);
+                school.Units.Add(CreateValidEntities.Unit(9));
+                #endregion Arrange
+
+                #region Act
+                SchoolRepository.DbContext.BeginTransaction();
+                SchoolRepository.EnsurePersistent(school);
+                SchoolRepository.DbContext.CommitTransaction();
+                #endregion Act
+            }
+            catch (Exception ex)
+            {
+                Assert.IsNotNull(school);
+                Assert.IsNotNull(ex);
+                Assert.AreEqual("Object reference not set to an instance of an object.", ex.Message);
+                throw;
+            }	
+        }
+        #endregion Invalid Tests
+        #region Valid Tests
+
+        [TestMethod]
+        public void TestSchoolWithANullUnitsWillSave()
+        {
+            #region Arrange
+            var school = GetValid(9);
+            school.Units = null;
+            #endregion Arrange
+
+            #region Act
+            SchoolRepository.DbContext.BeginTransaction();
+            SchoolRepository.EnsurePersistent(school);
+            SchoolRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.IsNull(school.Units);
+            Assert.IsFalse(school.IsTransient());
+            Assert.IsTrue(school.IsValid());
+            #endregion Assert		
+        }
+
+        [TestMethod]
+        public void TestSchoolWithAnEmptyUnitsWillSave()
+        {
+            #region Arrange
+            var school = GetValid(9);
+            school.Units = new List<Unit>();
+            #endregion Arrange
+
+            #region Act
+            SchoolRepository.DbContext.BeginTransaction();
+            SchoolRepository.EnsurePersistent(school);
+            SchoolRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.IsNotNull(school.Units);
+            Assert.AreEqual(0, school.Units.Count);
+            Assert.IsFalse(school.IsTransient());
+            Assert.IsTrue(school.IsValid());
+            #endregion Assert
+        }
+
+        [TestMethod]
+        public void TestSchoolWithExistingUnitsWillSave()
+        {
+            #region Arrange
+            var school = GetValid(9);
+            school.Units = new List<Unit>();
+            SchoolRepository.DbContext.BeginTransaction();
+            SchoolRepository.EnsurePersistent(school);
+            SchoolRepository.DbContext.CommitTransaction();
+
+            Repository.OfType<Unit>().DbContext.BeginTransaction();
+            for (int i = 0; i < 3; i++)
+            {
+                var unit = CreateValidEntities.Unit(i + 1);
+                unit.School = school;
+                Repository.OfType<Unit>().EnsurePersistent(unit);
+            }
+            Repository.OfType<Unit>().DbContext.CommitTransaction();
+
+            var saveId = school.Id;
+            #endregion Arrange
+
+            #region Act
+
+            NHibernateSessionManager.Instance.GetSession().Evict(school);
+            school = SchoolRepository.GetNullableById(saveId);
+            Assert.IsNotNull(school);
+            Assert.IsNotNull(school.Units);
+            Assert.AreEqual(3, school.Units.Count);
+            school.ShortDescription = "Updated";
+            SchoolRepository.DbContext.BeginTransaction();
+            SchoolRepository.EnsurePersistent(school);
+            SchoolRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.IsNotNull(school.Units);
+            Assert.AreEqual(3, school.Units.Count);
+            Assert.AreEqual("Updated", school.ShortDescription);
+            Assert.IsFalse(school.IsTransient());
+            Assert.IsTrue(school.IsValid());
+            #endregion Assert
+        }
+
+        #endregion Valid Tests
+
+        #region Cascade Tests
+        [TestMethod]
+        public void TestDeleteSchoolDoesNotCascadeToUnit()
+        {
+            #region Arrange
+            var school = GetValid(9);
+            school.Units = new List<Unit>();
+            SchoolRepository.DbContext.BeginTransaction();
+            SchoolRepository.EnsurePersistent(school);
+            SchoolRepository.DbContext.CommitTransaction();
+
+            Repository.OfType<Unit>().DbContext.BeginTransaction();
+            for (int i = 0; i < 3; i++)
+            {
+                var unit = CreateValidEntities.Unit(i + 1);
+                unit.School = school;
+                Repository.OfType<Unit>().EnsurePersistent(unit);
+            }
+            Repository.OfType<Unit>().DbContext.CommitTransaction();
+
+            var saveId = school.Id;
+            #endregion Arrange
+
+            #region Act
+
+            NHibernateSessionManager.Instance.GetSession().Evict(school);
+            school = SchoolRepository.GetNullableById(saveId);
+            Assert.IsNotNull(school);
+            Assert.IsNotNull(school.Units);
+            Assert.AreEqual(3, school.Units.Count);
+            SchoolRepository.DbContext.BeginTransaction();
+            SchoolRepository.Remove(school);
+            SchoolRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.AreEqual(3, Repository.OfType<Unit>().Queryable.Count());
+            Assert.IsNull(SchoolRepository.GetNullableById(saveId));
+            #endregion Assert
+        }
+        #endregion Cascade Tests
+        #endregion Units Tests
+
         #region Fluent Mapping Tests
         [TestMethod]
-        public void TestCanCorrectlyMapApplicationRole1()
+        public void TestCanCorrectlyMapSchool()
         {
             #region Arrange
             var session = NHibernateSessionManager.Instance.GetSession();
@@ -710,6 +876,7 @@ namespace Catbert4.Tests.Repositories
                  "[NHibernate.Validator.Constraints.LengthAttribute((Int32)25)]", 
                  "[UCDArch.Core.NHibernateValidator.Extensions.RequiredAttribute()]"
             }));
+            expectedFields.Add(new NameAndType("Units", "System.Collections.Generic.IList`1[Catbert4.Core.Domain.Unit]", new List<string>()));
             #endregion Arrange
 
             AttributeAndFieldValidation.ValidateFieldsAndAttributes(expectedFields, typeof(School));
