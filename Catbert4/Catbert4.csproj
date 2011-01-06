@@ -148,6 +148,13 @@
     <Compile Include="RouteConfigurator.asax.cs" />
     <Compile Include="Services\AuditInterceptor.cs" />
     <Compile Include="Services\DirectoryService.cs" />
+    <Compile Include="Services\UserManagement\IRoleService.cs" />
+    <Compile Include="Services\UserManagement\IUnitService.cs" />
+    <Compile Include="Services\UserManagement\IUserService.cs" />
+    <Compile Include="Services\UserManagement\RoleService.cs" />
+    <Compile Include="Services\UserManagement\UnitService.cs" />
+    <Compile Include="Services\UserManagement\UserManagementService.cs" />
+    <Compile Include="Services\UserManagement\UserService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Services\Wcf\ApplicationAuthorization.cs" />
     <Compile Include="Services\Wcf\IMessageService.cs" />

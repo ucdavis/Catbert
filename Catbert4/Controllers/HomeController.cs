@@ -2,10 +2,14 @@
 using System.ServiceModel;
 using System.Web.Mvc;
 using Catbert4.Providers;
+using Catbert4.Services.UserManagement;
 using Catbert4.Services.Wcf;
+using NHibernate.Criterion;
 using UCDArch.Web.Attributes;
 using Catbert4.Core.Domain;
 using System.Web.Security;
+using IRoleService = Catbert4.Services.Wcf.IRoleService;
+using UCDArch.Data.NHibernate;
 
 namespace Catbert4.Controllers
 {
@@ -49,6 +53,15 @@ namespace Catbert4.Controllers
             var q = Roles.GetAllRoles();
             var q2 = Roles.GetUsersInRole("Admin");
             
+            return Content("");
+        }
+
+        public  ActionResult UserManagementTests()
+        {
+            var unitService = new UnitService();
+
+            var units = unitService.GetVisibleByUser("postit", "HelpRequest");
+
             return Content("");
         }
 

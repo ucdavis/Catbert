@@ -52,11 +52,7 @@
             }
         })
         .data( "autocomplete" )._renderItem = function( ul, item ) {
-			
-            $.each(item, function(i,v) {
-                
-            });
-            
+                    
             var template = $("#search-user-template").tmpl(item);
             
             return template.appendTo(ul);
