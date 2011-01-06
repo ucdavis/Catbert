@@ -9,52 +9,33 @@ namespace Catbert4.Services.UserManagement
 {
     public class UnitService : IUnitService
     {
-        Application _appAlias = null;
-        User _userAlias = null;
-        Unit _unitAlias = null;
-        School _schoolAlias = null;
-
         /// <summary>
         /// Get all of the units associated with the given user, depending on role
         /// ManageAll: GetAllUnits
         /// ManageSchool: Get All Units which are associated with the user's schools
         /// ManageUnit: Get Just the units you are associated with
         /// </summary>
-        public List<Unit> GetVisibleByUser(string login, string application)
-        {
-            return GetVisibleByUserCriteria(login, application)
-                       .GetExecutableQueryOver(NHibernateSessionManager.Instance.GetSession())
-                       .OrderBy(x => x.ShortName).Asc()
-                       .List() as List<Unit>;
-        }
-
-        /// <summary>
-        /// Get all of the units associated with the given user, depending on role
-        /// ManageAll: GetAllUnits
-        /// ManageSchool: Get All Units which are associated with the user's schools
-        /// ManageUnit: Get Just the units you are associated with
-        /// </summary>
-        internal QueryOver<Unit> GetVisibleByUserCriteria(string login, string application)
+        public IQueryable<Unit> GetVisibleByUser(string login, string application)
         {
             //First we need to find out what kind of user management permissions the given user has in the application                
             var roles = new UserService().GetManagementRolesForUserInApplication(application, login);
 
+            var schoolRepo = new Repository<School>();
             var unitAssociationRepo = new Repository<UnitAssociation>();
             var unitRepo = new Repository<Unit>();
             
             if (roles.Contains("ManageAll"))
             {
-                return QueryOver.Of<Unit>();
+                return unitRepo.Queryable;
             }
             else if (roles.Contains("ManageSchool"))
             {
                 //Find all schools that the given user has in the application
+                var units = (from s in schoolRepo.Queryable
+                         join u in unitRepo.Queryable on s.Id equals u.School.Id
+                         where u.UnitAssociations.Any(x => x.Application.Name == application && x.User.LoginId == login)
+                         select s).SelectMany(x => x.Units, (x, y) => y);
                 /*
-                var schools = unitAssociationRepo.Queryable
-                    .Where(x => x.Application.Name == application)
-                    .Where(x => x.User.LoginId == login)
-                    .Select(x => x.Unit.School.Id);
-                */
                 var schools = QueryOver.Of<UnitAssociation>()
                     .JoinAlias(x => x.Application, () => _appAlias)
                     .JoinAlias(x => x.User, () => _userAlias)
@@ -62,9 +43,7 @@ namespace Catbert4.Services.UserManagement
                     .JoinAlias(x => _unitAlias.School, () => _schoolAlias)
                     .Where(() => _appAlias.Name == application && _userAlias.LoginId == login)
                     .Select(x => _schoolAlias.Id);
-
-                var result = schools.GetExecutableQueryOver(NHibernateSessionManager.Instance.GetSession())
-                    .List<string>();
+                */
                 /*
                 DetachedCriteria schools = DetachedCriteria.For<UnitAssociation>()
                     .CreateAlias("Application", "Application")
@@ -89,28 +68,24 @@ namespace Catbert4.Services.UserManagement
                     .CreateAlias("School", "School")
                     .Add(Subqueries.PropertyIn("School.id", schools));
                 */
-                var units = QueryOver.Of<Unit>()
-                    .JoinQueryOver(x => x.School)
-                    .WithSubquery.WhereProperty(x => x.Id).Eq(schools);
                 
                 return units;
             }
             else if (roles.Contains("ManageUnit"))
             {
                 //Just get all units that the user has in this application
-                /*
-                var units = unitAssociationRepo.Queryable
-                    .Where(x => x.Application.Name == application)
-                    .Where(x => x.User.LoginId == login)
-                    .Select(x=>x.Unit);
-                */
 
+                var units = from ua in unitAssociationRepo.Queryable
+                            where ua.Application.Name == "HelpRequest" && ua.User.LoginId == "postit"
+                            select ua.Unit;
+                
+                /*
                 var units = QueryOver.Of<UnitAssociation>()
                     .JoinAlias(x => x.Application, () => _appAlias)
                     .JoinAlias(x => x.User, () => _userAlias)
                     .Where(() => _appAlias.Name == application && _userAlias.LoginId == login)
                     .Select(x => x.Unit).As<QueryOver<Unit>>();
-
+                */
                 /*
                 DetachedCriteria associatedUnitIds = DetachedCriteria.For<UnitAssociation>()
                     .CreateAlias("Application", "Application")

@@ -1,4 +1,5 @@
-﻿using NHibernate.Validator.Constraints;
+﻿using System.Collections.Generic;
+using NHibernate.Validator.Constraints;
 using UCDArch.Core.DomainModel;
 using UCDArch.Core.NHibernateValidator.Extensions;
 
@@ -31,6 +32,8 @@ namespace Catbert4.Core.Domain
         public virtual School School { get; set; }
         
         public virtual UnitType Type { get; set; }
+
+        public virtual IList<UnitAssociation> UnitAssociations { get; set; }
     }
 
     public enum UnitType

@@ -20,6 +20,8 @@ namespace Catbert4.Core.Mappings
 
             References(x => x.School).Column("SchoolCode").Fetch.Join();
             References(x => x.Parent).Column("ParentID").Cascade.None().Nullable();
+
+            HasMany(x => x.UnitAssociations).Inverse().ReadOnly().Where("Inactive = 0");
         }
     }
 }

@@ -62,6 +62,18 @@ namespace Catbert4.Controllers
 
             var units = unitService.GetVisibleByUser("postit", "HelpRequest");
 
+            //var uaRepo = Repository.OfType<UnitAssociation>().Queryable;
+            //var units = Repository.OfType<Unit>().GetAll();
+            //var schools = Repository.OfType<School>().GetAll();
+            //schools.First().Units.Count();
+            /*
+            var q = (from s in Repository.OfType<School>().Queryable
+                join u in Repository.OfType<Unit>().Queryable on s.Id equals u.School.Id
+                where u.UnitAssociations.Any(x => x.Application.Name == "HelpRequest" && x.User.LoginId == "postit")
+                select s).SelectMany(x => x.Units, (x, y) => y);
+
+            var result = q.ToList();
+            */
             return Content("");
         }
 

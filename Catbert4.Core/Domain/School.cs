@@ -1,4 +1,5 @@
-﻿using NHibernate.Validator.Constraints;
+﻿using System.Collections.Generic;
+using NHibernate.Validator.Constraints;
 using UCDArch.Core.DomainModel;
 using UCDArch.Core.NHibernateValidator.Extensions;
 
@@ -17,6 +18,8 @@ namespace Catbert4.Core.Domain
         [Length(12)]
         [Required]
         public virtual string Abbreviation { get; set; }
+
+        public virtual IList<Unit> Units { get; set; }
 
         //Note, these two attributes are no longer on the id because it was overridden:
                 //"[Newtonsoft.Json.JsonPropertyAttribute()]", 

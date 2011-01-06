@@ -13,6 +13,7 @@ namespace Catbert4.Core.Mappings
             Map(x => x.LongDescription);
             Map(x => x.Abbreviation);
 
+            HasMany(x => x.Units).KeyColumn("SchoolCode").ReadOnly();
         }
     }
 }
