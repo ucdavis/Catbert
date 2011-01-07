@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Catbert4.Core.Domain;
@@ -10,6 +11,7 @@ using FluentNHibernate.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UCDArch.Core.PersistanceSupport;
 using UCDArch.Data.NHibernate;
+using UCDArch.Testing;
 using UCDArch.Testing.Extensions;
 
 namespace Catbert4.Tests.Repositories
@@ -826,7 +828,7 @@ namespace Catbert4.Tests.Repositories
 
         #region Fluent Mapping Tests
         [TestMethod]
-        public void TestCanCorrectlyMapSchool()
+        public void TestCanCorrectlyMapSchool1()
         {
             #region Arrange
             var session = NHibernateSessionManager.Instance.GetSession();
@@ -842,7 +844,67 @@ namespace Catbert4.Tests.Repositories
             #endregion Act/Assert
         }
 
+        [TestMethod]
+        public void TestCanCorrectlyMapSchool2()
+        {
+            #region Arrange
+            var session = NHibernateSessionManager.Instance.GetSession();
+            var school = new School();
+            school.SetIdTo("Id");
+            Repository.OfType<Unit>().DbContext.BeginTransaction();
+            for (int i = 0; i < 3; i++)
+            {
+                var unit = CreateValidEntities.Unit(i + 1);
+                unit.School = school;
+                Repository.OfType<Unit>().EnsurePersistent(unit);
+            }
+            Repository.OfType<Unit>().DbContext.CommitTransaction();
 
+            IList<Unit> units = Repository.OfType<Unit>().Queryable.Where(a => a.School.Id == "Id").ToList();
+            Assert.AreEqual(3, units.Count);
+
+            #endregion Arrange
+
+            #region Act/Assert
+            new PersistenceSpecification<School>(session, new SchoolEqualityComparer())
+                .CheckProperty(c => c.Id, "Id")
+                .CheckProperty(c => c.Abbreviation, "Abbreviation")
+                .CheckProperty(c => c.LongDescription, "LongDescription")
+                .CheckProperty(c => c.ShortDescription, "ShortDescription")
+                .CheckProperty(c => c.Units, units)
+                .VerifyTheMappings();
+            #endregion Act/Assert
+        }
+
+        public class SchoolEqualityComparer : IEqualityComparer
+        {
+            bool IEqualityComparer.Equals(object x, object y)
+            {
+                if (x == null || y == null)
+                {
+                    return false;
+                }
+
+                if (x is IList<Unit> && y is IList<Unit>)
+                {
+                    var xVal = (IList<Unit>)x;
+                    var yVal = (IList<Unit>)y;
+                    Assert.AreEqual(xVal.Count, yVal.Count);
+                    for (int i = 0; i < xVal.Count; i++)
+                    {
+                        Assert.AreEqual(xVal[i].Id, yVal[i].Id);
+                        Assert.AreEqual(xVal[i].FullName, yVal[i].FullName);
+                    }
+                    return true;
+                }
+                return x.Equals(y);
+            }
+
+            public int GetHashCode(object obj)
+            {
+                throw new NotImplementedException();
+            }
+        }
         #endregion Fluent Mapping Tests
         
         #region Reflection of Database.

@@ -479,7 +479,6 @@ namespace Catbert4.Tests.Repositories
         #endregion Valid Tests
         #endregion ShortName Tests
 
-
         #region PpsCode Tests
         #region Invalid Tests
 
@@ -1139,7 +1138,7 @@ namespace Catbert4.Tests.Repositories
         }
 
         [TestMethod]
-        public void TestTypeWithValidValueSaves3()
+        public void TestTypeDefaultValue()
         {
             #region Arrange
             var unit = new Unit();
@@ -1152,11 +1151,128 @@ namespace Catbert4.Tests.Repositories
 
             #region Assert
             Assert.AreEqual(UnitType.Department, unit.Type);
- 
             #endregion Assert
         }
         
         #endregion Type Tests
+
+        #region UnitAssociations Tests
+
+        #region Valid Tests
+
+        [TestMethod]
+        public void TestUnitAssoicationsWithNullValueSaves()
+        {
+            #region Arrange
+            var unit = GetValid(9);
+            unit.UnitAssociations = null;
+            #endregion Arrange
+
+            #region Act
+            UnitRepository.DbContext.BeginTransaction();
+            UnitRepository.EnsurePersistent(unit);
+            UnitRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.IsNull(unit.UnitAssociations);
+            Assert.IsFalse(unit.IsTransient());
+            Assert.IsTrue(unit.IsValid());
+            #endregion Assert		
+        }
+
+        [TestMethod]
+        public void TestUnitAssoicationsWithEmptyListSaves()
+        {
+            #region Arrange
+            var unit = GetValid(9);
+            unit.UnitAssociations = new List<UnitAssociation>();
+            #endregion Arrange
+
+            #region Act
+            UnitRepository.DbContext.BeginTransaction();
+            UnitRepository.EnsurePersistent(unit);
+            UnitRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.IsNotNull(unit.UnitAssociations);
+            Assert.AreEqual(0,unit.UnitAssociations.Count);
+            Assert.IsFalse(unit.IsTransient());
+            Assert.IsTrue(unit.IsValid());
+            #endregion Assert
+        }
+
+        [TestMethod]
+        public void TestUnitAssoicationsWithExistingValuesSaves()
+        {
+            #region Arrange
+            var unit = UnitRepository.GetNullableById(1);
+
+            Repository.OfType<UnitAssociation>().DbContext.BeginTransaction();
+            LoadUsers(1);
+            LoadApplications(1);
+            LoadUnitAssociations(3, Repository.OfType<User>().Queryable.First());
+            Repository.OfType<UnitAssociation>().DbContext.CommitTransaction();
+
+            NHibernateSessionManager.Instance.GetSession().Evict(unit);
+            unit = UnitRepository.GetNullableById(1);
+
+            Assert.AreEqual(3, unit.UnitAssociations.Count());
+            #endregion Arrange
+
+            #region Act
+            unit.ShortName = "Updated";
+            UnitRepository.DbContext.BeginTransaction();
+            UnitRepository.EnsurePersistent(unit);
+            UnitRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.AreEqual("Updated", unit.ShortName);
+            Assert.IsNotNull(unit.UnitAssociations);
+            Assert.AreEqual(3, unit.UnitAssociations.Count);
+            Assert.IsFalse(unit.IsTransient());
+            Assert.IsTrue(unit.IsValid());
+            #endregion Assert
+        }
+
+        #endregion Valid Tests
+        #region Cascade Tests
+
+        [TestMethod]
+        public void TestDeleteUnitDoesNotCascadeToUnitAssociation()
+        {
+            #region Arrange
+            var unit = UnitRepository.GetNullableById(1);
+
+            Repository.OfType<UnitAssociation>().DbContext.BeginTransaction();
+            LoadUsers(1);
+            LoadApplications(1);
+            LoadUnitAssociations(3, Repository.OfType<User>().Queryable.First());
+            Repository.OfType<UnitAssociation>().DbContext.CommitTransaction();
+            var count = Repository.OfType<UnitAssociation>().Queryable.Count();
+            Assert.IsTrue(count > 0);
+
+            NHibernateSessionManager.Instance.GetSession().Evict(unit);
+            unit = UnitRepository.GetNullableById(1);
+
+            Assert.AreEqual(3, unit.UnitAssociations.Count());
+            #endregion Arrange
+
+            #region Act
+            UnitRepository.DbContext.BeginTransaction();
+            UnitRepository.Remove(unit);
+            UnitRepository.DbContext.CommitTransaction();
+            #endregion Act
+
+            #region Assert
+            Assert.IsNull(UnitRepository.GetNullableById(1));
+            Assert.AreEqual(count, Repository.OfType<UnitAssociation>().Queryable.Count());
+            #endregion Assert		
+        }
+        #endregion Cascade Tests
+        #endregion UnitAssociations Tests
 
         #region Fluent Mapping Tests
         [TestMethod]
@@ -1251,6 +1367,7 @@ namespace Catbert4.Tests.Repositories
         }
 
 
+
         #endregion Fluent Mapping Tests
 
         #region Reflection of Database.
@@ -1294,6 +1411,7 @@ namespace Catbert4.Tests.Repositories
                  "[UCDArch.Core.NHibernateValidator.Extensions.RequiredAttribute()]"
             }));
             expectedFields.Add(new NameAndType("Type", "Catbert4.Core.Domain.UnitType", new List<string>()));
+            expectedFields.Add(new NameAndType("UnitAssociations", "System.Collections.Generic.IList`1[Catbert4.Core.Domain.UnitAssociation]", new List<string>()));
             #endregion Arrange
 
             AttributeAndFieldValidation.ValidateFieldsAndAttributes(expectedFields, typeof(Unit));
@@ -1304,7 +1422,7 @@ namespace Catbert4.Tests.Repositories
 		
         public class UnitEqualityComparer : IEqualityComparer
         {
-            public bool Equals(object x, object y)
+            bool IEqualityComparer.Equals(object x, object y)
             {
                 if (x == null || y == null)
                 {
