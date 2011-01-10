@@ -13,45 +13,70 @@ namespace Catbert4.Services.UserManagement
     {
         private readonly IUnitService _unitService;
         private readonly IRepository<UnitAssociation> _unitAssociationRepository;
+        private readonly IRepository<Permission> _permissionRepository;
 
-        public UserService(IUnitService unitService, IRepository<UnitAssociation> unitAssociationRepository)
+        public UserService(IUnitService unitService, IRepository<UnitAssociation> unitAssociationRepository, IRepository<Permission> permissionRepository)
         {
             _unitService = unitService;
             _unitAssociationRepository = unitAssociationRepository;
+            _permissionRepository = permissionRepository;
         }
 
-        public List<User> GetByCriteria(string application, string searchToken, int page, int pageSize, string orderBy, out int totalUsers)
+        //public List<User> GetByCriteria(string application, string searchToken, int page, int pageSize, string orderBy, out int totalUsers)
+        //{
+        //    //Now filter out all of the users in this list by the search criteria 
+        //    ICriteria criteria = NHibernateSessionManager.Instance.GetSession().CreateCriteria(typeof(User))
+        //        .Add(Expression.Eq("Inactive", false))
+        //        .Add(
+        //            Expression.Disjunction()
+        //                .Add(Expression.Like("Email", searchToken, MatchMode.Anywhere))
+        //                .Add(Expression.Like("FirstName", searchToken, MatchMode.Anywhere))
+        //                .Add(Expression.Like("LastName", searchToken, MatchMode.Anywhere))
+        //                .Add(Expression.Like("LoginID", searchToken, MatchMode.Anywhere))
+        //        );
+
+        //    //Only filter on application if one is given
+        //    if (!string.IsNullOrEmpty(application))
+        //    {
+        //        criteria.Add(Subqueries.PropertyIn("id", GetUsersInAnyRoleInApplication(application))); //Include just users within an application
+        //    }
+
+        //    totalUsers = CriteriaTransformer.TransformToRowCount(criteria).UniqueResult<int>();
+
+        //    criteria = criteria
+        //        .SetFirstResult((page - 1) * pageSize)
+        //        .SetMaxResults(pageSize)
+        //        .AddOrder(GetOrder(orderBy));
+
+        //    return criteria.List<User>() as List<User>;
+        //}
+
+        /// <summary>
+        /// Return all of the users that match the given criteria, and who are visible to the current login
+        /// </summary>
+        public IQueryable<User> GetByApplication(string application, string currentLogin, string role = null, string unit = null)
         {
-            //Now filter out all of the users in this list by the search criteria 
-            ICriteria criteria = NHibernateSessionManager.Instance.GetSession().CreateCriteria(typeof(User))
-                .Add(Expression.Eq("Inactive", false))
-                .Add(
-                    Expression.Disjunction()
-                        .Add(Expression.Like("Email", searchToken, MatchMode.Anywhere))
-                        .Add(Expression.Like("FirstName", searchToken, MatchMode.Anywhere))
-                        .Add(Expression.Like("LastName", searchToken, MatchMode.Anywhere))
-                        .Add(Expression.Like("LoginID", searchToken, MatchMode.Anywhere))
-                );
+            //Only allow users who intersect with the current login's unit list
+            //Need to get the unitIds for the linq provider
+            var allowedUnitIds = _unitService.GetVisibleByUser(currentLogin, application).Select(x => x.Id).ToList();
+            
+            //Get everyone with perms, possibly filtered by role and unit
+            var usersWithPermissions = from p in _permissionRepository.Queryable
+                                       join u in _unitAssociationRepository.Queryable on
+                                           new {User = p.User.Id, App = p.Application.Id}
+                                           equals new {User = u.User.Id, App = u.Application.Id}
+                                       where p.Application.Name == "HelpRequest"
+                                       where p.User.UnitAssociations.Any(a => allowedUnitIds.Contains(a.Unit.Id))
+                                       select new {Permissions = p, UnitAssociations = u};
+           
+            if (!string.IsNullOrWhiteSpace(role))
+                usersWithPermissions = usersWithPermissions.Where(x => x.Permissions.Role.Name == role);
 
-            //Only filter on application if one is given
-            if (!string.IsNullOrEmpty(application))
-            {
-                criteria.Add(Subqueries.PropertyIn("id", GetUsersInAnyRoleInApplication(application))); //Include just users within an application
-            }
+            if (!string.IsNullOrWhiteSpace(unit))
+                usersWithPermissions = usersWithPermissions.Where(x => x.UnitAssociations.Unit.FisCode == unit);
 
-            totalUsers = CriteriaTransformer.TransformToRowCount(criteria).UniqueResult<int>();
+            return usersWithPermissions.Select(x=>x.UnitAssociations.User).Distinct();
 
-            criteria = criteria
-                .SetFirstResult((page - 1) * pageSize)
-                .SetMaxResults(pageSize)
-                .AddOrder(GetOrder(orderBy));
-
-            return criteria.List<User>() as List<User>;
-        }
-
-        public List<User> GetByApplication(string application, string currentLogin, string role, string unit, string searchToken, int page, int pageSize, string orderBy, out int totalUsers)
-        {
-            throw new NotImplementedException();
             /*
             //Now filter out all of the users in this list by the role search criteria 
             //Note: If no role is selected, we still need to filter and make sure the user has ANY role in the application
@@ -128,7 +153,7 @@ namespace Catbert4.Services.UserManagement
             return matchedUnits > 0; //true if there are any matched units
              * */
         }
-
+        
         private static DetachedCriteria GetUsersInAnyRoleInApplication(string application)
         {
             Permission p = new Permission();

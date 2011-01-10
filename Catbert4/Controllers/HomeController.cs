@@ -62,23 +62,40 @@ namespace Catbert4.Controllers
         {
             var unitService = ServiceLocator.Current.GetInstance<IUnitService>();
             var roleService = ServiceLocator.Current.GetInstance<Services.UserManagement.IRoleService>();
+            var userService = ServiceLocator.Current.GetInstance<Services.UserManagement.IUserService>();
             
-            var units = unitService.GetVisibleByUser("postit", "HelpRequest");
-            units.ToList();
+            var units = unitService.GetVisibleByUser("jsylvest", "HelpRequest");
+            //units.ToList();
 
             var roles = roleService.GetVisibleByUser("HelpRequest", "postit");
-            var result = roles.ToList();
+            //var result = roles.ToList();
 
-            var unitsCurrentUserCanManage = unitService.GetVisibleByUser("postit", "HelpRequest");
+            var users = userService.GetByApplication("HelpRequest", "postit");
+            users.ToList();
 
-            //Now create a query to find the loginToManage's units in this app
-            var unitsForLoginToManage = from u in Repository.OfType<UnitAssociation>().Queryable
-                                        where u.Application.Name == "HelpRequest"
-                                              && u.User.LoginId == "postit"
-                                        select u.Unit;
+            int i = 0;
+            i++;
+            //
+            /*
+            var unitIds = units.Select(x => x.Id).ToList();
 
-            var numIntersectingUnits = unitsForLoginToManage.ToFuture().Intersect(unitsCurrentUserCanManage.ToFuture()).Count();
+            //Get everyone with perms, possibly filtered by role and unit
+            var usersWithPermissions = from p in Repository.OfType<Permission>().Queryable
+                                       join u in Repository.OfType<UnitAssociation>().Queryable on
+                                           new { User = p.User.Id, App = p.Application.Id }
+                                           equals new { User = u.User.Id, App = u.Application.Id }
+                                       where p.Application.Name == "HelpRequest"
+                                       where p.User.UnitAssociations.Any(a=> unitIds.Contains(a.Unit.Id))
+                                       select new { Permissions = p, UnitAssociations = u };
             
+
+            //usersWithPermissions = usersWithPermissions.Where(x => x.Permissions.Role.Name == "Admin");
+
+            usersWithPermissions = usersWithPermissions.Where(x => x.UnitAssociations.Unit.FisCode == "ADNO");
+
+            var result = usersWithPermissions.Select(x=>x.UnitAssociations.User).Distinct().ToList();
+            */
+            //
             /*
             var levels = from p in Repository.OfType<Permission>().Queryable
                          join a in Repository.OfType<ApplicationRole>().Queryable on new { Role = p.Role.Id, App = p.Application.Id }
