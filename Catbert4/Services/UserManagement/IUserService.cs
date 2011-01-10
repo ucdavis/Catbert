@@ -6,8 +6,6 @@ namespace Catbert4.Services.UserManagement
 {
     public interface IUserService
     {
-        //List<User> GetByCriteria(string application, string searchToken, int page, int pageSize, string orderBy, out int totalUsers);
-        
         /// <summary>
         /// Return all of the users that match the given criteria, and who are visible to the current login
         /// </summary>

@@ -12,6 +12,6 @@ namespace Catbert4.Services.UserManagement
         /// ManageSchool: Get All Units which are associated with the user's schools
         /// ManageUnit: Get Just the units you are associated with
         /// </summary>
-        IQueryable<Unit> GetVisibleByUser(string login, string application);
+        IQueryable<Unit> GetVisibleByUser(string application, string login);
     }
 }

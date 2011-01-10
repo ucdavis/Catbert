@@ -64,80 +64,15 @@ namespace Catbert4.Controllers
             var roleService = ServiceLocator.Current.GetInstance<Services.UserManagement.IRoleService>();
             var userService = ServiceLocator.Current.GetInstance<Services.UserManagement.IUserService>();
             
-            var units = unitService.GetVisibleByUser("jsylvest", "HelpRequest");
-            //units.ToList();
+            var units = unitService.GetVisibleByUser("HelpRequest", "postit");
+            units.ToList();
 
-            var roles = roleService.GetVisibleByUser("HelpRequest", "postit");
+            //var roles = roleService.GetVisibleByUser("HelpRequest", "postit");
             //var result = roles.ToList();
 
-            var users = userService.GetByApplication("HelpRequest", "postit");
-            users.ToList();
+            //var users = userService.GetByApplication("HelpRequest", "postit");
+            //users.ToList();
 
-            int i = 0;
-            i++;
-            //
-            /*
-            var unitIds = units.Select(x => x.Id).ToList();
-
-            //Get everyone with perms, possibly filtered by role and unit
-            var usersWithPermissions = from p in Repository.OfType<Permission>().Queryable
-                                       join u in Repository.OfType<UnitAssociation>().Queryable on
-                                           new { User = p.User.Id, App = p.Application.Id }
-                                           equals new { User = u.User.Id, App = u.Application.Id }
-                                       where p.Application.Name == "HelpRequest"
-                                       where p.User.UnitAssociations.Any(a=> unitIds.Contains(a.Unit.Id))
-                                       select new { Permissions = p, UnitAssociations = u };
-            
-
-            //usersWithPermissions = usersWithPermissions.Where(x => x.Permissions.Role.Name == "Admin");
-
-            usersWithPermissions = usersWithPermissions.Where(x => x.UnitAssociations.Unit.FisCode == "ADNO");
-
-            var result = usersWithPermissions.Select(x=>x.UnitAssociations.User).Distinct().ToList();
-            */
-            //
-            /*
-            var levels = from p in Repository.OfType<Permission>().Queryable
-                         join a in Repository.OfType<ApplicationRole>().Queryable on new { Role = p.Role.Id, App = p.Application.Id }
-                                 equals new { Role = a.Role.Id, App = a.Application.Id }
-                         where p.Application.Name == "HelpRequest" &&
-                             p.User.LoginId == "postit" &&
-                             a.Level != null
-                         select a.Level;
-
-            var manageableRoles = from ar in Repository.OfType<ApplicationRole>().Queryable
-                                  where ar.Application.Name == "HelpRequest" &&
-                                        ar.Level > (levels.Max())
-                                  select ar.Role;
-            */
-
-            //var manageableRoles = from ar in Repository.OfType<ApplicationRole>().Queryable
-            //                      where ar.Application.Name == "HelpRequest" &&
-            //                            ar.Level > (
-            //                                           (from p in Repository.OfType<Permission>().Queryable
-            //                                            join a in Repository.OfType<ApplicationRole>().Queryable on
-            //                                                new {Role = p.Role.Id, App = p.Application.Id}
-            //                                                equals new {Role = a.Role.Id, App = a.Application.Id}
-            //                                            where p.Application.Name == "HelpRequest" &&
-            //                                                  p.User.LoginId == "postit" &&
-            //                                                  a.Level != null
-            //                                            select a.Level).Max()
-            //                                       )
-            //                      select ar.Role;
-            
-            
-            //var uaRepo = Repository.OfType<UnitAssociation>().Queryable;
-            //var units = Repository.OfType<Unit>().GetAll();
-            //var schools = Repository.OfType<School>().GetAll();
-            //schools.First().Units.Count();
-            /*
-            var q = (from s in Repository.OfType<School>().Queryable
-                join u in Repository.OfType<Unit>().Queryable on s.Id equals u.School.Id
-                where u.UnitAssociations.Any(x => x.Application.Name == "HelpRequest" && x.User.LoginId == "postit")
-                select s).SelectMany(x => x.Units, (x, y) => y);
-
-            var result = q.ToList();
-            */
             return Content("");
         }
 

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Catbert4.Core.Domain;
-using NHibernate;
-using NHibernate.Criterion;
 using UCDArch.Core.PersistanceSupport;
-using UCDArch.Data.NHibernate;
 
 namespace Catbert4.Services.UserManagement
 {
@@ -30,26 +26,6 @@ namespace Catbert4.Services.UserManagement
             //Use to future to batch together the queries
             var visibleRoles = userRoles.ToFuture().Union(additionalManageableRoles.ToFuture()).OrderBy(x=>x.Name);
             
-			/*
-			//Take the min role level for this application and then get all application roles with a "higher" level than this min
-			var minLevel = GetMinApplicationRole(userRoles, application);
-			var lowerApplicationRoles = GetApplicationRolesUnderLevel(minLevel, application);
-						
-			//Now get all roles that either the user has or are in the lowerApplicationRoles
-			ICriteria roles = NHibernateSessionManager.Instance.GetSession().CreateCriteria(typeof(Role))
-				.Add(
-					Expression.Or(
-						Subqueries.PropertyIn("Id", userRoles),
-						Subqueries.PropertyIn("Id", lowerApplicationRoles)
-						)
-				)
-				.AddOrder(Order.Asc("Name"));
-
-			var result = roles.List<Role>() as List<Role>;
-			
-			return result.AsQueryable();
-			 * */
-
 		    return visibleRoles.AsQueryable();
 		}
 
@@ -61,7 +37,7 @@ namespace Catbert4.Services.UserManagement
             var permissions = _permissionRepository.Queryable
                 .Where(x => x.Application.Name == application)
                 .Where(x => x.User.LoginId == login)
-                .Where(x=>x.Role.Name.StartsWith("Manage"))
+                .Where(x=>x.Role.Name.StartsWith(UserManagementResources.Permission_Manage_Prefix))
                 .Select(x => x.Role.Name);
 
             return permissions.ToList();
@@ -74,14 +50,14 @@ namespace Catbert4.Services.UserManagement
 		private IQueryable<Role> GetManageableApplicationRoles(string application, string login)
 		{
             var manageableRoles = from ar in _applicationRoleRepository.Queryable
-                                  where ar.Application.Name == "HelpRequest" &&
+                                  where ar.Application.Name == application &&
                                         ar.Level > (
                                                        (from p in _permissionRepository.Queryable
                                                         join a in _applicationRoleRepository.Queryable on
                                                             new { Role = p.Role.Id, App = p.Application.Id }
                                                             equals new { Role = a.Role.Id, App = a.Application.Id }
-                                                        where p.Application.Name == "HelpRequest" &&
-                                                              p.User.LoginId == "postit" &&
+                                                        where p.Application.Name == application &&
+                                                              p.User.LoginId == login &&
                                                               a.Level != null
                                                         select a.Level).Max()
                                                    )
@@ -89,35 +65,7 @@ namespace Catbert4.Services.UserManagement
             
 			return manageableRoles;
 		}
-
-        /*
-		private static DetachedCriteria GetApplicationRolesUnderLevel(DetachedCriteria minLevel, string application)
-		{
-			DetachedCriteria criteria = DetachedCriteria.For<ApplicationRole>()
-				.Add(Expression.IsNotNull("Level"))
-				.CreateAlias("Application", "Application")
-				.CreateAlias("Role", "Role")
-				.Add(Expression.Eq("Application.Name", application))
-				.Add(Subqueries.PropertyGt("Level", minLevel))
-				.SetProjection(Projections.Property("Role.Id"));
-
-			return criteria;
-		}
-
-		private DetachedCriteria GetMinApplicationRole2(DetachedCriteria roles, string application)
-		{
-			DetachedCriteria criteria = DetachedCriteria.For<ApplicationRole>()
-				.Add(Expression.IsNotNull("Level"))
-				.CreateAlias("Application", "Application")
-				.CreateAlias("Role", "Role")
-				.Add(Expression.Eq("Application.Name", application))
-				.Add(Subqueries.PropertyIn("Role.Id", roles)) //this role must be in the given roles list
-				.SetProjection(Projections.Min("Level"));
-
-			return criteria; //Returns the minimum level of these application roles
-		}
-         * */
-		
+        
 		private IQueryable<Role> GetRolesForUser(string application, string login)
 		{
 			var allRoles = from p in _permissionRepository.Queryable
