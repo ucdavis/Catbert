@@ -4,12 +4,22 @@ using System.Linq;
 using Catbert4.Core.Domain;
 using NHibernate;
 using NHibernate.Criterion;
+using UCDArch.Core.PersistanceSupport;
 using UCDArch.Data.NHibernate;
 
 namespace Catbert4.Services.UserManagement
 {
     public class UserService : IUserService
     {
+        private readonly IUnitService _unitService;
+        private readonly IRepository<UnitAssociation> _unitAssociationRepository;
+
+        public UserService(IUnitService unitService, IRepository<UnitAssociation> unitAssociationRepository)
+        {
+            _unitService = unitService;
+            _unitAssociationRepository = unitAssociationRepository;
+        }
+
         public List<User> GetByCriteria(string application, string searchToken, int page, int pageSize, string orderBy, out int totalUsers)
         {
             //Now filter out all of the users in this list by the search criteria 
@@ -83,7 +93,19 @@ namespace Catbert4.Services.UserManagement
         /// </summary>
         public bool CanUserManageGivenLogin(string application, string currentUserLogin, string loginToManage)
         {
-            throw new NotImplementedException();
+            var unitsCurrentUserCanManage = _unitService.GetVisibleByUser(currentUserLogin, application);
+
+            //Now create a query to find the loginToManage's units in this app
+            var unitsForLoginToManage = from u in _unitAssociationRepository.Queryable
+                                        where u.Application.Name == application
+                                              && u.User.LoginId == loginToManage
+                                        select u.Unit;
+            
+            //The linq provider can't handle Intersect() so we need to turn them into Enumerable first.
+            //Using to future does this and makes the queries more efficient by batching them
+            var numIntersectingUnits = unitsForLoginToManage.ToFuture().Intersect(unitsCurrentUserCanManage.ToFuture()).Count();
+
+            return numIntersectingUnits > 0;
             /*
             var unitsCurrentUserCanManage =
                 new UnitService().GetVisibleByUserCriteria(currentUserLogin, application)
@@ -187,32 +209,6 @@ namespace Catbert4.Services.UserManagement
                 return Order.Asc(orderTerm);
             else
                 return Order.Desc(orderTerm);
-        }
-
-        public List<string> GetManagementRolesForUserInApplication(string application, string login)
-        {
-            var permRepo = new Repository<Permission>();
-
-            //First we need to find out what kind of user management permissions the given user has in the application
-            var permissions = permRepo.Queryable
-                .Where(x => x.Application.Name == application)
-                .Where(x => x.User.LoginId == login)
-                .Select(x=>x.Role.Name);
-
-            /*
-            ICriteria permissionsCriteria = NHibernateSessionManager.Instance.GetSession().CreateCriteria(typeof(Permission))
-                .CreateAlias("Application", "Application")
-                .CreateAlias("User", "User")
-                .CreateAlias("Role", "Role")
-                .Add(Expression.Eq("Application.Name", application))
-                .Add(Expression.Eq("User.LoginID", login))
-                .Add(Expression.Eq("Inactive", false))
-                .Add(Expression.Like("Role.Name", "Manage", MatchMode.Start))
-                .SetProjection(Projections.Distinct(Projections.Property("Role.Name")))
-                .SetMaxResults(3); //ManageAll, ManageSchool, ManageUnit
-            */
-
-            return permissions.ToList();
         }
     }
 }

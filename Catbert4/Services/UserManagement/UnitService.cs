@@ -7,17 +7,17 @@ namespace Catbert4.Services.UserManagement
 {
     public class UnitService : IUnitService
     {
-        private readonly IUserService _userService;
+        private readonly IRoleService _roleService;
         private readonly IRepository<School> _schoolRepository;
         private readonly IRepository<Unit> _unitRepository;
         private readonly IRepository<UnitAssociation> _unitAssociationRespository;
 
-        public UnitService(IUserService userService, 
+        public UnitService(IRoleService roleService,
             IRepository<School> schoolRepository, 
             IRepository<Unit> unitRepository, 
             IRepository<UnitAssociation> unitAssociationRespository)
         {
-            _userService = userService;
+            _roleService = roleService;
             _schoolRepository = schoolRepository;
             _unitRepository = unitRepository;
             _unitAssociationRespository = unitAssociationRespository;
@@ -32,7 +32,7 @@ namespace Catbert4.Services.UserManagement
         public IQueryable<Unit> GetVisibleByUser(string login, string application)
         {
             //First we need to find out what kind of user management permissions the given user has in the application                
-            var roles = _userService.GetManagementRolesForUserInApplication(application, login);
+            var roles = _roleService.GetManagementRolesForUserInApplication(application, login);
 
             if (roles.Contains("ManageAll"))
             {

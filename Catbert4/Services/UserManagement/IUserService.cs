@@ -12,7 +12,5 @@ namespace Catbert4.Services.UserManagement
         /// Returns true if the given current user has the proper permissions to be managing the loginToManage.
         /// </summary>
         bool CanUserManageGivenLogin(string application, string currentUserLogin, string loginToManage);
-
-        List<string> GetManagementRolesForUserInApplication(string application, string login);
     }
 }

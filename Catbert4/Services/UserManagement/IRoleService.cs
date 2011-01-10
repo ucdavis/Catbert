@@ -7,5 +7,6 @@ namespace Catbert4.Services.UserManagement
     public interface IRoleService
     {
         IQueryable<Role> GetVisibleByUser(string application, string login);
+        List<string> GetManagementRolesForUserInApplication(string application, string login);
     }
 }

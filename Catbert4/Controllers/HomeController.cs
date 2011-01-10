@@ -69,6 +69,16 @@ namespace Catbert4.Controllers
             var roles = roleService.GetVisibleByUser("HelpRequest", "postit");
             var result = roles.ToList();
 
+            var unitsCurrentUserCanManage = unitService.GetVisibleByUser("postit", "HelpRequest");
+
+            //Now create a query to find the loginToManage's units in this app
+            var unitsForLoginToManage = from u in Repository.OfType<UnitAssociation>().Queryable
+                                        where u.Application.Name == "HelpRequest"
+                                              && u.User.LoginId == "postit"
+                                        select u.Unit;
+
+            var numIntersectingUnits = unitsForLoginToManage.ToFuture().Intersect(unitsCurrentUserCanManage.ToFuture()).Count();
+            
             /*
             var levels = from p in Repository.OfType<Permission>().Queryable
                          join a in Repository.OfType<ApplicationRole>().Queryable on new { Role = p.Role.Id, App = p.Application.Id }

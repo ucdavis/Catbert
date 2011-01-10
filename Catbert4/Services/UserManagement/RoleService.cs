@@ -54,6 +54,20 @@ namespace Catbert4.Services.UserManagement
 		}
 
         /// <summary>
+        /// Return what kind of user management permissions the given user has in the application.
+        /// </summary>
+        public List<string> GetManagementRolesForUserInApplication(string application, string login)
+        {
+            var permissions = _permissionRepository.Queryable
+                .Where(x => x.Application.Name == application)
+                .Where(x => x.User.LoginId == login)
+                .Where(x=>x.Role.Name.StartsWith("Manage"))
+                .Select(x => x.Role.Name);
+
+            return permissions.ToList();
+        }
+
+        /// <summary>
         /// Get all of the additionally manageable roles that the user has.  This is found by taking the largest
         /// role level the user has and then finding all roles above that level.
         /// </summary>
