@@ -4,7 +4,6 @@ using System.Linq;
 using Catbert4.Core.Domain;
 using NHibernate;
 using NHibernate.Criterion;
-using NHibernate.Linq;
 using UCDArch.Core.PersistanceSupport;
 using UCDArch.Data.NHibernate;
 
@@ -29,7 +28,7 @@ namespace Catbert4.Services.UserManagement
             
             //visible roles = actual user roles + additional manageable roles
             //Use to future to batch together the queries
-            var visibleRoles = Enumerable.Union(userRoles.ToFuture(), additionalManageableRoles.ToFuture()).OrderBy(x=>x.Name);
+            var visibleRoles = userRoles.ToFuture().Union(additionalManageableRoles.ToFuture()).OrderBy(x=>x.Name);
             
 			/*
 			//Take the min role level for this application and then get all application roles with a "higher" level than this min
