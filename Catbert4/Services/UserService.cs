@@ -6,6 +6,7 @@ using System.Security.Principal;
 
 namespace Catbert4.Services
 {
+    /*
     public interface IUserService
     {
         User GetUser();
@@ -45,4 +46,5 @@ namespace Catbert4.Services
             return _userRepository.Queryable.Any(x => x.LoginId == login);
         }
     }
+     * */
 }

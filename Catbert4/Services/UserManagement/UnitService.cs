@@ -1,14 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Catbert4.Core.Domain;
-using NHibernate.Criterion;
-using UCDArch.Data.NHibernate;
+using UCDArch.Core.PersistanceSupport;
 
 namespace Catbert4.Services.UserManagement
 {
     public class UnitService : IUnitService
     {
+        private readonly IUserService _userService;
+        private readonly IRepository<School> _schoolRepository;
+        private readonly IRepository<Unit> _unitRepository;
+        private readonly IRepository<UnitAssociation> _unitAssociationRespository;
+
+        public UnitService(IUserService userService, 
+            IRepository<School> schoolRepository, 
+            IRepository<Unit> unitRepository, 
+            IRepository<UnitAssociation> unitAssociationRespository)
+        {
+            _userService = userService;
+            _schoolRepository = schoolRepository;
+            _unitRepository = unitRepository;
+            _unitAssociationRespository = unitAssociationRespository;
+        }
+
         /// <summary>
         /// Get all of the units associated with the given user, depending on role
         /// ManageAll: GetAllUnits
@@ -18,21 +32,17 @@ namespace Catbert4.Services.UserManagement
         public IQueryable<Unit> GetVisibleByUser(string login, string application)
         {
             //First we need to find out what kind of user management permissions the given user has in the application                
-            var roles = new UserService().GetManagementRolesForUserInApplication(application, login);
+            var roles = _userService.GetManagementRolesForUserInApplication(application, login);
 
-            var schoolRepo = new Repository<School>();
-            var unitAssociationRepo = new Repository<UnitAssociation>();
-            var unitRepo = new Repository<Unit>();
-            
             if (roles.Contains("ManageAll"))
             {
-                return unitRepo.Queryable;
+                return _unitRepository.Queryable;
             }
             else if (roles.Contains("ManageSchool"))
             {
                 //Find all schools that the given user has in the application
-                var units = (from s in schoolRepo.Queryable
-                         join u in unitRepo.Queryable on s.Id equals u.School.Id
+                var units = (from s in _schoolRepository.Queryable
+                         join u in _unitRepository.Queryable on s.Id equals u.School.Id
                          where u.UnitAssociations.Any(x => x.Application.Name == application && x.User.LoginId == login)
                          select s).SelectMany(x => x.Units, (x, y) => y);
                 /*
@@ -75,7 +85,7 @@ namespace Catbert4.Services.UserManagement
             {
                 //Just get all units that the user has in this application
 
-                var units = from ua in unitAssociationRepo.Queryable
+                var units = from ua in _unitAssociationRespository.Queryable
                             where ua.Application.Name == "HelpRequest" && ua.User.LoginId == "postit"
                             select ua.Unit;
                 

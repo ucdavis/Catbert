@@ -5,11 +5,13 @@ using Catbert4.Providers;
 using Catbert4.Services.UserManagement;
 using Catbert4.Services.Wcf;
 using NHibernate.Criterion;
+using NHibernate.Linq;
 using UCDArch.Web.Attributes;
 using Catbert4.Core.Domain;
 using System.Web.Security;
 using IRoleService = Catbert4.Services.Wcf.IRoleService;
 using UCDArch.Data.NHibernate;
+using Microsoft.Practices.ServiceLocation;
 
 namespace Catbert4.Controllers
 {
@@ -58,10 +60,45 @@ namespace Catbert4.Controllers
 
         public  ActionResult UserManagementTests()
         {
-            var unitService = new UnitService();
-
+            var unitService = ServiceLocator.Current.GetInstance<IUnitService>();
+            var roleService = ServiceLocator.Current.GetInstance<Services.UserManagement.IRoleService>();
+            
             var units = unitService.GetVisibleByUser("postit", "HelpRequest");
+            units.ToList();
 
+            var roles = roleService.GetVisibleByUser("HelpRequest", "postit");
+            var result = roles.ToList();
+
+            /*
+            var levels = from p in Repository.OfType<Permission>().Queryable
+                         join a in Repository.OfType<ApplicationRole>().Queryable on new { Role = p.Role.Id, App = p.Application.Id }
+                                 equals new { Role = a.Role.Id, App = a.Application.Id }
+                         where p.Application.Name == "HelpRequest" &&
+                             p.User.LoginId == "postit" &&
+                             a.Level != null
+                         select a.Level;
+
+            var manageableRoles = from ar in Repository.OfType<ApplicationRole>().Queryable
+                                  where ar.Application.Name == "HelpRequest" &&
+                                        ar.Level > (levels.Max())
+                                  select ar.Role;
+            */
+
+            //var manageableRoles = from ar in Repository.OfType<ApplicationRole>().Queryable
+            //                      where ar.Application.Name == "HelpRequest" &&
+            //                            ar.Level > (
+            //                                           (from p in Repository.OfType<Permission>().Queryable
+            //                                            join a in Repository.OfType<ApplicationRole>().Queryable on
+            //                                                new {Role = p.Role.Id, App = p.Application.Id}
+            //                                                equals new {Role = a.Role.Id, App = a.Application.Id}
+            //                                            where p.Application.Name == "HelpRequest" &&
+            //                                                  p.User.LoginId == "postit" &&
+            //                                                  a.Level != null
+            //                                            select a.Level).Max()
+            //                                       )
+            //                      select ar.Role;
+            
+            
             //var uaRepo = Repository.OfType<UnitAssociation>().Queryable;
             //var units = Repository.OfType<Unit>().GetAll();
             //var schools = Repository.OfType<School>().GetAll();

@@ -1,72 +1,118 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Catbert4.Core.Domain;
 using NHibernate;
 using NHibernate.Criterion;
+using NHibernate.Linq;
+using UCDArch.Core.PersistanceSupport;
 using UCDArch.Data.NHibernate;
 
 namespace Catbert4.Services.UserManagement
 {
-    public class RoleService : IRoleService
-    {
-        public List<Role> GetVisibleByUser(string application, string login)
-        {
-            var userRoles = GetRolesForUser(application, login); //Get all of the user roles
+	public class RoleService : IRoleService
+	{
+		private readonly IRepository<Permission> _permissionRepository;
+		private readonly IRepository<ApplicationRole> _applicationRoleRepository;
 
-            //Take the min role level for this application and then get all application roles with a higher level than this min
-            var minLevel = GetMinApplicationRole(userRoles, application);
-            var lowerApplicationRoles = GetApplicationRolesUnderLevel(minLevel, application);
+		public RoleService(IRepository<Permission> permissionRepository, IRepository<ApplicationRole> applicationRoleRepository)
+		{
+			_permissionRepository = permissionRepository;
+			_applicationRoleRepository = applicationRoleRepository;
+		}
 
-            //Now get all roles that either the user has or are in the lowerApplicationRoles
-            ICriteria roles = NHibernateSessionManager.Instance.GetSession().CreateCriteria(typeof(Role))
-                .Add(
-                    Expression.Or(
-                        Subqueries.PropertyIn("id", userRoles),
-                        Subqueries.PropertyIn("id", lowerApplicationRoles)
-                        )
-                )
-                .AddOrder(Order.Asc("Name"));
+		public IQueryable<Role> GetVisibleByUser(string application, string login)
+		{
+			var userRoles = GetRolesForUser(application, login); //Get all of the user roles
 
-            return roles.List<Role>() as List<Role>;
-        }
+		    var additionalManageableRoles = GetManageableApplicationRoles(application, login);
+            
+            //visible roles = actual user roles + additional manageable roles
+            //Use to future to batch together the queries
+            var visibleRoles = Enumerable.Union(userRoles.ToFuture(), additionalManageableRoles.ToFuture()).OrderBy(x=>x.Name);
+            
+			/*
+			//Take the min role level for this application and then get all application roles with a "higher" level than this min
+			var minLevel = GetMinApplicationRole(userRoles, application);
+			var lowerApplicationRoles = GetApplicationRolesUnderLevel(minLevel, application);
+						
+			//Now get all roles that either the user has or are in the lowerApplicationRoles
+			ICriteria roles = NHibernateSessionManager.Instance.GetSession().CreateCriteria(typeof(Role))
+				.Add(
+					Expression.Or(
+						Subqueries.PropertyIn("Id", userRoles),
+						Subqueries.PropertyIn("Id", lowerApplicationRoles)
+						)
+				)
+				.AddOrder(Order.Asc("Name"));
 
-        private static DetachedCriteria GetApplicationRolesUnderLevel(DetachedCriteria minLevel, string application)
-        {
-            DetachedCriteria criteria = DetachedCriteria.For<ApplicationRole>()
-                .Add(Expression.IsNotNull("Level"))
-                .CreateAlias("Application", "Application")
-                .CreateAlias("Role", "Role")
-                .Add(Expression.Eq("Application.Name", application))
-                .Add(Subqueries.PropertyGt("Level", minLevel))
-                .SetProjection(Projections.Property("Role.id"));
+			var result = roles.List<Role>() as List<Role>;
+			
+			return result.AsQueryable();
+			 * */
 
-            return criteria;
-        }
+		    return visibleRoles.AsQueryable();
+		}
 
-        private static DetachedCriteria GetMinApplicationRole(DetachedCriteria roles, string application)
-        {
-            DetachedCriteria criteria = DetachedCriteria.For<ApplicationRole>()
-                .Add(Expression.IsNotNull("Level"))
-                .CreateAlias("Application", "Application")
-                .CreateAlias("Role", "Role")
-                .Add(Expression.Eq("Application.Name", application))
-                .Add(Subqueries.PropertyIn("Role.id", roles)) //this role must be in the given roles list
-                .SetProjection(Projections.Min("Level"));
+        /// <summary>
+        /// Get all of the additionally manageable roles that the user has.  This is found by taking the largest
+        /// role level the user has and then finding all roles above that level.
+        /// </summary>
+		private IQueryable<Role> GetManageableApplicationRoles(string application, string login)
+		{
+            var manageableRoles = from ar in _applicationRoleRepository.Queryable
+                                  where ar.Application.Name == "HelpRequest" &&
+                                        ar.Level > (
+                                                       (from p in _permissionRepository.Queryable
+                                                        join a in _applicationRoleRepository.Queryable on
+                                                            new { Role = p.Role.Id, App = p.Application.Id }
+                                                            equals new { Role = a.Role.Id, App = a.Application.Id }
+                                                        where p.Application.Name == "HelpRequest" &&
+                                                              p.User.LoginId == "postit" &&
+                                                              a.Level != null
+                                                        select a.Level).Max()
+                                                   )
+                                  select ar.Role;
+            
+			return manageableRoles;
+		}
 
-            return criteria; //Returns the minimum level of these application roles
-        }
+        /*
+		private static DetachedCriteria GetApplicationRolesUnderLevel(DetachedCriteria minLevel, string application)
+		{
+			DetachedCriteria criteria = DetachedCriteria.For<ApplicationRole>()
+				.Add(Expression.IsNotNull("Level"))
+				.CreateAlias("Application", "Application")
+				.CreateAlias("Role", "Role")
+				.Add(Expression.Eq("Application.Name", application))
+				.Add(Subqueries.PropertyGt("Level", minLevel))
+				.SetProjection(Projections.Property("Role.Id"));
 
-        private static DetachedCriteria GetRolesForUser(string application, string login)
-        {
-            DetachedCriteria criteria = DetachedCriteria.For<Permission>()
-                .Add(Expression.Eq("Inactive", false))
-                .CreateAlias("Application", "Application")
-                .CreateAlias("Role", "Role")
-                .CreateAlias("User", "User")
-                .Add(Expression.Eq("Application.Name", application))
-                .Add(Expression.Eq("User.LoginID", login))
-                .SetProjection(Projections.Property("Role.id"));
+			return criteria;
+		}
 
-            return criteria;
-        }
-    }
+		private DetachedCriteria GetMinApplicationRole2(DetachedCriteria roles, string application)
+		{
+			DetachedCriteria criteria = DetachedCriteria.For<ApplicationRole>()
+				.Add(Expression.IsNotNull("Level"))
+				.CreateAlias("Application", "Application")
+				.CreateAlias("Role", "Role")
+				.Add(Expression.Eq("Application.Name", application))
+				.Add(Subqueries.PropertyIn("Role.Id", roles)) //this role must be in the given roles list
+				.SetProjection(Projections.Min("Level"));
+
+			return criteria; //Returns the minimum level of these application roles
+		}
+         * */
+		
+		private IQueryable<Role> GetRolesForUser(string application, string login)
+		{
+			var allRoles = from p in _permissionRepository.Queryable
+						   where p.Application.Name == application
+								 && p.User.LoginId == login
+						   select p.Role;
+
+			return allRoles;
+		}
+	}
 }

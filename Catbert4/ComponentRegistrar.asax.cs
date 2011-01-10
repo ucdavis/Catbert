@@ -10,6 +10,7 @@ using System.Web;
 using NHibernate;
 using Catbert4.Services;
 using System.Web.Security;
+using Catbert4.Services.UserManagement;
 
 namespace Catbert4
 {
@@ -23,6 +24,11 @@ namespace Catbert4
             container.AddComponent("queryExtensionProvider", typeof (IQueryExtensionProvider),
                                    typeof(NHibernateQueryExtensionProvider));
 
+            container.AddComponent("userService", typeof (IUserService), typeof (UserService));
+            container.AddComponent("unitService", typeof (IUnitService), typeof (UnitService));
+            container.AddComponent("roleService", typeof (IRoleService), typeof (RoleService));
+
+            /**/
             container.AddComponent("interceptor", typeof (IInterceptor), typeof (AuditInterceptor));
 
             container.AddComponent("principal", typeof (IPrincipal), typeof (WebPrincipal));

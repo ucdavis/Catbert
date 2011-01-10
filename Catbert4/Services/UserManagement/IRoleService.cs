@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Catbert4.Core.Domain;
 
 namespace Catbert4.Services.UserManagement
 {
     public interface IRoleService
     {
-        List<Role> GetVisibleByUser(string application, string login);
+        IQueryable<Role> GetVisibleByUser(string application, string login);
     }
 }
