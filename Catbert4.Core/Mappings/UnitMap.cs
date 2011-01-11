@@ -7,6 +7,8 @@ namespace Catbert4.Core.Mappings
     {
         public UnitMap()
         {
+            Cache.ReadWrite();
+
             Table("Unit");
 
             Id(x => x.Id).Column("UnitID");

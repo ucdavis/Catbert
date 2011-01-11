@@ -4,13 +4,11 @@ using System.Web.Mvc;
 using Catbert4.Providers;
 using Catbert4.Services.UserManagement;
 using Catbert4.Services.Wcf;
-using NHibernate.Criterion;
-using NHibernate.Linq;
+using UCDArch.Core.PersistanceSupport;
 using UCDArch.Web.Attributes;
 using Catbert4.Core.Domain;
 using System.Web.Security;
 using IRoleService = Catbert4.Services.Wcf.IRoleService;
-using UCDArch.Data.NHibernate;
 using Microsoft.Practices.ServiceLocation;
 
 namespace Catbert4.Controllers
@@ -73,9 +71,9 @@ namespace Catbert4.Controllers
             var roleService = ServiceLocator.Current.GetInstance<Services.UserManagement.IRoleService>();
             var userService = ServiceLocator.Current.GetInstance<Services.UserManagement.IUserService>();
             
-            var units = unitService.GetVisibleByUser("HelpRequest", "postit");
-            units.ToList();
-
+            //var units = unitService.GetVisibleByUser("HelpRequest", "postit");
+            //units.ToList();
+            
             //var roles = roleService.GetVisibleByUser("HelpRequest", "postit");
             //var result = roles.ToList();
 

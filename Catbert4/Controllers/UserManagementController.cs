@@ -43,8 +43,6 @@ namespace Catbert4.Controllers
 		    model.Units =
 		        _unitService.GetVisibleByUser(application, CurrentUser.Identity.Name).ToList().Select(
 		            x => new KeyValuePair<int, string>(x.Id, x.ShortName)).ToList();
-            
-		    _unitService.GetVisibleByUser(application, CurrentUser.Identity.Name).ToList();
 
 		    model.Roles =
 		        _roleService.GetVisibleByUser(application, CurrentUser.Identity.Name).Select(

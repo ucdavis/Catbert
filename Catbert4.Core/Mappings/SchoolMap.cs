@@ -7,6 +7,8 @@ namespace Catbert4.Core.Mappings
     {
         public SchoolMap()
         {
+            Cache.ReadWrite();
+
             Id(x => x.Id).Column("SchoolCode").GeneratedBy.Assigned();
 
             Map(x => x.ShortDescription);

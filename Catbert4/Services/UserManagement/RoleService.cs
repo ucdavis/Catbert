@@ -40,7 +40,7 @@ namespace Catbert4.Services.UserManagement
                 .Where(x=>x.Role.Name.StartsWith(UserManagementResources.Permission_Manage_Prefix))
                 .Select(x => x.Role.Name);
 
-            return permissions.ToList();
+            return permissions.Cache().ToList();
         }
 
         /// <summary>

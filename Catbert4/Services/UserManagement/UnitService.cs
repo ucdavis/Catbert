@@ -31,6 +31,11 @@ namespace Catbert4.Services.UserManagement
         /// </summary>
         public IQueryable<Unit> GetVisibleByUser(string application, string login)
         {
+            return GetVisibleByUserCore(application, login).Cache();
+        }
+
+        private IQueryable<Unit> GetVisibleByUserCore(string application, string login)
+        {
             //First we need to find out what kind of user management permissions the given user has in the application                
             var roles = _roleService.GetManagementRolesForUserInApplication(application, login);
 
@@ -42,9 +47,9 @@ namespace Catbert4.Services.UserManagement
             {
                 //Find all schools that the given user has in the application, then choose the units from those schools
                 return (from s in _schoolRepository.Queryable
-                         join u in _unitRepository.Queryable on s.Id equals u.School.Id
-                         where u.UnitAssociations.Any(x => x.Application.Name == application && x.User.LoginId == login)
-                         select s).SelectMany(x => x.Units, (x, y) => y).Distinct();
+                        join u in _unitRepository.Queryable on s.Id equals u.School.Id
+                        where u.UnitAssociations.Any(x => x.Application.Name == application && x.User.LoginId == login)
+                        select s).SelectMany(x => x.Units, (x, y) => y).Distinct();
                
             }
             else if (roles.Contains(UserManagementResources.Permission_ManageUnit))
@@ -52,8 +57,8 @@ namespace Catbert4.Services.UserManagement
                 //Just get all units that the user has in this application
 
                 return from ua in _unitAssociationRespository.Queryable
-                            where ua.Application.Name == application && ua.User.LoginId == login
-                            select ua.Unit;
+                       where ua.Application.Name == application && ua.User.LoginId == login
+                       select ua.Unit;
             }
             else //no roles
             {
