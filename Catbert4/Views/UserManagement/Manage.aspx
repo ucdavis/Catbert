@@ -7,8 +7,6 @@
         <thead>
             <tr>
                 <th>
-                </th>
-                <th>
                     Login
                 </th>
                 <th>
@@ -23,14 +21,11 @@
             </tr>
         </thead>
         <tbody>
-            <% foreach (var item in Model.Users)
+            <% foreach (var item in Model.UserShowModel)
                { %>
             <tr>
                 <td>
-                    <%: Html.ActionLink("Edit", "Edit", new { id=item.LoginId }) %>
-                </td>
-                <td>
-                    <%: item.LoginId %>
+                    <%: item.Login %>
                 </td>
                 <td>
                     <%: item.FirstName %>
@@ -68,9 +63,10 @@
         $(function () {
             $("#users").dataTable({
                 "bJQueryUI": true,
+                "iDisplayLength": 25,
                 "sPaginationType": "full_numbers",
-                "aaSorting": [[3, "asc"]]
+                "aaSorting": [[2, "asc"]]
             });
         });
-    </script>>
+    </script>
 </asp:Content>

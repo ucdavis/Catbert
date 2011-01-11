@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.ServiceModel;
 using System.Web.Mvc;
+using Catbert4.Models;
 using Catbert4.Providers;
 using Catbert4.Services.UserManagement;
 using Catbert4.Services.Wcf;
@@ -77,9 +79,8 @@ namespace Catbert4.Controllers
             //var roles = roleService.GetVisibleByUser("HelpRequest", "postit");
             //var result = roles.ToList();
 
-            //var users = userService.GetByApplication("HelpRequest", "postit");
-            //users.ToList();
-
+            //var users = userService.GetByApplication("HelpRequest", "postit").ToList();
+            
             return Content("");
         }
 
