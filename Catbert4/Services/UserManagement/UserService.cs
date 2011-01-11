@@ -24,7 +24,7 @@ namespace Catbert4.Services.UserManagement
         {
             //Only allow users who intersect with the current login's unit list
             //Need to get the unitIds for the linq provider
-            var allowedUnitIds = _unitService.GetVisibleByUser(application, currentLogin).Select(x => x.Id).ToList();
+            var allowedUnitIds = _unitService.GetVisibleByUser(application, currentLogin).ToList().Select(x => x.Id).ToList();
             
             //Get everyone with perms, possibly filtered by role and unit
             var usersWithPermissions = from p in _permissionRepository.Queryable

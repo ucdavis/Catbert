@@ -72,7 +72,7 @@
                     <li><%= Html.ActionLink("Schools", "Index", "School")%></li>
                     <li><%= Html.ActionLink("Users (Admin)", "Index", "UserAdministration")%></li>
                     <li><%= Html.ActionLink("Units", "Index", "Unit")%></li>
-                    <li><%= Html.ActionLink("Dev", "Dev", "Home")%></li>
+                    <li><%= Html.ActionLink("Manage App", "UserManagement", "Home")%></li>
                 </ul>
             
             </div>

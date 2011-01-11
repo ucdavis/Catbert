@@ -23,6 +23,15 @@ namespace Catbert4.Controllers
             return View();
         }
 
+        public ActionResult UserManagement()
+        {
+            var apps = Repository.OfType<Application>().Queryable
+                .Where(x => x.Inactive == false)
+                .OrderBy(x => x.Name);
+
+            return View(apps.ToList());
+        }
+
         //
         // GET: /Home/
         public ActionResult Dev()
