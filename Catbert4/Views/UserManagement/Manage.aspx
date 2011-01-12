@@ -2,6 +2,10 @@
 <asp:Content runat="server" ID="Title" ContentPlaceHolderID="TitleContent">Catbert: User Management</asp:Content>
 <asp:Content runat="server" ID="Main" ContentPlaceHolderID="MainContent">
 
+<div>
+    <a href="#" id="add-user">Add User</a>    
+</div>
+<br />
 <div style="width: 100%">
     <div>
         <%= this.Select("roles").Class("user-filter").Attr("data-filter-column", 5).Options(Model.Roles, x=>x.Value, x=>x.Value).FirstOption("-- Filter By Role --") %>
@@ -35,7 +39,7 @@
                { %>
             <tr>
                 <td>
-                    <%: item.Login %>
+                    <a href="#" title="Modify <%: item.FullNameAndLogin %>"><%: item.Login %></a>
                 </td>
                 <td>
                     <%: item.FirstName %>
@@ -58,6 +62,7 @@
     </table>
 </div>
 
+<% Html.RenderPartial("NewUserDialog"); %>
 
 </asp:Content>
 <asp:Content runat="server" ID="Header" ContentPlaceHolderID="HeaderContent">
@@ -76,10 +81,16 @@
         }
     </style>
     <script type="text/javascript">
-        var userTable = null;
+        var Catbert = { Services: { }, Indicators: { } };
+        Catbert.Services.FindUser = "<%: Url.Action("FindUser") %>";
 
         $(function () {
-            userTable = $("#users").dataTable({
+
+            CreateButtons();
+
+            AssignIndicators(); //Find and assign loading indicators
+
+            Catbert.UserTable = $("#users").dataTable({
                 "bJQueryUI": true,
                 "iDisplayLength": 25,
                 "sPaginationType": "full_numbers",
@@ -89,8 +100,95 @@
 
             $(".user-filter").change(function () {
                 var element = $(this);
-                userTable.fnFilter(element.val(), element.data("filter-column"));
+                Catbert.UserTable.fnFilter(element.val(), element.data("filter-column"));
+            });
+
+            $("#add-user").click(function (e) {
+                e.preventDefault();
+
+                $("#find-user").dialog({ modal: true, width: '50%' });
+            });
+
+            $("#search-user").click(function (e) {
+                e.preventDefault();
+
+                Catbert.Indicators.SearchProgress.show(0); //Show the loading dialog
+                $("#search-results").hide(0); //Hide the content
+
+                //var data = { eid: null, firstName: null, lastName: null, email: null, login: $("#txtLoginID").val() };
+                var data = { searchTerm: $("#search-login").val() };
+
+                Log(data);
+                Log(Catbert.Services.FindUser);
+
+                $.getJSON(Catbert.Services.FindUser, data, SearchNewUserSuccess);
+            });
+
+            $("#search-login").keypress(function (e) {
+                if (e.keyCode == 13) {
+                    $("#search-user").click();
+                }
+            });
+
+            $("#add-new-user").click(function(e) {
+                e.preventDefault();
+
+                //Pull out the required fields
+
+
             });
         });
+
+        function CreateButtons() {
+            $("#add-user").button({
+                icons: {
+                    primary: "ui-icon-person"
+                }
+            });
+
+            $("#search-user").button({
+                icons: {
+                    primary: "ui-icon-search"
+                }
+            });
+
+            $("#add-new-user").button({
+                icons: {
+                    primary: "ui-icon-plus"
+                }
+            });
+        }
+
+        function AssignIndicators(){
+            Catbert.Indicators.SearchProgress = $("#search-progress");
+            Catbert.Indicators.AddNewUserProgress = $("#add-new-user-progress");
+        }
+
+        function SearchNewUserSuccess(data){
+            Log(data);
+
+            Catbert.Indicators.SearchProgress.hide(0);
+
+            if (data == null){
+                alert("No Users Found");
+            }
+            else {
+                var searchResults = $("#search-results");
+
+                $("#new-user-first-name", searchResults).html(data.FirstName);
+                $("#new-user-last-name", searchResults).html(data.LastName);
+                $("#new-user-login", searchResults).html(data.Login);
+                $("#new-user-email", searchResults).val(data.Email);
+                $("#new-user-phone", searchResults).val(data.Phone);
+
+                searchResults.show(0);
+            }
+        }
+
+        function Log(text){
+            if (typeof console != "undefined") {
+                console.info(text);
+            }
+        }
     </script>
 </asp:Content>

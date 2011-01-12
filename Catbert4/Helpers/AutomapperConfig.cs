@@ -48,6 +48,11 @@ namespace Catbert4.Helpers
             CreateMap<DirectoryUser, User>()
                 .ForMember(x => x.Email, x => x.MapFrom(p => p.EmailAddress))
                 .ForMember(x => x.Phone, x => x.MapFrom(p => p.PhoneNumber));
+
+            CreateMap<DirectoryUser, ServiceUser>()
+                .ForMember(x => x.Login, x => x.MapFrom(p => p.LoginId))
+                .ForMember(x => x.Email, x => x.MapFrom(p => p.EmailAddress))
+                .ForMember(x => x.Phone, x => x.MapFrom(p => p.PhoneNumber));
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using Catbert4.Models;
+using Catbert4.Services;
 using Catbert4.Services.UserManagement;
 using UCDArch.Core.PersistanceSupport;
 using UCDArch.Web.Controller;
@@ -22,16 +23,19 @@ namespace Catbert4.Controllers
 	    private readonly IUserService _userService;
 	    private readonly IUnitService _unitService;
 	    private readonly IRoleService _roleService;
+	    private readonly IDirectorySearchService _directorySearchService;
 
 	    public UserManagementController(IRepository<User> usermanagementRepository, 
             IUserService userService, 
             IUnitService unitService, 
-            IRoleService roleService)
+            IRoleService roleService, 
+            IDirectorySearchService directorySearchService)
 		{
 		    _usermanagementRepository = usermanagementRepository;
 		    _userService = userService;
 	        _unitService = unitService;
 	        _roleService = roleService;
+	        _directorySearchService = directorySearchService;
 		}
 
 	    //
@@ -56,6 +60,17 @@ namespace Catbert4.Controllers
 
 			return View(model);
 		}
+
+        public ActionResult FindUser(string searchTerm)
+        {
+            ServiceUser serviceUser = null;
+
+            var directoryUser = _directorySearchService.FindUser(searchTerm);
+
+            if (directoryUser != null) serviceUser = new ServiceUser(directoryUser);
+
+            return Json(serviceUser, JsonRequestBehavior.AllowGet);
+        }
 	}
 
 	/// <summary>
@@ -105,6 +120,7 @@ namespace Catbert4.Controllers
                                 FirstName = u.FirstName,
                                 LastName = u.LastName,
                                 Email = u.Email,
+                                FullNameAndLogin = u.FullNameAndLogin,
 	                            Permissions =
 	                                roles.Where(x => x.UserId == u.Id).Select(
 	                                    x => new UserShowModel.PermissionModel {RoleName = x.RoleName}).ToList(),
