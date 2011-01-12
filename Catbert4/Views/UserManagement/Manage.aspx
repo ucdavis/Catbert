@@ -39,7 +39,7 @@
                { %>
             <tr>
                 <td>
-                    <a href="#" title="Modify <%: item.FullNameAndLogin %>"><%: item.Login %></a>
+                    <a href="#" id="<%: item.Login %>" title="Modify <%: item.FullNameAndLogin %>"><%: item.Login %></a>
                 </td>
                 <td>
                     <%: item.FirstName %>
@@ -118,7 +118,6 @@
                 Catbert.Indicators.SearchProgress.show(0); //Show the loading dialog
                 $("#search-results").hide(0); //Hide the content
 
-                //var data = { eid: null, firstName: null, lastName: null, email: null, login: $("#txtLoginID").val() };
                 var data = { searchTerm: $("#search-login").val() };
 
                 Log(data);
@@ -142,7 +141,7 @@
 
                 if (!form.valid()) return;
                 
-                $.post(Catbert.Services.InsertNewUser, form.serialize(), function(result) { Log(result); }, 'json');
+                $.post(Catbert.Services.InsertNewUser, form.serialize(), function(result) { AddNewUserSuccess(result); }, 'json');
             });
         });
 
@@ -193,6 +192,31 @@
 
                 searchResults.show(0);
             }
+        }
+
+        function AddNewUserSuccess(data){
+            var userTable = Catbert.UserTable;
+
+            //First find if the given login is already in the table
+            var userRow = $("#" + data.Login).parent().parent();
+
+            if (userRow.length != 0) { //if we are already in the table, remove the row first                
+                var position = userTable.fnGetPosition(userRow[0]);
+
+                userTable.fnDeleteRow(position);
+            }
+
+            var userLink = "<a href=\"#\" id=\""+ data.Login + "\" title=\""+ data.FullNameAndLogin +"\">"+ data.Login + "</a>";
+
+            userTable.fnAddData([
+                userLink,
+                data.FirstName,
+                data.LastName,
+                data.Email,
+                null,
+                null
+            ]);            
+
         }
 
         function Log(text){

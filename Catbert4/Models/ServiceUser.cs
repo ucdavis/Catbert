@@ -8,9 +8,10 @@ namespace Catbert4.Models
         public string Login { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string FullNameAndLogin { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-
+        
         public int RoleId { get; set; }
         public int UnitId { get; set; }
 

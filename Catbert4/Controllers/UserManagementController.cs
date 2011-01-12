@@ -75,8 +75,9 @@ namespace Catbert4.Controllers
         [HttpPost]
         public JsonResult InsertNewUser(ServiceUser serviceUser)
         {
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
-            return Json(serviceUser);
+            var newuser = new UserShowModel { Login = serviceUser.Login, Email = serviceUser.Email, FirstName = serviceUser.FirstName, LastName = serviceUser.LastName, FullNameAndLogin = serviceUser.FullNameAndLogin};
+
+            return Json(newuser);
         }
 	}
 
