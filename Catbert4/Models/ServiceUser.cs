@@ -11,10 +11,10 @@ namespace Catbert4.Models
         public string FullNameAndLogin { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        
-        public int RoleId { get; set; }
-        public int UnitId { get; set; }
 
+        public string Roles { get; set; }
+        public string Units { get; set; }
+        
         public ServiceUser() { }
 
         public ServiceUser(DirectoryUser directoryUser)

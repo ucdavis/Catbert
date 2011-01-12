@@ -15,10 +15,10 @@
             <label>Email:</label> <input type="text" id="new-user-email" name="Email" class="required email" /><br />
             <label>Phone:</label> <input type="text" id="new-user-phone" name="Phone" /><br />
             <label>Role:</label>
-            <%= this.Select("new-user-roles").Options(Model.Roles, x=>x.Key, x=>x.Value).Class("required") %>
+            <%= this.Select("roleId").Options(Model.Roles, x=>x.Key, x=>x.Value).Class("required") %>
             <br />
             <label>Unit:</label>
-            <%= this.Select("new-user-units").Options(Model.Units, x=>x.Key, x=>x.Value).Class("required") %>
+            <%= this.Select("unitId").Options(Model.Units, x=>x.Key, x=>x.Value).Class("required") %>
             <br /><br />
             <a href="#" id="add-new-user">Add User</a><span id="add-new-user-progress" style="display: none;">Processing...</span>
         </form>

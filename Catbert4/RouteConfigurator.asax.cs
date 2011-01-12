@@ -15,7 +15,7 @@ namespace Catbert4
             routes.IgnoreRoute("{*favicon}", new { favicon = @"(.*/)?favicon.ico(/.*)?" });
 
             MvcRoute.MappUrl("UserManagement/{action}/{application}")
-                .WithDefaults(new {controller = "UserManagement", action = "Manage"})
+                .WithDefaults(new {controller = "UserManagement", action = "Manage", application = ""})
                 .AddWithName("UserManagement", routes);
 
             MvcRoute.MappUrl("{controller}/{action}/{id}")

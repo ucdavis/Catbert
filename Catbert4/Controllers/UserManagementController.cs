@@ -1,15 +1,13 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using Catbert4.Models;
 using Catbert4.Services;
 using Catbert4.Services.UserManagement;
 using UCDArch.Core.PersistanceSupport;
-using UCDArch.Web.Controller;
-using UCDArch.Web.Helpers;
 using UCDArch.Core.Utils;
 using Catbert4.Core.Domain;
+using AutoMapper;
 
 namespace Catbert4.Controllers
 {
@@ -19,20 +17,26 @@ namespace Catbert4.Controllers
 	[Authorize]
 	public class UserManagementController : ApplicationControllerBase
 	{
-	    private readonly IRepository<User> _usermanagementRepository;
+	    private readonly IRepository<User> _userRepository;
+	    private readonly IRepository<Permission> _permissionRepository;
+	    private readonly IRepository<UnitAssociation> _unitAssociationRepository;
 	    private readonly IUserService _userService;
 	    private readonly IUnitService _unitService;
 	    private readonly IRoleService _roleService;
 	    private readonly IDirectorySearchService _directorySearchService;
 
-	    public UserManagementController(IRepository<User> usermanagementRepository, 
+	    public UserManagementController(IRepository<User> userRepository, 
+            IRepository<Permission> permissionRepository,
+            IRepository<UnitAssociation> unitAssociationRepository,
             IUserService userService, 
             IUnitService unitService, 
             IRoleService roleService, 
             IDirectorySearchService directorySearchService)
 		{
-		    _usermanagementRepository = usermanagementRepository;
-		    _userService = userService;
+		    _userRepository = userRepository;
+	        _permissionRepository = permissionRepository;
+	        _unitAssociationRepository = unitAssociationRepository;
+	        _userService = userService;
 	        _unitService = unitService;
 	        _roleService = roleService;
 	        _directorySearchService = directorySearchService;
@@ -43,7 +47,8 @@ namespace Catbert4.Controllers
         //Optional:  filter by ?role= and/or ?unit=
 		public ActionResult Manage(string application, string role, string unit)
 		{
-		    var model = UserManagementViewModel.Create(Repository);
+		    var model = UserManagementViewModel.Create(_permissionRepository, _unitAssociationRepository);
+		    model.Application = application;
             
 		    model.Units =
 		        _unitService.GetVisibleByUser(application, CurrentUser.Identity.Name).ToList().Select(
@@ -52,7 +57,6 @@ namespace Catbert4.Controllers
 		    model.Roles =
 		        _roleService.GetVisibleByUser(application, CurrentUser.Identity.Name).Select(
 		            x => new KeyValuePair<int, string>(x.Id, x.Name)).ToList();
-
             
 		    var users = _userService.GetByApplication(application, CurrentUser.Identity.Name, role, unit).ToList();
             
@@ -73,11 +77,92 @@ namespace Catbert4.Controllers
         }
 
         [HttpPost]
-        public JsonResult InsertNewUser(ServiceUser serviceUser)
+        public JsonResult InsertNewUser(string application, ServiceUser serviceUser, int roleId, int unitId)
         {
-            var newuser = new UserShowModel { Login = serviceUser.Login, Email = serviceUser.Email, FirstName = serviceUser.FirstName, LastName = serviceUser.LastName, FullNameAndLogin = serviceUser.FullNameAndLogin};
+            var user = _userRepository.Queryable.Where(x => x.LoginId == serviceUser.Login).SingleOrDefault();
 
-            return Json(newuser);
+            if (user == null) 
+            {
+                user = Mapper.Map<ServiceUser, User>(serviceUser);
+                InsertNewUser(user);
+            }
+
+            var app = Repository.OfType<Application>().Queryable.Where(x => x.Name == application).Single();
+            var role = Repository.OfType<Role>().GetById(roleId);
+            var unit = Repository.OfType<Unit>().GetById(unitId);
+            
+            AssociateRole(app, role, user);
+            AssociateUnit(app, unit, user);
+
+            //Pull down all the user's roles
+            var roles = (from p in _permissionRepository.Queryable
+                         where p.Application.Name == application
+                               && p.User.Id == user.Id
+                         orderby p.Role.Name
+                         select new { Role = p.Role.Name.Trim() }).ToList();
+
+            //Now all the units for this user
+            var units = (from unitAssociation in _unitAssociationRepository.Queryable
+                         where unitAssociation.Application.Name == application
+                               && unitAssociation.User.Id == user.Id
+                         orderby unitAssociation.Unit.ShortName
+                         select new { Units = unitAssociation.Unit.ShortName.Trim() }).ToList();
+
+            serviceUser.Roles = string.Join(", ", roles.Select(x=>x.Role));
+            serviceUser.Units = string.Join(", ", units.Select(x=>x.Units));
+
+            serviceUser.FullNameAndLogin = user.FullNameAndLogin;
+
+            return Json(serviceUser);
+        }
+
+	    private void AssociateUnit(Application application, Unit unit, User user)
+	    {
+            var unitAssociationExists =
+                _unitAssociationRepository.Queryable.Any(
+                    x => x.Application.Id == application.Id && x.Unit.Id == unit.Id && x.User.Id == user.Id);
+
+            if (unitAssociationExists) return;
+
+	        var unitAssociation = new UnitAssociation
+	                                  {
+	                                      Inactive = false,
+	                                      Application = application,
+	                                      Unit = unit,
+	                                      User = user
+	                                  };
+	        
+            _unitAssociationRepository.EnsurePersistent(unitAssociation);
+	    }
+
+	    private void AssociateRole(Application application, Role role, User user)
+	    {
+	        var permissionExists =
+	            _permissionRepository.Queryable.Any(
+	                x => x.Application.Id == application.Id && x.Role.Id == role.Id && x.User.Id == user.Id);
+
+            if (permissionExists) return;
+            
+            var permission = new Permission
+                                 {
+                                     Inactive = false, 
+                                     Application = application, 
+                                     Role = role, 
+                                     User = user
+                                 };
+
+	        _permissionRepository.EnsurePersistent(permission);
+	    }
+
+	    /// <summary>
+        /// Insert a new user into the database
+        /// </summary>
+        private void InsertNewUser(User user)
+        {
+            //Make sure the user given in valid
+            Check.Require(user.IsValid(), string.Format("User not valid: {0}", string.Join(", ", user.ValidationResults().Select(x=>x.Message))));
+            
+            _userRepository.EnsurePersistent(user);
         }
 	}
 
@@ -86,17 +171,23 @@ namespace Catbert4.Controllers
 	/// </summary>
 	public class UserManagementViewModel
 	{
-	    private static IRepository _repository;
+	    private static IRepository<Permission> _permissionRepository;
+	    private static IRepository<UnitAssociation> _unitAssociationRepository;
 
 	    public IList<KeyValuePair<int, string>> Units { get; set; }
 	    public IList<KeyValuePair<int, string>> Roles { get; set; }
 
 	    public List<UserShowModel> UserShowModel { get; set; }
 
-		public static UserManagementViewModel Create(IRepository repository)
+	    public string Application { get; set; }
+
+		public static UserManagementViewModel Create(IRepository<Permission> permissionRepository, IRepository<UnitAssociation> unitAssociationRepository)
 		{
-			Check.Require(repository != null, "Repository must be supplied");
-            _repository = repository;
+		    Check.Require(permissionRepository != null, "Repository must be supplied");
+		    Check.Require(unitAssociationRepository != null, "Repository must be supplied");
+
+		    _permissionRepository = permissionRepository;
+		    _unitAssociationRepository = unitAssociationRepository;
 	
 			var viewModel = new UserManagementViewModel();
  
@@ -108,13 +199,13 @@ namespace Catbert4.Controllers
             var userIds = users.Select(x => x.Id).ToArray();
 
 	        //Pull down all the role names for these users
-            var roles = (from p in _repository.OfType<Permission>().Queryable
+            var roles = (from p in _permissionRepository.Queryable
                         where p.Application.Name == application
                               && userIds.Contains(p.User.Id)
                         select new { UserId = p.User.Id, RoleName = p.Role.Name }).ToList();
 
             //Now all the units for these users
-            var units = (from p in _repository.OfType<UnitAssociation>().Queryable
+            var units = (from p in _unitAssociationRepository.Queryable
                          where p.Application.Name == application
                                && userIds.Contains(p.User.Id)
                          select new { UserId = p.User.Id, UnitName = p.Unit.ShortName }).ToList();

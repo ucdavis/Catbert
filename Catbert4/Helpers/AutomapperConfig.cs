@@ -53,6 +53,9 @@ namespace Catbert4.Helpers
                 .ForMember(x => x.Login, x => x.MapFrom(p => p.LoginId))
                 .ForMember(x => x.Email, x => x.MapFrom(p => p.EmailAddress))
                 .ForMember(x => x.Phone, x => x.MapFrom(p => p.PhoneNumber));
+
+            CreateMap<ServiceUser, User>()
+                .ForMember(x => x.LoginId, x => x.MapFrom(p => p.Login));
         }
     }
 }
