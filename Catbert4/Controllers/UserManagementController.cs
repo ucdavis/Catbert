@@ -61,7 +61,7 @@ namespace Catbert4.Controllers
 			return View(model);
 		}
 
-        public ActionResult FindUser(string searchTerm)
+        public JsonResult FindUser(string searchTerm)
         {
             ServiceUser serviceUser = null;
 
@@ -70,6 +70,13 @@ namespace Catbert4.Controllers
             if (directoryUser != null) serviceUser = new ServiceUser(directoryUser);
 
             return Json(serviceUser, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult InsertNewUser(ServiceUser serviceUser)
+        {
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            return Json(serviceUser);
         }
 	}
 

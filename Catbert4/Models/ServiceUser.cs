@@ -1,5 +1,6 @@
 ﻿using Catbert4.Services;
 using AutoMapper;
+
 namespace Catbert4.Models
 {
     public class ServiceUser
@@ -12,6 +13,8 @@ namespace Catbert4.Models
 
         public int RoleId { get; set; }
         public int UnitId { get; set; }
+
+        public ServiceUser() { }
 
         public ServiceUser(DirectoryUser directoryUser)
         {

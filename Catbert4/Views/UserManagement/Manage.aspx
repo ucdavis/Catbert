@@ -83,12 +83,15 @@
     <script type="text/javascript">
         var Catbert = { Services: { }, Indicators: { } };
         Catbert.Services.FindUser = "<%: Url.Action("FindUser") %>";
+        Catbert.Services.InsertNewUser = "<%: Url.Action("InsertNewUser") %>";
 
         $(function () {
 
             CreateButtons();
 
             AssignIndicators(); //Find and assign loading indicators
+
+            $("#insert-new-user").validate();
 
             Catbert.UserTable = $("#users").dataTable({
                 "bJQueryUI": true,
@@ -133,9 +136,13 @@
             $("#add-new-user").click(function(e) {
                 e.preventDefault();
 
-                //Pull out the required fields
+                Catbert.Indicators.AddNewUserProgress.show(0);
 
+                var form = $("#insert-new-user");
 
+                if (!form.valid()) return;
+                
+                $.post(Catbert.Services.InsertNewUser, form.serialize(), function(result) { Log(result); }, 'json');
             });
         });
 
@@ -175,9 +182,12 @@
             else {
                 var searchResults = $("#search-results");
 
-                $("#new-user-first-name", searchResults).html(data.FirstName);
-                $("#new-user-last-name", searchResults).html(data.LastName);
-                $("#new-user-login", searchResults).html(data.Login);
+                $("#new-user-first-name-display", searchResults).html(data.FirstName);
+                $("#new-user-last-name-display", searchResults).html(data.LastName);
+                $("#new-user-login-display", searchResults).html(data.Login);
+                $("#new-user-first-name", searchResults).val(data.FirstName);
+                $("#new-user-last-name", searchResults).val(data.LastName);
+                $("#new-user-login", searchResults).val(data.Login);
                 $("#new-user-email", searchResults).val(data.Email);
                 $("#new-user-phone", searchResults).val(data.Phone);
 
