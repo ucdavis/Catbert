@@ -97,6 +97,8 @@
         Catbert.Services.LoadUser = "<%: Url.Action("LoadUser", new { application = Model.Application }) %>";
         Catbert.Services.RemoveUnit = "<%: Url.Action("RemoveUnit", new { application = Model.Application }) %>";
         Catbert.Services.RemovePermission = "<%: Url.Action("RemovePermission", new { application = Model.Application }) %>";
+        Catbert.Services.AddUnit = "<%: Url.Action("AddUnit", new { application = Model.Application }) %>";
+        Catbert.Services.AddPermission = "<%: Url.Action("AddPermission", new { application = Model.Application }) %>";
 
 		$(function () {
 
@@ -205,6 +207,44 @@
                     var url = link.data("type") == "permission" ? Catbert.Services.RemovePermission : Catbert.Services.RemoveUnit;
 
                     $.post(url, data, null, null);
+                });
+
+                $(".add-link").live("click", function(e) {
+                    e.preventDefault();
+
+                    var link = $(this);
+                    var type = link.data("type");
+                
+                    var url, list, table;
+
+                    if (type == "permission"){
+                        url = Catbert.Services.AddPermission;
+                        list = $("#userRoles");
+                        table = $("#user-info-roles");
+                    }
+                    else {
+                        url = Catbert.Services.AddUnit;
+                        list = $("#userUnits");
+                        table = $("#user-info-units");
+                    }
+
+                    var data = { login: link.data("login"), id: list.val(), __RequestVerificationToken: Catbert.VerificationToken };
+                    Log(data);
+
+                    var selectedText = list.find("option:selected").text();
+
+                    var existingRowMatch = table.find("tbody tr td:contains(" + selectedText + ")").filter(
+                        function() {
+                            if ($(this).text() == selectedText)
+                                return true;
+                            else
+                                return false;
+                        }
+                    );
+
+                    Log(selectedText);
+                    Log(existingRowMatch);
+
                 });
 			});
 		});
