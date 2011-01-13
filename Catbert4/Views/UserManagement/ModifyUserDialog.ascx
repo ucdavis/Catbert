@@ -2,12 +2,17 @@
 
 <div id="manage-user" title="User Information" style="display: none;">
     <span id="user-info-progress" style="display:none;">Loading User...</span>
-    <div id="user-info" style="display: block;">
-        <h2>
-            <span id="UserInfoName"></span>(<span id="UserInfoLogin"></span>)</h2>
-        <br />
-        <br />
-        <table id="UserInfoRoles">
+    <%--Filled in with the below template info--%>
+</div>
+
+<script id="user-info-template" type="text/x-jquery-tmpl">    
+<div id="user-info">
+    <h2>
+        <span id="user-info-name">${FullNameAndLogin}</span>
+    </h2>
+    <fieldset>
+        <legend>Roles</legend>
+        <table id="user-info-roles">
             <thead>
                 <tr>
                     <th>
@@ -19,23 +24,27 @@
                 </tr>
             </thead>
             <tbody>
+                {{each Permissions}}
+                    <tr>
+                        <td>${$value.RoleName}</td>
+                        <td>
+                            <a href="#" class="remove-role remove-link" data-roleId="${$value.Id}">Remove</a>                    
+                        </td>
+                    </tr>
+                {{/each}}
             </tbody>
         </table>
         <br />
         <%= this.Select("userRoles").Options(Model.Roles, x=>x.Key, x=>x.Value) %>
-        <input type="button" id="btnAddUserRole" value="Add Role" />
-        <br />
-        <br />
-        <br />
-        <br />
-        <table id="UserInfoUnits">
+        <a href="#" id="add-role" class="add-link">Add Role</a>
+    </fieldset>
+    <fieldset>
+        <legend>Units</legend>
+        <table id="user-info-units">
             <thead>
                 <tr>
                     <th>
                         Unit
-                    </th>
-                    <th>
-                        FISCode
                     </th>
                     <th>
                         Remove
@@ -43,10 +52,19 @@
                 </tr>
             </thead>
             <tbody>
+                {{each UnitAssociations}}
+                    <tr>
+                        <td>${$value.UnitName}</td>
+                        <td>
+                            <a href="#" class="remove-unit remove-link" data-unitId="${$value.Id}">Remove</a>
+                        </td>
+                    </tr>
+                {{/each}}
             </tbody>
         </table>
         <br />
         <%= this.Select("userUnits").Options(Model.Units, x=>x.Key, x=>x.Value) %>
-        <input type="button" id="btnAddUserUnit" value="Add Unit" />
-    </div>
+        <a href="#" id="add-unit" class="add-link">Add Unit</a>
+    </fieldset>
 </div>
+</script>

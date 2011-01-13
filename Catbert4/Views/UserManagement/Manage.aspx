@@ -76,6 +76,7 @@
 </asp:Content>
 <asp:Content runat="server" ID="Header" ContentPlaceHolderID="HeaderContent">
 	<% Html.RenderPartial("IncludeDataTables"); %>
+    <%: Catbert4.Helpers.HtmlHelpers.IncludeJqueryTemplate() %>
 
 	<style type="text/css">
 		.dataTables_length {
@@ -169,15 +170,15 @@
                     function (data) {
                         PopulateUserInfo(data);
                         Catbert.Indicators.UserInfoProgress.hide(0);
-                        $("#user-info").show(0);
                     }
                 );
 
                 $("#manage-user").dialog({ 
                     modal: true, 
                     width: '50%', 
+                    position: 'top',
                     beforeClose: function(event, ui) {
-                        $("#user-info").hide(0);
+                        $("#user-info").remove();
                     },
                     buttons: {
                         "Close": function() {
@@ -269,7 +270,21 @@
 		}
 
         function PopulateUserInfo(data){
+            var userInfo = $("#user-info-template").tmpl(data);
+            $("#manage-user").append(userInfo);
 
+            //style the buttons
+            $(".remove-link").button({
+                icons: {
+                    primary: "ui-icon-trash"
+                }
+            });
+
+            $(".add-link").button({
+                icons: {
+                    primary: "ui-icon-plusthick"
+                }
+            });
         }
 
 		function Log(text){
