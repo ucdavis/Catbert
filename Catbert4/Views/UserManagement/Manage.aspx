@@ -46,7 +46,7 @@
 			   { %>
 			<tr>
 				<td>
-					<a href="#" id="<%: item.Login %>" title="Modify <%: item.FullNameAndLogin %>"><%: item.Login %></a>
+					<a href="#" id="<%: item.Login %>" class="modify-user" title="Modify <%: item.FullNameAndLogin %>"><%: item.Login %></a>
 				</td>
 				<td>
 					<%: item.FirstName %>
@@ -71,6 +71,8 @@
 
 <% Html.RenderPartial("NewUserDialog"); %>
 
+<% Html.RenderPartial("ModifyUserDialog"); %>
+
 </asp:Content>
 <asp:Content runat="server" ID="Header" ContentPlaceHolderID="HeaderContent">
 	<% Html.RenderPartial("IncludeDataTables"); %>
@@ -91,6 +93,7 @@
 		var Catbert = { Services: { }, Indicators: { } };
 		Catbert.Services.FindUser = "<%: Url.Action("FindUser") %>";
 		Catbert.Services.InsertNewUser = "<%: Url.Action("InsertNewUser", new { application = Model.Application }) %>";
+        Catbert.Services.LoadUser = "<%: Url.Action("LoadUser", new { application = Model.Application }) %>";
 
 		$(function () {
 
@@ -150,6 +153,39 @@
 				
 				$.post(Catbert.Services.InsertNewUser, form.serialize(), function(result) { AddNewUserSuccess(result); }, 'json');
 			});
+
+			$(".modify-user").live("click", function(e){
+				e.preventDefault();
+
+                Catbert.Indicators.UserInfoProgress.show(0);
+
+                //Load the user info
+                var login = this.id;
+
+                Log(login);
+
+                $.getJSON(Catbert.Services.LoadUser,
+                    { login: login },
+                    function (data) {
+                        PopulateUserInfo(data);
+                        Catbert.Indicators.UserInfoProgress.hide(0);
+                        $("#user-info").show(0);
+                    }
+                );
+
+                $("#manage-user").dialog({ 
+                    modal: true, 
+                    width: '50%', 
+                    beforeClose: function(event, ui) {
+                        $("#user-info").hide(0);
+                    },
+                    buttons: {
+                        "Close": function() {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+			});
 		});
 
 		function CreateButtons() {
@@ -175,6 +211,7 @@
 		function AssignIndicators(){
 			Catbert.Indicators.SearchProgress = $("#search-progress");
 			Catbert.Indicators.AddNewUserProgress = $("#add-new-user-progress");
+            Catbert.Indicators.UserInfoProgress = $("#user-info-progress");
 		}
 
 		function SearchNewUserSuccess(data){
@@ -213,7 +250,7 @@
 				userTable.fnDeleteRow(position);
 			}
 
-			var userLink = "<a href=\"#\" id=\""+ data.Login + "\" title=\""+ "Modify " + data.FullNameAndLogin +"\">"+ data.Login + "</a>";
+			var userLink = "<a href=\"#\" id=\""+ data.Login + "\" class=\"manage-user\" title=\""+ "Modify " + data.FullNameAndLogin +"\">"+ data.Login + "</a>";
 
 			userTable.fnAddData([
 				userLink,
@@ -230,6 +267,10 @@
 			$("#message-text").html(data.FullNameAndLogin + " has been added successfully");
 			$("#message").show("slow"); //Show the new user notification
 		}
+
+        function PopulateUserInfo(data){
+
+        }
 
 		function Log(text){
 			if (typeof console != "undefined") {

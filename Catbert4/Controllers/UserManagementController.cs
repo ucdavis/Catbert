@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using Catbert4.Models;
@@ -114,6 +115,38 @@ namespace Catbert4.Controllers
             serviceUser.FullNameAndLogin = user.FullNameAndLogin;
 
             return Json(serviceUser);
+        }
+
+        public JsonResult LoadUser(string application, string login)
+        {
+            var user = _userRepository.Queryable.Where(x => x.LoginId == login).Single();
+
+            var model = Mapper.Map<User, UserShowModel>(user);
+
+            SetPermissionsAndUnitAssociations(application, login, model);
+
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+        private void SetPermissionsAndUnitAssociations(string application, string login, UserShowModel model)
+        {
+            model.Permissions = (from p in _permissionRepository.Queryable
+                                 where p.User.LoginId == login && p.Application.Name == application
+                                 select
+                                     new UserShowModel.PermissionModel
+                                     {
+                                         Id = p.Id,
+                                         RoleName = p.Role.Name.Trim()
+                                     }).ToList();
+
+            model.UnitAssociations = (from ua in _unitAssociationRepository.Queryable
+                                      where ua.User.LoginId == login && ua.Application.Name == application
+                                      select
+                                          new UserShowModel.UnitAssociationModel
+                                          {
+                                              Id = ua.Id,
+                                              UnitName = ua.Unit.ShortName.Trim()
+                                          }).ToList();
         }
 
 	    private void AssociateUnit(Application application, Unit unit, User user)
