@@ -28,7 +28,7 @@
                     <tr>
                         <td>${$value.RoleName}</td>
                         <td>
-                            <a href="#" class="remove-role remove-link" data-roleId="${$value.Id}">Remove</a>                    
+                            <a href="#" class="remove-role remove-link" data-type="permission" data-id="${$value.Id}" data-login="${Login}">Remove</a>                    
                         </td>
                     </tr>
                 {{/each}}
@@ -56,7 +56,7 @@
                     <tr>
                         <td>${$value.UnitName}</td>
                         <td>
-                            <a href="#" class="remove-unit remove-link" data-unitId="${$value.Id}">Remove</a>
+                            <a href="#" class="remove-unit remove-link" data-type="unit" data-id="${$value.Id}" data-login="${Login}">Remove</a>
                         </td>
                     </tr>
                 {{/each}}

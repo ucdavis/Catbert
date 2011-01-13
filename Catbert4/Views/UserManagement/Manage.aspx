@@ -95,12 +95,16 @@
 		Catbert.Services.FindUser = "<%: Url.Action("FindUser") %>";
 		Catbert.Services.InsertNewUser = "<%: Url.Action("InsertNewUser", new { application = Model.Application }) %>";
         Catbert.Services.LoadUser = "<%: Url.Action("LoadUser", new { application = Model.Application }) %>";
+        Catbert.Services.RemoveUnit = "<%: Url.Action("RemoveUnit", new { application = Model.Application }) %>";
+        Catbert.Services.RemovePermission = "<%: Url.Action("RemovePermission", new { application = Model.Application }) %>";
 
 		$(function () {
 
 			CreateButtons();
 
 			AssignIndicators(); //Find and assign loading indicators
+
+            AssignVerificationToken();
 
 			$("#insert-new-user").validate();
 
@@ -186,6 +190,22 @@
                         }
                     }
                 });
+
+                $(".remove-link").live("click", function(e){
+                    e.preventDefault();
+
+                    var link = $(this);
+                    var row = link.parent().parent();
+
+                    row.fadeOut("slow");
+
+                    var data = { login: link.data("login"), id: link.data("id"), __RequestVerificationToken: Catbert.VerificationToken };
+                    Log(data);
+
+                    var url = link.data("type") == "permission" ? Catbert.Services.RemovePermission : Catbert.Services.RemoveUnit;
+
+                    $.post(url, data, null, null);
+                });
 			});
 		});
 
@@ -214,6 +234,10 @@
 			Catbert.Indicators.AddNewUserProgress = $("#add-new-user-progress");
             Catbert.Indicators.UserInfoProgress = $("#user-info-progress");
 		}
+
+        function AssignVerificationToken() {
+            Catbert.VerificationToken = $("input[name=__RequestVerificationToken]").val();
+        }
 
 		function SearchNewUserSuccess(data){
 			Log(data);
