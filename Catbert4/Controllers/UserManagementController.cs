@@ -19,7 +19,10 @@ namespace Catbert4.Controllers
 	public class UserManagementController : ApplicationControllerBase
 	{
 		private readonly IRepository<User> _userRepository;
-		private readonly IRepository<Permission> _permissionRepository;
+	    private readonly IRepository<Application> _applicationRepository;
+	    private readonly IRepository<Unit> _unitRepository;
+	    private readonly IRepository<Role> _roleRepository;
+	    private readonly IRepository<Permission> _permissionRepository;
 		private readonly IRepository<UnitAssociation> _unitAssociationRepository;
 	    private readonly IUserService _userService;
 		private readonly IUnitService _unitService;
@@ -27,6 +30,9 @@ namespace Catbert4.Controllers
 		private readonly IDirectorySearchService _directorySearchService;
 
 		public UserManagementController(IRepository<User> userRepository, 
+            IRepository<Application> applicationRepository,
+            IRepository<Unit> unitRepository,
+            IRepository<Role> roleRepository,
 			IRepository<Permission> permissionRepository,
 			IRepository<UnitAssociation> unitAssociationRepository,
 			IUserService userService, 
@@ -35,7 +41,10 @@ namespace Catbert4.Controllers
 			IDirectorySearchService directorySearchService)
 		{
 			_userRepository = userRepository;
-			_permissionRepository = permissionRepository;
+		    _applicationRepository = applicationRepository;
+		    _unitRepository = unitRepository;
+		    _roleRepository = roleRepository;
+		    _permissionRepository = permissionRepository;
 			_unitAssociationRepository = unitAssociationRepository;
 		    _userService = userService;
 			_unitService = unitService;
@@ -88,9 +97,9 @@ namespace Catbert4.Controllers
 				InsertNewUser(user);
 			}
 
-			var app = Repository.OfType<Application>().Queryable.Where(x => x.Name == application).Single();
-			var role = Repository.OfType<Role>().GetById(roleId);
-			var unit = Repository.OfType<Unit>().GetById(unitId);
+		    var app = GetApplication(application);
+			var role = _roleRepository.GetById(roleId);
+			var unit = _unitRepository.GetById(unitId);
 			
 			AssociateRole(app, role, user);
 			AssociateUnit(app, unit, user);
@@ -141,8 +150,20 @@ namespace Catbert4.Controllers
             
             _unitAssociationRepository.Remove(unitAsoociation);
 		}
-		
-		[HttpPost]
+
+        [HttpPost]
+        public void AddUnit(string application, string login, int id)
+        {
+            EnsureCurrentUserCanManageLogin(application, login);
+
+            var app = GetApplication(application);
+            var user = GetUser(login);
+            var unit = _unitRepository.GetById(id);
+            
+            AssociateUnit(app, unit, user);
+        }
+
+	    [HttpPost]
 		public void RemovePermission(string application, string login, int id)
 		{
             EnsureCurrentUserCanManageLogin(application, login);
@@ -155,6 +176,18 @@ namespace Catbert4.Controllers
 
             _permissionRepository.Remove(permission);
 		}
+
+	    [HttpPost]
+	    public void AddPermission(string application, string login, int id)
+	    {
+	        EnsureCurrentUserCanManageLogin(application, login);
+
+	        var app = GetApplication(application);
+            var role = _roleRepository.GetById(id);
+	        var user = GetUser(login);
+			
+            AssociateRole(app, role, user);
+	    }
 
         private void EnsureCurrentUserCanManageLogin(string application, string loginToManage)
         {
@@ -232,6 +265,16 @@ namespace Catbert4.Controllers
 			
 			_userRepository.EnsurePersistent(user);
 		}
+
+        private User GetUser(string login)
+        {
+            return _userRepository.Queryable.Where(x => x.LoginId == login).Single();
+        }
+
+        private Application GetApplication(string application)
+        {
+            return _applicationRepository.Queryable.Where(x => x.Name == application).Single();
+        }
 	}
 
 	/// <summary>

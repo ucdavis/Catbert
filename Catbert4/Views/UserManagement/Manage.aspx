@@ -76,7 +76,7 @@
 </asp:Content>
 <asp:Content runat="server" ID="Header" ContentPlaceHolderID="HeaderContent">
 	<% Html.RenderPartial("IncludeDataTables"); %>
-    <%: Catbert4.Helpers.HtmlHelpers.IncludeJqueryTemplate() %>
+	<%: Catbert4.Helpers.HtmlHelpers.IncludeJqueryTemplate() %>
 
 	<style type="text/css">
 		.dataTables_length {
@@ -94,11 +94,11 @@
 		var Catbert = { Services: { }, Indicators: { } };
 		Catbert.Services.FindUser = "<%: Url.Action("FindUser") %>";
 		Catbert.Services.InsertNewUser = "<%: Url.Action("InsertNewUser", new { application = Model.Application }) %>";
-        Catbert.Services.LoadUser = "<%: Url.Action("LoadUser", new { application = Model.Application }) %>";
-        Catbert.Services.RemoveUnit = "<%: Url.Action("RemoveUnit", new { application = Model.Application }) %>";
-        Catbert.Services.RemovePermission = "<%: Url.Action("RemovePermission", new { application = Model.Application }) %>";
-        Catbert.Services.AddUnit = "<%: Url.Action("AddUnit", new { application = Model.Application }) %>";
-        Catbert.Services.AddPermission = "<%: Url.Action("AddPermission", new { application = Model.Application }) %>";
+		Catbert.Services.LoadUser = "<%: Url.Action("LoadUser", new { application = Model.Application }) %>";
+		Catbert.Services.RemoveUnit = "<%: Url.Action("RemoveUnit", new { application = Model.Application }) %>";
+		Catbert.Services.RemovePermission = "<%: Url.Action("RemovePermission", new { application = Model.Application }) %>";
+		Catbert.Services.AddUnit = "<%: Url.Action("AddUnit", new { application = Model.Application }) %>";
+		Catbert.Services.AddPermission = "<%: Url.Action("AddPermission", new { application = Model.Application }) %>";
 
 		$(function () {
 
@@ -106,7 +106,7 @@
 
 			AssignIndicators(); //Find and assign loading indicators
 
-            AssignVerificationToken();
+			AssignVerificationToken();
 
 			$("#insert-new-user").validate();
 
@@ -164,88 +164,46 @@
 			$(".modify-user").live("click", function(e){
 				e.preventDefault();
 
-                Catbert.Indicators.UserInfoProgress.show(0);
+				Catbert.Indicators.UserInfoProgress.show(0);
 
-                //Load the user info
-                var login = this.id;
+				//Load the user info
+				var login = this.id;
 
-                Log(login);
+				Log(login);
 
-                $.getJSON(Catbert.Services.LoadUser,
-                    { login: login },
-                    function (data) {
-                        PopulateUserInfo(data);
-                        Catbert.Indicators.UserInfoProgress.hide(0);
-                    }
-                );
+				$.getJSON(Catbert.Services.LoadUser,
+					{ login: login },
+					function (data) {
+						PopulateUserInfo(data);
+						Catbert.Indicators.UserInfoProgress.hide(0);
+					}
+				);
 
-                $("#manage-user").dialog({ 
-                    modal: true, 
-                    width: '50%', 
-                    position: 'top',
-                    beforeClose: function(event, ui) {
-                        $("#user-info").remove();
-                    },
-                    buttons: {
-                        "Close": function() {
-                            $(this).dialog("close");
-                        }
-                    }
-                });
+				$("#manage-user").dialog({ 
+					modal: true, 
+					width: '50%', 
+					position: 'top',
+					beforeClose: function(event, ui) {
+						$("#user-info").remove();
+					},
+					buttons: {
+						"Close": function() {
+							$(this).dialog("close");
+						}
+					}
+				});
 
-                $(".remove-link").live("click", function(e){
-                    e.preventDefault();
+				$(".remove-link").live("click", function(e){
+					e.preventDefault();
 
-                    var link = $(this);
-                    var row = link.parent().parent();
+                    RemoveAssociation($(this));
+				});
 
-                    row.fadeOut("slow");
+				$(".add-link").live("click", function(e) {
+					e.preventDefault();
 
-                    var data = { login: link.data("login"), id: link.data("id"), __RequestVerificationToken: Catbert.VerificationToken };
-                    Log(data);
-
-                    var url = link.data("type") == "permission" ? Catbert.Services.RemovePermission : Catbert.Services.RemoveUnit;
-
-                    $.post(url, data, null, null);
-                });
-
-                $(".add-link").live("click", function(e) {
-                    e.preventDefault();
-
-                    var link = $(this);
-                    var type = link.data("type");
-                
-                    var url, list, table;
-
-                    if (type == "permission"){
-                        url = Catbert.Services.AddPermission;
-                        list = $("#userRoles");
-                        table = $("#user-info-roles");
-                    }
-                    else {
-                        url = Catbert.Services.AddUnit;
-                        list = $("#userUnits");
-                        table = $("#user-info-units");
-                    }
-
-                    var data = { login: link.data("login"), id: list.val(), __RequestVerificationToken: Catbert.VerificationToken };
-                    Log(data);
-
-                    var selectedText = list.find("option:selected").text();
-
-                    var existingRowMatch = table.find("tbody tr td:contains(" + selectedText + ")").filter(
-                        function() {
-                            if ($(this).text() == selectedText)
-                                return true;
-                            else
-                                return false;
-                        }
-                    );
-
-                    Log(selectedText);
-                    Log(existingRowMatch);
-
-                });
+                    AddAssociation($(this));
+				});
 			});
 		});
 
@@ -272,12 +230,12 @@
 		function AssignIndicators(){
 			Catbert.Indicators.SearchProgress = $("#search-progress");
 			Catbert.Indicators.AddNewUserProgress = $("#add-new-user-progress");
-            Catbert.Indicators.UserInfoProgress = $("#user-info-progress");
+			Catbert.Indicators.UserInfoProgress = $("#user-info-progress");
 		}
 
-        function AssignVerificationToken() {
-            Catbert.VerificationToken = $("input[name=__RequestVerificationToken]").val();
-        }
+		function AssignVerificationToken() {
+			Catbert.VerificationToken = $("input[name=__RequestVerificationToken]").val();
+		}
 
 		function SearchNewUserSuccess(data){
 			Log(data);
@@ -333,22 +291,94 @@
 			$("#message").show("slow"); //Show the new user notification
 		}
 
-        function PopulateUserInfo(data){
-            var userInfo = $("#user-info-template").tmpl(data);
-            $("#manage-user").append(userInfo);
+		function PopulateUserInfo(data){
+			var userInfo = $("#user-info-template").tmpl(data);
+			$("#manage-user").append(userInfo);
 
-            //style the buttons
-            $(".remove-link").button({
-                icons: {
-                    primary: "ui-icon-trash"
-                }
-            });
+            StyleUserInfoButtons();
+		}
 
-            $(".add-link").button({
-                icons: {
-                    primary: "ui-icon-plusthick"
-                }
-            });
+        function RemoveAssociation(removeLink){
+            var link = removeLink;
+
+			var row = link.parent().parent();
+
+			row.fadeOut("slow").remove();
+
+			var data = { login: link.data("login"), id: link.data("id"), __RequestVerificationToken: Catbert.VerificationToken };
+			Log(data);
+
+			var url = link.data("type") == "permission" ? Catbert.Services.RemovePermission : Catbert.Services.RemoveUnit;
+
+			$.post(url, data, null, null);
+        }
+
+        function AddAssociation(addLink){
+            var link = addLink;
+
+			var type = link.data("type");
+				
+			var url, list, table;
+
+			if (type == "permission"){
+				url = Catbert.Services.AddPermission;
+				list = $("#userRoles");
+				table = $("#user-info-roles");
+			}
+			else {
+				url = Catbert.Services.AddUnit;
+				list = $("#userUnits");
+				table = $("#user-info-units");
+			}
+
+            var login = link.data("login");
+            var id = list.val();
+
+			var selectedText = list.find("option:selected").text();
+
+			var existingColumnMatch = table.find("tbody tr td:contains(" + selectedText + ")").filter(
+				function() {
+					if ($(this).text() == selectedText)
+						return true;
+					else
+						return false;
+				}
+			);
+
+			if (existingColumnMatch.size() != 0) {
+				alert("The user already has the " + type + " " + selectedText);
+				return;
+			}
+
+            var rowValues = { value: selectedText, login: login, type: type, id: id };
+            //Add a new row
+            var newRow = $("#user-info-row-template").tmpl(rowValues);
+            table.append(newRow);
+
+            list.effect("transfer", { to: newRow }, "slow");
+            newRow.effect("highlight", {}, 'slow');
+
+            StyleUserInfoButtons();
+
+            var data = { login: login, id: id, __RequestVerificationToken: Catbert.VerificationToken };
+			Log(data);
+
+			//$.post(url, data, null, null);
+        }
+
+        function StyleUserInfoButtons(){
+        	//style the buttons
+			$(".remove-link").button({
+				icons: {
+					primary: "ui-icon-trash"
+				}
+			});
+
+			$(".add-link").button({
+				icons: {
+					primary: "ui-icon-plusthick"
+				}
+			});
         }
 
 		function Log(text){

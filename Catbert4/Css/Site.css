@@ -315,3 +315,9 @@ div#title
     font-weight: bold;
     color: #ff0000;
 }
+
+.ui-effects-transfer  
+{
+    border: 2px dotted gray; 
+    z-index: 2000;
+} 

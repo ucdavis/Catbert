@@ -28,7 +28,7 @@
                     <tr>
                         <td>${$value.RoleName}</td>
                         <td>
-                            <a href="#" class="remove-role remove-link" data-type="permission" data-id="${$value.Id}" data-login="${Login}">Remove</a>                    
+                            <a href="#" class="remove-permission remove-link" data-type="permission" data-id="${$value.Id}" data-login="${Login}">Remove</a>                    
                         </td>
                     </tr>
                 {{/each}}
@@ -36,7 +36,7 @@
         </table>
         <br />
         <%= this.Select("userRoles").Options(Model.Roles, x=>x.Key, x=>x.Value) %>
-        <a href="#" id="add-role" class="add-link" data-type="permission" data-login="${Login}">Add Role</a>
+        <a href="#" id="add-permission" class="add-link" data-type="permission" data-login="${Login}">Add Role</a>
     </fieldset>
     <fieldset>
         <legend>Units</legend>
@@ -67,4 +67,13 @@
         <a href="#" id="add-unit" class="add-link" data-type="unit" data-login="${Login}">Add Unit</a>
     </fieldset>
 </div>
+</script>
+
+<script id="user-info-row-template" type="text/x-jquery-tmpl">
+<tr>
+    <td>${value}</td>
+    <td>
+        <a href="#" class="remove-${type} remove-link" data-type="${type}" data-id="${id}" data-login="${login}">Remove</a>                    
+    </td>
+</tr>
 </script>
