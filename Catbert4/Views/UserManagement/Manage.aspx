@@ -184,7 +184,8 @@
 					width: '50%', 
 					position: 'top',
 					beforeClose: function(event, ui) {
-						$("#user-info").remove();
+						UpdateRecord(login); //Update the record before closing if it's changed
+                        $("#user-info").remove();
 					},
 					buttons: {
 						"Close": function() {
@@ -265,7 +266,7 @@
 			var userTable = Catbert.UserTable;
 
 			//First find if the given login is already in the table
-			var userRow = $("#" + data.Login).parent().parent();
+			var userRow = GetRowFor(data.Login);
 
 			if (userRow.length != 0) { //if we are already in the table, remove the row first                
 				var position = userTable.fnGetPosition(userRow[0]);
@@ -303,7 +304,7 @@
 
 			var row = link.parent().parent();
 
-			row.fadeOut("slow").remove();
+			row.fadeOut("slow", function() { row.remove(); });
 
 			var data = { login: link.data("login"), id: link.data("id"), __RequestVerificationToken: Catbert.VerificationToken };
 			Log(data);
@@ -363,7 +364,40 @@
             var data = { login: login, id: id, __RequestVerificationToken: Catbert.VerificationToken };
 			Log(data);
 
-			//$.post(url, data, null, null);
+			$.post(url, data, null, null);
+        }
+
+        //Update the row for the given login, setting the unit associations and permissions
+        function UpdateRecord(login){
+            var row = GetRowFor(login); //The current row in the table
+            var rowElement = row.get(0);
+            
+            //Get the user's roles and permissions, then push them into arrays and then join them into readable strings
+            var roles = $("#user-info-roles tbody tr td:first-child");
+            var units = $("#user-info-units tbody tr td:first-child");
+
+            var rolesArray = [], unitsArray = [];
+
+            roles.each(function(i){
+                 rolesArray.push(this.innerHTML);
+            });            
+            
+            units.each(function(i){
+                 unitsArray.push(this.innerHTML);
+            });
+            
+            var allRoles = rolesArray.sort().join(', ');
+            var allUnits = unitsArray.sort().join(', ');
+
+            Log(allRoles);
+            Log(allUnits);
+            
+            Catbert.UserTable.fnUpdate(allUnits, rowElement, 4, false, false); //False params to not redraw until second call
+            Catbert.UserTable.fnUpdate(allRoles, rowElement, 5);
+        }
+
+        function GetRowFor(login){
+            return $("#" + login).parent().parent(); //get the user link, then find it's parent (td)'s parent (tr)
         }
 
         function StyleUserInfoButtons(){
