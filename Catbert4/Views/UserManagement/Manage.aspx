@@ -185,6 +185,8 @@
 					position: 'top',
 					beforeClose: function(event, ui) {
 						UpdateRecord(login); //Update the record before closing if it's changed
+                        //unbind click handlers
+                        $(".remove-link, .add-link").unbind('click');
                         $("#user-info").remove();
 					},
 					buttons: {
@@ -192,18 +194,6 @@
 							$(this).dialog("close");
 						}
 					}
-				});
-
-				$(".remove-link").live("click", function(e){
-					e.preventDefault();
-
-                    RemoveAssociation($(this));
-				});
-
-				$(".add-link").live("click", function(e) {
-					e.preventDefault();
-
-                    AddAssociation($(this));
 				});
 			});
 		});
@@ -274,7 +264,7 @@
 				userTable.fnDeleteRow(position);
 			}
 
-			var userLink = "<a href=\"#\" id=\""+ data.Login + "\" class=\"manage-user\" title=\""+ "Modify " + data.FullNameAndLogin +"\">"+ data.Login + "</a>";
+			var userLink = "<a href=\"#\" id=\""+ data.Login + "\" class=\"modify-user\" title=\""+ "Modify " + data.FullNameAndLogin +"\">"+ data.Login + "</a>";
 
 			userTable.fnAddData([
 				userLink,
@@ -295,10 +285,23 @@
 		function PopulateUserInfo(data){
 			var userInfo = $("#user-info-template").tmpl(data);
 			$("#manage-user").append(userInfo);
+            
+            //Assign the click handlers
+            $(".remove-link").click(function(e){
+			    e.preventDefault();
+                
+                RemoveAssociation($(this));
+            });
+
+            $(".add-link").click(function(e) {
+                e.preventDefault();
+
+                AddAssociation($(this));
+            });
 
             StyleUserInfoButtons();
 		}
-
+        
         function RemoveAssociation(removeLink){
             var link = removeLink;
 
@@ -310,7 +313,7 @@
 			Log(data);
 
 			var url = link.data("type") == "permission" ? Catbert.Services.RemovePermission : Catbert.Services.RemoveUnit;
-
+            
 			$.post(url, data, null, null);
         }
 
@@ -355,6 +358,13 @@
             //Add a new row
             var newRow = $("#user-info-row-template").tmpl(rowValues);
             table.append(newRow);
+
+            //Add the click binding on the new row
+            $(".remove-link", newRow).click(function(e){
+                e.preventDefault();
+                
+                RemoveAssociation($(this));
+            });
 
             list.effect("transfer", { to: newRow }, "slow");
             newRow.effect("highlight", {}, 'slow');

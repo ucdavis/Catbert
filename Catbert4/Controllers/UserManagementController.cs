@@ -145,7 +145,7 @@ namespace Catbert4.Controllers
             //We must check that the given unit association is indeed in this application and granted to this login
 		    var unitAsoociation =
 		        _unitAssociationRepository.Queryable
-		            .Where(x => x.Id == id && x.Application.Name == application && x.User.LoginId == login)
+		            .Where(x => x.Unit.Id == id && x.Application.Name == application && x.User.LoginId == login)
 		            .Single();
             
             _unitAssociationRepository.Remove(unitAsoociation);
@@ -171,7 +171,7 @@ namespace Catbert4.Controllers
             //We must check that the given permission is indeed in this application and granted to this login
             var permission =
                 _permissionRepository.Queryable
-                    .Where(x => x.Id == id && x.Application.Name == application && x.User.LoginId == login)
+                    .Where(x => x.Role.Id == id && x.Application.Name == application && x.User.LoginId == login)
                     .Single();
 
             _permissionRepository.Remove(permission);
@@ -204,6 +204,7 @@ namespace Catbert4.Controllers
 									 new UserShowModel.PermissionModel
 									 {
 										 Id = p.Id,
+                                         RoleId = p.Role.Id,
 										 RoleName = p.Role.Name.Trim()
 									 }).ToList();
 
@@ -213,6 +214,7 @@ namespace Catbert4.Controllers
 										  new UserShowModel.UnitAssociationModel
 										  {
 											  Id = ua.Id,
+                                              UnitId = ua.Unit.Id,
 											  UnitName = ua.Unit.ShortName.Trim()
 										  }).ToList();
 		}

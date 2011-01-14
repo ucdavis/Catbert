@@ -23,6 +23,7 @@ namespace Catbert4.Models
         public class PermissionModel
         {
             public int Id { get; set; }
+            public int RoleId { get; set; }
             public string ApplicationName { get; set; }
             public string RoleName { get; set; }
         }
@@ -30,6 +31,7 @@ namespace Catbert4.Models
         public class UnitAssociationModel
         {
             public int Id { get; set; }
+            public int UnitId { get; set; }
             public string ApplicationName { get; set; }
             public string UnitName { get; set; }
         }
