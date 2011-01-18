@@ -126,7 +126,7 @@ namespace Catbert4.Tests.Controllers
         /// Tests the controller has only two attributes.
         /// </summary>
         [TestMethod]
-        public void TestControllerHasOnlyTwoAttributes()
+        public void TestControllerHasOnlyThreeAttributes()
         {
             #region Arrange
             var controllerClass = _controllerClass;
@@ -137,7 +137,7 @@ namespace Catbert4.Tests.Controllers
             #endregion Act
 
             #region Assert
-            Assert.AreEqual(2, result.Count());
+            Assert.AreEqual(3, result.Count());
             #endregion Assert
         }
 
@@ -179,6 +179,22 @@ namespace Catbert4.Tests.Controllers
             #endregion Assert
         }
 
+
+        [TestMethod]
+        public void TestControllerHasAuthorizeAttribute()
+        {
+            #region Arrange
+            var controllerClass = _controllerClass;
+            #endregion Arrange
+
+            #region Act
+            var result = controllerClass.GetCustomAttributes(true).OfType<AuthorizeAttribute>();
+            #endregion Act
+
+            #region Assert
+            Assert.IsTrue(result.Count() > 0, "AuthorizeAttribute not found.");
+            #endregion Assert
+        }
 
         //Only on Index because of the testing methods.
         ///// <summary>
