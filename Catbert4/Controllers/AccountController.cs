@@ -1,7 +1,5 @@
 ﻿using System.Web.Mvc;
 using System.Web.Security;
-using UCDArch.Core.PersistanceSupport;
-using UCDArch.Core.Utils;
 using UCDArch.Web.Authentication;
 
 namespace Catbert4.Controllers
@@ -9,7 +7,7 @@ namespace Catbert4.Controllers
     /// <summary>
     /// Controller for the Account class
     /// </summary>
-    public class AccountController : ApplicationControllerBase
+    public class AccountController : Controller
     {
         public ActionResult LogOn(string returnUrl)
         {
