@@ -186,6 +186,7 @@
     <Content Include="Views\AccessToken\Create.aspx" />
     <Content Include="Views\AccessToken\Details.aspx" />
     <Content Include="Views\AccessToken\Index.aspx" />
+    <Content Include="Views\Account\LogOn.aspx" />
     <Content Include="Views\Application\ApplicationForm.ascx" />
     <Content Include="Views\Application\ApplicationFormHeaderContent.ascx" />
     <Content Include="Views\Application\Create.aspx" />
