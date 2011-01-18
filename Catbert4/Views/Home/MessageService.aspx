@@ -2,6 +2,7 @@
 <asp:Content runat="server" ID="Title" ContentPlaceHolderID="TitleContent">Messages</asp:Content>
 <asp:Content runat="server" ID="Main" ContentPlaceHolderID="MainContent">
 
+    <h3>Using the following service <%: ViewData["serviceUrl"] %>.  Change it by passing a baseUrl parameter.</h3>
     <h2>Current Global Messages (server-side via service)</h2>
 
     <div>

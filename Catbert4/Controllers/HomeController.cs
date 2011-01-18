@@ -32,9 +32,12 @@ namespace Catbert4.Controllers
             return View(apps.ToList());
         }
 
-        public ActionResult MessageService()
+        public ActionResult MessageService(string baseUrl)
         {
-            var messageService = new ChannelFactory<IMessageService>(new BasicHttpBinding(), GetAbsoluteUrl("~/Public/Message.svc"));
+            var serviceUrl = string.IsNullOrWhiteSpace(baseUrl) ? GetAbsoluteUrl("~/Public/Message.svc") : baseUrl + "~/Public/Message.svc";
+            ViewData["serviceUrl"] = serviceUrl;
+
+            var messageService = new ChannelFactory<IMessageService>(new BasicHttpBinding(), serviceUrl);
 
             var messageProxy = messageService.CreateChannel();
 
@@ -49,7 +52,7 @@ namespace Catbert4.Controllers
         {
             string[] users;
 
-            using (var client = new RoleServiceClient(new BasicHttpBinding(), new EndpointAddress(GetAbsoluteUrl("~/Public/Role.svc"))))
+            using (var client = new RoleServiceClient(new BasicHttpBinding(BasicHttpSecurityMode.Transport), new EndpointAddress(GetAbsoluteUrl("~/Public/Role.svc"))))
             {
                 users = client.GetUsersInRole("Catbert", "Admin");
             }
