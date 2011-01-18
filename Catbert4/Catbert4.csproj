@@ -194,6 +194,7 @@
     <Content Include="Views\Application\Edit.aspx" />
     <Content Include="Views\Application\Index.aspx" />
     <Content Include="Views\Home\Index.aspx" />
+    <Content Include="Views\Home\MessageService.aspx" />
     <Content Include="Views\Home\UserManagement.aspx" />
     <Content Include="Views\Message\Create.aspx" />
     <Content Include="Views\Message\Delete.aspx" />

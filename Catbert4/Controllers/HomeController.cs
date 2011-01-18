@@ -32,6 +32,19 @@ namespace Catbert4.Controllers
             return View(apps.ToList());
         }
 
+        public ActionResult MessageService()
+        {
+            var messageService = new ChannelFactory<IMessageService>(new BasicHttpBinding(), GetAbsoluteUrl("~/Public/Message.svc"));
+
+            var messageProxy = messageService.CreateChannel();
+
+            var messages = messageProxy.GetMessages("AD419");
+
+            messageService.Close();
+
+            return View(messages);
+        }
+
         //
         // GET: /Home/
         public ActionResult Dev()
