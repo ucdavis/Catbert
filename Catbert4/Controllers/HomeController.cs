@@ -37,7 +37,11 @@ namespace Catbert4.Controllers
             var serviceUrl = string.IsNullOrWhiteSpace(baseUrl) ? GetAbsoluteUrl("~/Public/Message.svc") : baseUrl + "~/Public/Message.svc";
             ViewData["serviceUrl"] = serviceUrl;
 
-            var messageService = new ChannelFactory<IMessageService>(new BasicHttpBinding(), serviceUrl);
+            var binding = new BasicHttpBinding();
+
+            if (serviceUrl.StartsWith("https://")) binding.Security.Mode = BasicHttpSecurityMode.Transport;
+
+            var messageService = new ChannelFactory<IMessageService>(binding, serviceUrl);
 
             var messageProxy = messageService.CreateChannel();
 
