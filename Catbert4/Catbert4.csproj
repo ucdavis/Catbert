@@ -179,6 +179,7 @@
     <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.jqcascade.js" />
     <Content Include="Scripts\jquery.jqcascade.min.js" />
+    <Content Include="Scripts\UserManagement.js" />
     <Content Include="Scripts\xVal.jquery.validate.js" />
     <Content Include="Public\Message.svc" />
     <Content Include="Public\Role.svc" />
