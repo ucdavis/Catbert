@@ -1,6 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
+using System.Security.Authentication;
 using System.Web.Mvc;
 using Catbert4.Models;
 using Catbert4.Services;
@@ -15,6 +15,7 @@ namespace Catbert4.Controllers
 	/// <summary>
 	/// Controller for the UserManagement class
 	/// </summary>
+    [HandleError(ExceptionType = typeof(AuthenticationException), View = "AuthorizationError")]
 	public class UserManagementController : ApplicationControllerBase
 	{
 		private readonly IRepository<User> _userRepository;

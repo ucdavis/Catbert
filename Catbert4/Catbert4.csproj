@@ -225,6 +225,7 @@
     <Content Include="Views\UserAdministration\Index.aspx" />
     <Content Include="Views\UserAdministration\List.ascx" />
     <Content Include="Views\UserAdministration\Table.aspx" />
+    <Content Include="Views\UserManagement\AuthorizationError.ascx" />
     <Content Include="Views\UserManagement\Manage.aspx" />
     <Content Include="Views\UserManagement\ModifyUserDialog.ascx" />
     <Content Include="Views\UserManagement\NewUserDialog.ascx" />

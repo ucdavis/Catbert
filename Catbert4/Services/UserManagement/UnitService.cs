@@ -1,5 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
+using System.Security.Authentication;
 using Catbert4.Core.Domain;
 using UCDArch.Core.PersistanceSupport;
 
@@ -62,7 +62,7 @@ namespace Catbert4.Services.UserManagement
             }
             else //no roles
             {
-                throw new ArgumentException(string.Format("User {0} does not have access to this application", login));
+                throw new AuthenticationException(string.Format("User {0} does not have access to this application", login));
             }
         }
     }
