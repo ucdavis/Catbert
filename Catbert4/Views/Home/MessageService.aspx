@@ -18,7 +18,11 @@
 
     <button id="get-messages">Get Messages</button>
 
-    <div id="result"></div>
+    <div id="result">
+        <ul id="messages">
+        
+        </ul>
+    </div>
 
 </asp:Content>
 <asp:Content runat="server" ID="Header" ContentPlaceHolderID="HeaderContent">
@@ -29,12 +33,23 @@
 
                 var urlBase = '<%: Url.Content("~/Public/Message.svc") %>';
 
-                $.get(urlBase + '/json/GetMessage',
+                $.get(urlBase + '/json/GetMessages',
                     { appName: "AD419" },
-                    function (result) { console.log(result.d); },
+                    function (result) { ShowMessages(result.d); },
                     'json'
                 );
             });
-        });    
+        });
+
+        function ShowMessages(messages) {
+            var messageList = $("#messages");
+            messageList.html(null); //clear out any old messages
+
+            for (var i = 0; i < messages.length; i++) {
+                var newMessage = $("<li>").html(messages[i].Message);
+
+                messageList.append(newMessage);
+            }
+        }
     </script>    
 </asp:Content>
