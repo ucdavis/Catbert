@@ -15,7 +15,6 @@ namespace Catbert4.Controllers
 	/// <summary>
 	/// Controller for the UserManagement class
 	/// </summary>
-	[Authorize]
 	public class UserManagementController : ApplicationControllerBase
 	{
 		private readonly IRepository<User> _userRepository;
