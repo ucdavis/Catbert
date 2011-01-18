@@ -34,7 +34,7 @@
                 var urlBase = '<%: Url.Content("~/Public/Message.svc") %>';
 
                 $.get(urlBase + '/json/GetMessages',
-                    { appName: "AD419" },
+                    null,
                     function (result) { ShowMessages(result.d); },
                     'json'
                 );

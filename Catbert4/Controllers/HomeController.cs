@@ -38,11 +38,23 @@ namespace Catbert4.Controllers
 
             var messageProxy = messageService.CreateChannel();
 
-            var messages = messageProxy.GetMessages("AD419");
+            var messages = messageProxy.GetMessages(null);
 
             messageService.Close();
 
             return View(messages);
+        }
+
+        public ActionResult RoleService()
+        {
+            string[] users;
+
+            using (var client = new RoleServiceClient(new BasicHttpBinding(), new EndpointAddress(GetAbsoluteUrl("~/Public/Role.svc"))))
+            {
+                users = client.GetUsersInRole("Catbert", "Admin");
+            }
+
+            return Content("User count: " + users.Length);
         }
 
         //
