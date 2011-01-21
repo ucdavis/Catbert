@@ -82,6 +82,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Services" />
+    <Reference Include="System.Data.Services.Client" />
     <Reference Include="System.DirectoryServices.Protocols" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel" />
@@ -147,9 +150,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\CatbertServiceRoleProvider.cs" />
     <Compile Include="Providers\RoleServiceClient.cs" />
+    <Compile Include="Public\CatbertService.svc.cs">
+      <DependentUpon>CatbertService.svc</DependentUpon>
+    </Compile>
     <Compile Include="RouteConfigurator.asax.cs" />
     <Compile Include="Services\AuditInterceptor.cs" />
     <Compile Include="Services\DirectoryService.cs" />
+    <Compile Include="Services\QueryService.cs" />
     <Compile Include="Services\UserManagement\IRoleService.cs" />
     <Compile Include="Services\UserManagement\IUnitService.cs" />
     <Compile Include="Services\UserManagement\IUserService.cs" />
@@ -177,6 +184,7 @@
     <Content Include="Global.asax" />
     <Content Include="Css\Site.css" />
     <Content Include="Images\logo-caes.png" />
+    <Content Include="Public\CatbertService.svc" />
     <Content Include="Scripts\jquery.dataTables.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.jqcascade.js" />

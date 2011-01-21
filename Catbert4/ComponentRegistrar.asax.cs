@@ -23,6 +23,8 @@ namespace Catbert4
             container.AddComponent("dbContext", typeof(IDbContext), typeof(DbContext));
             container.AddComponent("queryExtensionProvider", typeof (IQueryExtensionProvider),
                                    typeof(NHibernateQueryExtensionProvider));
+            container.AddComponent("queryService", typeof(IQueryService),
+                                   typeof(QueryService));
 
             container.AddComponent("userService", typeof (IUserService), typeof (UserService));
             container.AddComponent("unitService", typeof (IUnitService), typeof (UnitService));
