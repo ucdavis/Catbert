@@ -32,7 +32,7 @@
             $("#get-messages").click(function (e) {
                 e.preventDefault();
 
-                var urlBase = '<%: Url.Content("~/Public/Message.svc") %>';
+                var urlBase = '<%: ViewData["serviceUrl"] %>';
 
                 $.get(urlBase + '/json/GetMessages',
                     null,

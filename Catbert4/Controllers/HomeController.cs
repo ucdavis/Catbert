@@ -34,7 +34,7 @@ namespace Catbert4.Controllers
 
         public ActionResult MessageService(string baseUrl)
         {
-            var serviceUrl = string.IsNullOrWhiteSpace(baseUrl) ? GetAbsoluteUrl("~/Public/Message.svc") : baseUrl + "~/Public/Message.svc";
+            var serviceUrl = string.IsNullOrWhiteSpace(baseUrl) ? GetAbsoluteUrl("~/Public/Message.svc") : baseUrl + "/Public/Message.svc";
             ViewData["serviceUrl"] = serviceUrl;
 
             var binding = new BasicHttpBinding();
@@ -118,7 +118,7 @@ namespace Catbert4.Controllers
 
         private string GetAbsoluteUrl(string relative)
         {
-            return string.Format("http://{0}:{1}{2}", Request.Url.Host, Request.Url.Port, Url.Content(relative));
+            return string.Format("{0}://{1}:{2}{3}", Request.Url.Scheme, Request.Url.Host, Request.Url.Port, Url.Content(relative));
         }
     }
 }
