@@ -12,6 +12,7 @@ using Catbert4.Core.Domain;
 using System.Web.Security;
 using IRoleService = Catbert4.Services.Wcf.IRoleService;
 using Microsoft.Practices.ServiceLocation;
+using UCDArch.Core.Utils;
 
 namespace Catbert4.Controllers
 {
@@ -52,11 +53,54 @@ namespace Catbert4.Controllers
             return View(messages);
         }
 
-        public ActionResult RoleService()
+        public ContentResult RoleProvider(string baseUrl, string token)
         {
+            var serviceUrl = string.IsNullOrWhiteSpace(baseUrl) ? GetAbsoluteUrl("~/Public/Role.svc") : baseUrl + "/Public/Role.svc";
+
+            var binding = new BasicHttpBinding();
+            if (serviceUrl.StartsWith("https://")) binding.Security.Mode = BasicHttpSecurityMode.TransportWithMessageCredential;
+
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                token =
+                Repository.OfType<AccessToken>().Queryable.Where(x => x.Application.Name == "Catbert" && x.Active).
+                    Select(x => x.Token).FirstOrDefault();
+            }
+
+            Check.Require(token != null, "No access tokens for catbert found");
+
+            var provider = new CatbertServiceRoleProvider();
+            provider.InitWithoutConfig("Catbert", serviceUrl, token);
+
+            string[] users = provider.GetUsersInRole("Admin");
+            
+            return Content("User count: " + users.Length);
+        }
+
+        public ActionResult RoleService(string baseUrl, string token)
+        {
+            var serviceUrl = string.IsNullOrWhiteSpace(baseUrl) ? GetAbsoluteUrl("~/Public/Role.svc") : baseUrl + "/Public/Role.svc";
+
+            var binding = new BasicHttpBinding();
+            if (serviceUrl.StartsWith("https://")) binding.Security.Mode = BasicHttpSecurityMode.TransportWithMessageCredential;
+
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                token =
+                Repository.OfType<AccessToken>().Queryable.Where(x => x.Application.Name == "Catbert" && x.Active).
+                    Select(x => x.Token).FirstOrDefault();
+            }
+            
+            Check.Require(token != null, "No access tokens for catbert found");
+
+            var client = new RoleServiceClient(binding, new EndpointAddress(serviceUrl));
+            
+            client.ClientCredentials.UserName.UserName = "Catbert";
+            client.ClientCredentials.UserName.Password = token;
+
             string[] users;
 
-            using (var client = new RoleServiceClient(new BasicHttpBinding(BasicHttpSecurityMode.Transport), new EndpointAddress(GetAbsoluteUrl("~/Public/Role.svc"))))
+            using (client)
             {
                 users = client.GetUsersInRole("Catbert", "Admin");
             }

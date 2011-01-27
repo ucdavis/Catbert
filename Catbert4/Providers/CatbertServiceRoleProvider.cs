@@ -98,7 +98,6 @@ namespace Catbert4.Providers
 
         private RoleServiceClient GetClient()
         {
-            /*
             var binding = new BasicHttpBinding
                               {
                                   SendTimeout = TimeSpan.FromMinutes(1),
@@ -113,9 +112,8 @@ namespace Catbert4.Providers
             var client = new RoleServiceClient(binding, endpointAddress);
             client.ClientCredentials.UserName.UserName = ApplicationName;
             client.ClientCredentials.UserName.Password = AuthToken;
-            */
- 
-            return new RoleServiceClient(new BasicHttpBinding(), new EndpointAddress(ServiceUrl));
+
+            return client;
         }
 
         /// <summary>
