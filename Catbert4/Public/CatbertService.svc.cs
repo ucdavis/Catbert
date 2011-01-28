@@ -3,8 +3,7 @@ using System.Data.Services.Common;
 using System.Linq;
 using System.ServiceModel;
 using Catbert4.Core.Service;
-using NHibernate.Linq;
-using UCDArch.Data.NHibernate;
+using UCDArch.Core.Utils;
 using Microsoft.Practices.ServiceLocation;
 using Catbert4.Services;
 
@@ -19,10 +18,10 @@ namespace Catbert4.Public
             var appName = headers["AppName"];
             var token = headers["Token"];
 
-            //Check.Require(!string.IsNullOrWhiteSpace(appName), "Application Name is required to be set. Please ensure you have set an AppSetting called AppName");
-            //Check.Require(!string.IsNullOrWhiteSpace(token), "Token is required to be set. Please ensure you have set an AppSetting called Token");
+            Check.Require(!string.IsNullOrWhiteSpace(appName), "Application Name is required to be set. Please ensure you have set an AppSetting called AppName");
+            Check.Require(!string.IsNullOrWhiteSpace(token), "Token is required to be set. Please ensure you have set an AppSetting called Token");
 
-            base.CurrentDataSource.ApplicationName = appName ?? "HelpRequest"; //TODO: remove after testing
+            //base.CurrentDataSource.ApplicationName = appName ?? "HelpRequest"; //TODO: remove after testing
 
             base.OnStartProcessingRequest(args);
         }
