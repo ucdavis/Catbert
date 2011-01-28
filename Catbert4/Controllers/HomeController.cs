@@ -33,6 +33,15 @@ namespace Catbert4.Controllers
             return View(apps.ToList());
         }
 
+        public ActionResult UserManagementPortal(string application)
+        {
+            Check.Require(application != null);
+            ViewData["Application"] = application;
+            ViewData["ManagementUrl"] = Url.Action("Manage", "UserManagement", new {application});
+            
+            return View();
+        }
+
         public ActionResult MessageService(string baseUrl)
         {
             var serviceUrl = string.IsNullOrWhiteSpace(baseUrl) ? GetAbsoluteUrl("~/Public/Message.svc") : baseUrl + "/Public/Message.svc";

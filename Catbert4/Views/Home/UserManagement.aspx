@@ -26,7 +26,7 @@
     
         <tr>
             <td>
-                <%: Html.ActionLink("Manage", "Manage", "UserManagement", new { application = item.Name }, null) %>
+                <%: Html.ActionLink("Manage", "UserManagementPortal", "Home", new { application = item.Name }, null) %>
             </td>
             <td>
                 <%: item.Name %>
