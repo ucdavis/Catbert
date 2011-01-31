@@ -141,12 +141,12 @@ namespace Catbert4.Controllers
             orderedRoles = orderedRoles ?? new List<string>();
             unorderedRoles = unorderedRoles ?? new List<string>();
 
-            var roles = _roleRepository.Queryable;
+            var allRoles = orderedRoles.Union(unorderedRoles).ToArray();
 
-            if (orderedRoles.Count > 0) roles = roles.Where(x => orderedRoles.Contains(x.Name));
-            if (unorderedRoles.Count > 0) roles = roles.Where(x => unorderedRoles.Contains(x.Name));
-
-            roles.ToList();
+            //Get the roles that we are going to need all at once))
+            var roles = (from r in _roleRepository.Queryable
+                         where (allRoles.Contains(r.Name))
+                                           select r).ToList();
             
             //Now go through the leveled roles and add them in order to the applicationRoles object
             for (var i = 0; i < orderedRoles.Count; i++)
