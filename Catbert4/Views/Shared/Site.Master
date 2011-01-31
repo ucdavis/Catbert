@@ -62,9 +62,9 @@
                 <h1>Catbert 4</h1>
             </div>
               
-            <div id="Div1">
-                &nbsp;
-            </div> 
+            <div id="welcome">
+                <% Html.RenderPartial("LogOnControl"); %>
+            </div>
             
             <div id="menucontainer">
             

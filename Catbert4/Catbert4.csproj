@@ -225,6 +225,7 @@
     <Content Include="Views\Shared\EditorTemplates\EditComplexValues.ascx" />
     <Content Include="Views\Shared\EditorTemplates\Object.ascx" />
     <Content Include="Views\Shared\IncludeDataTables.ascx" />
+    <Content Include="Views\Shared\LogOnControl.ascx" />
     <Content Include="Views\Shared\Message.ascx" />
     <Content Include="Views\Unit\Create.aspx" />
     <Content Include="Views\Unit\Delete.aspx" />
