@@ -349,5 +349,8 @@
     <NotInBuild Include="Schema Comparisons\CompareLocalToDevelopment.scmp">
       <SubType>NotInBuild</SubType>
     </NotInBuild>
+    <NotInBuild Include="Schema Comparisons\CompareDevToTest.scmp">
+      <SubType>NotInBuild</SubType>
+    </NotInBuild>
   </ItemGroup>
 </Project>
