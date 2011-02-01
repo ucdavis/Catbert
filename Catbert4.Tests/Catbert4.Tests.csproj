@@ -74,6 +74,10 @@
   <ItemGroup>
     <Compile Include="ContinuousDeploymentIntegrationHack.cs" />
     <Compile Include="Controllers\HomeControllerTests.cs" />
+    <Compile Include="Controllers\UserManagementControllerTests\UserManagementControllerInit.cs" />
+    <Compile Include="Controllers\UserManagementControllerTests\UserManagementControllerTests1.cs" />
+    <Compile Include="Controllers\UserManagementControllerTests\UserManagementControllerTestsMapping.cs" />
+    <Compile Include="Controllers\UserManagementControllerTests\UserManagementControllerTestsReflection.cs" />
     <Compile Include="Core\AbstractRepositoryTests.cs" />
     <Compile Include="Core\Extensions\AssertExtensions.cs" />
     <Compile Include="Core\Extensions\RouteTestingExtensions.cs" />
