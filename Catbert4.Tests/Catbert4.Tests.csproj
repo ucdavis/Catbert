@@ -87,6 +87,7 @@
     <Compile Include="Repositories\ApplicationRepositoryTests.cs" />
     <Compile Include="Repositories\ApplicationRoleRepositoryTests.cs" />
     <Compile Include="Repositories\AuditRepositoryTests.cs" />
+    <Compile Include="Repositories\MessageRepositoryTests.cs" />
     <Compile Include="Repositories\PermissionRepositoryTests.cs" />
     <Compile Include="Repositories\RoleRepositoryTests.cs" />
     <Compile Include="Repositories\SchoolRepositoryTests.cs" />

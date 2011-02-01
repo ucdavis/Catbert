@@ -155,5 +155,15 @@ namespace Catbert4.Tests.Core.Helpers
 
             return rtValue;
         }
+
+        public static Message Message(int? counter)
+        {
+            var rtValue = new Message();
+            rtValue.Text = "Text" + counter.Extra();
+            rtValue.EndDisplayDate = DateTime.Now.AddDays(10);
+            rtValue.BeginDisplayDate = DateTime.Now;
+
+            return rtValue;
+        }
     }
 }
