@@ -12,7 +12,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
         [TestMethod]
         public void TestManageMapping()
         {
-            "~/UserManagement/Manage/".ShouldMapTo<UserManagementController>(a => a.Manage("application", "role", "unit"), true);
+            "~/UserManagement/Manage/".ShouldMapTo<UserManagementController>(a => a.Manage("application"), true);
         }
 
         #endregion Mapping Tests

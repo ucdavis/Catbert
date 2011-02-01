@@ -103,11 +103,11 @@ namespace Catbert4.Tests.Core.Helpers
             rtValue.Inactive = false;
             if (populateAllFields)
             {
-                rtValue.Email = "test@testy.com";
+                rtValue.Email = string.Format("test{0}@testy.com", counter.Extra());
                 //rtValue.EmployeeId = "x".RepeatTimes(9);
-                rtValue.FirstName = "x".RepeatTimes(50);
-                rtValue.LastName = "x".RepeatTimes(50);
-                //rtValue.Phone = "555-555-5555"; //Not Sure
+                rtValue.FirstName = "FirstName" + counter.Extra();
+                rtValue.LastName = "LastName" + counter.Extra();
+                rtValue.Phone = "+1 530 763 0395"; 
                 //rtValue.StudentId = "x".RepeatTimes(9);
             }
 

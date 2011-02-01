@@ -55,7 +55,7 @@ namespace Catbert4.Controllers
 		//
 		// GET: /UserManagement/Manage/app
 		//Optional:  filter by ?role= and/or ?unit=
-		public ActionResult Manage(string application, string role, string unit)
+		public ActionResult Manage(string application) //, string role, string unit)
 		{
 			var model = UserManagementViewModel.Create(_permissionRepository, _unitAssociationRepository);
 			model.Application = application;
@@ -68,7 +68,8 @@ namespace Catbert4.Controllers
 				_roleService.GetVisibleByUser(application, CurrentUser.Identity.Name).Select(
 					x => new KeyValuePair<int, string>(x.Id, x.Name)).ToList();
 			
-			var users = _userService.GetByApplication(application, CurrentUser.Identity.Name, role, unit).ToList();
+			//var users = _userService.GetByApplication(application, CurrentUser.Identity.Name, role, unit).ToList();
+            var users = _userService.GetByApplication(application, CurrentUser.Identity.Name).ToList();
 			
 			model.ConvertToUserShowModel(users, application);
 
