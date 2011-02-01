@@ -15,6 +15,12 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
             "~/UserManagement/Manage/".ShouldMapTo<UserManagementController>(a => a.Manage("application"), true);
         }
 
+        [TestMethod]
+        public void TestFindUserMapping()
+        {
+            "~/UserManagement/FindUser/".ShouldMapTo<UserManagementController>(a => a.FindUser("tester"), true);
+        }
+
         #endregion Mapping Tests
     }
 }

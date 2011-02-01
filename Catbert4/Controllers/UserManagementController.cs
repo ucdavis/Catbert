@@ -52,9 +52,12 @@ namespace Catbert4.Controllers
 			_directorySearchService = directorySearchService;
 		}
 
-		//
-		// GET: /UserManagement/Manage/app
-		//Optional:  filter by ?role= and/or ?unit=
+        /// <summary>
+        /// GET: /UserManagement/Manage/app
+        /// #1
+        /// </summary>
+        /// <param name="application"></param>
+        /// <returns></returns>
 		public ActionResult Manage(string application) //, string role, string unit)
 		{
 			var model = UserManagementViewModel.Create(_permissionRepository, _unitAssociationRepository);

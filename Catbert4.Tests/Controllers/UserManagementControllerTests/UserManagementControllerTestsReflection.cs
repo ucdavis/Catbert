@@ -168,7 +168,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
         }
 
         [TestMethod]
-        public void TestControllerMethodIndexContainsExpectedAttributes()
+        public void TestControllerMethodManageContainsExpectedAttributes()
         {
             #region Arrange
             var controllerClass = ControllerClass;
