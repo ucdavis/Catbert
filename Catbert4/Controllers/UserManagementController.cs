@@ -79,6 +79,11 @@ namespace Catbert4.Controllers
 			return View(model);
 		}
 
+        /// <summary>
+        /// #2
+        /// </summary>
+        /// <param name="searchTerm"></param>
+        /// <returns></returns>
 		public JsonResult FindUser(string searchTerm)
 		{
 			ServiceUser serviceUser = null;

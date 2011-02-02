@@ -237,6 +237,60 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
             #endregion Assert
         }
 
+        [TestMethod]
+        public void TestManageReturnsView4()
+        {
+            #region Arrange
+            Controller.ControllerContext.HttpContext = new MockHttpContext(1, new[] { "" });
+            ControllerRecordFakes.FakeUnits(3, UnitRepository);
+            UnitService.Expect(a => a.GetVisibleByUser("appName", "UserName")).Return(UnitRepository.GetAll().AsQueryable()).Repeat.Any();
+            ControllerRecordFakes.FakeRoles(3, RoleRepository);
+            RoleService.Expect(a => a.GetVisibleByUser("appName", "UserName")).Return(RoleRepository.GetAll().AsQueryable()).Repeat.Any();
+            ControllerRecordFakes.FakeUsers(3, UserRepository);
+            UserService.Expect(a => a.GetByApplication("appName", "UserName")).Return(UserRepository.Queryable).Repeat.Any();
+            var application = CreateValidEntities.Application(1);
+            application.Name = "appName";
+            var permissions = new List<Permission>();
+            for (int i = 0; i < 4; i++)
+            {
+                permissions.Add(CreateValidEntities.Permission(i + 1));
+                permissions[i].Application = application;
+                permissions[i].User = UserRepository.Queryable.First();
+                permissions[i].Role = RoleRepository.GetNullableById(i + 1);
+            }
+            permissions[1].User = UserRepository.GetNullableById(2);
+            permissions[2].User = UserRepository.GetNullableById(3);
+            permissions[3].Role = RoleRepository.GetNullableById(1);
+            permissions[3].Application = CreateValidEntities.Application(9); // This will cause these permissions to be filtered out
+            ControllerRecordFakes.FakePermissions(0, PermissionRepository, permissions);
+            var unitAssociations = new List<UnitAssociation>();
+            for (int i = 0; i < 4; i++)
+            {
+                unitAssociations.Add(CreateValidEntities.UnitAssociation(i + 1));
+                unitAssociations[i].Application = application;
+                unitAssociations[i].User = UserRepository.Queryable.First();
+                unitAssociations[i].Unit = UnitRepository.GetNullableById(i + 1);
+            }
+            unitAssociations[1].User = UserRepository.GetNullableById(2);
+            unitAssociations[2].User = UserRepository.GetNullableById(3);
+            unitAssociations[2].Application = CreateValidEntities.Application(9); //This one is filtered out
+            unitAssociations[3].Unit = UnitRepository.GetNullableById(1);
+            ControllerRecordFakes.FakeUnitAssociations(0, UnitAssociationRepository, unitAssociations);
+            #endregion Arrange
+
+            #region Act
+            Controller.Manage("appName")
+                .AssertViewRendered()
+                .WithViewData<UserManagementViewModel>();
+            #endregion Act
+
+            #region Assert
+            UnitService.AssertWasCalled(a => a.GetVisibleByUser("appName", "UserName"));
+            RoleService.AssertWasCalled(a => a.GetVisibleByUser("appName", "UserName"));
+            UserService.AssertWasCalled(a => a.GetByApplication("appName", "UserName"));
+            #endregion Assert
+        }
+
 
         #endregion Manage Tests
     }

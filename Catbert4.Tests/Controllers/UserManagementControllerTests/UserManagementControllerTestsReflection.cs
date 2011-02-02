@@ -163,16 +163,41 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
 
             #region Assert
             Assert.Inconclusive("Still wring tests");
-            Assert.AreEqual(1, result.Count(), "It looks like a method was added or removed from the controller.");
+            Assert.AreEqual(2, result.Count(), "It looks like a method was added or removed from the controller.");
             #endregion Assert
         }
 
+        /// <summary>
+        /// #1
+        /// </summary>
         [TestMethod]
         public void TestControllerMethodManageContainsExpectedAttributes()
         {
             #region Arrange
             var controllerClass = ControllerClass;
             var controllerMethod = controllerClass.GetMethod("Manage");
+            #endregion Arrange
+
+            #region Act
+            //var expectedAttribute = controllerMethod.GetCustomAttributes(true).OfType<HandleTransactionsManuallyAttribute>();
+            var allAttributes = controllerMethod.GetCustomAttributes(true);
+            #endregion Act
+
+            #region Assert
+            //Assert.AreEqual(1, expectedAttribute.Count(), "HandleTransactionsManuallyAttribute not found");
+            Assert.AreEqual(0, allAttributes.Count(), "More than expected custom attributes found.");
+            #endregion Assert
+        }
+
+        /// <summary>
+        /// #2
+        /// </summary>
+        [TestMethod]
+        public void TestControllerMethodFindUserContainsExpectedAttributes()
+        {
+            #region Arrange
+            var controllerClass = ControllerClass;
+            var controllerMethod = controllerClass.GetMethod("FindUser");
             #endregion Arrange
 
             #region Act

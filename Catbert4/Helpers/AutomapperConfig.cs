@@ -9,7 +9,7 @@ namespace Catbert4.Helpers
     {
         public static void Configure()
         {
-            Mapper.Initialize(cfg => cfg.AddProfile<ViewModelProfile>());
+            Mapper.Initialize(cfg => cfg.AddProfile<ViewModelProfile>());            
         }
     }
 

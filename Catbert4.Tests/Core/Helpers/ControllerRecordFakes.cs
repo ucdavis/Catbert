@@ -210,5 +210,45 @@ namespace Catbert4.Tests.Core.Helpers
             repository.Expect(a => a.Queryable).Return(records.AsQueryable()).Repeat.Any();
             repository.Expect(a => a.GetAll()).Return(records).Repeat.Any();
         }
+
+        public static void FakeApplications(int count, IRepository<Application> repository)
+        {
+            var records = new List<Application>();
+            FakeApplications(count, repository, records);
+        }
+
+        public static void FakeApplications(int count, IRepository<Application> repository, List<Application> specificRecords)
+        {
+            var records = new List<Application>();
+            var specificRecordsCount = 0;
+            if (specificRecords != null)
+            {
+                specificRecordsCount = specificRecords.Count;
+                for (int i = 0; i < specificRecordsCount; i++)
+                {
+                    records.Add(specificRecords[i]);
+                }
+            }
+
+            for (int i = 0; i < count; i++)
+            {
+                records.Add(CreateValidEntities.Application(i + specificRecordsCount + 1));
+            }
+
+            var totalCount = records.Count;
+            for (int i = 0; i < totalCount; i++)
+            {
+                records[i].SetIdTo(i + 1);
+                int i1 = i;
+                repository
+                    .Expect(a => a.GetNullableById(i1 + 1))
+                    .Return(records[i])
+                    .Repeat
+                    .Any();
+            }
+            repository.Expect(a => a.GetNullableById(totalCount + 1)).Return(null).Repeat.Any();
+            repository.Expect(a => a.Queryable).Return(records.AsQueryable()).Repeat.Any();
+            repository.Expect(a => a.GetAll()).Return(records).Repeat.Any();
+        }
     }
 }

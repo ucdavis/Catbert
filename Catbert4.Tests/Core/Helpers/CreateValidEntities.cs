@@ -165,5 +165,19 @@ namespace Catbert4.Tests.Core.Helpers
 
             return rtValue;
         }
+
+        public static Models.ServiceUser ServiceUser(int? counter)
+        {
+            var rtValue = new Models.ServiceUser();
+            rtValue.Email = string.Format("test{0}@testy.com", counter.Extra());
+            rtValue.FirstName = "FirstName" + counter.Extra();
+            rtValue.LastName = "LastName" + counter.Extra();
+            rtValue.Login = "LoginId" + counter.Extra();
+            rtValue.Phone = "+1 530 755 7777";
+            rtValue.Roles = null;
+            rtValue.Units = null;
+
+            return rtValue;
+        }
     }
 }
