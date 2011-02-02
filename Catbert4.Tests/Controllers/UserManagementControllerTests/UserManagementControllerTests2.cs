@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
-using AutoMapper;
 using Catbert4.Controllers;
 using Catbert4.Core.Domain;
 using Catbert4.Helpers;
@@ -127,7 +126,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
             Assert.Inconclusive("Finish this test");
             const string applicationName = "Name2";
             ControllerRecordFakes.FakeUsers(3, UserRepository);
-            Mapper.Initialize(cfg => cfg.AddProfile<ViewModelProfile>());
+   
             var serviceUser = CreateValidEntities.ServiceUser(4);
             ControllerRecordFakes.FakeApplications(3, ApplicationRepository);
             #endregion Arrange
