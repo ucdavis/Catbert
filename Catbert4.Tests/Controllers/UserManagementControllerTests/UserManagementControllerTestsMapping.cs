@@ -62,6 +62,15 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
         {
             "~/UserManagement/AddUnit/".ShouldMapTo<UserManagementController>(a => a.AddUnit("appName", "login", 5), true);
         }
+       
+        /// <summary>
+        /// #7
+        /// </summary>
+        [TestMethod]
+        public void TestRemovePermissionMapping()
+        {
+            "~/UserManagement/RemovePermission/".ShouldMapTo<UserManagementController>(a => a.RemovePermission("appName", "login", 5), true);
+        }
         #endregion Mapping Tests
     }
 }

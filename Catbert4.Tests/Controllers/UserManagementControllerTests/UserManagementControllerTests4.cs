@@ -1,20 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.Mvc;
-using Catbert4.Controllers;
 using Catbert4.Core.Domain;
-using Catbert4.Helpers;
-using Catbert4.Models;
-using Catbert4.Services;
 using Catbert4.Tests.Core.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Catbert4.Tests.Core.Extensions;
-using MvcContrib.TestHelper;
-using UCDArch.Web.ActionResults;
-using UCDArch.Web.Attributes;
-using Rhino;
 using Rhino.Mocks;
 
 namespace Catbert4.Tests.Controllers.UserManagementControllerTests
@@ -194,5 +182,252 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
 
 
         #endregion AddUnit Tests
+
+        #region RemovePermission Tests
+
+        [TestMethod]
+        public void TestRemovePermission()
+        {
+            #region Arrange
+            Controller.ControllerContext.HttpContext = new MockHttpContext(1, new[] { "" });
+            ControllerRecordFakes.FakeApplications(3, ApplicationRepository);
+            ControllerRecordFakes.FakeUsers(3, UserRepository);
+            ControllerRecordFakes.FakeRoles(5, RoleRepository);
+            var permissions = new List<Permission>();
+            for (int i = 0; i < 3; i++)
+            {
+                permissions.Add(CreateValidEntities.Permission(i+1));
+                permissions[i].User = UserRepository.GetNullableById(1);
+                permissions[i].Application = ApplicationRepository.GetNullableById(2);
+                permissions[i].Role = RoleRepository.GetNullableById(i + 1);
+            }
+            permissions[1].Role = RoleRepository.GetNullableById(4);
+            ControllerRecordFakes.FakePermissions(1, PermissionRepository, permissions);
+            UserService.Expect(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1")).Return(true).Repeat.Any();
+            PermissionRepository.Expect(a => a.Remove(Arg<Permission>.Is.Anything)).Repeat.Any();
+            #endregion Arrange
+
+            #region Act
+            Controller.RemovePermission("Name2", "LoginId1", 4);
+            #endregion Act
+
+            #region Assert
+            UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1"));
+            PermissionRepository.AssertWasCalled(a => a.Remove(Arg<Permission>.Is.Anything));
+            var args = (Permission) PermissionRepository.GetArgumentsForCallsMadeOn(a => a.Remove(Arg<Permission>.Is.Anything))[0][0]; 
+            Assert.IsNotNull(args);
+            Assert.AreEqual("Name4", args.Role.Name);
+            Assert.AreEqual("LoginId1", args.User.LoginId);
+            Assert.AreEqual("Name2", args.Application.ToString());
+            #endregion Assert		
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UCDArch.Core.Utils.PreconditionException))]
+        public void TestRemovePermissionThrowsExceptionIfCurrentUserDoesNotHaveRights()
+        {
+            try
+            {
+                #region Arrange
+                Controller.ControllerContext.HttpContext = new MockHttpContext(1, new[] { "" });
+                ControllerRecordFakes.FakeApplications(3, ApplicationRepository);
+                ControllerRecordFakes.FakeUsers(3, UserRepository);
+                ControllerRecordFakes.FakeRoles(5, RoleRepository);
+                var permissions = new List<Permission>();
+                for (int i = 0; i < 3; i++)
+                {
+                    permissions.Add(CreateValidEntities.Permission(i + 1));
+                    permissions[i].User = UserRepository.GetNullableById(1);
+                    permissions[i].Application = ApplicationRepository.GetNullableById(2);
+                    permissions[i].Role = RoleRepository.GetNullableById(i + 1);
+                }
+                permissions[1].Role = RoleRepository.GetNullableById(4);
+                ControllerRecordFakes.FakePermissions(1, PermissionRepository, permissions);
+                UserService.Expect(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1")).Return(false).Repeat.Any();
+                PermissionRepository.Expect(a => a.Remove(Arg<Permission>.Is.Anything)).Repeat.Any();
+                #endregion Arrange
+
+                #region Act
+                Controller.RemovePermission("Name2", "LoginId1", 4);
+                #endregion Act
+            }
+            catch (Exception ex)
+            {
+                #region Assert
+                Assert.IsNotNull(ex);
+                Assert.AreEqual("UserName does not have access to manage LoginId1 within the Name2 application", ex.Message);
+                UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1"));
+                PermissionRepository.AssertWasNotCalled(a => a.Remove(Arg<Permission>.Is.Anything));
+                #endregion Assert
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void TestRemovePermissionThrowsExceptionPermissionNotUnique()
+        {
+            try
+            {
+                #region Arrange
+                Controller.ControllerContext.HttpContext = new MockHttpContext(1, new[] { "" });                
+                ControllerRecordFakes.FakeApplications(3, ApplicationRepository);
+                ControllerRecordFakes.FakeUsers(3, UserRepository);
+                ControllerRecordFakes.FakeRoles(5, RoleRepository);
+                var permissions = new List<Permission>();
+                for (int i = 0; i < 3; i++)
+                {
+                    permissions.Add(CreateValidEntities.Permission(i + 1));
+                    permissions[i].User = UserRepository.GetNullableById(1);
+                    permissions[i].Application = ApplicationRepository.GetNullableById(2);
+                    permissions[i].Role = RoleRepository.GetNullableById(i + 1);
+                }
+                permissions[1].Role = RoleRepository.GetNullableById(1);
+
+                ControllerRecordFakes.FakePermissions(1, PermissionRepository, permissions);
+                UserService.Expect(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1")).Return(true).Repeat.Any();
+                PermissionRepository.Expect(a => a.Remove(Arg<Permission>.Is.Anything)).Repeat.Any();
+                #endregion Arrange
+
+                #region Act
+                Controller.RemovePermission("Name2", "LoginId1", 1);
+                #endregion Act
+            }
+            catch (Exception ex)
+            {
+                #region Assert
+                Assert.IsNotNull(ex);
+                Assert.AreEqual("Sequence contains more than one element", ex.Message);
+                UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1"));
+                PermissionRepository.AssertWasNotCalled(a => a.Remove(Arg<Permission>.Is.Anything));
+                #endregion Assert
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void TestRemovePermissionThrowsExceptionPermissionNotFound1()
+        {
+            try
+            {
+                #region Arrange
+                Controller.ControllerContext.HttpContext = new MockHttpContext(1, new[] { "" });
+                ControllerRecordFakes.FakeApplications(3, ApplicationRepository);
+                ControllerRecordFakes.FakeUsers(3, UserRepository);
+                ControllerRecordFakes.FakeRoles(5, RoleRepository);
+                var permissions = new List<Permission>();
+                for (int i = 0; i < 3; i++)
+                {
+                    permissions.Add(CreateValidEntities.Permission(i + 1));
+                    permissions[i].User = UserRepository.GetNullableById(1);
+                    permissions[i].Application = ApplicationRepository.GetNullableById(2);
+                    permissions[i].Role = RoleRepository.GetNullableById(i + 1);
+                }
+
+                ControllerRecordFakes.FakePermissions(1, PermissionRepository, permissions);
+                UserService.Expect(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1")).Return(true).Repeat.Any();
+                PermissionRepository.Expect(a => a.Remove(Arg<Permission>.Is.Anything)).Repeat.Any();
+                #endregion Arrange
+
+                #region Act
+                Controller.RemovePermission("Name2", "LoginId1", 4);
+                #endregion Act
+            }
+            catch (Exception ex)
+            {
+                #region Assert
+                Assert.IsNotNull(ex);
+                Assert.AreEqual("Sequence contains no elements", ex.Message);
+                UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1"));
+                PermissionRepository.AssertWasNotCalled(a => a.Remove(Arg<Permission>.Is.Anything));
+                #endregion Assert
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void TestRemovePermissionThrowsExceptionPermissionNotFound2()
+        {
+            try
+            {
+                #region Arrange
+                Controller.ControllerContext.HttpContext = new MockHttpContext(1, new[] { "" });
+                ControllerRecordFakes.FakeApplications(3, ApplicationRepository);
+                ControllerRecordFakes.FakeUsers(3, UserRepository);
+                ControllerRecordFakes.FakeRoles(5, RoleRepository);
+                var permissions = new List<Permission>();
+                for (int i = 0; i < 3; i++)
+                {
+                    permissions.Add(CreateValidEntities.Permission(i + 1));
+                    permissions[i].User = UserRepository.GetNullableById(1);
+                    permissions[i].Application = ApplicationRepository.GetNullableById(3); //Not Found
+                    permissions[i].Role = RoleRepository.GetNullableById(i + 1);
+                }
+
+                ControllerRecordFakes.FakePermissions(1, PermissionRepository, permissions);
+                UserService.Expect(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1")).Return(true).Repeat.Any();
+                PermissionRepository.Expect(a => a.Remove(Arg<Permission>.Is.Anything)).Repeat.Any();
+                #endregion Arrange
+
+                #region Act
+                Controller.RemovePermission("Name2", "LoginId1", 2);
+                #endregion Act
+            }
+            catch (Exception ex)
+            {
+                #region Assert
+                Assert.IsNotNull(ex);
+                Assert.AreEqual("Sequence contains no elements", ex.Message);
+                UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1"));
+                PermissionRepository.AssertWasNotCalled(a => a.Remove(Arg<Permission>.Is.Anything));
+                #endregion Assert
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void TestRemovePermissionThrowsExceptionPermissionNotFound3()
+        {
+            try
+            {
+                #region Arrange
+                Controller.ControllerContext.HttpContext = new MockHttpContext(1, new[] { "" });
+                ControllerRecordFakes.FakeApplications(3, ApplicationRepository);
+                ControllerRecordFakes.FakeUsers(3, UserRepository);
+                ControllerRecordFakes.FakeRoles(5, RoleRepository);
+                var permissions = new List<Permission>();
+                for (int i = 0; i < 3; i++)
+                {
+                    permissions.Add(CreateValidEntities.Permission(i + 1));
+                    permissions[i].User = UserRepository.GetNullableById(3); //Not Found
+                    permissions[i].Application = ApplicationRepository.GetNullableById(2); 
+                    permissions[i].Role = RoleRepository.GetNullableById(i + 1);
+                }
+
+                ControllerRecordFakes.FakePermissions(1, PermissionRepository, permissions);
+                UserService.Expect(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1")).Return(true).Repeat.Any();
+                PermissionRepository.Expect(a => a.Remove(Arg<Permission>.Is.Anything)).Repeat.Any();
+                #endregion Arrange
+
+                #region Act
+                Controller.RemovePermission("Name2", "LoginId1", 2);
+                #endregion Act
+            }
+            catch (Exception ex)
+            {
+                #region Assert
+                Assert.IsNotNull(ex);
+                Assert.AreEqual("Sequence contains no elements", ex.Message);
+                UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1"));
+                PermissionRepository.AssertWasNotCalled(a => a.Remove(Arg<Permission>.Is.Anything));
+                #endregion Assert
+                throw;
+            }
+        }
+
+        #endregion RemovePermission Tests
     }
 }
