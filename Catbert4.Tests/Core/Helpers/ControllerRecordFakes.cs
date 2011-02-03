@@ -45,6 +45,11 @@ namespace Catbert4.Tests.Core.Helpers
                     .Return(records[i])
                     .Repeat
                     .Any();
+                repository
+                    .Expect(a => a.GetById(i1 + 1))
+                    .Return(records[i])
+                    .Repeat
+                    .Any();
             }
             repository.Expect(a => a.GetNullableById(totalCount + 1)).Return(null).Repeat.Any();
             repository.Expect(a => a.Queryable).Return(records.AsQueryable()).Repeat.Any();
@@ -82,6 +87,11 @@ namespace Catbert4.Tests.Core.Helpers
                 int i1 = i;
                 repository
                     .Expect(a => a.GetNullableById(i1 + 1))
+                    .Return(records[i])
+                    .Repeat
+                    .Any();
+                repository
+                    .Expect(a => a.GetById(i1 + 1))
                     .Return(records[i])
                     .Repeat
                     .Any();

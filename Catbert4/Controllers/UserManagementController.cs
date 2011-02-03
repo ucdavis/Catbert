@@ -95,6 +95,14 @@ namespace Catbert4.Controllers
 			return Json(serviceUser, JsonRequestBehavior.AllowGet);
 		}
 
+        /// <summary>
+        /// #3
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="serviceUser"></param>
+        /// <param name="roleId"></param>
+        /// <param name="unitId"></param>
+        /// <returns></returns>
 		[HttpPost]
 		public JsonResult InsertNewUser(string application, ServiceUser serviceUser, int roleId, int unitId)
 		{
