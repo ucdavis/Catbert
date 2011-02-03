@@ -1,20 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Web.Mvc;
-using Catbert4.Controllers;
 using Catbert4.Core.Domain;
 using Catbert4.Helpers;
 using Catbert4.Models;
-using Catbert4.Services;
 using Catbert4.Tests.Core.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Catbert4.Tests.Core.Extensions;
 using MvcContrib.TestHelper;
-using UCDArch.Web.ActionResults;
-using UCDArch.Web.Attributes;
-using Rhino;
 using Rhino.Mocks;
 
 namespace Catbert4.Tests.Controllers.UserManagementControllerTests
@@ -168,5 +161,252 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
 
 
         #endregion LoadUser Tests
+
+        #region RemoveUnit Tests
+
+        [TestMethod]
+        public void TestRemoveUnit()
+        {
+            #region Arrange
+            Controller.ControllerContext.HttpContext = new MockHttpContext(1, new[] {""});
+            ControllerRecordFakes.FakeApplications(3, ApplicationRepository);
+            ControllerRecordFakes.FakeUnits(3, UnitRepository);
+            ControllerRecordFakes.FakeUsers(3, UserRepository);
+
+            var unitAssociations = new List<UnitAssociation>();
+            for (int i = 0; i < 3; i++)
+            {
+                unitAssociations.Add(CreateValidEntities.UnitAssociation(i+1));
+                unitAssociations[i].Application = ApplicationRepository.GetNullableById(2);
+                unitAssociations[i].User = UserRepository.GetNullableById(1);
+                unitAssociations[i].Unit = UnitRepository.GetNullableById(i + 1);
+            }
+            ControllerRecordFakes.FakeUnitAssociations(2, UnitAssociationRepository, unitAssociations);
+            UserService.Expect(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1")).Return(true).Repeat.Any();
+            #endregion Arrange
+
+            #region Act
+            Controller.RemoveUnit("Name2", "LoginId1", 2);
+            #endregion Act
+
+            #region Assert
+            UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1"));
+            UnitAssociationRepository.AssertWasCalled(a => a.Remove(Arg<UnitAssociation>.Is.Anything));
+            var args = (UnitAssociation) UnitAssociationRepository.GetArgumentsForCallsMadeOn(a => a.Remove(Arg<UnitAssociation>.Is.Anything))[0][0]; 
+            Assert.AreEqual(2, args.Id);
+            Assert.AreEqual("ShortName2", args.Unit.ShortName);
+            Assert.AreEqual("LoginId1", args.User.LoginId);
+            Assert.AreEqual("Name2", args.Application.ToString());
+            #endregion Assert		
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UCDArch.Core.Utils.PreconditionException))]
+        public void TestRemoveUnitThrowsExceptionIfCurrentUserDoesNotHaveAccess()
+        {
+            try
+            {
+                #region Arrange
+                Controller.ControllerContext.HttpContext = new MockHttpContext(1, new[] { "" });
+                ControllerRecordFakes.FakeApplications(3, ApplicationRepository);
+                ControllerRecordFakes.FakeUnits(3, UnitRepository);
+                ControllerRecordFakes.FakeUsers(3, UserRepository);
+
+                var unitAssociations = new List<UnitAssociation>();
+                for (int i = 0; i < 3; i++)
+                {
+                    unitAssociations.Add(CreateValidEntities.UnitAssociation(i + 1));
+                    unitAssociations[i].Application = ApplicationRepository.GetNullableById(2);
+                    unitAssociations[i].User = UserRepository.GetNullableById(1);
+                    unitAssociations[i].Unit = UnitRepository.GetNullableById(i + 1);
+                }
+                ControllerRecordFakes.FakeUnitAssociations(2, UnitAssociationRepository, unitAssociations);
+                UserService.Expect(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1")).Return(false).Repeat.Any();
+                #endregion Arrange
+
+                #region Act
+                Controller.RemoveUnit("Name2", "LoginId1", 2);
+                #endregion Act
+            }
+            catch (Exception ex)
+            {
+                #region Assert
+                Assert.IsNotNull(ex);
+                Assert.AreEqual("UserName does not have access to manage LoginId1 within the Name2 application", ex.Message);
+                UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1"));
+                UnitAssociationRepository.AssertWasNotCalled(a => a.Remove(Arg<UnitAssociation>.Is.Anything));
+                #endregion Assert
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void TestRemoveUnitThrowsExceptionIfRecordNotFound1()
+        {
+            try
+            {
+                #region Arrange
+                Controller.ControllerContext.HttpContext = new MockHttpContext(1, new[] { "" });
+                ControllerRecordFakes.FakeApplications(3, ApplicationRepository);
+                ControllerRecordFakes.FakeUnits(3, UnitRepository);
+                ControllerRecordFakes.FakeUsers(3, UserRepository);
+
+                var unitAssociations = new List<UnitAssociation>();
+                for (int i = 0; i < 3; i++)
+                {
+                    unitAssociations.Add(CreateValidEntities.UnitAssociation(i + 1));
+                    unitAssociations[i].Application = ApplicationRepository.GetNullableById(2);
+                    unitAssociations[i].User = UserRepository.GetNullableById(1);
+                    unitAssociations[i].Unit = UnitRepository.GetNullableById(i + 1);
+                }
+                ControllerRecordFakes.FakeUnitAssociations(2, UnitAssociationRepository, unitAssociations);
+                UserService.Expect(a => a.CanUserManageGivenLogin("Name3", "UserName", "LoginId1")).Return(true).Repeat.Any();
+                #endregion Arrange
+
+                #region Act
+                Controller.RemoveUnit("Name3", "LoginId1", 2);
+                #endregion Act
+            }
+            catch (Exception ex)
+            {
+                #region Assert
+                Assert.IsNotNull(ex);
+                Assert.AreEqual("Sequence contains no elements", ex.Message);
+                UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name3", "UserName", "LoginId1"));
+                UnitAssociationRepository.AssertWasNotCalled(a => a.Remove(Arg<UnitAssociation>.Is.Anything));
+                #endregion Assert
+                throw;
+            }
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void TestRemoveUnitThrowsExceptionIfRecordNotFound2()
+        {
+            try
+            {
+                #region Arrange
+                Controller.ControllerContext.HttpContext = new MockHttpContext(1, new[] { "" });
+                ControllerRecordFakes.FakeApplications(3, ApplicationRepository);
+                ControllerRecordFakes.FakeUnits(3, UnitRepository);
+                ControllerRecordFakes.FakeUsers(3, UserRepository);
+
+                var unitAssociations = new List<UnitAssociation>();
+                for (int i = 0; i < 3; i++)
+                {
+                    unitAssociations.Add(CreateValidEntities.UnitAssociation(i + 1));
+                    unitAssociations[i].Application = ApplicationRepository.GetNullableById(2);
+                    unitAssociations[i].User = UserRepository.GetNullableById(1);
+                    unitAssociations[i].Unit = UnitRepository.GetNullableById(i + 1);
+                }
+                ControllerRecordFakes.FakeUnitAssociations(2, UnitAssociationRepository, unitAssociations);
+                UserService.Expect(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId2")).Return(true).Repeat.Any();
+                #endregion Arrange
+
+                #region Act
+                Controller.RemoveUnit("Name2", "LoginId2", 2);
+                #endregion Act
+            }
+            catch (Exception ex)
+            {
+                #region Assert
+                Assert.IsNotNull(ex);
+                Assert.AreEqual("Sequence contains no elements", ex.Message);
+                UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId2"));
+                UnitAssociationRepository.AssertWasNotCalled(a => a.Remove(Arg<UnitAssociation>.Is.Anything));
+                #endregion Assert
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void TestRemoveUnitThrowsExceptionIfRecordNotFound3()
+        {
+            try
+            {
+                #region Arrange
+                Controller.ControllerContext.HttpContext = new MockHttpContext(1, new[] { "" });
+                ControllerRecordFakes.FakeApplications(3, ApplicationRepository);
+                ControllerRecordFakes.FakeUnits(3, UnitRepository);
+                ControllerRecordFakes.FakeUsers(3, UserRepository);
+
+                var unitAssociations = new List<UnitAssociation>();
+                for (int i = 0; i < 3; i++)
+                {
+                    unitAssociations.Add(CreateValidEntities.UnitAssociation(i + 1));
+                    unitAssociations[i].Application = ApplicationRepository.GetNullableById(2);
+                    unitAssociations[i].User = UserRepository.GetNullableById(1);
+                    unitAssociations[i].Unit = UnitRepository.GetNullableById(i + 1);
+                }
+                ControllerRecordFakes.FakeUnitAssociations(2, UnitAssociationRepository, unitAssociations);
+                UserService.Expect(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1")).Return(true).Repeat.Any();
+                #endregion Arrange
+
+                #region Act
+                Controller.RemoveUnit("Name2", "LoginId1", 7);
+                #endregion Act
+            }
+            catch (Exception ex)
+            {
+                #region Assert
+                Assert.IsNotNull(ex);
+                Assert.AreEqual("Sequence contains no elements", ex.Message);
+                UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1"));
+                UnitAssociationRepository.AssertWasNotCalled(a => a.Remove(Arg<UnitAssociation>.Is.Anything));
+                #endregion Assert
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void TestRemoveUnitThrowsExceptionIfRecordNotFound4()
+        {
+            try
+            {
+                #region Arrange
+                Controller.ControllerContext.HttpContext = new MockHttpContext(1, new[] { "" });
+                ControllerRecordFakes.FakeApplications(3, ApplicationRepository);
+                ControllerRecordFakes.FakeUnits(3, UnitRepository);
+                ControllerRecordFakes.FakeUsers(3, UserRepository);
+
+                var unitAssociations = new List<UnitAssociation>();
+                for (int i = 0; i < 3; i++)
+                {
+                    unitAssociations.Add(CreateValidEntities.UnitAssociation(i + 1));
+                    unitAssociations[i].Application = ApplicationRepository.GetNullableById(2);
+                    unitAssociations[i].User = UserRepository.GetNullableById(1);
+                    unitAssociations[i].Unit = UnitRepository.GetNullableById(i + 1);
+                }
+                unitAssociations.Add(CreateValidEntities.UnitAssociation(4)); 
+                unitAssociations[3].Application = ApplicationRepository.GetNullableById(2);
+                unitAssociations[3].User = UserRepository.GetNullableById(1);
+                unitAssociations[3].Unit = UnitRepository.GetNullableById(2); //Duplicate
+
+                ControllerRecordFakes.FakeUnitAssociations(2, UnitAssociationRepository, unitAssociations);
+                UserService.Expect(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1")).Return(true).Repeat.Any();
+                #endregion Arrange
+
+                #region Act
+                Controller.RemoveUnit("Name2", "LoginId1", 2);
+                #endregion Act
+            }
+            catch (Exception ex)
+            {
+                #region Assert
+                Assert.IsNotNull(ex);
+                Assert.AreEqual("Sequence contains more than one element", ex.Message);
+                UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1"));
+                UnitAssociationRepository.AssertWasNotCalled(a => a.Remove(Arg<UnitAssociation>.Is.Anything));
+                #endregion Assert
+                throw;
+            }
+        }
+
+
+        #endregion RemoveUnit Tests
     }
 }

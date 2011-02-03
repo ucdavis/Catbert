@@ -255,6 +255,28 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
             #endregion Assert
         }
 
+        /// <summary>
+        /// #5
+        /// </summary>
+        [TestMethod]
+        public void TestControllerMethodRemoveUnitContainsExpectedAttributes()
+        {
+            #region Arrange
+            var controllerClass = ControllerClass;
+            var controllerMethod = controllerClass.GetMethod("RemoveUnit");
+            #endregion Arrange
+
+            #region Act
+            var expectedAttribute = controllerMethod.GetCustomAttributes(true).OfType<HttpPostAttribute>();
+            var allAttributes = controllerMethod.GetCustomAttributes(true);
+            #endregion Act
+
+            #region Assert
+            Assert.AreEqual(1, expectedAttribute.Count(), "HttpPostAttribute not found");
+            Assert.AreEqual(1, allAttributes.Count(), "More than expected custom attributes found.");
+            #endregion Assert
+        }
+
         #endregion Controller Method Tests
 
         #endregion Reflection
