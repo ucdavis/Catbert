@@ -15,24 +15,24 @@ namespace Catbert4.Controllers
 	/// <summary>
 	/// Controller for the UserManagement class
 	/// </summary>
-    [HandleError(ExceptionType = typeof(AuthenticationException), View = "AuthorizationError")]
+	[HandleError(ExceptionType = typeof(AuthenticationException), View = "AuthorizationError")]
 	public class UserManagementController : ApplicationControllerBase
 	{
 		private readonly IRepository<User> _userRepository;
-	    private readonly IRepository<Application> _applicationRepository;
-	    private readonly IRepository<Unit> _unitRepository;
-	    private readonly IRepository<Role> _roleRepository;
-	    private readonly IRepository<Permission> _permissionRepository;
+		private readonly IRepository<Application> _applicationRepository;
+		private readonly IRepository<Unit> _unitRepository;
+		private readonly IRepository<Role> _roleRepository;
+		private readonly IRepository<Permission> _permissionRepository;
 		private readonly IRepository<UnitAssociation> _unitAssociationRepository;
-	    private readonly IUserService _userService;
+		private readonly IUserService _userService;
 		private readonly IUnitService _unitService;
 		private readonly IRoleService _roleService;
 		private readonly IDirectorySearchService _directorySearchService;
 
 		public UserManagementController(IRepository<User> userRepository, 
-            IRepository<Application> applicationRepository,
-            IRepository<Unit> unitRepository,
-            IRepository<Role> roleRepository,
+			IRepository<Application> applicationRepository,
+			IRepository<Unit> unitRepository,
+			IRepository<Role> roleRepository,
 			IRepository<Permission> permissionRepository,
 			IRepository<UnitAssociation> unitAssociationRepository,
 			IUserService userService, 
@@ -41,23 +41,23 @@ namespace Catbert4.Controllers
 			IDirectorySearchService directorySearchService)
 		{
 			_userRepository = userRepository;
-		    _applicationRepository = applicationRepository;
-		    _unitRepository = unitRepository;
-		    _roleRepository = roleRepository;
-		    _permissionRepository = permissionRepository;
+			_applicationRepository = applicationRepository;
+			_unitRepository = unitRepository;
+			_roleRepository = roleRepository;
+			_permissionRepository = permissionRepository;
 			_unitAssociationRepository = unitAssociationRepository;
-		    _userService = userService;
+			_userService = userService;
 			_unitService = unitService;
 			_roleService = roleService;
 			_directorySearchService = directorySearchService;
 		}
 
-        /// <summary>
-        /// GET: /UserManagement/Manage/app
-        /// #1
-        /// </summary>
-        /// <param name="application"></param>
-        /// <returns></returns>
+		/// <summary>
+		/// GET: /UserManagement/Manage/app
+		/// #1
+		/// </summary>
+		/// <param name="application"></param>
+		/// <returns></returns>
 		public ActionResult Manage(string application) //, string role, string unit)
 		{
 			var model = UserManagementViewModel.Create(_permissionRepository, _unitAssociationRepository);
@@ -72,18 +72,18 @@ namespace Catbert4.Controllers
 					x => new KeyValuePair<int, string>(x.Id, x.Name)).ToList();
 			
 			//var users = _userService.GetByApplication(application, CurrentUser.Identity.Name, role, unit).ToList();
-            var users = _userService.GetByApplication(application, CurrentUser.Identity.Name).ToList();
+			var users = _userService.GetByApplication(application, CurrentUser.Identity.Name).ToList();
 			
 			model.ConvertToUserShowModel(users, application);
 
 			return View(model);
 		}
 
-        /// <summary>
-        /// #2
-        /// </summary>
-        /// <param name="searchTerm"></param>
-        /// <returns></returns>
+		/// <summary>
+		/// #2
+		/// </summary>
+		/// <param name="searchTerm"></param>
+		/// <returns></returns>
 		public JsonResult FindUser(string searchTerm)
 		{
 			ServiceUser serviceUser = null;
@@ -95,14 +95,14 @@ namespace Catbert4.Controllers
 			return Json(serviceUser, JsonRequestBehavior.AllowGet);
 		}
 
-        /// <summary>
-        /// #3
-        /// </summary>
-        /// <param name="application"></param>
-        /// <param name="serviceUser"></param>
-        /// <param name="roleId"></param>
-        /// <param name="unitId"></param>
-        /// <returns></returns>
+		/// <summary>
+		/// #3
+		/// </summary>
+		/// <param name="application"></param>
+		/// <param name="serviceUser"></param>
+		/// <param name="roleId"></param>
+		/// <param name="unitId"></param>
+		/// <returns></returns>
 		[HttpPost]
 		public JsonResult InsertNewUser(string application, ServiceUser serviceUser, int roleId, int unitId)
 		{
@@ -114,7 +114,7 @@ namespace Catbert4.Controllers
 				InsertNewUser(user);
 			}
 
-		    var app = GetApplication(application);
+			var app = GetApplication(application);
 			var role = _roleRepository.GetById(roleId);
 			var unit = _unitRepository.GetById(unitId);
 			
@@ -143,12 +143,12 @@ namespace Catbert4.Controllers
 			return Json(serviceUser);
 		}
 
-        /// <summary>
-        /// #4
-        /// </summary>
-        /// <param name="application"></param>
-        /// <param name="login"></param>
-        /// <returns></returns>
+		/// <summary>
+		/// #4
+		/// </summary>
+		/// <param name="application"></param>
+		/// <param name="login"></param>
+		/// <returns></returns>
 		public JsonResult LoadUser(string application, string login)
 		{
 			var user = _userRepository.Queryable.Where(x => x.LoginId == login).Single();
@@ -160,98 +160,72 @@ namespace Catbert4.Controllers
 			return Json(model, JsonRequestBehavior.AllowGet);
 		}
 
-        /// <summary>
-        /// #5
-        /// </summary>
-        /// <param name="application"></param>
-        /// <param name="login"></param>
-        /// <param name="id"></param>
+		/// <summary>
+		/// #5
+		/// </summary>
+		/// <param name="application"></param>
+		/// <param name="login"></param>
+		/// <param name="id"></param>
 		[HttpPost]
 		public void RemoveUnit(string application, string login, int id)
 		{
-            EnsureCurrentUserCanManageLogin(application, login);
+			EnsureCurrentUserCanManageLogin(application, login);
+			EnsureCurrentUserCanModifyUnit(application, id);
 
-            //We must check that the given unit association is indeed in this application and granted to this login
-		    var unitAssociation =
-		        _unitAssociationRepository.Queryable
-		            .Where(x => x.Unit.Id == id && x.Application.Name == application && x.User.LoginId == login)
-		            .Single();
-            
-            _unitAssociationRepository.Remove(unitAssociation);
+			//We must check that the given unit association is indeed in this application and granted to this login
+			var unitAssociation =
+				_unitAssociationRepository.Queryable
+					.Where(x => x.Unit.Id == id && x.Application.Name == application && x.User.LoginId == login)
+					.Single();
+			
+			_unitAssociationRepository.Remove(unitAssociation);
 		}
 
-        /// <summary>
-        /// #6
-        /// </summary>
-        /// <param name="application"></param>
-        /// <param name="login"></param>
-        /// <param name="id"></param>
-        [HttpPost]
-        public void AddUnit(string application, string login, int id)
-        {
-            EnsureCurrentUserCanManageLogin(application, login);
+		/// <summary>
+		/// #6
+		/// </summary>
+		/// <param name="application"></param>
+		/// <param name="login"></param>
+		/// <param name="id"></param>
+		[HttpPost]
+		public void AddUnit(string application, string login, int id)
+		{
+			EnsureCurrentUserCanManageLogin(application, login);
+			EnsureCurrentUserCanModifyUnit(application, id);
 
-            var app = GetApplication(application);
-            var user = GetUser(login);
-            var unit = _unitRepository.GetById(id);
-            
-            AssociateUnit(app, unit, user);
-        }
+			var app = GetApplication(application);
+			var user = GetUser(login);
+			var unit = _unitRepository.GetById(id);
+			
+			AssociateUnit(app, unit, user);
+		}
 
-	    [HttpPost]
+		[HttpPost]
 		public void RemovePermission(string application, string login, int id)
 		{
-            EnsureCurrentUserCanManageLogin(application, login);
+			EnsureCurrentUserCanManageLogin(application, login);
+			EnsureCurrentUserCanModifyRole(application, id);
 
-            //We must check that the given permission is indeed in this application and granted to this login
-            var permission =
-                _permissionRepository.Queryable
-                    .Where(x => x.Role.Id == id && x.Application.Name == application && x.User.LoginId == login)
-                    .Single();
+			//We must check that the given permission is indeed in this application and granted to this login
+			var permission =
+				_permissionRepository.Queryable
+					.Where(x => x.Role.Id == id && x.Application.Name == application && x.User.LoginId == login)
+					.Single();
 
-            _permissionRepository.Remove(permission);
+			_permissionRepository.Remove(permission);
 		}
 
-	    [HttpPost]
-	    public void AddPermission(string application, string login, int id)
-	    {
-	        EnsureCurrentUserCanManageLogin(application, login);
-
-	        var app = GetApplication(application);
-            var role = _roleRepository.GetById(id);
-	        var user = GetUser(login);
-			
-            AssociateRole(app, role, user);
-	    }
-
-        private void EnsureCurrentUserCanManageLogin(string application, string loginToManage)
-        {
-            Check.Require(_userService.CanUserManageGivenLogin(application, CurrentUser.Identity.Name, loginToManage),
-                          string.Format("{0} does not have access to manage {1} within the {2} application",
-                                        CurrentUser.Identity.Name, loginToManage, application));
-        }
-
-		private void SetPermissionsAndUnitAssociations(string application, string login, UserShowModel model)
+		[HttpPost]
+		public void AddPermission(string application, string login, int id)
 		{
-			model.Permissions = (from p in _permissionRepository.Queryable
-								 where p.User.LoginId == login && p.Application.Name == application
-								 select
-									 new UserShowModel.PermissionModel
-									 {
-										 Id = p.Id,
-                                         RoleId = p.Role.Id,
-										 RoleName = p.Role.Name.Trim()
-									 }).ToList();
+			EnsureCurrentUserCanManageLogin(application, login);
+			EnsureCurrentUserCanModifyRole(application, id);
 
-			model.UnitAssociations = (from ua in _unitAssociationRepository.Queryable
-									  where ua.User.LoginId == login && ua.Application.Name == application
-									  select
-										  new UserShowModel.UnitAssociationModel
-										  {
-											  Id = ua.Id,
-                                              UnitId = ua.Unit.Id,
-											  UnitName = ua.Unit.ShortName.Trim()
-										  }).ToList();
+			var app = GetApplication(application);
+			var role = _roleRepository.GetById(id);
+			var user = GetUser(login);
+			
+			AssociateRole(app, role, user);
 		}
 
 		private void AssociateUnit(Application application, Unit unit, User user)
@@ -292,6 +266,54 @@ namespace Catbert4.Controllers
 			_permissionRepository.EnsurePersistent(permission);
 		}
 
+		private void EnsureCurrentUserCanModifyRole(string application, int roleId)
+		{
+			var manageableRoles = _roleService.GetVisibleByUser(application, CurrentUser.Identity.Name);
+
+			Check.Require(manageableRoles.Where(x => x.Id == roleId).Any(),
+						  string.Format("{0} does not have access to manage the given role",
+										CurrentUser.Identity.Name));
+		}
+
+		private void EnsureCurrentUserCanModifyUnit(string application, int unitId)
+		{
+			var manageableUnits = _unitService.GetVisibleByUser(application, CurrentUser.Identity.Name);
+
+			Check.Require(manageableUnits.Where(x => x.Id == unitId).Any(),
+						  string.Format("{0} does not have access to manage the given unit",
+										CurrentUser.Identity.Name));
+		}
+
+		private void EnsureCurrentUserCanManageLogin(string application, string loginToManage)
+		{
+			Check.Require(_userService.CanUserManageGivenLogin(application, CurrentUser.Identity.Name, loginToManage),
+						  string.Format("{0} does not have access to manage {1} within the {2} application",
+										CurrentUser.Identity.Name, loginToManage, application));
+		}
+
+		private void SetPermissionsAndUnitAssociations(string application, string login, UserShowModel model)
+		{
+			model.Permissions = (from p in _permissionRepository.Queryable
+								 where p.User.LoginId == login && p.Application.Name == application
+								 select
+									 new UserShowModel.PermissionModel
+									 {
+										 Id = p.Id,
+										 RoleId = p.Role.Id,
+										 RoleName = p.Role.Name.Trim()
+									 }).ToList();
+
+			model.UnitAssociations = (from ua in _unitAssociationRepository.Queryable
+									  where ua.User.LoginId == login && ua.Application.Name == application
+									  select
+										  new UserShowModel.UnitAssociationModel
+										  {
+											  Id = ua.Id,
+											  UnitId = ua.Unit.Id,
+											  UnitName = ua.Unit.ShortName.Trim()
+										  }).ToList();
+		}
+
 		/// <summary>
 		/// Insert a new user into the database
 		/// </summary>
@@ -303,15 +325,15 @@ namespace Catbert4.Controllers
 			_userRepository.EnsurePersistent(user);
 		}
 
-        private User GetUser(string login)
-        {
-            return _userRepository.Queryable.Where(x => x.LoginId == login).Single();
-        }
+		private User GetUser(string login)
+		{
+			return _userRepository.Queryable.Where(x => x.LoginId == login).Single();
+		}
 
-        private Application GetApplication(string application)
-        {
-            return _applicationRepository.Queryable.Where(x => x.Name == application).Single();
-        }
+		private Application GetApplication(string application)
+		{
+			return _applicationRepository.Queryable.Where(x => x.Name == application).Single();
+		}
 	}
 
 	/// <summary>
