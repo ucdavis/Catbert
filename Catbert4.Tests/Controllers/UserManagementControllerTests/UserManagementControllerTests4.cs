@@ -246,6 +246,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
             permissions[1].Role = RoleRepository.GetNullableById(4);
             ControllerRecordFakes.FakePermissions(1, PermissionRepository, permissions);
             UserService.Expect(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1")).Return(true).Repeat.Any();
+            RoleService.Expect(a => a.GetVisibleByUser("Name2", "UserName")).Return(RoleRepository.Queryable).Repeat.Any();
             PermissionRepository.Expect(a => a.Remove(Arg<Permission>.Is.Anything)).Repeat.Any();
             #endregion Arrange
 
@@ -255,6 +256,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
 
             #region Assert
             UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1"));
+            RoleService.AssertWasCalled(a => a.GetVisibleByUser("Name2", "UserName"));
             PermissionRepository.AssertWasCalled(a => a.Remove(Arg<Permission>.Is.Anything));
             var args = (Permission) PermissionRepository.GetArgumentsForCallsMadeOn(a => a.Remove(Arg<Permission>.Is.Anything))[0][0]; 
             Assert.IsNotNull(args);
@@ -266,7 +268,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
 
         [TestMethod]
         [ExpectedException(typeof(UCDArch.Core.Utils.PreconditionException))]
-        public void TestRemovePermissionThrowsExceptionIfCurrentUserDoesNotHaveRights()
+        public void TestRemovePermissionThrowsExceptionIfCurrentUserDoesNotHaveRights1()
         {
             try
             {
@@ -304,6 +306,47 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
                 throw;
             }
         }
+        [TestMethod]
+        [ExpectedException(typeof(UCDArch.Core.Utils.PreconditionException))]
+        public void TestRemovePermissionThrowsExceptionIfCurrentUserDoesNotHaveRights2()
+        {
+            try
+            {
+                #region Arrange
+                Controller.ControllerContext.HttpContext = new MockHttpContext(1, new[] { "" });
+                ControllerRecordFakes.FakeApplications(3, ApplicationRepository);
+                ControllerRecordFakes.FakeUsers(3, UserRepository);
+                ControllerRecordFakes.FakeRoles(7, RoleRepository);
+                var permissions = new List<Permission>();
+                for (int i = 0; i < 3; i++)
+                {
+                    permissions.Add(CreateValidEntities.Permission(i + 1));
+                    permissions[i].User = UserRepository.GetNullableById(1);
+                    permissions[i].Application = ApplicationRepository.GetNullableById(2);
+                    permissions[i].Role = RoleRepository.GetNullableById(i + 1);
+                }
+                permissions[1].Role = RoleRepository.GetNullableById(4);
+                ControllerRecordFakes.FakePermissions(1, PermissionRepository, permissions);
+                UserService.Expect(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1")).Return(true).Repeat.Any();
+                RoleService.Expect(a => a.GetVisibleByUser("Name2", "UserName")).Return(RoleRepository.Queryable.Where(a => a.Id >= 4)).Repeat.Any();
+                PermissionRepository.Expect(a => a.Remove(Arg<Permission>.Is.Anything)).Repeat.Any();
+                #endregion Arrange
+
+                #region Act
+                Controller.RemovePermission("Name2", "LoginId1", 3);
+                #endregion Act
+            }
+            catch (Exception ex)
+            {
+                #region Assert
+                Assert.IsNotNull(ex);
+                Assert.AreEqual("UserName does not have access to manage the given role", ex.Message);
+                UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1"));
+                PermissionRepository.AssertWasNotCalled(a => a.Remove(Arg<Permission>.Is.Anything));
+                #endregion Assert
+                throw;
+            }
+        }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
@@ -328,6 +371,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
 
                 ControllerRecordFakes.FakePermissions(1, PermissionRepository, permissions);
                 UserService.Expect(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1")).Return(true).Repeat.Any();
+                RoleService.Expect(a => a.GetVisibleByUser("Name2", "UserName")).Return(RoleRepository.Queryable).Repeat.Any();
                 PermissionRepository.Expect(a => a.Remove(Arg<Permission>.Is.Anything)).Repeat.Any();
                 #endregion Arrange
 
@@ -341,6 +385,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
                 Assert.IsNotNull(ex);
                 Assert.AreEqual("Sequence contains more than one element", ex.Message);
                 UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1"));
+                RoleService.AssertWasCalled(a => a.GetVisibleByUser("Name2", "UserName"));
                 PermissionRepository.AssertWasNotCalled(a => a.Remove(Arg<Permission>.Is.Anything));
                 #endregion Assert
                 throw;
@@ -369,6 +414,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
 
                 ControllerRecordFakes.FakePermissions(1, PermissionRepository, permissions);
                 UserService.Expect(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1")).Return(true).Repeat.Any();
+                RoleService.Expect(a => a.GetVisibleByUser("Name2", "UserName")).Return(RoleRepository.Queryable).Repeat.Any();
                 PermissionRepository.Expect(a => a.Remove(Arg<Permission>.Is.Anything)).Repeat.Any();
                 #endregion Arrange
 
@@ -382,6 +428,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
                 Assert.IsNotNull(ex);
                 Assert.AreEqual("Sequence contains no elements", ex.Message);
                 UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1"));
+                RoleService.AssertWasCalled(a => a.GetVisibleByUser("Name2", "UserName"));
                 PermissionRepository.AssertWasNotCalled(a => a.Remove(Arg<Permission>.Is.Anything));
                 #endregion Assert
                 throw;
@@ -410,6 +457,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
 
                 ControllerRecordFakes.FakePermissions(1, PermissionRepository, permissions);
                 UserService.Expect(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1")).Return(true).Repeat.Any();
+                RoleService.Expect(a => a.GetVisibleByUser("Name2", "UserName")).Return(RoleRepository.Queryable).Repeat.Any();
                 PermissionRepository.Expect(a => a.Remove(Arg<Permission>.Is.Anything)).Repeat.Any();
                 #endregion Arrange
 
@@ -423,6 +471,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
                 Assert.IsNotNull(ex);
                 Assert.AreEqual("Sequence contains no elements", ex.Message);
                 UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1"));
+                RoleService.AssertWasCalled(a => a.GetVisibleByUser("Name2", "UserName"));
                 PermissionRepository.AssertWasNotCalled(a => a.Remove(Arg<Permission>.Is.Anything));
                 #endregion Assert
                 throw;
@@ -451,6 +500,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
 
                 ControllerRecordFakes.FakePermissions(1, PermissionRepository, permissions);
                 UserService.Expect(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1")).Return(true).Repeat.Any();
+                RoleService.Expect(a => a.GetVisibleByUser("Name2", "UserName")).Return(RoleRepository.Queryable).Repeat.Any();
                 PermissionRepository.Expect(a => a.Remove(Arg<Permission>.Is.Anything)).Repeat.Any();
                 #endregion Arrange
 
@@ -464,6 +514,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
                 Assert.IsNotNull(ex);
                 Assert.AreEqual("Sequence contains no elements", ex.Message);
                 UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1"));
+                RoleService.AssertWasCalled(a => a.GetVisibleByUser("Name2", "UserName"));
                 PermissionRepository.AssertWasNotCalled(a => a.Remove(Arg<Permission>.Is.Anything));
                 #endregion Assert
                 throw;

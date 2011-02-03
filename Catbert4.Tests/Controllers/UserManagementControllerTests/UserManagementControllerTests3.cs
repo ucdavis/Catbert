@@ -183,6 +183,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
             }
             ControllerRecordFakes.FakeUnitAssociations(2, UnitAssociationRepository, unitAssociations);
             UserService.Expect(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1")).Return(true).Repeat.Any();
+            UnitService.Expect(a => a.GetVisibleByUser("Name2", "UserName")).Return(UnitRepository.Queryable).Repeat.Any();
             #endregion Arrange
 
             #region Act
@@ -191,6 +192,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
 
             #region Assert
             UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1"));
+            UnitService.AssertWasCalled(a => a.GetVisibleByUser("Name2", "UserName"));
             UnitAssociationRepository.AssertWasCalled(a => a.Remove(Arg<UnitAssociation>.Is.Anything));
             var args = (UnitAssociation) UnitAssociationRepository.GetArgumentsForCallsMadeOn(a => a.Remove(Arg<UnitAssociation>.Is.Anything))[0][0]; 
             Assert.AreEqual(2, args.Id);
@@ -202,7 +204,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
 
         [TestMethod]
         [ExpectedException(typeof(UCDArch.Core.Utils.PreconditionException))]
-        public void TestRemoveUnitThrowsExceptionIfCurrentUserDoesNotHaveAccess()
+        public void TestRemoveUnitThrowsExceptionIfCurrentUserDoesNotHaveAccess1()
         {
             try
             {
@@ -241,6 +243,48 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(UCDArch.Core.Utils.PreconditionException))]
+        public void TestRemoveUnitThrowsExceptionIfCurrentUserDoesNotHaveAccess2()
+        {
+            try
+            {
+                #region Arrange
+                Controller.ControllerContext.HttpContext = new MockHttpContext(1, new[] { "" });
+                ControllerRecordFakes.FakeApplications(3, ApplicationRepository);
+                ControllerRecordFakes.FakeUnits(7, UnitRepository);
+                ControllerRecordFakes.FakeUsers(3, UserRepository);
+
+                var unitAssociations = new List<UnitAssociation>();
+                for (int i = 0; i < 3; i++)
+                {
+                    unitAssociations.Add(CreateValidEntities.UnitAssociation(i + 1));
+                    unitAssociations[i].Application = ApplicationRepository.GetNullableById(2);
+                    unitAssociations[i].User = UserRepository.GetNullableById(1);
+                    unitAssociations[i].Unit = UnitRepository.GetNullableById(i + 1);
+                }
+                ControllerRecordFakes.FakeUnitAssociations(2, UnitAssociationRepository, unitAssociations);
+                UserService.Expect(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1")).Return(true).Repeat.Any();
+                UnitService.Expect(a => a.GetVisibleByUser("Name2", "UserName")).Return(UnitRepository.Queryable.Where(a => a.Id >= 3)).Repeat.Any();
+                #endregion Arrange
+
+                #region Act
+                Controller.RemoveUnit("Name2", "LoginId1", 2);
+                #endregion Act
+            }
+            catch (Exception ex)
+            {
+                #region Assert
+                Assert.IsNotNull(ex);
+                Assert.AreEqual("UserName does not have access to manage the given unit", ex.Message);
+                UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1"));
+                UnitService.AssertWasCalled(a => a.GetVisibleByUser("Name2", "UserName"));
+                UnitAssociationRepository.AssertWasNotCalled(a => a.Remove(Arg<UnitAssociation>.Is.Anything));
+                #endregion Assert
+                throw;
+            }
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void TestRemoveUnitThrowsExceptionIfRecordNotFound1()
         {
@@ -262,6 +306,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
                 }
                 ControllerRecordFakes.FakeUnitAssociations(2, UnitAssociationRepository, unitAssociations);
                 UserService.Expect(a => a.CanUserManageGivenLogin("Name3", "UserName", "LoginId1")).Return(true).Repeat.Any();
+                UnitService.Expect(a => a.GetVisibleByUser("Name3", "UserName")).Return(UnitRepository.Queryable).Repeat.Any();
                 #endregion Arrange
 
                 #region Act
@@ -274,6 +319,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
                 Assert.IsNotNull(ex);
                 Assert.AreEqual("Sequence contains no elements", ex.Message);
                 UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name3", "UserName", "LoginId1"));
+                UnitService.AssertWasCalled(a => a.GetVisibleByUser("Name3", "UserName"));
                 UnitAssociationRepository.AssertWasNotCalled(a => a.Remove(Arg<UnitAssociation>.Is.Anything));
                 #endregion Assert
                 throw;
@@ -303,6 +349,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
                 }
                 ControllerRecordFakes.FakeUnitAssociations(2, UnitAssociationRepository, unitAssociations);
                 UserService.Expect(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId2")).Return(true).Repeat.Any();
+                UnitService.Expect(a => a.GetVisibleByUser("Name2", "UserName")).Return(UnitRepository.Queryable).Repeat.Any();
                 #endregion Arrange
 
                 #region Act
@@ -315,6 +362,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
                 Assert.IsNotNull(ex);
                 Assert.AreEqual("Sequence contains no elements", ex.Message);
                 UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId2"));
+                UnitService.AssertWasCalled(a => a.GetVisibleByUser("Name2", "UserName"));
                 UnitAssociationRepository.AssertWasNotCalled(a => a.Remove(Arg<UnitAssociation>.Is.Anything));
                 #endregion Assert
                 throw;
@@ -330,7 +378,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
                 #region Arrange
                 Controller.ControllerContext.HttpContext = new MockHttpContext(1, new[] { "" });
                 ControllerRecordFakes.FakeApplications(3, ApplicationRepository);
-                ControllerRecordFakes.FakeUnits(3, UnitRepository);
+                ControllerRecordFakes.FakeUnits(7, UnitRepository);
                 ControllerRecordFakes.FakeUsers(3, UserRepository);
 
                 var unitAssociations = new List<UnitAssociation>();
@@ -343,6 +391,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
                 }
                 ControllerRecordFakes.FakeUnitAssociations(2, UnitAssociationRepository, unitAssociations);
                 UserService.Expect(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1")).Return(true).Repeat.Any();
+                UnitService.Expect(a => a.GetVisibleByUser("Name2", "UserName")).Return(UnitRepository.Queryable).Repeat.Any();
                 #endregion Arrange
 
                 #region Act
@@ -355,6 +404,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
                 Assert.IsNotNull(ex);
                 Assert.AreEqual("Sequence contains no elements", ex.Message);
                 UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1"));
+                UnitService.AssertWasCalled(a => a.GetVisibleByUser("Name2", "UserName"));
                 UnitAssociationRepository.AssertWasNotCalled(a => a.Remove(Arg<UnitAssociation>.Is.Anything));
                 #endregion Assert
                 throw;
@@ -388,6 +438,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
 
                 ControllerRecordFakes.FakeUnitAssociations(2, UnitAssociationRepository, unitAssociations);
                 UserService.Expect(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1")).Return(true).Repeat.Any();
+                UnitService.Expect(a => a.GetVisibleByUser("Name2", "UserName")).Return(UnitRepository.Queryable).Repeat.Any();
                 #endregion Arrange
 
                 #region Act
@@ -400,6 +451,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
                 Assert.IsNotNull(ex);
                 Assert.AreEqual("Sequence contains more than one element", ex.Message);
                 UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1"));
+                UnitService.AssertWasCalled(a => a.GetVisibleByUser("Name2", "UserName"));
                 UnitAssociationRepository.AssertWasNotCalled(a => a.Remove(Arg<UnitAssociation>.Is.Anything));
                 #endregion Assert
                 throw;
