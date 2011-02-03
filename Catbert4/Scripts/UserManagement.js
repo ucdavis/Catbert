@@ -299,9 +299,15 @@ function UpdateRecord(login){
 
 	Log(allRoles);
 	Log(allUnits);
-			
-	Catbert.UserTable.fnUpdate(allUnits, rowElement, 4, false, false); //False params to not redraw until second call
-	Catbert.UserTable.fnUpdate(allRoles, rowElement, 5);
+
+	if (rolesArray.length == 0 || unitsArray.length == 0) {
+	    //Remove the user's row if they don't have any roles or units
+	    Catbert.UserTable.fnDeleteRow(rowElement);
+	}
+	else {
+		Catbert.UserTable.fnUpdate(allUnits, rowElement, 4, false, false); //False params to not redraw until second call
+		Catbert.UserTable.fnUpdate(allRoles, rowElement, 5);
+	}
 }
 
 function GetRowFor(login){
