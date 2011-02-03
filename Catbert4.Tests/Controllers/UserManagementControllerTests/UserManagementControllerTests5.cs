@@ -21,5 +21,32 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
 {
     public partial class UserManagementControllerTests
     {
+        #region AddPermission Tests
+
+        [TestMethod]
+        public void TestAddPermission()
+        {
+            #region Arrange
+            Assert.Inconclusive("Continue these tests");
+            Controller.ControllerContext.HttpContext = new MockHttpContext(1, new[] { "" });
+            ControllerRecordFakes.FakeRoles(5, RoleRepository);
+            ControllerRecordFakes.FakeApplications(3, ApplicationRepository);
+            ControllerRecordFakes.FakeUsers(3, UserRepository);
+
+            UserService.Expect(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1")).Return(true).Repeat.Any();
+            RoleService.Expect(a => a.GetVisibleByUser("Name2", "UserName")).Return(RoleRepository.Queryable).Repeat.Any();
+            #endregion Arrange
+
+            #region Act
+
+            #endregion Act
+
+            #region Assert
+
+            #endregion Assert		
+        }
+
+
+        #endregion AddPermission Tests
     }
 }
