@@ -180,6 +180,12 @@ namespace Catbert4.Controllers
             _unitAssociationRepository.Remove(unitAsociation);
 		}
 
+        /// <summary>
+        /// #6
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="login"></param>
+        /// <param name="id"></param>
         [HttpPost]
         public void AddUnit(string application, string login, int id)
         {
