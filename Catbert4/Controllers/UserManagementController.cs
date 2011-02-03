@@ -172,12 +172,12 @@ namespace Catbert4.Controllers
             EnsureCurrentUserCanManageLogin(application, login);
 
             //We must check that the given unit association is indeed in this application and granted to this login
-		    var unitAsociation =
+		    var unitAssociation =
 		        _unitAssociationRepository.Queryable
 		            .Where(x => x.Unit.Id == id && x.Application.Name == application && x.User.LoginId == login)
 		            .Single();
             
-            _unitAssociationRepository.Remove(unitAsociation);
+            _unitAssociationRepository.Remove(unitAssociation);
 		}
 
         /// <summary>
