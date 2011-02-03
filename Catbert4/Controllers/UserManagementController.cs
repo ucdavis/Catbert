@@ -143,6 +143,12 @@ namespace Catbert4.Controllers
 			return Json(serviceUser);
 		}
 
+        /// <summary>
+        /// #4
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="login"></param>
+        /// <returns></returns>
 		public JsonResult LoadUser(string application, string login)
 		{
 			var user = _userRepository.Queryable.Where(x => x.LoginId == login).Single();

@@ -36,6 +36,14 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
             "~/UserManagement/InsertNewUser/".ShouldMapTo<UserManagementController>(a => a.InsertNewUser("appName", new ServiceUser(),1, 1), true);
         }
 
+        /// <summary>
+        /// #4
+        /// </summary>
+        [TestMethod]
+        public void TestLoadUserMapping()
+        {
+            "~/UserManagement/LoadUser/".ShouldMapTo<UserManagementController>(a => a.LoadUser("appname", "loginId"), true);
+        }
         #endregion Mapping Tests
     }
 }

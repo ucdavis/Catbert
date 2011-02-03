@@ -94,6 +94,7 @@
     <Compile Include="Controllers\UserManagementControllerTests\UserManagementControllerInit.cs" />
     <Compile Include="Controllers\UserManagementControllerTests\UserManagementControllerTests1.cs" />
     <Compile Include="Controllers\UserManagementControllerTests\UserManagementControllerTests2.cs" />
+    <Compile Include="Controllers\UserManagementControllerTests\UserManagementControllerTests3.cs" />
     <Compile Include="Controllers\UserManagementControllerTests\UserManagementControllerTestsMapping.cs" />
     <Compile Include="Controllers\UserManagementControllerTests\UserManagementControllerTestsReflection.cs" />
     <Compile Include="Core\AbstractRepositoryTests.cs" />
