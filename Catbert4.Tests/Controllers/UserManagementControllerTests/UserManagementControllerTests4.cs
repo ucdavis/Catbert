@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Catbert4.Core.Domain;
 using Catbert4.Tests.Core.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -22,6 +23,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
             ControllerRecordFakes.FakeUnitAssociations(1, UnitAssociationRepository);
 
             UserService.Expect(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1")).Return(true).Repeat.Any();
+            UnitService.Expect(a => a.GetVisibleByUser("Name2", "UserName")).Return(UnitRepository.Queryable).Repeat.Any();
             UnitAssociationRepository.Expect(a => a.EnsurePersistent(Arg<UnitAssociation>.Is.Anything)).Repeat.Any();
             #endregion Arrange
 
@@ -31,6 +33,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
 
             #region Assert
             UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1"));
+            UnitService.AssertWasCalled(a => a.GetVisibleByUser("Name2", "UserName"));
             UnitAssociationRepository.AssertWasCalled(a => a.EnsurePersistent(Arg<UnitAssociation>.Is.Anything));
             var args = (UnitAssociation) UnitAssociationRepository.GetArgumentsForCallsMadeOn(a => a.EnsurePersistent(Arg<UnitAssociation>.Is.Anything))[0][0]; 
             Assert.IsNotNull(args);
@@ -44,7 +47,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
 
         [TestMethod]
         [ExpectedException(typeof(UCDArch.Core.Utils.PreconditionException))]
-        public void TestAddUnitThrowsExceptionIfCurrentUserDoesNotHaveRights()
+        public void TestAddUnitThrowsExceptionIfCurrentUserDoesNotHaveRights1()
         {
             try
             {
@@ -75,6 +78,41 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
             }		
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(UCDArch.Core.Utils.PreconditionException))]
+        public void TestAddUnitThrowsExceptionIfCurrentUserDoesNotHaveRights2()
+        {
+            try
+            {
+                #region Arrange
+                Controller.ControllerContext.HttpContext = new MockHttpContext(1, new[] { "" });
+                ControllerRecordFakes.FakeApplications(3, ApplicationRepository);
+                ControllerRecordFakes.FakeUnits(5, UnitRepository);
+                ControllerRecordFakes.FakeUsers(3, UserRepository);
+                ControllerRecordFakes.FakeUnitAssociations(1, UnitAssociationRepository);
+
+                UnitService.Expect(a => a.GetVisibleByUser("Name2", "UserName")).Return(UnitRepository.Queryable.Where(a => a.Id >= 4)).Repeat.Any();
+
+                UserService.Expect(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1")).Return(true).Repeat.Any();
+                UnitAssociationRepository.Expect(a => a.EnsurePersistent(Arg<UnitAssociation>.Is.Anything)).Repeat.Any();
+                #endregion Arrange
+
+                #region Act
+                Controller.AddUnit("Name2", "LoginId1", 3);
+                #endregion Act
+            }
+            catch (Exception ex)
+            {
+                #region Assert
+                Assert.IsNotNull(ex);
+                Assert.AreEqual("UserName does not have access to manage the given unit", ex.Message);
+                UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1"));
+                UnitAssociationRepository.AssertWasNotCalled(a => a.EnsurePersistent(Arg<UnitAssociation>.Is.Anything));
+                #endregion Assert
+                throw;
+            }
+        }
+
         /// <summary>
         /// This would probably be caught by the UserService before the "Single()", but maybe not if there was a duplicate
         /// </summary>
@@ -90,7 +128,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
                 ControllerRecordFakes.FakeUnits(3, UnitRepository);
                 ControllerRecordFakes.FakeUsers(3, UserRepository);
                 ControllerRecordFakes.FakeUnitAssociations(1, UnitAssociationRepository);
-
+                UnitService.Expect(a => a.GetVisibleByUser("Name4", "UserName")).Return(UnitRepository.Queryable).Repeat.Any();
                 UserService.Expect(a => a.CanUserManageGivenLogin("Name4", "UserName", "LoginId1")).Return(true).Repeat.Any();
                 UnitAssociationRepository.Expect(a => a.EnsurePersistent(Arg<UnitAssociation>.Is.Anything)).Repeat.Any();
                 #endregion Arrange
@@ -105,6 +143,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
                 Assert.IsNotNull(ex);
                 Assert.AreEqual("Sequence contains no elements", ex.Message);
                 UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name4", "UserName", "LoginId1"));
+                UnitService.AssertWasCalled(a => a.GetVisibleByUser("Name4", "UserName"));
                 UnitAssociationRepository.AssertWasNotCalled(a => a.EnsurePersistent(Arg<UnitAssociation>.Is.Anything));
                 #endregion Assert
                 throw;
@@ -130,6 +169,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
                 ControllerRecordFakes.FakeUsers(3, UserRepository, users);
                 ControllerRecordFakes.FakeUnitAssociations(1, UnitAssociationRepository);
 
+                UnitService.Expect(a => a.GetVisibleByUser("Name2", "UserName")).Return(UnitRepository.Queryable).Repeat.Any();
                 UserService.Expect(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1")).Return(true).Repeat.Any();
                 UnitAssociationRepository.Expect(a => a.EnsurePersistent(Arg<UnitAssociation>.Is.Anything)).Repeat.Any();
                 #endregion Arrange
@@ -144,6 +184,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
                 Assert.IsNotNull(ex);
                 Assert.AreEqual("Sequence contains more than one element", ex.Message);
                 UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1"));
+                UnitService.AssertWasCalled(a => a.GetVisibleByUser("Name2", "UserName"));
                 UnitAssociationRepository.AssertWasNotCalled(a => a.EnsurePersistent(Arg<UnitAssociation>.Is.Anything));
                 #endregion Assert
                 throw;
@@ -165,6 +206,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
             unitAssociations[0].Unit = UnitRepository.GetNullableById(3);
             ControllerRecordFakes.FakeUnitAssociations(1, UnitAssociationRepository, unitAssociations);
 
+            UnitService.Expect(a => a.GetVisibleByUser("Name2", "UserName")).Return(UnitRepository.Queryable).Repeat.Any();
             UserService.Expect(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1")).Return(true).Repeat.Any();
             UnitAssociationRepository.Expect(a => a.EnsurePersistent(Arg<UnitAssociation>.Is.Anything)).Repeat.Any();
             #endregion Arrange
@@ -176,7 +218,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
             #region Assert
             UserService.AssertWasCalled(a => a.CanUserManageGivenLogin("Name2", "UserName", "LoginId1"));
             UnitAssociationRepository.AssertWasNotCalled(a => a.EnsurePersistent(Arg<UnitAssociation>.Is.Anything));
-
+            UnitService.AssertWasCalled(a => a.GetVisibleByUser("Name2", "UserName"));
             #endregion Assert
         }
 

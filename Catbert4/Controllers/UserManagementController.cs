@@ -200,6 +200,12 @@ namespace Catbert4.Controllers
 			AssociateUnit(app, unit, user);
 		}
 
+        /// <summary>
+        /// #7
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="login"></param>
+        /// <param name="id"></param>
 		[HttpPost]
 		public void RemovePermission(string application, string login, int id)
 		{
