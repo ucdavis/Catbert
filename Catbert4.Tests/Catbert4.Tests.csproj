@@ -99,6 +99,7 @@
     <Compile Include="Controllers\UserManagementControllerTests\UserManagementControllerTests5.cs" />
     <Compile Include="Controllers\UserManagementControllerTests\UserManagementControllerTestsMapping.cs" />
     <Compile Include="Controllers\UserManagementControllerTests\UserManagementControllerTestsReflection.cs" />
+    <Compile Include="Controllers\UserManagementControllerTests\UserManagementControllerWithServiceTests1.cs" />
     <Compile Include="Core\AbstractRepositoryTests.cs" />
     <Compile Include="Core\Extensions\AssertExtensions.cs" />
     <Compile Include="Core\Extensions\RouteTestingExtensions.cs" />

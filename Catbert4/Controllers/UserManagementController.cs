@@ -221,6 +221,12 @@ namespace Catbert4.Controllers
 			_permissionRepository.Remove(permission);
 		}
 
+        /// <summary>
+        /// #8
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="login"></param>
+        /// <param name="id"></param>
 		[HttpPost]
 		public void AddPermission(string application, string login, int id)
 		{

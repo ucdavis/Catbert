@@ -162,8 +162,7 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
             #endregion Act
 
             #region Assert
-            Assert.Inconclusive("Still wring tests");
-            Assert.AreEqual(7, result.Count(), "It looks like a method was added or removed from the controller.");
+            Assert.AreEqual(8, result.Count(), "It looks like a method was added or removed from the controller.");
             #endregion Assert
         }
 
@@ -321,6 +320,27 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
             #endregion Assert
         }
 
+        /// <summary>
+        /// #8
+        /// </summary>
+        [TestMethod]
+        public void TestControllerMethodAddPermissionContainsExpectedAttributes()
+        {
+            #region Arrange
+            var controllerClass = ControllerClass;
+            var controllerMethod = controllerClass.GetMethod("AddPermission");
+            #endregion Arrange
+
+            #region Act
+            var expectedAttribute = controllerMethod.GetCustomAttributes(true).OfType<HttpPostAttribute>();
+            var allAttributes = controllerMethod.GetCustomAttributes(true);
+            #endregion Act
+
+            #region Assert
+            Assert.AreEqual(1, expectedAttribute.Count(), "HttpPostAttribute not found");
+            Assert.AreEqual(1, allAttributes.Count(), "More than expected custom attributes found.");
+            #endregion Assert
+        }
         #endregion Controller Method Tests
 
         #endregion Reflection
