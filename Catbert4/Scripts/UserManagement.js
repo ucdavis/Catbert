@@ -97,7 +97,7 @@
 });
 
 function CreateButtons() {
-	$("#add-user").button({
+    $("#add-user").button({
 		icons: {
 			primary: "ui-icon-person"
 		}
@@ -180,7 +180,25 @@ function AddNewUserSuccess(data){
 	$("#message").show("slow"); //Show the new user notification
 }
 
-function PopulateUserInfo(data){
+function PopulateUserInfo(data) {
+    //Check to see which permissions and units are editable by this user
+    for (i in data.Permissions)
+    {
+        var perm = data.Permissions[i];
+
+        var arrayIndex = $.inArray(perm.RoleId, Catbert.User.Roles);
+        
+        perm.UserEditable = arrayIndex == -1 ? false : true;
+    }
+
+    for (i in data.UnitAssociations) {
+        var ua = data.UnitAssociations[i];
+
+        var arrayIndex = $.inArray(ua.UnitId, Catbert.User.Units);
+
+        ua.UserEditable = arrayIndex == -1 ? false : true;
+    }
+
 	var userInfo = $("#user-info-template").tmpl(data);
 	$("#manage-user").append(userInfo);
 			
@@ -202,6 +220,10 @@ function PopulateUserInfo(data){
 		
 function RemoveAssociation(removeLink){
 	var link = removeLink;
+
+	if (removeLink.hasClass("no-delete")) {
+	    return;
+	}
 
 	var row = link.parent().parent();
 
@@ -327,6 +349,8 @@ function StyleUserInfoButtons(){
 			primary: "ui-icon-plusthick"
 		}
 	});
+
+    $(".no-delete").button("option", "disabled", true);
 }
 
 function Log(text){

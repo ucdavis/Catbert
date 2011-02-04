@@ -32,7 +32,7 @@
         }
     </style>
     <script type="text/javascript">
-        var Catbert = { Services: { }, Indicators: { } };
+        var Catbert = { Services: { }, Indicators: { }, User: { } };
         Catbert.Services.FindUser = "<%: Url.Action("FindUser") %>";
         Catbert.Services.InsertNewUser = "<%: Url.Action("InsertNewUser", new { application = Model.Application }) %>";
         Catbert.Services.LoadUser = "<%: Url.Action("LoadUser", new { application = Model.Application }) %>";
@@ -40,6 +40,18 @@
         Catbert.Services.RemovePermission = "<%: Url.Action("RemovePermission", new { application = Model.Application }) %>";
         Catbert.Services.AddUnit = "<%: Url.Action("AddUnit", new { application = Model.Application }) %>";
         Catbert.Services.AddPermission = "<%: Url.Action("AddPermission", new { application = Model.Application }) %>";    
+
+        Catbert.User.Roles = [];
+        Catbert.User.Units = [];
+
+        <% foreach(var r in Model.Roles) {  %>
+            Catbert.User.Roles.push(<%: r.Key %>);
+        <% } %>
+        
+        <% foreach(var u in Model.Units) {  %>
+            Catbert.User.Units.push(<%: u.Key %>);
+        <% } %>
+
     </script>
     <script src="<%: Url.Script("UserManagement.js") %>"></script>
 </head>
