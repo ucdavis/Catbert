@@ -110,13 +110,6 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
 
         protected override void RegisterAdditionalServices(IWindsorContainer container)
         {
-            //container.AddComponent("queryExtensionProvider", typeof(IQueryExtensionProvider),
-            //                       typeof(NHibernateQueryExtensionProvider));
-            //container.AddComponent("queryService", typeof(IQueryService),
-            //                       typeof(QueryService));
-            //QueryExtension = MockRepository.GenerateStub<IQueryExtensionProvider>();
-
-            //container.Kernel.AddComponentInstance<IQueryExtensionProvider>(QueryExtension);
             
             container.AddComponent("queryExtensionProvider", typeof(IQueryExtensionProvider),
                                    typeof(QueryExtensionFakes));
