@@ -1,4 +1,5 @@
 ﻿using System;
+using Castle.Windsor;
 using Catbert4.Controllers;
 using Catbert4.Core.Domain;
 using Catbert4.Services;
@@ -7,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MvcContrib.TestHelper;
 using Rhino.Mocks;
 using UCDArch.Core.PersistanceSupport;
+using UCDArch.Data.NHibernate;
 using UCDArch.Testing;
 
 namespace Catbert4.Tests.Controllers.UserManagementControllerTests
@@ -25,6 +27,8 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
         public IUnitService UnitService;
         public IRoleService RoleService;
         public IDirectorySearchService DirectorySearchService;
+
+        //public IQueryExtensionProvider QueryExtension;
 
         public readonly Type ControllerClass = typeof(UserManagementController);
 
@@ -95,6 +99,25 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
         protected override void RegisterRoutes()
         {
             new RouteConfigurator().RegisterRoutes();
+        }
+
+        //protected override void RegisterAdditionalServices(IWindsorContainer container)
+        //{
+        //    TermCodeRepository = MockRepository.GenerateStub<IRepository<TermCode>>();
+        //    container.Kernel.AddComponentInstance<IRepository<TermCode>>(TermCodeRepository);
+        //    base.RegisterAdditionalServices(container);
+        //}
+
+        protected override void RegisterAdditionalServices(IWindsorContainer container)
+        {
+            //container.AddComponent("queryExtensionProvider", typeof(IQueryExtensionProvider),
+            //                       typeof(NHibernateQueryExtensionProvider));
+            //container.AddComponent("queryService", typeof(IQueryService),
+            //                       typeof(QueryService));
+            //QueryExtension = MockRepository.GenerateStub<IQueryExtensionProvider>();
+
+            //container.Kernel.AddComponentInstance<IQueryExtensionProvider>(QueryExtension);
+            base.RegisterAdditionalServices(container);
         }
         
 
