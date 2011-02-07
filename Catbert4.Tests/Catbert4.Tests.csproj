@@ -63,6 +63,7 @@
     <Reference Include="FluentNHibernate">
       <HintPath>..\Bin\FluentNHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="MvcContrib">
       <HintPath>..\Bin\MvcContrib.dll</HintPath>
@@ -100,6 +101,7 @@
   <ItemGroup>
     <Compile Include="ContinuousDeploymentIntegrationHack.cs" />
     <Compile Include="Controllers\HomeControllerTests.cs" />
+    <Compile Include="Core\QueryExtensionFakes.cs" />
     <Compile Include="Controllers\UserManagementControllerTests\UserManagementControllerInit.cs" />
     <Compile Include="Controllers\UserManagementControllerTests\UserManagementControllerTests1.cs" />
     <Compile Include="Controllers\UserManagementControllerTests\UserManagementControllerTests2.cs" />

@@ -4,11 +4,11 @@ using Catbert4.Controllers;
 using Catbert4.Core.Domain;
 using Catbert4.Services;
 using Catbert4.Services.UserManagement;
+using Catbert4.Tests.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MvcContrib.TestHelper;
 using Rhino.Mocks;
 using UCDArch.Core.PersistanceSupport;
-using UCDArch.Data.NHibernate;
 using UCDArch.Testing;
 
 namespace Catbert4.Tests.Controllers.UserManagementControllerTests
@@ -117,6 +117,10 @@ namespace Catbert4.Tests.Controllers.UserManagementControllerTests
             //QueryExtension = MockRepository.GenerateStub<IQueryExtensionProvider>();
 
             //container.Kernel.AddComponentInstance<IQueryExtensionProvider>(QueryExtension);
+            
+            container.AddComponent("queryExtensionProvider", typeof(IQueryExtensionProvider),
+                                   typeof(QueryExtensionFakes));
+
             base.RegisterAdditionalServices(container);
         }
         
