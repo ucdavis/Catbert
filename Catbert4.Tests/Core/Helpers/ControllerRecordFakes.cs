@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Catbert4.Core.Domain;
 using Rhino.Mocks;
+using UCDArch.Core.DomainModel;
 using UCDArch.Core.PersistanceSupport;
 using UCDArch.Testing;
 
@@ -300,5 +301,101 @@ namespace Catbert4.Tests.Core.Helpers
             repository.Expect(a => a.Queryable).Return(records.AsQueryable()).Repeat.Any();
             repository.Expect(a => a.GetAll()).Return(records).Repeat.Any();
         }
+
+        public static void FakeApplicationRoles(int count, IRepository<ApplicationRole> repository)
+        {
+            var records = new List<ApplicationRole>();
+            FakeApplicationRoles(count, repository, records);
+        }
+
+        public static void FakeApplicationRoles(int count, IRepository<ApplicationRole> repository, List<ApplicationRole> specificRecords)
+        {
+            var records = new List<ApplicationRole>();
+            var specificRecordsCount = 0;
+            if (specificRecords != null)
+            {
+                specificRecordsCount = specificRecords.Count;
+                for (int i = 0; i < specificRecordsCount; i++)
+                {
+                    records.Add(specificRecords[i]);
+                }
+            }
+
+            for (int i = 0; i < count; i++)
+            {
+                records.Add(CreateValidEntities.ApplicationRole(i + specificRecordsCount + 1));
+            }
+
+            var totalCount = records.Count;
+            for (int i = 0; i < totalCount; i++)
+            {
+                records[i].SetIdTo(i + 1);
+                int i1 = i;
+                repository
+                    .Expect(a => a.GetNullableById(i1 + 1))
+                    .Return(records[i])
+                    .Repeat
+                    .Any();
+            }
+            repository.Expect(a => a.GetNullableById(totalCount + 1)).Return(null).Repeat.Any();
+            repository.Expect(a => a.Queryable).Return(records.AsQueryable()).Repeat.Any();
+            repository.Expect(a => a.GetAll()).Return(records).Repeat.Any();
+        }
     }
+
+    //public abstract class ControllerRecordFakes2<T> where T : DomainObjectWithTypedId<int>
+    //{
+    //    public void FakeRecords(int count, IRepository<T> repository)
+    //    {
+    //        var records = new List<T>();
+    //        FakeRecords(count, repository, records);
+    //    }
+        
+    //    public void FakeRecords(int count, IRepository<T> repository, List<T> specificRecords)
+    //    {
+    //        var records = new List<T>();
+    //        var specificRecordsCount = 0;
+    //        if (specificRecords != null)
+    //        {
+    //            specificRecordsCount = specificRecords.Count;
+    //            for (int i = 0; i < specificRecordsCount; i++)
+    //            {
+    //                records.Add(specificRecords[i]);
+    //            }
+    //        }
+
+    //        for (int i = 0; i < count; i++)
+    //        {
+    //            //records.Add(CreateValidEntities.ApplicationRole(i + specificRecordsCount + 1));
+    //            records.Add(GetValid(i + specificRecordsCount + 1));
+    //        }
+
+    //        var totalCount = records.Count;
+    //        for (int i = 0; i < totalCount; i++)
+    //        {
+    //            records[i].SetIdTo(i + 1);
+    //            int i1 = i;
+    //            repository
+    //                .Expect(a => a.GetNullableById(i1 + 1))
+    //                .Return(records[i])
+    //                .Repeat
+    //                .Any();
+    //        }
+    //        repository.Expect(a => a.GetNullableById(totalCount + 1)).Return(null).Repeat.Any();
+    //        repository.Expect(a => a.Queryable).Return(records.AsQueryable()).Repeat.Any();
+    //        repository.Expect(a => a.GetAll()).Return(records).Repeat.Any();
+    //    }
+
+    //    protected abstract T GetValid(int count);
+    //}
+
+    //public class FakeRoles : ControllerRecordFakes2<Role>
+    //{
+    //    protected override Role GetValid(int count)
+    //    {
+    //        return CreateValidEntities.Role(count);
+    //    }
+    //}
+
+
 }

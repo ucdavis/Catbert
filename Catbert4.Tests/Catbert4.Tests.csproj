@@ -101,6 +101,7 @@
   <ItemGroup>
     <Compile Include="ContinuousDeploymentIntegrationHack.cs" />
     <Compile Include="Controllers\HomeControllerTests.cs" />
+    <Compile Include="Controllers\UserManagementControllerTests\UserManagementControllerWithServiceTests3.cs" />
     <Compile Include="Core\QueryExtensionFakes.cs" />
     <Compile Include="Controllers\UserManagementControllerTests\UserManagementControllerInit.cs" />
     <Compile Include="Controllers\UserManagementControllerTests\UserManagementControllerTests1.cs" />
