@@ -5,6 +5,10 @@
     
     <h2>Access Tokens</h2>
 
+    <p id="pageactions">
+        <img class="back" src="<%: Url.Image("add.png") %>" alt="New token! TODO!" /> &nbsp;<%: Html.ActionLink<AccessTokenController>(x=>x.Create(), "Generate new token") %>
+    </p>
+
 <table id="tokens">
     <thead>
         <tr>
@@ -31,9 +35,5 @@
         <% } %>
     </tbody>
 </table>
-
-    <p>
-        <img class="back" src="<%: Url.Image("add.png") %>" alt="New token! TODO!" /> &nbsp;<%: Html.ActionLink<AccessTokenController>(x=>x.Create(), "Generate new token") %>
-    </p>
 
 </asp:Content>

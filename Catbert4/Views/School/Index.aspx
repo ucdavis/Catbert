@@ -8,6 +8,10 @@
 
     <h2>Schools</h2>
 
+    <p id="pageactions">
+        <img class="back" src="<%: Url.Image("add.png") %>" alt="New token! TODO!" /> &nbsp;<%: Html.ActionLink("Create New School", "Create") %>
+    </p>
+
     <table>
         <tr>
             <th></th>
@@ -47,10 +51,6 @@
     <% } %>
 
     </table>
-
-    <p>
-        <img class="back" src="<%: Url.Image("add.png") %>" alt="New token! TODO!" /> &nbsp;<%: Html.ActionLink("Create New School", "Create") %>
-    </p>
 
 </asp:Content>
 

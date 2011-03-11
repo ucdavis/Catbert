@@ -34,6 +34,10 @@
         }
         .addnew, .filters {display: inline-block; width: 49%;}
         .filters {text-align: right;}
+        
+        .ui-widget label {display: inline-block; width: 70px;}
+        .ui-button-text-icon-primary .ui-button-text, .ui-button-text-icons .ui-button-text {padding: 0.2em .5em 0.2em 2.1em !important;}
+        table.display thead th {font-size: 1.1em;}
     </style>
     <script type="text/javascript">
         var Catbert = { Services: { }, Indicators: { }, User: { } };

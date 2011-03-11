@@ -8,6 +8,10 @@
 
     <h2>Index</h2>
 
+    <p id="pageactions">
+        <img class="back" src="<%: Url.Image("add.png") %>" alt="New token! TODO!" /> &nbsp;<%: Html.ActionLink("Create New", "Create") %>
+    </p>
+
     <table>
         <tr>
             <th></th>
@@ -62,10 +66,6 @@
     <% } %>
 
     </table>
-
-    <p>
-        <img class="back" src="<%: Url.Image("add.png") %>" alt="New token! TODO!" /> &nbsp;<%: Html.ActionLink("Create New", "Create") %>
-    </p>
 
 </asp:Content>
 

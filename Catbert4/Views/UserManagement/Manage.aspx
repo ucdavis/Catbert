@@ -34,10 +34,10 @@
         }
         .addnew, .filters {display: inline-block; width: 49%;}
         .filters {text-align: right;}
-        
-        .ui-widget label {display: inline-block; width: 70px;}
-        .ui-button-text-icon-primary .ui-button-text, .ui-button-text-icons .ui-button-text {padding: 0.2em .5em 0.2em 2.1em !important;}
-        table.display thead th {font-size: 1.1em;}
+        table.display td {padding: 15px 10px 5px !important;}
+        table.display td.login {font-size: 2.5em; padding: 15px 5px 5px 25px !important;}
+        table.display td.email {font-size: 1.25em;}
+        table.display td.firstname, table.display td.lastname {font-weight: bold; font-size: 2em; letter-spacing: .25px;}
     </style>
     <script type="text/javascript">
         var Catbert = { Services: { }, Indicators: { }, User: { } };
@@ -85,19 +85,10 @@
                         Login
                     </th>
                     <th>
-                        First Name
+                        Name
                     </th>
                     <th>
-                        Last Name
-                    </th>
-                    <th>
-                        Email
-                    </th>
-                    <th>
-                        Units
-                    </th>
-                    <th>
-                        Roles
+                        Units & Roles
                     </th>
                 </tr>
             </thead>
@@ -105,25 +96,21 @@
                 <% foreach (var item in Model.UserShowModel)
                    { %>
                 <tr>
-                    <td class="login">
+                    <td class="login" rowspan="2">
                         <a href="#" id="<%: item.Login %>" class="modify-user" title="Modify <%: item.FullNameAndLogin %>">
                             <%: item.Login %></a>
                     </td>
-                    <td>
-                        <%: item.FirstName %>
-                    </td>
-                    <td>
+                    <td class="firstname">
+                        <%: item.FirstName %> 
                         <%: item.LastName %>
-                    </td>
-                    <td>
-                        <%: item.Email %>
                     </td>
                     <td>
                         <%: string.Join(", ", item.UnitAssociations.OrderBy(x=>x.UnitName).Select(x=>x.UnitName.Trim())) %>
                     </td>
-                    <td>
-                        <%: string.Join(", ", item.Permissions.OrderBy(x=>x.RoleName).Select(x=>x.RoleName.Trim())) %>
-                    </td>
+                </tr>
+                <tr>
+                <td class="mono email"><%: item.Email %></td>
+                <td><%: string.Join(", ", item.Permissions.OrderBy(x=>x.RoleName).Select(x=>x.RoleName.Trim())) %></td>
                 </tr>
                 <% } %>
             </tbody>

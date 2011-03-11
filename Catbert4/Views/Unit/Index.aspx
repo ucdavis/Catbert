@@ -6,6 +6,10 @@
 
     <h2>Units</h2>
 
+    <p id="pageactions">
+    <img class="back" src="<%: Url.Image("add.png") %>" alt="Add TODO!" />&nbsp;<%: Html.ActionLink<UnitController>(x=>x.Create(), "Create New Unit") %>
+    </p>
+
 <table id="tblUnits">
     <thead>
         <tr>
@@ -39,10 +43,6 @@
         <% } %>
     </tbody>
 </table>
-
-    <p>
-    <img class="back" src="<%: Url.Image("add.png") %>" alt="Add TODO!" />&nbsp;<%: Html.ActionLink<UnitController>(x=>x.Create(), "Create New Unit") %>
-    </p>
 
 
 </asp:Content>

@@ -69,7 +69,7 @@
     <div class="page">
         <div id="header">
             <div id="title">
-                <h1>Catbert v4</h1>
+                <h1><%= Html.ActionLink("Catbert v4", "Index", "Home")%></h1>
             </div>
             
             <div id="menucontainer">

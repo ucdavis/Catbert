@@ -8,9 +8,8 @@
 
     <h2>Users List</h2>
 
-    <p>
-        <a id="add-user" href="<%: Url.Action("Find") %>">Add User</a>
-    </p>
+   
+    <p id="pageactions"><a id="add-user" href="<%: Url.Action("Find") %>">Add User</a></p>
 
     <p class="ui-widget">
 	    <label for="user-search">Search Users: </label>
