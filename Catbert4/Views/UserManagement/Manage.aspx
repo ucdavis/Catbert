@@ -88,7 +88,7 @@
                         Name
                     </th>
                     <th>
-                        Units & Roles
+                        &nbsp;
                     </th>
                 </tr>
             </thead>
@@ -105,12 +105,12 @@
                         <%: item.LastName %>
                     </td>
                     <td>
-                        <%: string.Join(", ", item.UnitAssociations.OrderBy(x=>x.UnitName).Select(x=>x.UnitName.Trim())) %>
+                        <strong>Units</strong> &mdash;&nbsp;<%: string.Join(", ", item.UnitAssociations.OrderBy(x=>x.UnitName).Select(x=>x.UnitName.Trim())) %>
                     </td>
                 </tr>
                 <tr>
                 <td class="mono email"><%: item.Email %></td>
-                <td><%: string.Join(", ", item.Permissions.OrderBy(x=>x.RoleName).Select(x=>x.RoleName.Trim())) %></td>
+                <td><strong>Roles</strong> &mdash;&nbsp;<%: string.Join(", ", item.Permissions.OrderBy(x=>x.RoleName).Select(x=>x.RoleName.Trim())) %></td>
                 </tr>
                 <% } %>
             </tbody>

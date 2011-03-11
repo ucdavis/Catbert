@@ -12,8 +12,9 @@ body
     color: #696969;
     margin: 2em;
     border: 3px solid #fff;
-    min-width: 1200px;
+    min-width: 1000px;
 }
+.ie body {min-width: 1200px;}
 iframe body {border: 0px; margin: 0px;}
 
 a:link
@@ -60,6 +61,7 @@ p.ui-widget, form .ui-widget {padding: .5em;}
 .ui-icon, .ui-state-highlight .ui-icon {background-image: url(https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/themes/ui-lightness/images/ui-icons_ffffff_256x240.png) !important; position: relative; top: 3px;}
 .connectedSortable li {cursor: pointer; font-size: 2em !important;}
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {background: #C5101C; border: 1px solid #fff;}
+.ui-sortable .ui-state-default {background: #F6F6F6;}
 a.ui-state-default, .ui-widget-content a.ui-state-default, .ui-widget-header a.ui-state-default {color: #fff;}
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, 
 .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {border: 1px solid #C5101C; background: #333;}
