@@ -11,27 +11,20 @@
     <table>
         <tr>
             <th></th>
-            <th>
-                Name
-            </th>
-            <th>
-                Abbr
-            </th>
-            <th>
-                Location
-            </th>
-            <th>
-                Active
-            </th>
+            <th>Name</th>
+            <th>Abbr</th>
+            <th>Location</th>
+            <th>Active</th>
         </tr>
 
     <% foreach (var item in Model) { %>
     
         <tr>
-            <td>
+            <%--<td>
                 <%: Html.ActionLink("Edit", "Edit", new { id=item.Id }) %> |
                 <%: Html.ActionLink("Details", "Details", new { id = item.Id })%>
-            </td>
+            </td>--%>
+            <td><a href="TODO!" class="img"><img src="<%: Url.Image("edit.png") %>" alt="Edit" /></a> | <a href="TODO!" class="img"><img src="<%: Url.Image("file.png") %>" alt="Details" /></a></td>
             <td>
                 <%: item.Name %>
             </td>
@@ -51,7 +44,7 @@
     </table>
 
     <p>
-        <%: Html.ActionLink("Create New Application", "Create") %>
+        <img class="back" src="<%: Url.Image("add.png") %>" alt="New token! TODO!" /> &nbsp;<%: Html.ActionLink("Create New Application", "Create") %>
     </p>
 
 </asp:Content>

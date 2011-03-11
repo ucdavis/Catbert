@@ -56,14 +56,14 @@
                 </tr>
             </tbody>
         </table>
-        <p>
-            <input type="submit" value="Create" />
-        </p>
+        <br />
+        <input type="submit" value="Create" />
+        
     </fieldset>
     <% } %>
-    <div>
-        <%: Html.ActionLink("Back to List", "Index") %>
-    </div>
+    <p>
+        <img class="back" src="<%: Url.Image("back.png") %>" alt="Back to List TODO!" />&nbsp;<%: Html.ActionLink("Back to List", "Index") %>
+    </p>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="HeaderContent" runat="server">
 </asp:Content>

@@ -8,19 +8,19 @@
 
     <h2>Users List</h2>
 
-    <div>
+    <p>
         <a id="add-user" href="<%: Url.Action("Find") %>">Add User</a>
-    </div>
+    </p>
 
-    <div class="ui-widget">
+    <p class="ui-widget">
 	    <label for="user-search">Search Users: </label>
 	    <input id="user-search" />
         
         <a id="clear-user-search" href="#">Clear</a>        
-    </div>
+    </p>
 
     <h5><a id="load-users" href="#">View All Users</a></h5>
-    <div id="users-list" style="width:60%"></div>
+    <div id="users-list" style="width:100%"></div>
 
 <script id="search-user-template" type="text/x-jquery-tmpl">
     <li data-item.autocomplete="${value}">

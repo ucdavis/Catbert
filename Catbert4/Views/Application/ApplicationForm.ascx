@@ -11,7 +11,7 @@
 
 <fieldset>
     <legend>Roles</legend>
-    [<%: Html.ActionLink<RoleController>(x=>x.Index(), "Manage Roles") %>]
+    <p>[<%: Html.ActionLink<RoleController>(x=>x.Index(), "Manage Roles") %>]</p>
 
     <h3>Ordered:</h3>
     <ul id="ordered-roles" class="connectedSortable">

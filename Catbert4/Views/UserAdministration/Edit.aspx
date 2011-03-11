@@ -71,9 +71,9 @@
         </table>
         <%: Html.HiddenFor(x=>x.User.Id) %>
         <%: Html.HiddenFor(x=>x.User.LoginId) %>
-        <p>
-            <input type="submit" value="Edit" />
-        </p>
+        <br />
+            <input type="submit" value="Save" />
+        
     </fieldset>
     <% } %>
 
@@ -98,14 +98,15 @@
             <% } %>
             </tbody>
         </table>
-        <div>
+        <br />
+        <p>
             <%= this.Select("add-permission-application").Options(Model.UserLookupModel.Applications, x => x.Key, x => x.Value).FirstOption("--Select An Application--")%>
             <select id='add-permission-roles' name='add-permission-roles'>
                 <option value="0">--Select A Role--</option>
             </select>
         
             <a class="add-permission button-plus" href="#" data-table="permissions" data-application="add-permission-application" data-role="add-permission-roles">Add</a>
-        </div>
+        </p>
     </fieldset>
         <fieldset>
         <legend>Unit Associations</legend>
@@ -128,17 +129,17 @@
             <% } %>
             </tbody>
         </table>
-
-        <div>
+        <br />
+        <p>
             <%= this.Select("add-association-application").Options(Model.UserLookupModel.Applications, x=>x.Key, x=>x.Value).FirstOption("--Select An Application--") %>
             <%= this.Select("add-association-unit").Options(Model.UserLookupModel.Units, x=>x.Key, x=>x.Value).FirstOption("--Select A Unit--") %>
             <a class="add-association button-plus" href="#" data-table="unit-associations" data-application="add-association-application" data-unit="add-association-unit">Add</a>
-        </div>
+        </p>
     </fieldset>
 
-    <div>
-        <%: Html.ActionLink("Back to List", "Index") %>
-    </div>
+    <p>
+        <img class="back" src="<%: Url.Image("back.png") %>" alt="Back to List TODO!" />&nbsp;<%: Html.ActionLink("Back to List", "Index") %>
+    </p>
 
     <script id="user-association-template" type="text/x-jquery-tmpl">
     <tr>

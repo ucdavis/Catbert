@@ -35,8 +35,8 @@
             </tbody>
         </table>
         <br />
-        <%= this.Select("userRoles").Options(Model.Roles, x=>x.Key, x=>x.Value) %>
-        <a href="#" id="add-permission" class="add-link" data-type="permission" data-login="${Login}">Add Role</a>
+        <p><%= this.Select("userRoles").Options(Model.Roles, x=>x.Key, x=>x.Value) %>
+        <a href="#" id="add-permission" class="add-link" data-type="permission" data-login="${Login}">Add Role</a></p>
     </fieldset>
     <fieldset>
         <legend>Units</legend>
@@ -63,8 +63,8 @@
             </tbody>
         </table>
         <br />
-        <%= this.Select("userUnits").Options(Model.Units, x=>x.Key, x=>x.Value) %>
-        <a href="#" id="add-unit" class="add-link" data-type="unit" data-login="${Login}">Add Unit</a>
+        <p><%= this.Select("userUnits").Options(Model.Units, x=>x.Key, x=>x.Value) %>
+        <a href="#" id="add-unit" class="add-link" data-type="unit" data-login="${Login}">Add Unit</a></p>
     </fieldset>
 </div>
 </script>

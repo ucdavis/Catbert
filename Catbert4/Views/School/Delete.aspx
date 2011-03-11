@@ -21,7 +21,7 @@
 		<%= Html.AntiForgeryToken() %>
         <p>
 		    <input type="submit" value="Delete" /> |
-		    <%: Html.ActionLink("Back to List", "Index") %>
+		    <img class="back" src="<%: Url.Image("back.png") %>" alt="Back to List TODO!" />&nbsp;<%: Html.ActionLink("Back to List", "Index") %>
         </p>
     <% } %>
 

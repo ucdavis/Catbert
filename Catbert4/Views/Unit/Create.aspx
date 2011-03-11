@@ -17,15 +17,15 @@
             <% Html.RenderPartial("UnitForm"); %>
 
             
-            <p>
+            <br />
                 <input type="submit" value="Create" />
-            </p>
+            
         </fieldset>
 
     <% } %>
 
-    <div>
-        <%: Html.ActionLink("Back to List", "Index") %>
-    </div>
+    <p>
+        <img class="back" src="<%: Url.Image("back.png") %>" alt="Back TODO!" />&nbsp;<%: Html.ActionLink("Back to List", "Index") %>
+    </p>
 
 </asp:Content>

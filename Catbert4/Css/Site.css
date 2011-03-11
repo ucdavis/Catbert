@@ -1,74 +1,101 @@
 /*----------------------------------------------------------
-The base color for this template is #5c87b2. If you'd like
+The base color for this template is #efefef. If you'd like
 to use a different color start by replacing all instances of
-#5c87b2 with your new color.
+#efefef with your new color.
 ----------------------------------------------------------*/
 body
 {
-    background-color: #5c87b2;
-    font-size: .75em;
-    font-family: Verdana, Helvetica, Sans-Serif;
-    margin: 0;
+    background: #efefef url(../Images/bg.jpg);
+    font-size: 62.5%;
+    font-family: 'Yanone Kaffeesatz', Arial, Verdana, Helvetica, Sans-Serif;
     padding: 0;
     color: #696969;
+    margin: 2em;
+    border: 3px solid #fff;
+    min-width: 1000px;
 }
+iframe body {border: 0px; margin: 0px;}
 
 a:link
 {
-    color: #034af3;
-    text-decoration: underline;
+    color: #c5101c;
+    text-decoration: none;
 }
 a:visited
 {
-    color: #505abc;
+    color: #c5101c;
+    text-decoration: none;
 }
 a:hover
 {
-    color: #1d60ff;
-    text-decoration: none;
+    color: #5a5858;
+    border-bottom: 1px solid #5a5858;
 }
 a:active
 {
-    color: #12eb87;
+    color: #be0e19;
+    text-decoration: none;
 }
+a.img:hover {border-bottom: 0px;}
+a img {border: 0px; position: relative; top: 2px; padding: 0 2px;}
 
-p, ul
+p, li, td, th
 {
+    font-size: 1.8em;
     margin-bottom: 20px;
     line-height: 1.6em;
 }
+
+
+/* jQuery Overwrites
+----------------------------------------------------------*/
+
+.ui-widget {font-family: 'Yanone Kaffeesatz', Arial, Verdana, Helvetica, Sans-Serif;
+ background: #fff; border-top: 3px solid #333;
+ box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.15); -moz-box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.15); -webkit-box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.15);}
+p.ui-widget, form .ui-widget {padding: .5em;}
+.ui-widget p {line-height: 1em; padding: .5em; margin: 0px;}
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {background: #cb0c19; border: 0px; border-top: 3px solid #000; color: #fff;}
+.ui-corner-all {-moz-border-radius: 0px;}
+.ui-icon, .ui-state-highlight .ui-icon {background-image: url(https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/themes/ui-lightness/images/ui-icons_ffffff_256x240.png) !important; position: relative; top: 3px;}
+.connectedSortable li {cursor: pointer; font-size: 2em !important;}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {background: #C5101C; border: 1px solid #fff;}
+a.ui-state-default, .ui-widget-content a.ui-state-default, .ui-widget-header a.ui-state-default {color: #fff;}
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, 
+.ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {border: 1px solid #C5101C; background: #333;}
+.ui-widget input, .ui-widget textarea, .ui-widget button {padding: 0.25em 0.5em;}
+input.ui-button {color: #fff;}
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {color: #fff;}
+.ui-button-text-icon-primary .ui-button-text, .ui-button-text-icons .ui-button-text {padding: 0.2em .5em 0.2em 2.1em;}
+.dataTables_wrapper div {font-size: 1.4em; line-height: 1.4em;}
+
+tr.odd {background-color: #ddd !important;}
+tr.odd td.sorting_1 {background-color: #ccc !important;}
+tr.even td.sorting_1 {background-color: #eee !important;}
+th.ui-state-default, th.ui-widget-header .ui-state-default {color: #fff; border: 0px none; border-bottom: 2px solid #fff}
+.ui-widget-header {background: #333; border: 0px; -moz-border-radius: 0px; border-radius: 0px;}
+
 
 /* HEADINGS   
 ----------------------------------------------------------*/
 h1, h2, h3, h4, h5, h6
 {
-    font-size: 1.5em;
+    font-size: 3em;
     color: #000;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Yanone Kaffeesatz', Arial, Helvetica, sans-serif;
+    margin-bottom: 0;
 }
 
 h1
 {
-    font-size: 2em;
+    font-size: 5em;
     padding-bottom: 0;
     margin-bottom: 0;
 }
-h2
-{
-    padding: 0 0 10px 0;
-}
-h3
-{
-    font-size: 1.2em;
-}
-h4
-{
-    font-size: 1.1em;
-}
-h5, h6
-{
-    font-size: 1em;
-}
+h2 {padding: 0 0 10px 0;}
+h3 {font-size: 3em;}
+h4 {font-size: 2.5em;}
+h5, h6 {font-size: 2em;}
 
 /* this rule styles <h2> tags that are the 
 first child of the left and right table columns */
@@ -76,6 +103,8 @@ first child of the left and right table columns */
 {
     margin-top: 0;
 }
+.mono {font-family: Courier New, Courier New, monospace; font-size: 1.1em;}
+
 
 /* PRIMARY LAYOUT ELEMENTS   
 ----------------------------------------------------------*/
@@ -84,10 +113,17 @@ first child of the left and right table columns */
 page width. Or, you can specify an exact pixel width. */
 .page
 {
-    width: 90%;
+    width: 90%; min-height: 700px;
     margin-left: auto;
     margin-right: auto;
 }
+#top {background: url(../Images/bg-branding.jpg) repeat-x transparent; position: absolute; top: 0px; left: 0px; z-index: -1; height: 82px; width: 100%;}
+#catbert {background: url(../Images/bg-catbert-short.jpg) no-repeat fixed bottom right; position: fixed; right: 0px; bottom: 0px; z-index: -1;}
+
+
+#welcome {border-top: 3px solid #333; float: right; background: #fff; padding: 1em; position: absolute; top: 0px; right: 5em; box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.15); -moz-box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.15); -webkit-box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.15);}
+#welcome p {margin: 0; text-align: right; line-height: 1.4em; font-size: 1.5em;}
+#welcome a {text-transform: uppercase; letter-spacing: 1px; font-size: .9em;}
 
 #header
 {
@@ -97,23 +133,26 @@ page width. Or, you can specify an exact pixel width. */
     padding: 0;
 }
 
+
 #header h1
 {
     font-weight: bold;
     padding: 5px 0;
     margin: 0;
-    color: #fff;
+    color: #c8c7c7;
     border: none;
     line-height: 2em;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 32px !important;
+    font-family: 'Lobster', Arial, Helvetica, sans-serif;
+    font-size: 6em;
+    text-shadow: 0px 2px 3px #fff;
+    text-shadow: rgba(0,0,0,0.2) -1px 0, rgba(0,0,0,0.1) 0 -1px, rgba(255,255,255,0.5) 0 1px, rgba(0,0,0,0.2) -1px -2px,  0px 2px 3px #fff;
+
 }
 
 #main
 {
-    padding: 30px 30px 15px 30px;
-    background-color: #fff;
-    margin-bottom: 30px;
+    clear: both;
+    margin-bottom: 60px;
     _height: 1px; /* only IE6 applies CSS properties starting with an underscrore */
 }
 
@@ -131,17 +170,17 @@ page width. Or, you can specify an exact pixel width. */
 ----------------------------------------------------------*/
 ul#menu
 {
-    border-bottom: 1px #5C87B2 solid;
     padding: 0 0 2px;
-    position: relative;
-    margin: 0;
-    text-align: right;
+    margin: 6.4em 0 0;
+    font-size: 1em;
+    float: right;
 }
 
 ul#menu li
 {
     display: inline;
     list-style: none;
+    font-size: 2em;
 }
 
 ul#menu li#greeting
@@ -155,29 +194,25 @@ ul#menu li#greeting
 
 ul#menu li a
 {
-    padding: 10px 20px;
+    padding: 0 10px 2px;
     font-weight: bold;
     text-decoration: none;
-    line-height: 2.8em;
-    background-color: #e8eef4;
-    color: #034af3;
+    color: #c5101c;
 }
 
 ul#menu li a:hover
 {
-    background-color: #fff;
     text-decoration: none;
+    border-bottom: 3px solid #b0afaf;
 }
 
 ul#menu li a:active
 {
-    background-color: #a6e2a6;
     text-decoration: none;
 }
 
 ul#menu li.selected a
 {
-    background-color: #fff;
     color: #000;
 }
 
@@ -198,7 +233,7 @@ fieldset p
 
 fieldset label 
 {
-    display: block;
+    display: inline-block;
 }
 
 fieldset label.inline 
@@ -208,16 +243,22 @@ fieldset label.inline
 
 legend 
 {
-    font-size: 1.1em;
+    font-size: 2em;
     font-weight: 600;
     padding: 2px 4px 8px 4px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
 }
+.display-label, label {font-size: 1.2em; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; color: #aaa;}
+.ui-widget label {font-size: 1.8em;}
 
 input[type="text"] 
 {
     width: 200px;
     border: 1px solid #CCC;
+    padding: 0.25em 0.5em;
 }
+textarea {padding: 0.25em 0.5em;}
 
 input[type="password"] 
 {
@@ -225,45 +266,30 @@ input[type="password"]
     border: 1px solid #CCC;
 }
 
+
 /* TABLE
 ----------------------------------------------------------*/
 
 table 
 {
-  border: solid 1px #e8eef4;
-  border-collapse: collapse;
+  border-collapse: collapse; width: 100%;
+  border-top: 3px solid #333; background: #fff; padding: 1em 2em; 
+  box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.15); -moz-box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.15); -webkit-box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-table td 
-{
-  padding: 5px;   
-  border: solid 1px #e8eef4;
-}
+table thead {background: #efefef;}
+table td {padding: 10px 5px 5px; border-top: 1px dashed #ccc;}
+table th {padding: 10px 5px 5px; text-align: left;}
 
-table th
-{
-  padding: 6px 5px;
-  text-align: left;
-  background-color: #e8eef4; 
-  border: solid 1px #e8eef4;   
-}
+div#users-list {}
+
 
 /* MISC  
 ----------------------------------------------------------*/
-.clear
-{
-    clear: both;
-}
+.clear {clear: both;}
+.error {color: Red;}
 
-.error
-{
-    color:Red;
-}
-
-#menucontainer
-{
-    margin-top:40px;
-}
+#menucontainer {}
 
 div#title
 {
@@ -321,3 +347,5 @@ div#title
     border: 2px dotted gray; 
     z-index: 2000;
 } 
+
+img.back {position: relative; top: 3px;}

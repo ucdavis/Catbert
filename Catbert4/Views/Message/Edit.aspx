@@ -19,17 +19,16 @@
             <legend>Fields</legend>
             
             <% Html.RenderPartial("MessageForm"); %>
-
-            <p>
-                <input type="submit" value="Edit" />
-            </p>
+            <br />
+            <input type="submit" value="Edit" />
+            
         </fieldset>
 
     <% } %>
 
-    <div>
-        <%: Html.ActionLink("Back to List", "Index") %>
-    </div>
+    <p>
+        <img class="back" src="<%: Url.Image("back.png") %>" alt="Back to List TODO!" />&nbsp;<%: Html.ActionLink("Back to List", "Index") %>
+    </p>
 
 </asp:Content>
 

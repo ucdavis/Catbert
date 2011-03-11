@@ -72,14 +72,14 @@
 
         <%: Html.HiddenFor(x=>x.LoginId) %>
 
-        <p>
+        <br />
             <input type="submit" value="Add" />
-        </p>
+        
     </fieldset>
     <% } %>
-    <div>
-        <%: Html.ActionLink("Find A Different User", "Find") %>
-    </div>
+    <p>
+        <img class="back" src="<%: Url.Image("back.png") %>" alt="Back to List TODO!" />&nbsp;<%: Html.ActionLink("Find A Different User", "Find") %>
+    </p>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="HeaderContent" runat="server">
 </asp:Content>

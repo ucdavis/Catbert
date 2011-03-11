@@ -77,8 +77,8 @@
     <% } %>
 
     <p>
-        <%: Html.ActionLink("Edit", "Edit", new { id = Model.Login }) %> |
-        <%: Html.ActionLink("Back to List", "Index") %>
+        <img class="back" src="<%: Url.Image("edit.png") %>" alt="Back to List TODO!" />&nbsp;<%: Html.ActionLink("Edit", "Edit", new { id = Model.Login }) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <img class="back" src="<%: Url.Image("back.png") %>" alt="Back to List TODO!" />&nbsp;<%: Html.ActionLink("Back to List", "Index") %>
     </p>
 
 </asp:Content>

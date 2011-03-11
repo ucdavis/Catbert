@@ -5,7 +5,7 @@
 </asp:Content>
 
 <asp:Content runat="server" ID="Main" ContentPlaceHolderID="MainContent">
-<div style="width: 60%">
+<div style="width: 100%">
     <table id="users" class="display">
         <thead>
             <tr>
@@ -15,10 +15,10 @@
                     Login
                 </th>
                 <th>
-                    FirstName
+                    First Name
                 </th>
                 <th>
-                    LastName
+                    Last Name
                 </th>
                 <th>
                     Email
@@ -30,7 +30,8 @@
                { %>
             <tr>
                 <td>
-                    <%: Html.ActionLink("Edit", "Edit", new { id=item.Login }) %>
+                    <%--<%: Html.ActionLink("Edit", "Edit", new { id=item.Login }) %>--%>
+                    <a href="TODO!" class="img"><img src="<%: Url.Image("edit.png") %>" alt="Edit" /></a>
                 </td>
                 <td>
                     <%: item.Login %>

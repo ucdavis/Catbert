@@ -20,7 +20,7 @@
             <label>Unit:</label>
             <%= this.Select("unitId").Options(Model.Units, x=>x.Key, x=>x.Value).Class("required") %>
             <br /><br />
-            <a href="#" id="add-new-user">Add User</a><span id="add-new-user-progress" style="display: none;">Processing...</span>
+            <p><a href="#" id="add-new-user">Add User</a></p><span id="add-new-user-progress" style="display: none;">Processing...</span>
         </form>
     </div>
 </div>

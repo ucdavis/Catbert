@@ -18,14 +18,14 @@
         <% Html.RenderPartial("ApplicationForm"); %>
 
         <p>
-            <input id="edit" type="submit" value="Edit" />
+            <input id="edit" type="submit" value="Save" />
         </p>
 
     <% } %>
 
-    <div>
-        <%: Html.ActionLink("Back to List", "Index") %>
-    </div>
+    <p>
+        <img class="back" src="<%: Url.Image("back.png") %>" alt="Back to List TODO!" />&nbsp;<%: Html.ActionLink("Back to List", "Index") %>
+    </p>
 
 </asp:Content>
 

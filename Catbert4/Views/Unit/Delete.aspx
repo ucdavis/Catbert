@@ -20,8 +20,8 @@
     <% using (Html.BeginForm()) { %>
 		<%= Html.AntiForgeryToken() %>
         <p>
-		    <input type="submit" value="Delete" /> |
-		    <%: Html.ActionLink("Back to List", "Index") %>
+		    <input type="submit" value="Delete" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		    <img class="back" src="<%: Url.Image("back.png") %>" alt="Back TODO!" />&nbsp;<%: Html.ActionLink("Back to List", "Index") %>
         </p>
     <% } %>
 

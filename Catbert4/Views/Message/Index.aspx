@@ -34,10 +34,11 @@
     <% foreach (var item in Model) { %>
     
         <tr>
-            <td>
+            <%--<td>
                 <%: Html.ActionLink("Edit", "Edit", new { id = item.Id }) %> |
                 <%: Html.ActionLink("Delete", "Delete", new { id = item.Id })%>
-            </td>
+            </td>--%>
+            <td><a href="TODO!" class="img"><img src="<%: Url.Image("edit.png") %>" alt="Edit/Details" /></a> | <a href="TODO!" class="img"><img src="<%: Url.Image("delete.png") %>" alt="Delete" /></a></td>
             <td>
                 <%: item.Text %>
             </td>
@@ -63,7 +64,7 @@
     </table>
 
     <p>
-        <%: Html.ActionLink("Create New", "Create") %>
+        <img class="back" src="<%: Url.Image("add.png") %>" alt="New token! TODO!" /> &nbsp;<%: Html.ActionLink("Create New", "Create") %>
     </p>
 
 </asp:Content>

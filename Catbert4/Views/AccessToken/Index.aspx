@@ -20,9 +20,10 @@
         <% foreach (var accessToken in Model)
            { %>
            <tr>
-            <td><%: Html.ActionLink<AccessTokenController>(x=>x.Details(accessToken.Id), "Edit/Details") %></td>
+            <%--<td><%: Html.ActionLink<AccessTokenController>(x=>x.Details(accessToken.Id), "Edit/Details") %></td>--%>
+            <td><a href="TODO!" class="img"><img src="<%: Url.Image("edit.png") %>" alt="Edit/Details" /></a> | <a href="TODO!" class="img"><img src="<%: Url.Image("file.png") %>" alt="Edit/Details" /></a></td>
             <td><%: accessToken.Application.Name %></td>
-            <td><%: accessToken.Token %></td>
+            <td class="mono"><%: accessToken.Token %></td>
             <td><%: Html.DisplayFor(x=> accessToken.ContactEmail) %></td>
             <td><%: accessToken.Reason %></td>
             <td><%: Html.DisplayFor(x=> accessToken.Active) %></td>
@@ -32,7 +33,7 @@
 </table>
 
     <p>
-        <%: Html.ActionLink<AccessTokenController>(x=>x.Create(), "Generate new token") %>
+        <img class="back" src="<%: Url.Image("add.png") %>" alt="New token! TODO!" /> &nbsp;<%: Html.ActionLink<AccessTokenController>(x=>x.Create(), "Generate new token") %>
     </p>
 
 </asp:Content>
