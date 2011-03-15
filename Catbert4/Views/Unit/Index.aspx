@@ -28,9 +28,7 @@
            { %>
            <tr>
             <td>
-                <%--<%: Html.ActionLink<UnitController>(x=>x.Edit(unit.Id), "Edit") %> |
-                <%: Html.ActionLink<UnitController>(x=>x.Delete(unit.Id), "Delete") %>--%>
-                <a href="TODO!" class="img"><img src="<%: Url.Image("edit.png") %>" alt="Edit" /></a> | <a href="TODO!" class="img"><img src="<%: Url.Image("delete.png") %>" alt="Delete" /></a>
+                <a href="<%: Url.Action("Edit", new { id = unit.Id }) %>" class="img"><img src="<%: Url.Image("edit.png") %>" alt="Edit" /></a> | <a href="<%: Url.Action("Delete", new { id = unit.Id }) %>" class="img"><img src="<%: Url.Image("delete.png") %>" alt="Delete" /></a>
             </td>
             <td><%: unit.FisCode %></td>
             <td><%: unit.PpsCode %></td>

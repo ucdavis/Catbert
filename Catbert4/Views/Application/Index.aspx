@@ -24,11 +24,7 @@
     <% foreach (var item in Model) { %>
     
         <tr>
-            <%--<td>
-                <%: Html.ActionLink("Edit", "Edit", new { id=item.Id }) %> |
-                <%: Html.ActionLink("Details", "Details", new { id = item.Id })%>
-            </td>--%>
-            <td><a href="TODO!" class="img"><img src="<%: Url.Image("edit.png") %>" alt="Edit" /></a> | <a href="TODO!" class="img"><img src="<%: Url.Image("file.png") %>" alt="Details" /></a></td>
+            <td><a href="<%: Url.Action("Edit", new { id = item.Id }) %>" class="img"><img src="<%: Url.Image("edit.png") %>" alt="Edit" /></a> | <a href="<%: Url.Action("Details", new { id = item.Id }) %>" class="img"><img src="<%: Url.Image("file.png") %>" alt="Details" /></a></td>
             <td>
                 <%: item.Name %>
             </td>

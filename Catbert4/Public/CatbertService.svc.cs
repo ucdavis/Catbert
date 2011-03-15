@@ -21,15 +21,13 @@ namespace Catbert4.Public
             Check.Require(!string.IsNullOrWhiteSpace(appName), "Application Name is required to be set. Please ensure you have set an AppSetting called AppName");
             Check.Require(!string.IsNullOrWhiteSpace(token), "Token is required to be set. Please ensure you have set an AppSetting called Token");
 
-            //base.CurrentDataSource.ApplicationName = appName ?? "HelpRequest"; //TODO: remove after testing
-
             base.OnStartProcessingRequest(args);
         }
 
         // This method is called only once to initialize service-wide policies.
         public static void InitializeService(DataServiceConfiguration config)
         {
-            // TODO: set rules to indicate which entity sets and service operations are visible, updatable, etc.
+            // Set rules to indicate which entity sets and service operations are visible, updatable, etc.
             // Examples:
             config.SetEntitySetAccessRule("*", EntitySetRights.AllRead);
             // config.SetServiceOperationAccessRule("MyServiceOperation", ServiceOperationRights.All);

@@ -30,8 +30,7 @@
                { %>
             <tr>
                 <td>
-                    <%--<%: Html.ActionLink("Edit", "Edit", new { id=item.Login }) %>--%>
-                    <a href="TODO!" class="img"><img src="<%: Url.Image("edit.png") %>" alt="Edit" /></a>
+                    <a href="<%: Url.Action("Edit", new { id = item.Login }) %>" class="img"><img src="<%: Url.Image("edit.png") %>" alt="Edit" /></a>
                 </td>
                 <td>
                     <%: item.Login %>

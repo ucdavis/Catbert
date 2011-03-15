@@ -24,8 +24,7 @@
         <% foreach (var accessToken in Model)
            { %>
            <tr>
-            <%--<td><%: Html.ActionLink<AccessTokenController>(x=>x.Details(accessToken.Id), "Edit/Details") %></td>--%>
-            <td><a href="TODO!" class="img"><img src="<%: Url.Image("edit.png") %>" alt="Edit/Details" /></a> | <a href="TODO!" class="img"><img src="<%: Url.Image("file.png") %>" alt="Edit/Details" /></a></td>
+            <td><a href="<%: Url.Action("Details", new { id = accessToken.Id }) %>" class="img"><img src="<%: Url.Image("edit.png") %>" alt="Edit/Details" /></a> </td>
             <td><%: accessToken.Application.Name %></td>
             <td class="mono"><%: accessToken.Token %></td>
             <td><%: Html.DisplayFor(x=> accessToken.ContactEmail) %></td>
