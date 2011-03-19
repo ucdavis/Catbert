@@ -77,6 +77,10 @@ tr.even td.sorting_1 {background-color: #eee !important;}
 th.ui-state-default, th.ui-widget-header .ui-state-default {color: #fff; border: 0px none; border-bottom: 2px solid #fff}
 .ui-widget-header {background: #333; border: 0px; -moz-border-radius: 0px; border-radius: 0px;}
 
+#users_paginate .ui-state-default, 
+#users_paginate .ui-widget-content .ui-state-default, 
+#users_paginate .ui-widget-header .ui-state-default {color: #fff;}
+
 
 /* HEADINGS   
 ----------------------------------------------------------*/
