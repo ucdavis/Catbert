@@ -10,17 +10,21 @@ namespace Catbert4
         {
             RouteCollection routes = RouteTable.Routes;
             routes.Clear();
-
+            
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.IgnoreRoute("{*favicon}", new { favicon = @"(.*/)?favicon.ico(/.*)?" });
 
-            MvcRoute.MappUrl("UserManagement/{action}/{application}")
-                .WithDefaults(new {controller = "UserManagement", action = "Manage", application = ""})
-                .AddWithName("UserManagement", routes);
+            routes.MapRoute("UserManagement", "UserManagement/{action}/{application}",
+                            defaults:
+                                new
+                                    {
+                                        controller = "UserManagement",
+                                        action = "Manage",
+                                        application = UrlParameter.Optional
+                                    });
 
-            MvcRoute.MappUrl("{controller}/{action}/{id}")
-                .WithDefaults(new { controller = "Home", action = "Index", id = "" })
-                .AddWithName("Default", routes);
+            routes.MapRoute("Default", "{controller}/{action}/{id}",
+                            defaults: new {controller = "Home", action = "Index", id = UrlParameter.Optional});
         }
     }
 }

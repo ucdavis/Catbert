@@ -3,7 +3,6 @@ using Catbert4.Controllers;
 using Catbert4.Core.Domain;
 using Catbert4.Helpers;
 using Microsoft.Practices.ServiceLocation;
-using MvcContrib.Castle;
 using Castle.Windsor;
 using NHibernate;
 using UCDArch.Data.NHibernate;
