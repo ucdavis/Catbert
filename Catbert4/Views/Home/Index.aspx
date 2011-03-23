@@ -36,6 +36,6 @@ ul#menu li a {color: #565353; padding: 10px; text-shadow: 0px 2px 3px #fff;}
                     <li><%= Html.ActionLink("5. Roles", "Index", "Role")%></li>
                 </ul>
 
-                <img class="catbert" src="Images/bg-catbert-med.jpg" alt="Catbert" />
+                <img class="catbert" src="<%: Url.Image("bg-catbert-med.jpg") %>" alt="Catbert" />
 
 </asp:Content>
