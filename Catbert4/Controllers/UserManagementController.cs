@@ -282,7 +282,7 @@ namespace Catbert4.Controllers
 		{
 			var manageableRoles = _roleService.GetVisibleByUser(application, CurrentUser.Identity.Name);
 
-			Check.Require(manageableRoles.Where(x => x.Id == roleId).Any(),
+			Check.Require(manageableRoles.Where(x => x.Id == roleId).Count() > 0,
 						  string.Format("{0} does not have access to manage the given role",
 										CurrentUser.Identity.Name));
 		}
@@ -291,7 +291,7 @@ namespace Catbert4.Controllers
 		{
 			var manageableUnits = _unitService.GetVisibleByUser(application, CurrentUser.Identity.Name);
 
-			Check.Require(manageableUnits.Where(x => x.Id == unitId).Any(),
+			Check.Require(manageableUnits.Where(x => x.Id == unitId).Count() > 0,
 						  string.Format("{0} does not have access to manage the given unit",
 										CurrentUser.Identity.Name));
 		}
