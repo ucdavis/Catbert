@@ -1,5 +1,6 @@
 #ignore sql dbmdl files
 *.dbmdl
+*.schemaview
 #ignore AppSettings.config file
 AppSettings.config
 #ignore thumbnails created by windows

@@ -44,24 +44,6 @@ EndProject
 Project("{C8D11400-126E-41CD-887F-60BD40844F9E}") = "Catbert4.Sql", "Catbert4.Sql\Catbert4.Sql.dbproj", "{67CBC824-A49E-4E9B-A947-360F3DFE65C3}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs.caes.ucdavis.edu:8088/tfs/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Catbert4.Tests\\Catbert4.Tests.csproj
-		SccProjectName1 = Catbert4.Tests
-		SccLocalPath1 = Catbert4.Tests
-		SccProjectUniqueName2 = Catbert4\\Catbert4.csproj
-		SccProjectName2 = Catbert4
-		SccLocalPath2 = Catbert4
-		SccProjectUniqueName3 = Catbert4.Core\\Catbert4.Core.csproj
-		SccProjectName3 = Catbert4.Core
-		SccLocalPath3 = Catbert4.Core
-		SccProjectUniqueName4 = Catbert4.Sql\\Catbert4.Sql.dbproj
-		SccProjectName4 = Catbert4.Sql
-		SccLocalPath4 = Catbert4.Sql
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
