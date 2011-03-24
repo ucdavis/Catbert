@@ -127,7 +127,7 @@ page width. Or, you can specify an exact pixel width. */
 #catbert {background: url(../Images/bg-catbert-short.jpg) no-repeat fixed bottom right; position: fixed; right: 0px; bottom: 0px; z-index: -1;}
 
 
-#welcome {border-top: 3px solid #333; float: right; background: #fff; padding: 1em; position: absolute; top: 0px; right: 5em; box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.15); -moz-box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.15); -webkit-box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.15);}
+#welcome {border-top: 3px solid #333; float: right; background: #fff; z-index:10; padding: 1em; position: absolute; top: 0px; right: 5em; box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.15); -moz-box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.15); -webkit-box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.15);}
 #welcome p {margin: 0; text-align: right; line-height: 1.4em; font-size: 1.5em;}
 #welcome a {text-transform: uppercase; letter-spacing: 1px; font-size: .9em;}
 
