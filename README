@@ -1,0 +1,13 @@
+CA&ES User Authorization System codename "Catbert."
+
+Catbert is a central user authorization system which helps consuming "client" applications determine what roles and units a user is associated with in their system.  Note that authentication is outside of the scope of Catbert since on the UCDavis campus we currently use CAS to handle authenticating users.
+
+Catbert can handle any number of client applications (with their own roles) as well as a complex unit hierarchy.  Permissions can be handled both centrally by a core IT group as well as by the clients themselves (preferred) using a client application "user management" view.  For example, a user with the "ManageSchool" and "User" roles in an application could user permissions for everyone within their "school" (maybe CA&ES) and grant "User" and "Reviewer" roles, but not grant the "Admin" role (of course, that is all configurable).  This allows you to hand off your application and let the users themselves manage permissions in a granular way.
+
+Client applications can communicate with Catbert through several secure WCF web services, or directly via SPROCs (if given proper permissions).  ASP.NET Role Providers have been written to support both scenarios; see UcdArch (https://github.com/ucdavis/UCDArch) for code and more details.
+
+Catbert is also covered by >500 unit tests, which you can look at to learn more about specific functionality (or to convince yourself how something works).
+
+If your office has written more than one application and duplicating user role handling logic is getting you down, start being DRY and use Catbert!
+
+A CA&ES Dean's Office production.
