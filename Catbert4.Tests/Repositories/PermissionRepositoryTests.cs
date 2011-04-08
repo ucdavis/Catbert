@@ -230,7 +230,7 @@ namespace Catbert4.Tests.Repositories
             {
                 Assert.IsNotNull(permission);
                 Assert.IsNotNull(ex);
-                Assert.AreEqual("not-null property references a null or transient valueCatbert4.Core.Domain.Permission.User", ex.Message);
+                Assert.AreEqual("not-null property references a null or transient value Catbert4.Core.Domain.Permission.User", ex.Message);
                 throw;
             }
         }
@@ -286,7 +286,7 @@ namespace Catbert4.Tests.Repositories
             {
                 Assert.IsNotNull(permission);
                 Assert.IsNotNull(ex);
-                Assert.AreEqual("not-null property references a null or transient valueCatbert4.Core.Domain.Permission.User", ex.Message);
+                Assert.AreEqual("not-null property references a null or transient value Catbert4.Core.Domain.Permission.User", ex.Message);
                 throw;
             }
         }
@@ -370,7 +370,7 @@ namespace Catbert4.Tests.Repositories
             {
                 Assert.IsNotNull(permission);
                 Assert.IsNotNull(ex);
-                Assert.AreEqual("not-null property references a null or transient valueCatbert4.Core.Domain.Permission.Application", ex.Message);
+                Assert.AreEqual("not-null property references a null or transient value Catbert4.Core.Domain.Permission.Application", ex.Message);
                 throw;
             }
         }
@@ -426,7 +426,7 @@ namespace Catbert4.Tests.Repositories
             {
                 Assert.IsNotNull(permission);
                 Assert.IsNotNull(ex);
-                Assert.AreEqual("not-null property references a null or transient valueCatbert4.Core.Domain.Permission.Application", ex.Message);
+                Assert.AreEqual("not-null property references a null or transient value Catbert4.Core.Domain.Permission.Application", ex.Message);
                 throw;
             }
         }
@@ -510,7 +510,7 @@ namespace Catbert4.Tests.Repositories
             {
                 Assert.IsNotNull(permission);
                 Assert.IsNotNull(ex);
-                Assert.AreEqual("not-null property references a null or transient valueCatbert4.Core.Domain.Permission.Role", ex.Message);
+                Assert.AreEqual("not-null property references a null or transient value Catbert4.Core.Domain.Permission.Role", ex.Message);
                 throw;
             }
         }
@@ -566,7 +566,7 @@ namespace Catbert4.Tests.Repositories
             {
                 Assert.IsNotNull(permission);
                 Assert.IsNotNull(ex);
-                Assert.AreEqual("not-null property references a null or transient valueCatbert4.Core.Domain.Permission.Role", ex.Message);
+                Assert.AreEqual("not-null property references a null or transient value Catbert4.Core.Domain.Permission.Role", ex.Message);
                 throw;
             }
         }

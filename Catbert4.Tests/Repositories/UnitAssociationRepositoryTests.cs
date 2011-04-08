@@ -231,7 +231,7 @@ namespace Catbert4.Tests.Repositories
             {
                 Assert.IsNotNull(unitAssociation);
                 Assert.IsNotNull(ex);
-                Assert.AreEqual("not-null property references a null or transient valueCatbert4.Core.Domain.UnitAssociation.User", ex.Message);
+                Assert.AreEqual("not-null property references a null or transient value Catbert4.Core.Domain.UnitAssociation.User", ex.Message);
                 throw;
             }
         }
@@ -287,7 +287,7 @@ namespace Catbert4.Tests.Repositories
             {
                 Assert.IsNotNull(unitAssociation);
                 Assert.IsNotNull(ex);
-                Assert.AreEqual("not-null property references a null or transient valueCatbert4.Core.Domain.UnitAssociation.User", ex.Message);
+                Assert.AreEqual("not-null property references a null or transient value Catbert4.Core.Domain.UnitAssociation.User", ex.Message);
                 throw;
             }
         }
@@ -371,7 +371,7 @@ namespace Catbert4.Tests.Repositories
             {
                 Assert.IsNotNull(unitAssociation);
                 Assert.IsNotNull(ex);
-                Assert.AreEqual("not-null property references a null or transient valueCatbert4.Core.Domain.UnitAssociation.Application", ex.Message);
+                Assert.AreEqual("not-null property references a null or transient value Catbert4.Core.Domain.UnitAssociation.Application", ex.Message);
                 throw;
             }
         }
@@ -427,7 +427,7 @@ namespace Catbert4.Tests.Repositories
             {
                 Assert.IsNotNull(unitAssociation);
                 Assert.IsNotNull(ex);
-                Assert.AreEqual("not-null property references a null or transient valueCatbert4.Core.Domain.UnitAssociation.Application", ex.Message);
+                Assert.AreEqual("not-null property references a null or transient value Catbert4.Core.Domain.UnitAssociation.Application", ex.Message);
                 throw;
             }
         }
@@ -511,7 +511,7 @@ namespace Catbert4.Tests.Repositories
             {
                 Assert.IsNotNull(unitAssociation);
                 Assert.IsNotNull(ex);
-                Assert.AreEqual("not-null property references a null or transient valueCatbert4.Core.Domain.UnitAssociation.Unit", ex.Message);
+                Assert.AreEqual("not-null property references a null or transient value Catbert4.Core.Domain.UnitAssociation.Unit", ex.Message);
                 throw;
             }
         }
@@ -569,7 +569,7 @@ namespace Catbert4.Tests.Repositories
             {
                 Assert.IsNotNull(unitAssociation);
                 Assert.IsNotNull(ex);
-                Assert.AreEqual("not-null property references a null or transient valueCatbert4.Core.Domain.UnitAssociation.Unit", ex.Message);
+                Assert.AreEqual("not-null property references a null or transient value Catbert4.Core.Domain.UnitAssociation.Unit", ex.Message);
                 throw;
             }
         }

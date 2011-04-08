@@ -95,7 +95,7 @@
     <Reference Include="NHibernate.Caches.SysCache2">
       <HintPath>..\Bin\NHibernate.Caches.SysCache2.dll</HintPath>
     </Reference>
-    <Reference Include="NHibernate.Validator, Version=1.3.0.1001, Culture=neutral, PublicKeyToken=70154e18752585bd, processorArchitecture=MSIL">
+    <Reference Include="NHibernate.Validator, Version=1.3.0.4000, Culture=neutral, PublicKeyToken=70154e18752585bd, processorArchitecture=MSIL">
       <HintPath>..\Bin\NHibernate.Validator.dll</HintPath>
     </Reference>
     <Reference Include="System" />
