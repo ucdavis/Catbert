@@ -55,5 +55,13 @@ namespace Catbert4.Core.Domain
                 return string.Format("{0} {1} ({2})", FirstName, LastName, LoginId);
             }
         }
+
+        public virtual string FullName
+        {
+            get
+            {
+                return string.Format("{0} {1}", FirstName, LastName);
+            }
+        }
     }
 }

@@ -154,6 +154,7 @@
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\SchoolController.cs" />
+    <Compile Include="Controllers\SsoController.cs" />
     <Compile Include="Controllers\UnitController.cs" />
     <Compile Include="Controllers\UserAdministrationController.cs" />
     <Compile Include="Controllers\UserManagementController.cs" />
@@ -162,6 +163,7 @@
     </Compile>
     <Compile Include="Helpers\AutomapperConfig.cs" />
     <Compile Include="Helpers\HtmlHelpers.cs" />
+    <Compile Include="Helpers\UserVoiceTokenGenerator.cs" />
     <Compile Include="Models\JsonStatusModel.cs" />
     <Compile Include="Models\ServiceUser.cs" />
     <Compile Include="Models\UserListModel.cs" />
