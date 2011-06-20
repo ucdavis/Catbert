@@ -1,157 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <publishData>
-  <publishProfile publishUrl="\\url\wwwroot\Catbert4" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Dev" publishMethod="FileSystem" replaceMatchingFiles="True" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
-    <file relUrl="bin/NHibernate.Validator.dll" publishTime="04/08/2011 14:33:40" />
-    <file relUrl="Scripts/MicrosoftAjax.js" publishTime="01/14/2011 16:41:56" />
-    <file relUrl="Public/Message.svc" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/Message/Index.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Scripts/UserManagement.js" publishTime="03/10/2011 17:28:41" />
-    <file relUrl="Views/Shared/EditorTemplates/DateTime.ascx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Scripts/jquery.jqcascade.min.js" publishTime="01/14/2011 16:41:56" />
-    <file relUrl="Views/UserManagement/Manage-original.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Content/themes/base/images/ui-bg_highlight-soft_75_cccccc_1x100.png" publishTime="03/22/2011 12:13:23" />
-    <file relUrl="Views/Web.config" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/Application/Create.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/UserManagement/ModifyUserDialog.ascx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Scripts/jquery.validate.js" publishTime="01/14/2011 16:41:56" />
-    <file relUrl="Views/Application/Edit.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="bin/HibernatingRhinos.Profiler.Appender.dll" publishTime="04/08/2011 14:33:39" />
-    <file relUrl="Views/UserManagement/AuthorizationError.ascx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/Shared/DisplayTemplates/DisplayComplexValues.ascx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/School/Index.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Public/CatbertService.svc" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Images/logo-ucdavis.jpg" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Scripts/jquery-ui.min.js" publishTime="03/22/2011 12:13:22" />
-    <file relUrl="bin/Catbert4.Core.pdb" publishTime="04/08/2011 14:39:07" />
-    <file relUrl="bin/Common.Logging.dll" publishTime="04/08/2011 14:33:38" />
-    <file relUrl="bin/Catbert4.pdb" publishTime="04/08/2011 14:39:09" />
-    <file relUrl="Views/Message/Edit.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/Home/UserManagement.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/Role/Index.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/Message/Create.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Content/themes/base/images/ui-bg_glass_55_fbf9ee_1x400.png" publishTime="03/22/2011 12:13:23" />
-    <file relUrl="Content/themes/base/jquery-ui.css" publishTime="03/22/2011 12:13:23" />
-    <file relUrl="Scripts/MicrosoftMvcAjax.debug.js" publishTime="03/22/2011 12:13:22" />
-    <file relUrl="Scripts/jquery.unobtrusive-ajax.min.js" publishTime="03/22/2011 12:13:22" />
-    <file relUrl="Views/Application/ApplicationForm.ascx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Images/add.png" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="bin/Spring.Aop.dll" publishTime="04/08/2011 14:33:40" />
-    <file relUrl="Content/themes/base/images/ui-icons_2e83ff_256x240.png" publishTime="03/22/2011 12:13:23" />
-    <file relUrl="Scripts/jquery-1.4.4-vsdoc.js" publishTime="03/22/2011 12:13:22" />
-    <file relUrl="Scripts/MicrosoftMvcAjax.js" publishTime="03/22/2011 12:13:22" />
-    <file relUrl="bin/Newtonsoft.Json.dll" publishTime="04/08/2011 14:33:39" />
-    <file relUrl="Views/Unit/Edit.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="bin/Microsoft.Practices.ServiceLocation.dll" publishTime="04/08/2011 14:33:39" />
-    <file relUrl="Images/logo-caes.png" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/Home/UserManagementPortal.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="bin/Castle.Windsor.dll" publishTime="04/08/2011 14:33:38" />
-    <file relUrl="Images/delete.png" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Scripts/jquery-1.4.4.min.js" publishTime="03/22/2011 12:13:22" />
-    <file relUrl="Global.asax" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="bin/log4net.dll" publishTime="04/08/2011 14:33:39" />
-    <file relUrl="Scripts/MicrosoftMvcValidation.js" publishTime="03/22/2011 12:13:22" />
-    <file relUrl="Views/UserManagement/Manage.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="bin/Spring.Core.dll" publishTime="04/08/2011 14:33:40" />
-    <file relUrl="Web.config" publishTime="04/08/2011 14:47:12" />
-    <file relUrl="Views/Account/LogOn.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="bin/MvcContrib.FluentHtml.dll" publishTime="04/08/2011 14:33:39" />
-    <file relUrl="Scripts/MicrosoftMvcValidation.debug.js" publishTime="03/22/2011 12:13:22" />
-    <file relUrl="Images/bg-branding.png" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="bin/FluentNHibernate.dll" publishTime="04/08/2011 14:33:39" />
-    <file relUrl="Views/UserAdministration/Find.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Scripts/jquery.unobtrusive-ajax.js" publishTime="03/22/2011 12:13:22" />
-    <file relUrl="packages.config" publishTime="04/08/2011 14:33:32" />
-    <file relUrl="bin/UCDArch.dll" publishTime="04/08/2011 14:33:41" />
-    <file relUrl="Views/UserAdministration/Index.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Content/themes/base/images/ui-icons_222222_256x240.png" publishTime="03/22/2011 12:13:23" />
-    <file relUrl="Views/Application/Index.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Scripts/xVal.jquery.validate.js" publishTime="01/14/2011 16:41:56" />
-    <file relUrl="Views/UserAdministration/Edit.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/Unit/Create.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/Shared/LogOnControl.ascx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="bin/Catbert4.dll" publishTime="04/08/2011 14:39:09" />
-    <file relUrl="Views/Application/Details.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="bin/MvcContrib.Castle.dll" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/Message/Delete.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/UserAdministration/Details.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Scripts/jquery.dataTables.min.js" publishTime="01/14/2011 16:41:56" />
-    <file relUrl="Views/UserAdministration/List.ascx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="bin/Castle.Core.dll" publishTime="04/08/2011 14:33:38" />
-    <file relUrl="Images/bg.jpg" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Images/bg-catbert-med.jpg" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Images/bg-catbert-tall.jpg" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Public/Role.svc" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Css/Site.css" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/Unit/Delete.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/School/Details.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/Home/Index.aspx" publishTime="03/29/2011 15:41:47" />
-    <file relUrl="Content/themes/base/images/ui-bg_glass_95_fef1ec_1x400.png" publishTime="03/22/2011 12:13:23" />
-    <file relUrl="Views/Shared/Message.ascx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Scripts/jquery-1.4.1.js" publishTime="01/14/2011 16:41:56" />
-    <file relUrl="Scripts/jquery.validate-vsdoc.js" publishTime="01/14/2011 16:41:56" />
-    <file relUrl="Images/bg-branding.jpg" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/UserAdministration/Delete.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/Unit/UnitForm.ascx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="bin/Castle.MicroKernel.dll" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Content/themes/base/images/ui-bg_glass_75_dadada_1x400.png" publishTime="03/22/2011 12:13:23" />
-    <file relUrl="Views/Shared/EditorTemplates/Object.ascx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/Message/MessageForm.ascx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="bin/MvcContrib.dll" publishTime="04/08/2011 14:33:39" />
-    <file relUrl="Views/School/Edit.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Scripts/jquery.dataTables.js" publishTime="01/14/2011 16:41:56" />
-    <file relUrl="bin/Catbert4.Core.dll" publishTime="04/08/2011 14:39:08" />
-    <file relUrl="Content/themes/base/images/ui-bg_glass_65_ffffff_1x400.png" publishTime="03/22/2011 12:13:23" />
-    <file relUrl="Scripts/jquery.validate.unobtrusive.min.js" publishTime="03/22/2011 12:13:22" />
-    <file relUrl="Content/themes/base/images/ui-icons_cd0a0a_256x240.png" publishTime="03/22/2011 12:13:23" />
-    <file relUrl="Views/Role/Create.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="AppSettings.config" publishTime="03/24/2011 13:42:24" />
-    <file relUrl="Images/logo-caes.jpg" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/Unit/Index.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png" publishTime="03/22/2011 12:13:22" />
-    <file relUrl="Images/back.png" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/UserManagement/NewUserDialog.ascx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Scripts/jquery-1.4.1-vsdoc.js" publishTime="01/14/2011 16:41:56" />
-    <file relUrl="Scripts/jquery-1.4.1.min.js" publishTime="01/14/2011 16:41:56" />
-    <file relUrl="bin/NHibernate.ByteCode.Spring.dll" publishTime="04/08/2011 14:33:39" />
-    <file relUrl="Content/themes/base/images/ui-bg_flat_75_ffffff_40x100.png" publishTime="03/22/2011 12:13:23" />
-    <file relUrl="bin/NHibernate.dll" publishTime="04/08/2011 14:33:39" />
-    <file relUrl="Content/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png" publishTime="03/22/2011 12:13:23" />
-    <file relUrl="Content/themes/base/images/ui-icons_454545_256x240.png" publishTime="03/22/2011 12:13:23" />
-    <file relUrl="bin/Microsoft.Web.Mvc.dll" publishTime="04/08/2011 14:33:39" />
-    <file relUrl="Views/AccessToken/Create.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Scripts/jquery.validate.unobtrusive.js" publishTime="03/22/2011 12:13:22" />
-    <file relUrl="bin/xVal.dll" publishTime="04/08/2011 14:33:41" />
-    <file relUrl="Scripts/MicrosoftAjax.debug.js" publishTime="01/14/2011 16:41:56" />
-    <file relUrl="Views/School/Delete.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/UserManagement/Manage-v2.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/Shared/IncludeDataTables.ascx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/Shared/EditorTemplates/EditComplexValues.ascx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Css/demo_table_jui.css" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="UCDArch.txt" publishTime="04/08/2011 14:33:32" />
-    <file relUrl="Views/School/Create.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Images/file.png" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/UserAdministration/Table.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Content/themes/base/images/ui-icons_888888_256x240.png" publishTime="03/22/2011 12:13:23" />
-    <file relUrl="bin/AutoMapper.dll" publishTime="04/08/2011 14:33:38" />
-    <file relUrl="Views/Shared/DisplayTemplates/Object.ascx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="bin/Elmah.dll" publishTime="04/08/2011 14:33:38" />
-    <file relUrl="Scripts/jquery.jqcascade.js" publishTime="01/14/2011 16:41:56" />
-    <file relUrl="Images/edit.png" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/UserAdministration/Add.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="bin/Rhino.Mocks.dll" publishTime="04/08/2011 14:33:40" />
-    <file relUrl="Views/AccessToken/Index.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Scripts/jquery.validate.min.js" publishTime="01/14/2011 16:41:56" />
-    <file relUrl="Views/Application/ApplicationFormHeaderContent.ascx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/AccessToken/Details.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Images/bg-catbert-short.jpg" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Scripts/jquery-ui.js" publishTime="03/22/2011 12:13:22" />
-    <file relUrl="bin/Iesi.Collections.dll" publishTime="04/08/2011 14:33:39" />
-    <file relUrl="bin/NHibernate.Caches.SysCache2.dll" publishTime="03/05/2011 13:52:08" />
-    <file relUrl="Views/Home/MessageService.aspx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="Views/Shared/Site.Master" publishTime="03/29/2011 15:41:29" />
-    <file relUrl="Scripts/jquery-1.4.4.js" publishTime="03/22/2011 12:13:22" />
-  </publishProfile>
-  <publishProfile publishUrl="\\hughman\wwwroot\Catbert4" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Test" publishMethod="FileSystem" replaceMatchingFiles="True" userName="" savePWD="False" userPWD="" SelectedForPublish="False">
+  <publishProfile publishUrl="\\url\wwwroot\Catbert4" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Dev" publishMethod="FileSystem" replaceMatchingFiles="True" userName="" savePWD="False" userPWD="" SelectedForPublish="False">
     <file relUrl="bin/NHibernate.Validator.dll" publishTime="04/08/2011 14:55:25" />
     <file relUrl="Scripts/MicrosoftAjax.js" publishTime="01/14/2011 16:41:56" />
     <file relUrl="Public/Message.svc" publishTime="03/24/2011 14:18:36" />
@@ -173,9 +22,9 @@
     <file relUrl="Public/CatbertService.svc" publishTime="03/24/2011 14:18:36" />
     <file relUrl="Images/logo-ucdavis.jpg" publishTime="03/24/2011 14:18:36" />
     <file relUrl="Scripts/jquery-ui.min.js" publishTime="03/22/2011 12:13:22" />
-    <file relUrl="bin/Catbert4.Core.pdb" publishTime="04/29/2011 09:16:48" />
+    <file relUrl="bin/Catbert4.Core.pdb" publishTime="06/15/2011 16:31:53" />
     <file relUrl="bin/Common.Logging.dll" publishTime="04/08/2011 14:33:38" />
-    <file relUrl="bin/Catbert4.pdb" publishTime="04/29/2011 09:24:13" />
+    <file relUrl="bin/Catbert4.pdb" publishTime="06/16/2011 10:38:32" />
     <file relUrl="Views/Message/Edit.aspx" publishTime="03/24/2011 14:18:36" />
     <file relUrl="Views/Home/UserManagement.aspx" publishTime="03/24/2011 14:18:36" />
     <file relUrl="Views/Role/Index.aspx" publishTime="03/24/2011 14:18:36" />
@@ -183,7 +32,6 @@
     <file relUrl="Content/themes/base/images/ui-bg_glass_55_fbf9ee_1x400.png" publishTime="03/22/2011 12:13:23" />
     <file relUrl="Content/themes/base/jquery-ui.css" publishTime="03/22/2011 12:13:23" />
     <file relUrl="Scripts/MicrosoftMvcAjax.debug.js" publishTime="03/22/2011 12:13:22" />
-    <file relUrl="Scripts/jquery.unobtrusive-ajax.min.js" publishTime="03/22/2011 12:13:22" />
     <file relUrl="Views/Application/ApplicationForm.ascx" publishTime="03/24/2011 14:18:36" />
     <file relUrl="Images/add.png" publishTime="03/24/2011 14:18:36" />
     <file relUrl="bin/Spring.Aop.dll" publishTime="04/08/2011 14:33:40" />
@@ -203,7 +51,7 @@
     <file relUrl="Scripts/MicrosoftMvcValidation.js" publishTime="03/22/2011 12:13:22" />
     <file relUrl="Views/UserManagement/Manage.aspx" publishTime="03/24/2011 14:18:36" />
     <file relUrl="bin/Spring.Core.dll" publishTime="04/08/2011 14:33:40" />
-    <file relUrl="Web.config" publishTime="04/29/2011 09:24:21" />
+    <file relUrl="Web.config" publishTime="06/16/2011 10:38:49" />
     <file relUrl="Views/Account/LogOn.aspx" publishTime="03/24/2011 14:18:36" />
     <file relUrl="bin/MvcContrib.FluentHtml.dll" publishTime="04/08/2011 14:33:39" />
     <file relUrl="Scripts/MicrosoftMvcValidation.debug.js" publishTime="03/22/2011 12:13:22" />
@@ -220,7 +68,7 @@
     <file relUrl="Views/UserAdministration/Edit.aspx" publishTime="03/24/2011 14:18:36" />
     <file relUrl="Views/Unit/Create.aspx" publishTime="03/24/2011 14:18:36" />
     <file relUrl="Views/Shared/LogOnControl.ascx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="bin/Catbert4.dll" publishTime="04/29/2011 09:24:13" />
+    <file relUrl="bin/Catbert4.dll" publishTime="06/16/2011 10:38:32" />
     <file relUrl="Views/Application/Details.aspx" publishTime="03/24/2011 14:18:36" />
     <file relUrl="bin/MvcContrib.Castle.dll" publishTime="03/24/2011 14:18:36" />
     <file relUrl="Views/Message/Delete.aspx" publishTime="03/24/2011 14:18:36" />
@@ -250,7 +98,8 @@
     <file relUrl="bin/MvcContrib.dll" publishTime="04/08/2011 14:33:39" />
     <file relUrl="Views/School/Edit.aspx" publishTime="03/24/2011 14:18:36" />
     <file relUrl="Scripts/jquery.dataTables.js" publishTime="01/14/2011 16:41:56" />
-    <file relUrl="bin/Catbert4.Core.dll" publishTime="04/29/2011 09:16:48" />
+    <file relUrl="bin/Catbert4.Core.dll" publishTime="06/15/2011 16:31:53" />
+    <file relUrl="bin/Iesi.Collections.dll" publishTime="04/08/2011 14:55:25" />
     <file relUrl="Content/themes/base/images/ui-bg_glass_65_ffffff_1x400.png" publishTime="03/22/2011 12:13:23" />
     <file relUrl="Scripts/jquery.validate.unobtrusive.min.js" publishTime="03/22/2011 12:13:22" />
     <file relUrl="Content/themes/base/images/ui-icons_cd0a0a_256x240.png" publishTime="03/22/2011 12:13:23" />
@@ -296,13 +145,164 @@
     <file relUrl="Views/AccessToken/Details.aspx" publishTime="03/24/2011 14:18:36" />
     <file relUrl="Images/bg-catbert-short.jpg" publishTime="03/24/2011 14:18:36" />
     <file relUrl="Scripts/jquery-ui.js" publishTime="03/22/2011 12:13:22" />
-    <file relUrl="bin/Iesi.Collections.dll" publishTime="04/08/2011 14:55:25" />
+    <file relUrl="Scripts/jquery.unobtrusive-ajax.min.js" publishTime="03/22/2011 12:13:22" />
     <file relUrl="bin/NHibernate.Caches.SysCache2.dll" publishTime="04/08/2011 14:55:25" />
     <file relUrl="Views/Home/MessageService.aspx" publishTime="03/24/2011 14:18:36" />
     <file relUrl="Views/Shared/Site.Master" publishTime="03/29/2011 15:41:29" />
     <file relUrl="Scripts/jquery-1.4.4.js" publishTime="03/22/2011 12:13:22" />
   </publishProfile>
-  <publishProfile publishUrl="\\glurmo\wwwroot\Catbert4" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Production" publishMethod="FileSystem" replaceMatchingFiles="True" userName="" savePWD="False" userPWD="" SelectedForPublish="False">
+  <publishProfile publishUrl="\\hughman\wwwroot\Catbert4" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Test" publishMethod="FileSystem" replaceMatchingFiles="True" userName="" savePWD="False" userPWD="" SelectedForPublish="False">
+    <file relUrl="bin/NHibernate.Validator.dll" publishTime="04/08/2011 14:55:25" />
+    <file relUrl="Scripts/MicrosoftAjax.js" publishTime="01/14/2011 16:41:56" />
+    <file relUrl="Public/Message.svc" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/Message/Index.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Scripts/UserManagement.js" publishTime="03/10/2011 17:28:41" />
+    <file relUrl="Views/Shared/EditorTemplates/DateTime.ascx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Scripts/jquery.jqcascade.min.js" publishTime="01/14/2011 16:41:56" />
+    <file relUrl="Views/UserManagement/Manage-original.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Content/themes/base/images/ui-bg_highlight-soft_75_cccccc_1x100.png" publishTime="03/22/2011 12:13:23" />
+    <file relUrl="Views/Web.config" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/Application/Create.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/UserManagement/ModifyUserDialog.ascx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Scripts/jquery.validate.js" publishTime="01/14/2011 16:41:56" />
+    <file relUrl="Views/Application/Edit.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="bin/HibernatingRhinos.Profiler.Appender.dll" publishTime="04/08/2011 14:33:39" />
+    <file relUrl="Views/UserManagement/AuthorizationError.ascx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/Shared/DisplayTemplates/DisplayComplexValues.ascx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/School/Index.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Public/CatbertService.svc" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Images/logo-ucdavis.jpg" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Scripts/jquery-ui.min.js" publishTime="03/22/2011 12:13:22" />
+    <file relUrl="bin/Catbert4.Core.pdb" publishTime="04/29/2011 10:51:17" />
+    <file relUrl="bin/Common.Logging.dll" publishTime="04/08/2011 14:33:38" />
+    <file relUrl="bin/Catbert4.pdb" publishTime="06/16/2011 10:39:02" />
+    <file relUrl="Views/Message/Edit.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/Home/UserManagement.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/Role/Index.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/Message/Create.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Content/themes/base/images/ui-bg_glass_55_fbf9ee_1x400.png" publishTime="03/22/2011 12:13:23" />
+    <file relUrl="Content/themes/base/jquery-ui.css" publishTime="03/22/2011 12:13:23" />
+    <file relUrl="Scripts/MicrosoftMvcAjax.debug.js" publishTime="03/22/2011 12:13:22" />
+    <file relUrl="Views/Application/ApplicationForm.ascx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Images/add.png" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="bin/Spring.Aop.dll" publishTime="04/08/2011 14:33:40" />
+    <file relUrl="Content/themes/base/images/ui-icons_2e83ff_256x240.png" publishTime="03/22/2011 12:13:23" />
+    <file relUrl="Scripts/jquery-1.4.4-vsdoc.js" publishTime="03/22/2011 12:13:22" />
+    <file relUrl="Scripts/MicrosoftMvcAjax.js" publishTime="03/22/2011 12:13:22" />
+    <file relUrl="bin/Newtonsoft.Json.dll" publishTime="04/08/2011 14:33:39" />
+    <file relUrl="Views/Unit/Edit.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="bin/Microsoft.Practices.ServiceLocation.dll" publishTime="04/08/2011 14:33:39" />
+    <file relUrl="Images/logo-caes.png" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/Home/UserManagementPortal.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="bin/Castle.Windsor.dll" publishTime="04/08/2011 14:33:38" />
+    <file relUrl="Images/delete.png" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Scripts/jquery-1.4.4.min.js" publishTime="03/22/2011 12:13:22" />
+    <file relUrl="Global.asax" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="bin/log4net.dll" publishTime="04/08/2011 14:33:39" />
+    <file relUrl="Scripts/MicrosoftMvcValidation.js" publishTime="03/22/2011 12:13:22" />
+    <file relUrl="Views/UserManagement/Manage.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="bin/Spring.Core.dll" publishTime="04/08/2011 14:33:40" />
+    <file relUrl="Web.config" publishTime="06/16/2011 10:39:03" />
+    <file relUrl="Views/Account/LogOn.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="bin/MvcContrib.FluentHtml.dll" publishTime="04/08/2011 14:33:39" />
+    <file relUrl="Scripts/MicrosoftMvcValidation.debug.js" publishTime="03/22/2011 12:13:22" />
+    <file relUrl="Images/bg-branding.png" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="bin/FluentNHibernate.dll" publishTime="04/08/2011 14:55:25" />
+    <file relUrl="Views/UserAdministration/Find.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Scripts/jquery.unobtrusive-ajax.js" publishTime="03/22/2011 12:13:22" />
+    <file relUrl="packages.config" publishTime="04/08/2011 14:55:25" />
+    <file relUrl="bin/UCDArch.dll" publishTime="04/08/2011 14:55:25" />
+    <file relUrl="Views/UserAdministration/Index.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Content/themes/base/images/ui-icons_222222_256x240.png" publishTime="03/22/2011 12:13:23" />
+    <file relUrl="Views/Application/Index.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Scripts/xVal.jquery.validate.js" publishTime="01/14/2011 16:41:56" />
+    <file relUrl="Views/UserAdministration/Edit.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/Unit/Create.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/Shared/LogOnControl.ascx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="bin/Catbert4.dll" publishTime="06/16/2011 10:39:02" />
+    <file relUrl="Views/Application/Details.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="bin/MvcContrib.Castle.dll" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/Message/Delete.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/UserAdministration/Details.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Scripts/jquery.dataTables.min.js" publishTime="01/14/2011 16:41:56" />
+    <file relUrl="Views/UserAdministration/List.ascx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="bin/Castle.Core.dll" publishTime="04/08/2011 14:33:38" />
+    <file relUrl="Images/bg.jpg" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Images/bg-catbert-med.jpg" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Images/bg-catbert-tall.jpg" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Public/Role.svc" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Css/Site.css" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/Unit/Delete.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/School/Details.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/Home/Index.aspx" publishTime="03/29/2011 15:41:47" />
+    <file relUrl="Content/themes/base/images/ui-bg_glass_95_fef1ec_1x400.png" publishTime="03/22/2011 12:13:23" />
+    <file relUrl="Views/Shared/Message.ascx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Scripts/jquery-1.4.1.js" publishTime="01/14/2011 16:41:56" />
+    <file relUrl="Scripts/jquery.validate-vsdoc.js" publishTime="01/14/2011 16:41:56" />
+    <file relUrl="Images/bg-branding.jpg" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/UserAdministration/Delete.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/Unit/UnitForm.ascx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="bin/Castle.MicroKernel.dll" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Content/themes/base/images/ui-bg_glass_75_dadada_1x400.png" publishTime="03/22/2011 12:13:23" />
+    <file relUrl="Views/Shared/EditorTemplates/Object.ascx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/Message/MessageForm.ascx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="bin/MvcContrib.dll" publishTime="04/08/2011 14:33:39" />
+    <file relUrl="Views/School/Edit.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Scripts/jquery.dataTables.js" publishTime="01/14/2011 16:41:56" />
+    <file relUrl="bin/Catbert4.Core.dll" publishTime="04/29/2011 10:51:17" />
+    <file relUrl="bin/Iesi.Collections.dll" publishTime="04/08/2011 14:55:25" />
+    <file relUrl="Content/themes/base/images/ui-bg_glass_65_ffffff_1x400.png" publishTime="03/22/2011 12:13:23" />
+    <file relUrl="Scripts/jquery.validate.unobtrusive.min.js" publishTime="03/22/2011 12:13:22" />
+    <file relUrl="Content/themes/base/images/ui-icons_cd0a0a_256x240.png" publishTime="03/22/2011 12:13:23" />
+    <file relUrl="Views/Role/Create.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="AppSettings.config" publishTime="03/24/2011 13:42:24" />
+    <file relUrl="Images/logo-caes.jpg" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/Unit/Index.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Content/themes/base/images/ui-bg_flat_0_aaaaaa_40x100.png" publishTime="03/22/2011 12:13:22" />
+    <file relUrl="Images/back.png" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/UserManagement/NewUserDialog.ascx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Scripts/jquery-1.4.1-vsdoc.js" publishTime="01/14/2011 16:41:56" />
+    <file relUrl="Scripts/jquery-1.4.1.min.js" publishTime="01/14/2011 16:41:56" />
+    <file relUrl="bin/NHibernate.ByteCode.Spring.dll" publishTime="04/08/2011 14:55:25" />
+    <file relUrl="Content/themes/base/images/ui-bg_flat_75_ffffff_40x100.png" publishTime="03/22/2011 12:13:23" />
+    <file relUrl="bin/NHibernate.dll" publishTime="04/08/2011 14:55:25" />
+    <file relUrl="Content/themes/base/images/ui-bg_glass_75_e6e6e6_1x400.png" publishTime="03/22/2011 12:13:23" />
+    <file relUrl="Content/themes/base/images/ui-icons_454545_256x240.png" publishTime="03/22/2011 12:13:23" />
+    <file relUrl="bin/Microsoft.Web.Mvc.dll" publishTime="04/08/2011 14:33:39" />
+    <file relUrl="Views/AccessToken/Create.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Scripts/jquery.validate.unobtrusive.js" publishTime="03/22/2011 12:13:22" />
+    <file relUrl="bin/xVal.dll" publishTime="04/08/2011 14:33:41" />
+    <file relUrl="Scripts/MicrosoftAjax.debug.js" publishTime="01/14/2011 16:41:56" />
+    <file relUrl="Views/School/Delete.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/UserManagement/Manage-v2.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/Shared/IncludeDataTables.ascx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/Shared/EditorTemplates/EditComplexValues.ascx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Css/demo_table_jui.css" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="UCDArch.txt" publishTime="04/08/2011 14:33:32" />
+    <file relUrl="Views/School/Create.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Images/file.png" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/UserAdministration/Table.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Content/themes/base/images/ui-icons_888888_256x240.png" publishTime="03/22/2011 12:13:23" />
+    <file relUrl="bin/AutoMapper.dll" publishTime="04/08/2011 14:33:38" />
+    <file relUrl="Views/Shared/DisplayTemplates/Object.ascx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="bin/Elmah.dll" publishTime="04/08/2011 14:33:38" />
+    <file relUrl="Scripts/jquery.jqcascade.js" publishTime="01/14/2011 16:41:56" />
+    <file relUrl="Images/edit.png" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/UserAdministration/Add.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="bin/Rhino.Mocks.dll" publishTime="04/08/2011 14:33:40" />
+    <file relUrl="Views/AccessToken/Index.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Scripts/jquery.validate.min.js" publishTime="01/14/2011 16:41:56" />
+    <file relUrl="Views/Application/ApplicationFormHeaderContent.ascx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/AccessToken/Details.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Images/bg-catbert-short.jpg" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Scripts/jquery-ui.js" publishTime="03/22/2011 12:13:22" />
+    <file relUrl="Scripts/jquery.unobtrusive-ajax.min.js" publishTime="03/22/2011 12:13:22" />
+    <file relUrl="bin/NHibernate.Caches.SysCache2.dll" publishTime="04/08/2011 14:55:25" />
+    <file relUrl="Views/Home/MessageService.aspx" publishTime="03/24/2011 14:18:36" />
+    <file relUrl="Views/Shared/Site.Master" publishTime="03/29/2011 15:41:29" />
+    <file relUrl="Scripts/jquery-1.4.4.js" publishTime="03/22/2011 12:13:22" />
+  </publishProfile>
+  <publishProfile publishUrl="\\glurmo\wwwroot\Catbert4" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Production" publishMethod="FileSystem" replaceMatchingFiles="True" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
     <file relUrl="bin/NHibernate.Validator.dll" publishTime="04/08/2011 14:55:25" />
     <file relUrl="Scripts/MicrosoftAjax.js" publishTime="01/14/2011 16:41:56" />
     <file relUrl="Public/Message.svc" publishTime="03/24/2011 14:18:36" />
@@ -326,7 +326,7 @@
     <file relUrl="Scripts/jquery-ui.min.js" publishTime="03/22/2011 12:13:22" />
     <file relUrl="bin/Catbert4.Core.pdb" publishTime="04/29/2011 10:53:50" />
     <file relUrl="bin/Common.Logging.dll" publishTime="04/08/2011 14:33:38" />
-    <file relUrl="bin/Catbert4.pdb" publishTime="04/29/2011 10:53:51" />
+    <file relUrl="bin/Catbert4.pdb" publishTime="06/16/2011 10:40:38" />
     <file relUrl="Views/Message/Edit.aspx" publishTime="03/24/2011 14:18:36" />
     <file relUrl="Views/Home/UserManagement.aspx" publishTime="03/24/2011 14:18:36" />
     <file relUrl="Views/Role/Index.aspx" publishTime="03/24/2011 14:18:36" />
@@ -334,6 +334,7 @@
     <file relUrl="Content/themes/base/images/ui-bg_glass_55_fbf9ee_1x400.png" publishTime="03/22/2011 12:13:23" />
     <file relUrl="Content/themes/base/jquery-ui.css" publishTime="03/22/2011 12:13:23" />
     <file relUrl="Scripts/MicrosoftMvcAjax.debug.js" publishTime="03/22/2011 12:13:22" />
+    <file relUrl="Scripts/jquery.unobtrusive-ajax.min.js" publishTime="03/22/2011 12:13:22" />
     <file relUrl="Views/Application/ApplicationForm.ascx" publishTime="03/24/2011 14:18:36" />
     <file relUrl="Images/add.png" publishTime="03/24/2011 14:18:36" />
     <file relUrl="bin/Spring.Aop.dll" publishTime="04/08/2011 14:33:40" />
@@ -370,7 +371,7 @@
     <file relUrl="Views/UserAdministration/Edit.aspx" publishTime="03/24/2011 14:18:36" />
     <file relUrl="Views/Unit/Create.aspx" publishTime="03/24/2011 14:18:36" />
     <file relUrl="Views/Shared/LogOnControl.ascx" publishTime="03/24/2011 14:18:36" />
-    <file relUrl="bin/Catbert4.dll" publishTime="04/29/2011 10:53:51" />
+    <file relUrl="bin/Catbert4.dll" publishTime="06/16/2011 10:40:38" />
     <file relUrl="Views/Application/Details.aspx" publishTime="03/24/2011 14:18:36" />
     <file relUrl="bin/MvcContrib.Castle.dll" publishTime="03/24/2011 14:18:36" />
     <file relUrl="Views/Message/Delete.aspx" publishTime="03/24/2011 14:18:36" />
@@ -401,7 +402,6 @@
     <file relUrl="Views/School/Edit.aspx" publishTime="03/24/2011 14:18:36" />
     <file relUrl="Scripts/jquery.dataTables.js" publishTime="01/14/2011 16:41:56" />
     <file relUrl="bin/Catbert4.Core.dll" publishTime="04/29/2011 10:53:50" />
-    <file relUrl="bin/Iesi.Collections.dll" publishTime="04/08/2011 14:55:25" />
     <file relUrl="Content/themes/base/images/ui-bg_glass_65_ffffff_1x400.png" publishTime="03/22/2011 12:13:23" />
     <file relUrl="Scripts/jquery.validate.unobtrusive.min.js" publishTime="03/22/2011 12:13:22" />
     <file relUrl="Content/themes/base/images/ui-icons_cd0a0a_256x240.png" publishTime="03/22/2011 12:13:23" />
@@ -447,7 +447,7 @@
     <file relUrl="Views/AccessToken/Details.aspx" publishTime="03/24/2011 14:18:36" />
     <file relUrl="Images/bg-catbert-short.jpg" publishTime="03/24/2011 14:18:36" />
     <file relUrl="Scripts/jquery-ui.js" publishTime="03/22/2011 12:13:22" />
-    <file relUrl="Scripts/jquery.unobtrusive-ajax.min.js" publishTime="03/22/2011 12:13:22" />
+    <file relUrl="bin/Iesi.Collections.dll" publishTime="04/08/2011 14:55:25" />
     <file relUrl="bin/NHibernate.Caches.SysCache2.dll" publishTime="04/08/2011 14:55:25" />
     <file relUrl="Views/Home/MessageService.aspx" publishTime="03/24/2011 14:18:36" />
     <file relUrl="Views/Shared/Site.Master" publishTime="03/29/2011 15:41:29" />

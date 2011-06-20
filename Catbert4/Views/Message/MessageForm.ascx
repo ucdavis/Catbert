@@ -19,3 +19,15 @@
     </tr>
     <%: Html.EditorFor(x=>x.Message) %>    
 </table>
+
+<script>
+    $(function () {
+        $("form").submit(function (e) {
+            var applicationSelected = $("#Message_Application").val() !== "";
+
+            if (!applicationSelected) {
+                return confirm("Are you sure you want this message to apply to all applications?");
+            }
+        });
+    });
+</script>
