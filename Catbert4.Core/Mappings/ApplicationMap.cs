@@ -19,6 +19,8 @@ namespace Catbert4.Core.Mappings
             Map(x => x.Inactive);
 
             HasMany(x => x.ApplicationRoles).Inverse().Cascade.AllDeleteOrphan();
+            
+            HasManyToMany(x => x.Units).ParentKeyColumn("ApplicationID").ChildKeyColumn("UnitID").Table("ApplicationUnits").Cascade.None();
         }
     }
 }

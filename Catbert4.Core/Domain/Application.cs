@@ -33,6 +33,8 @@ namespace Catbert4.Core.Domain
         public virtual bool Inactive { get; set; }
 
         public virtual IList<ApplicationRole> ApplicationRoles { get; set; }
+        
+        public virtual IList<Unit> Units { get; set; }
 
         public override string ToString()
         {
