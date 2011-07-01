@@ -38,6 +38,22 @@
         </ul>
 
     </fieldset>
+    <fieldset>
+        <legend>Units</legend>
+        <% if (Model.ApplicationUnits.Count == 0) { %>
+            <p>Associated with all units</p>
+        <% } %>
+        <% else { %>
+        <ul>
+            <% foreach (var unit in Model.ApplicationUnits) { %>
+            <li>
+                <%: unit.ShortName %>
+            </li>
+            <% } %>
+        </ul>
+        <% } %>
+    </fieldset>
+
     <p>
         <img class="back" src="<%: Url.Image("edit.png") %>" alt="Edit TODO!" />&nbsp;<%: Html.ActionLink("Edit", "Edit", new { id = Model.Id }) %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <img class="back" src="<%: Url.Image("back.png") %>" alt="Back to List TODO!" />&nbsp;<%: Html.ActionLink("Back to List", "Index") %>

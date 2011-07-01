@@ -44,6 +44,7 @@ namespace Catbert4.Controllers
             if (application == null) return RedirectToAction("Index");
             
             application.ApplicationRoles.ToList();
+            application.ApplicationUnits.ToList();
 
             return View(application);
         }
