@@ -17,10 +17,12 @@ namespace Catbert4.Controllers
     {
 	    private readonly IRepository<Application> _applicationRepository;
         private readonly IRepository<Role> _roleRepository;
+        private readonly IRepository<Unit> _unitRepository;
 
-        public ApplicationController(IRepository<Application> applicationRepository, IRepository<Role> roleRepository)
+        public ApplicationController(IRepository<Application> applicationRepository, IRepository<Role> roleRepository, IRepository<Unit> unitRepository)
         {
             _applicationRepository = applicationRepository;
+            _unitRepository = unitRepository;
             _roleRepository = roleRepository;
         }
 
@@ -66,6 +68,8 @@ namespace Catbert4.Controllers
             
             SetApplicationRoles(applicationToCreate, applicationEditModel.OrderedRoles, applicationEditModel.UnorderedRoles);
 
+            SetApplicationUnits(applicationToCreate, applicationEditModel.Units);
+
             applicationToCreate.TransferValidationMessagesTo(ModelState);
 
             if (ModelState.IsValid)
@@ -93,6 +97,7 @@ namespace Catbert4.Controllers
 
             if (application == null) return RedirectToAction("Index");
             application.ApplicationRoles.ToList();
+            application.ApplicationUnits.ToList();
 
 			var viewModel = ApplicationViewModel.Create(Repository);
 			viewModel.Application = application;
@@ -114,6 +119,8 @@ namespace Catbert4.Controllers
             SetApplicationRoles(applicationToEdit, applicationEditModel.OrderedRoles,
                                 applicationEditModel.UnorderedRoles);
 
+            SetApplicationUnits(applicationToEdit, applicationEditModel.Units);
+
             applicationToEdit.TransferValidationMessagesTo(ModelState);
 
             if (ModelState.IsValid)
@@ -130,6 +137,19 @@ namespace Catbert4.Controllers
                 viewModel.Application = applicationEditModel.Application;
 
                 return View(viewModel);
+            }
+        }
+
+        private void SetApplicationUnits(Application applicationToEdit, List<int> units)
+        {
+            applicationToEdit.ApplicationUnits.Clear();
+
+            if (units != null)
+            {
+                foreach (var unit in units)
+                {
+                    applicationToEdit.ApplicationUnits.Add(_unitRepository.GetById(unit));
+                }
             }
         }
 
@@ -183,6 +203,7 @@ namespace Catbert4.Controllers
         public Application Application { get; set; }
         public List<string> OrderedRoles { get; set; }
         public List<string> UnorderedRoles { get; set; }
+        public List<int> Units { get; set; }
     }
 
 	/// <summary>
@@ -192,6 +213,7 @@ namespace Catbert4.Controllers
 	{
 		public Application Application { get; set; }
 	    public List<Role> Roles { get; set; }
+	    public List<Unit> Units { get; set; }
 
 		public static ApplicationViewModel Create(IRepository repository)
 		{
@@ -200,7 +222,8 @@ namespace Catbert4.Controllers
 			var viewModel = new ApplicationViewModel
 			                    {
 			                        Application = new Application(),
-			                        Roles = repository.OfType<Role>().Queryable.OrderBy(x=>x.Name).ToList()
+			                        Roles = repository.OfType<Role>().Queryable.OrderBy(x=>x.Name).ToList(),
+			                        Units = repository.OfType<Unit>().Queryable.OrderBy(x=>x.ShortName).ToList()
 			                    };
             
 		    return viewModel;

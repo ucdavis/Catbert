@@ -20,7 +20,7 @@ namespace Catbert4.Core.Mappings
 
             HasMany(x => x.ApplicationRoles).Inverse().Cascade.AllDeleteOrphan();
             
-            HasManyToMany(x => x.Units).ParentKeyColumn("ApplicationID").ChildKeyColumn("UnitID").Table("ApplicationUnits").Cascade.None();
+            HasManyToMany(x => x.ApplicationUnits).ParentKeyColumn("ApplicationID").ChildKeyColumn("UnitID").Table("ApplicationUnits").Cascade.None();
         }
     }
 }

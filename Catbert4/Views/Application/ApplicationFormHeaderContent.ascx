@@ -3,14 +3,17 @@
 <style type="text/css">
     .connectedSortable { list-style-type: none; margin: 0; padding: 0; margin-right: 10px; background: #eee; padding: 5px; width: 220px;}
 	.connectedSortable li { margin: 5px; padding: 5px; font-size: 1.2em;  }
-		
 </style>
+<link href="<%: Url.Css("jquery.multiselect.css")%>" rel="stylesheet" type="text/css" />
 
+<script src="<%: Url.Script("jquery.multiselect.js") %>"></script>
 <script type="text/javascript">
     $(function () {
         $(".connectedSortable").sortable({
             connectWith: ".connectedSortable"
         }).disableSelection();
+
+        $(".multiselect").multiselect();
 
         $("form").submit(function (e) {
             e.preventDefault();

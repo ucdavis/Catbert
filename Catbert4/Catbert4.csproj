@@ -210,6 +210,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Css\demo_table_jui.css" />
+    <Content Include="Css\jquery.multiselect.css" />
     <Content Include="Global.asax" />
     <Content Include="Css\Site.css" />
     <Content Include="Images\add.png" />
@@ -231,6 +232,7 @@
     <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.jqcascade.js" />
     <Content Include="Scripts\jquery.jqcascade.min.js" />
+    <Content Include="Scripts\jquery.multiselect.js" />
     <Content Include="Scripts\UserManagement.js" />
     <Content Include="Scripts\xVal.jquery.validate.js" />
     <Content Include="Public\Message.svc" />
