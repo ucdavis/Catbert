@@ -38,6 +38,29 @@ namespace Catbert4.Services.UserManagement
             return GetVisibleByUserCore(application, login).Cache();
         }
 
+        public IQueryable<Unit> GetAssociatedVisibleByApplication(string application, string login)
+        {
+            var associatedUnits = GetAssociatedUnits(application).Cache().ToList();
+            var visibleByUser = GetVisibleByUserCore(application, login).Cache();
+
+            if (associatedUnits.Count() == 0)
+            {
+                return visibleByUser;
+            }
+            else
+            {
+                var visibleUnitIds = visibleByUser.Select(x => x.Id).ToList();
+                //if we have associated units, return those that the user has access to)
+                return associatedUnits.Where(x => visibleUnitIds.Contains(x.Id)).AsQueryable();
+                //return visibleByUser.Intersect(associatedUnits);
+            }
+        }
+
+        private IQueryable<Unit> GetAssociatedUnits(string application)
+        {
+            return _applicationUnit.Queryable.Where(x => x.Application.Name == application).Select(x => x.Unit);
+        }
+
         private IQueryable<Unit> GetVisibleByUserCore(string application, string login)
         {
             //First we need to find out what kind of user management permissions the given user has in the application                

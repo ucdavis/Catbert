@@ -13,5 +13,7 @@ namespace Catbert4.Services.UserManagement
         /// ManageUnit: Get Just the units you are associated with
         /// </summary>
         IQueryable<Unit> GetVisibleByUser(string application, string login);
+
+        IQueryable<Unit> GetAssociatedVisibleByApplication(string application, string login);
     }
 }
