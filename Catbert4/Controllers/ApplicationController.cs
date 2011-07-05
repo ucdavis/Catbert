@@ -149,7 +149,11 @@ namespace Catbert4.Controllers
             {
                 foreach (var unit in units)
                 {
-                    applicationToEdit.ApplicationUnits.Add(_unitRepository.GetById(unit));
+                    applicationToEdit.ApplicationUnits.Add(new ApplicationUnit
+                                                               {
+                                                                   Application = applicationToEdit,
+                                                                   Unit = _unitRepository.GetById(unit)
+                                                               });
                 }
             }
         }

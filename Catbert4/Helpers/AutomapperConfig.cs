@@ -22,8 +22,9 @@ namespace Catbert4.Helpers
             CreateMap<School, School>();
 
             CreateMap<Application, Application>()
-                .ForMember(x => x.ApplicationRoles, x => x.Ignore());
-
+                .ForMember(x => x.ApplicationRoles, x => x.Ignore())
+                .ForMember(x => x.ApplicationUnits, x => x.Ignore());
+            
             CreateMap<AccessToken, AccessToken>();
 
             CreateMap<Message, Message>();

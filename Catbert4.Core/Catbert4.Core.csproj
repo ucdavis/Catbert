@@ -81,6 +81,7 @@
     <Compile Include="Domain\ApplicationRole.cs" />
     <Compile Include="Domain\AccessToken.cs" />
     <Compile Include="Domain\Audit.cs" />
+    <Compile Include="Domain\ApplicationUnit.cs" />
     <Compile Include="Domain\Message.cs" />
     <Compile Include="Domain\Permission.cs" />
     <Compile Include="Domain\Role.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Mappings\ApplicationRoleMap.cs" />
     <Compile Include="Mappings\AccessTokenMap.cs" />
     <Compile Include="Mappings\AuditMap.cs" />
+    <Compile Include="Mappings\ApplicationUnitMap.cs" />
     <Compile Include="Mappings\MessageMap.cs" />
     <Compile Include="Mappings\PermissionMap.cs" />
     <Compile Include="Mappings\RoleMap.cs" />

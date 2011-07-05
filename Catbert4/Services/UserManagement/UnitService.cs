@@ -11,16 +11,20 @@ namespace Catbert4.Services.UserManagement
         private readonly IRepository<School> _schoolRepository;
         private readonly IRepository<Unit> _unitRepository;
         private readonly IRepository<UnitAssociation> _unitAssociationRespository;
+        private readonly IRepository<ApplicationUnit> _applicationUnit;
 
         public UnitService(IRoleService roleService,
             IRepository<School> schoolRepository, 
             IRepository<Unit> unitRepository, 
-            IRepository<UnitAssociation> unitAssociationRespository)
+            IRepository<UnitAssociation> unitAssociationRespository, 
+            IRepository<ApplicationUnit> applicationUnit)
         {
             _roleService = roleService;
+            _applicationUnit = applicationUnit;
             _schoolRepository = schoolRepository;
             _unitRepository = unitRepository;
             _unitAssociationRespository = unitAssociationRespository;
+            _applicationUnit = applicationUnit;
         }
 
         /// <summary>

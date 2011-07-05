@@ -10,7 +10,7 @@ namespace Catbert4.Core.Domain
         public Application()
         {
             ApplicationRoles = new List<ApplicationRole>();
-            ApplicationUnits = new List<Unit>();
+            ApplicationUnits = new List<ApplicationUnit>();
             //Roles = new List<Role>();
         }
 
@@ -35,7 +35,7 @@ namespace Catbert4.Core.Domain
 
         public virtual IList<ApplicationRole> ApplicationRoles { get; set; }
         
-        public virtual IList<Unit> ApplicationUnits { get; set; }
+        public virtual IList<ApplicationUnit> ApplicationUnits { get; set; }
 
         public override string ToString()
         {

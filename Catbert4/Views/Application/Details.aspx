@@ -47,7 +47,7 @@
         <ul>
             <% foreach (var unit in Model.ApplicationUnits) { %>
             <li>
-                <%: unit.ShortName %>
+                <%: unit.Unit.ShortName %>
             </li>
             <% } %>
         </ul>

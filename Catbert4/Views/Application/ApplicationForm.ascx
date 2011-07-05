@@ -47,5 +47,5 @@
     <p>Note: This section is <strong>optional</strong>. If you leave it blank, all departments will be available for association.</p>
     <p>[<%: Html.ActionLink<UnitController>(x=>x.Index(), "Manage Units") %>]</p>
 
-    <%: this.MultiSelect("units").Options(Model.Units, x=>x.Id, x=>x.ShortName).Selected(Model.Application.ApplicationUnits.Select(x=>x.Id)).Class("multiselect") %>
+    <%: this.MultiSelect("units").Options(Model.Units, x=>x.Id, x=>x.ShortName).Selected(Model.Application.ApplicationUnits.Select(x=>x.Unit.Id)).Class("multiselect") %>
 </fieldset>
