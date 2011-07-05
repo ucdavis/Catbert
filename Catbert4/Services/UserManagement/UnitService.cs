@@ -49,10 +49,9 @@ namespace Catbert4.Services.UserManagement
             }
             else
             {
-                var visibleUnitIds = visibleByUser.Select(x => x.Id).ToList();
+                var associatedUnitIds = associatedUnits.Select(x => x.Id).ToList();
                 //if we have associated units, return those that the user has access to)
-                return associatedUnits.Where(x => visibleUnitIds.Contains(x.Id)).AsQueryable();
-                //return visibleByUser.Intersect(associatedUnits);
+                return visibleByUser.ToList().Where(x => associatedUnitIds.Contains(x.Id)).AsQueryable();
             }
         }
 
