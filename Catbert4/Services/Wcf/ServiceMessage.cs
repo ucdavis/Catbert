@@ -9,5 +9,7 @@ namespace Catbert4.Services.Wcf
         public string Message { get; set; }
         [DataMember]
         public bool Critical { get; set; }
+        [DataMember]
+        public bool Global { get; set; }
     }
 }

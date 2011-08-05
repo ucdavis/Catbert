@@ -30,21 +30,20 @@ namespace Catbert4.Services.Wcf
                                        && m.Active
                                        && m.BeginDisplayDate < DateTime.Now
                                        && m.EndDisplayDate > DateTime.Now
-                                 select new ServiceMessage {Message = m.Text, Critical = m.Critical};
+                                 select new ServiceMessage {Message = m.Text, Critical = m.Critical, Global = true};
 
             var applicationMessages = from m in RepositoryFactory.MessageRepository.Queryable
                                       where m.Application.Name == appName
                                             && m.Active
                                             && m.BeginDisplayDate < DateTime.Now
                                             && m.EndDisplayDate > DateTime.Now
-                                      select new ServiceMessage {Message = m.Text, Critical = m.Critical};
+                                      select new ServiceMessage {Message = m.Text, Critical = m.Critical, Global = false};
 
             return Enumerable.Union(globalMessages, applicationMessages).ToArray();
         }
 
         public class RepositoryFactory
         {
-
             // Private constructor prevents instantiation from other classes
             private RepositoryFactory() { }
 

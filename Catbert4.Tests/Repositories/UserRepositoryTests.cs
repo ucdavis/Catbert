@@ -1462,6 +1462,7 @@ namespace Catbert4.Tests.Repositories
             {
                  "[NHibernate.Validator.Constraints.LengthAttribute((Int32)50)]"
             }));
+            expectedFields.Add(new NameAndType("FullName", "System.String", new List<string>()));
             expectedFields.Add(new NameAndType("FullNameAndLogin", "System.String", new List<string>()));
             expectedFields.Add(new NameAndType("Id", "System.Int32", new List<string>
             {
