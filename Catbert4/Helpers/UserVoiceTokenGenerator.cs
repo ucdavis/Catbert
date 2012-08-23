@@ -28,6 +28,7 @@ namespace Catbert4.Helpers
                 @"""display_name"":""{0}"",
             ""expires"":""{1}"",
             ""email"":""{2}"",
+            ""trusted"":""true"",
             ""guid"":""{3}""",
                 displayName, datestring, email, guid);
 
