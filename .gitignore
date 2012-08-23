@@ -1,6 +1,7 @@
 #ignore sql dbmdl files
 *.dbmdl
 *.schemaview
+*.[lm]df
 #ignore AppSettings.config file
 AppSettings.config
 #ignore thumbnails created by windows
@@ -31,4 +32,4 @@ obj/
 [Rr]elease*/
 _ReSharper*/
 [Tt]est[Rr]esult*
-!Bin/
+!/Bin/

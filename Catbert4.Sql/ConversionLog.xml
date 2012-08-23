@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type='text/xsl' href='_ConversionReport_Files/ConversionReport.xslt'?>
+<UpgradeLog>
+  <Properties>
+    <Property Name="Project" Value="Catbert4.Sql" />
+    <Property Name="Project File" Value="C:\Projects\Dev\Catbert\Catbert4.Sql\Catbert4.Sql.dbproj" />
+    <Property Name="Date" Value="Thursday, August 23, 2012" />
+    <Property Name="Time" Value="2:54 PM" />
+  </Properties>
+  <Event ErrorLevel="0" Project="C:\Projects\Dev\Catbert\Catbert4.Sql\Catbert4.Sql.dbproj" Source="..\Catbert4.Sql.dbproj" Description="The permissions file 'C:\Projects\Dev\Catbert\Catbert4.Sql\Properties\Database.sqlpermissions' was converted to Transact-SQL in the file 'C:\Projects\Dev\Catbert\Catbert4.Sql\Permissions.sql'." />
+  <Event ErrorLevel="0" Project="C:\Projects\Dev\Catbert\Catbert4.Sql\Catbert4.Sql.dbproj" Source="..\Catbert4.Sql.dbproj" Description="Project was successfully converted: 'C:\Projects\Dev\Catbert\Catbert4.Sql\Catbert4.Sql.dbproj' to 'C:\Projects\Dev\Catbert\Catbert4.Sql\Catbert4.Sql.sqlproj'" />
+  <Event ErrorLevel="3" Project="C:\Projects\Dev\Catbert\Catbert4.Sql\Catbert4.Sql.dbproj" Source="..\Catbert4.Sql.dbproj" Description="Converted" />
+</UpgradeLog>
