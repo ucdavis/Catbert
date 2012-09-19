@@ -13,7 +13,7 @@ namespace Catbert4.Helpers
         {
             var jqueryTemplateUrl = WebConfigurationManager.AppSettings["jqueryTemplateUrl"];
 
-            var template = string.Format(@"<script type='text/javascript' src='{0}'></script>", jqueryTemplateUrl);
+            var template = string.Format(@"<script src=""{0}"" type=""text/javascript""></script>", jqueryTemplateUrl);
             //var t = new TagBuilder("script");
             //t.Attributes.Add("type", "text/javascript");
             //t.Attributes.Add("src", jqueryTemplateUrl);
