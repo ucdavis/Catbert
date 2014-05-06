@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Security;
-using UCDArch.Web.Authentication;
 using System;
+using Catbert4.Helpers;
 
 namespace Catbert4.Controllers
 {
@@ -16,7 +16,7 @@ namespace Catbert4.Controllers
         }
         public ActionResult LogOn(string returnUrl)
         {
-            string resultUrl = CASHelper.Login(); //Do the CAS Login
+            string resultUrl = CasHelper.Login(); //Do the CAS Login
 
             if (resultUrl != null)
             {

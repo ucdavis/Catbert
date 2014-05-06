@@ -163,6 +163,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AutomapperConfig.cs" />
+    <Compile Include="Helpers\CasHelper.cs" />
     <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="Helpers\UserVoiceTokenGenerator.cs" />
     <Compile Include="Models\JsonStatusModel.cs" />
