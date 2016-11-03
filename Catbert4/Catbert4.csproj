@@ -391,7 +391,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AppSettings.config" />
     <None Include="CodeTemplates\AddController\Controller.tt">
       <LastGenOutput>Controller.cs</LastGenOutput>
     </None>
