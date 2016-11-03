@@ -1,8 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+  </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <PostConversionRemoveFromScc>
     </PostConversionRemoveFromScc>
     <PostConversionAddToScc>
@@ -14,7 +19,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Name>Catbert4.Sql</Name>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectVersion>4.0</ProjectVersion>
+    <ProjectVersion>4.1</ProjectVersion>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql100DatabaseSchemaProvider</DSP>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <ShowWizard>False</ShowWizard>
@@ -27,7 +32,7 @@
     <LoadSqlClrTypes>True</LoadSqlClrTypes>
     <RootNamespace>Catbert4.Sql</RootNamespace>
     <DefaultSchema>dbo</DefaultSchema>
-    <PreviousProjectVersion>4.0</PreviousProjectVersion>
+    <PreviousProjectVersion>4.1</PreviousProjectVersion>
     <SccProjectName>
     </SccProjectName>
     <SccProvider>
@@ -108,7 +113,8 @@
     <OutputPath>.\sql\Test\</OutputPath>
   </PropertyGroup>
   <!--Import the settings-->
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" Condition="'$(SQLDBExtensionsRefPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" Condition="'$(SQLDBExtensionsRefPath)' == ''" />
   <ItemGroup>
     <Folder Include="Scripts" />
     <Folder Include="Scripts\Pre-Deployment" />

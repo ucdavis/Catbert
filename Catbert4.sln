@@ -1,10 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catbert4", "Catbert4\Catbert4.csproj", "{B8863513-F3B6-4F72-8076-2DCC3F479E80}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catbert4.Tests", "Catbert4.Tests\Catbert4.Tests.csproj", "{A5B889D9-47E1-435C-AA85-76092074B236}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bin", "Bin", "{33390886-40A5-4CFF-97E2-8A99DE3A515A}"
 	ProjectSection(SolutionItems) = preProject
 		Bin\Antlr3.Runtime.dll = Bin\Antlr3.Runtime.dll
@@ -33,6 +31,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bin", "Bin", "{33390886-40A
 		Bin\Telerik.Web.Mvc.dll = Bin\Telerik.Web.Mvc.dll
 		Bin\xVal.dll = Bin\xVal.dll
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catbert4", "Catbert4\Catbert4.csproj", "{B8863513-F3B6-4F72-8076-2DCC3F479E80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catbert4.Tests", "Catbert4.Tests\Catbert4.Tests.csproj", "{A5B889D9-47E1-435C-AA85-76092074B236}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catbert4.Core", "Catbert4.Core\Catbert4.Core.csproj", "{A5876BBC-2054-4B62-8DFF-F2E948434EBB}"
 EndProject
