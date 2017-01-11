@@ -40,31 +40,36 @@ namespace Catbert4.Services
         private static readonly string LDAPPassword = WebConfigurationManager.AppSettings["LDAPPassword"];
         private static readonly string LDAPUser = WebConfigurationManager.AppSettings["LDAPUser"];
         private static readonly int STR_LDAPPort = 636;
-        private static readonly string STR_LDAPURL = "ldap.ucdavis.edu";
+        //private static readonly string STR_LDAPURL = "ldap.ucdavis.edu";
+        private static readonly string STR_LDAPOLD = "ldap-old.ucdavis.edu"; //via T.Poage: fast-delete setting in the load balancer entry
 
-        public static SearchResponse GetSearchResponse(string searchFilter, string searchBase)
+        public static SearchResponse GetSearchResponse(string searchFilter, string searchBase, int sizeLimit = 500)
         {
             //Establishing a Connection to the LDAP Server
-            var ldapident = new LdapDirectoryIdentifier(STR_LDAPURL, STR_LDAPPort);
+            //var ldapident = new LdapDirectoryIdentifier(STR_LDAPURL, STR_LDAPPort);
+            var ldapident = new LdapDirectoryIdentifier(STR_LDAPOLD, STR_LDAPPort);
             //LdapConnection lc = new LdapConnection(ldapident, null, AuthType.Basic);
-            var lc = new LdapConnection(ldapident, new NetworkCredential(LDAPUser, LDAPPassword), AuthType.Basic);
-            lc.Bind();
-            lc.SessionOptions.ProtocolVersion = 3;
-            lc.SessionOptions.SecureSocketLayer = true;
+            using (var lc = new LdapConnection(ldapident, new NetworkCredential(LDAPUser, LDAPPassword), AuthType.Basic))
+            {
+                lc.SessionOptions.ProtocolVersion = 3;
+                lc.SessionOptions.SecureSocketLayer = true;
+                lc.SessionOptions.VerifyServerCertificate = (connection, certificate) => true;
+                lc.Bind();
 
-            //Configure the Search Request to Query the UCD OpenLDAP Server's People Search Base for a Specific User ID or Mail ID and Return the Requested Attributes 
-            var attributesToReturn = new string[]
+                //Configure the Search Request to Query the UCD OpenLDAP Server's People Search Base for a Specific User ID or Mail ID and Return the Requested Attributes 
+                var attributesToReturn = new string[]
                                          {
                                              STR_UID, STR_EmployeeNumber, STR_Mail, STR_Telephone, STR_DisplayName, STR_CN,
                                              STR_SN, STR_GivenName, STR_PIDM
                                          };
 
-            var sRequest = new SearchRequest(searchBase, searchFilter, SearchScope.Subtree, attributesToReturn);
+                var sRequest = new SearchRequest(searchBase, searchFilter, SearchScope.Subtree, attributesToReturn) { SizeLimit = sizeLimit };
 
-            //Send the Request and Load the Response
-            var sResponse = (SearchResponse)lc.SendRequest(sRequest);
+                //Send the Request and Load the Response
+                var sResponse = (SearchResponse)lc.SendRequest(sRequest);
 
-            return sResponse;
+                return sResponse;
+            }
         }
 
         public static List<DirectoryUser> GetUsersFromResponse(SearchResponse sResponse)
