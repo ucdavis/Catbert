@@ -8,7 +8,7 @@ namespace Catbert4.Helpers
 {
     public static class CasHelper
     {
-        private const string StrCasUrl = "https://cas.ucdavis.edu/cas/";
+        private const string StrCasUrl = "https://ssodev.ucdavis.edu/cas/";
         private const string StrTicket = "ticket";
         private const string StrReturnUrl = "ReturnURL";
 

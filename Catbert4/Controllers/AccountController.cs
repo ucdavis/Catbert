@@ -31,7 +31,7 @@ namespace Catbert4.Controllers
         public ActionResult LogOut()
         {
             FormsAuthentication.SignOut();
-            return Redirect("https://cas.ucdavis.edu/cas/logout");
+            return Redirect("https://ssodev.ucdavis.edu/cas/logout");
         }
 
         public RedirectToRouteResult Emulate(string id /* Login ID*/)
