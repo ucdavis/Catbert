@@ -36,3 +36,8 @@ _ReSharper*/
 
 #nuget
 packages/
+Catbert4/Web.Test.config
+Catbert4/Web.Debug.config
+Catbert4/Web.Test.config
+Catbert4/Web.Debug.config
+Catbert4/Web.Debug.config
