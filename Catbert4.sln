@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1169
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bin", "Bin", "{33390886-40A5-4CFF-97E2-8A99DE3A515A}"
 	ProjectSection(SolutionItems) = preProject
@@ -67,11 +67,13 @@ Global
 		{A5876BBC-2054-4B62-8DFF-F2E948434EBB}.Test|Any CPU.Build.0 = Test|Any CPU
 		{0811783D-BFEA-4437-81AD-02A01FEB7260}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0811783D-BFEA-4437-81AD-02A01FEB7260}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0811783D-BFEA-4437-81AD-02A01FEB7260}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{0811783D-BFEA-4437-81AD-02A01FEB7260}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0811783D-BFEA-4437-81AD-02A01FEB7260}.Test|Any CPU.ActiveCfg = Test|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F1D5D5E9-C3A5-48CA-A6DF-32EBF9D982A7}
 	EndGlobalSection
 EndGlobal
