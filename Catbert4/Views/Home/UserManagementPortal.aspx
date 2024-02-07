@@ -1,5 +1,5 @@
 <%@ Page Title="" Language="C#" Inherits="System.Web.Mvc.ViewPage" MasterPageFile="~/Views/Shared/Site.Master" %>
-<asp:Content runat="server" ID="Title" ContentPlaceHolderID="TitleContent">Sample User Management Page for <%: ViewData["Application"] %></asp:Content>
+<asp:Content runat="server" ID="Title" ContentPlaceHolderID="TitleContent">User Management Page for <%: ViewData["Application"] %></asp:Content>
 <asp:Content runat="server" ID="Header" ContentPlaceHolderID="HeaderContent">
 <script type="text/javascript">
     $(function () {
