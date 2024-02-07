@@ -11,7 +11,7 @@
 </asp:Content>
 <asp:Content runat="server" ID="Main" ContentPlaceHolderID="MainContent">
 
-<h2>Sample User Management Page for <%: ViewData["Application"] %></h2>
+<h2>User Management Page for <%: ViewData["Application"] %></h2>
 
 <div id="loading">
     Loading...

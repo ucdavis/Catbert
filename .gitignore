@@ -4,6 +4,17 @@
 *.[lm]df
 #ignore AppSettings.config file
 AppSettings.config
+appSettings.config
+
+#ignore connectionStrings.config
+connectionStrings.config
+
+#ignore *.dtbcache
+*.dtbcache.json
+
+#ignore Visual Studio index files
+*.vsidx
+
 #ignore thumbnails created by windows
 Thumbs.db
 #Ignore files build by Visual Studio
@@ -42,3 +53,4 @@ Catbert4/Web.Debug.config
 .vs/Catbert4/v15/Server/sqlite3/storage.ide-wal
 .vs/Catbert4/v15/Server/sqlite3/storage.ide-shm
 .vs/Catbert4/v15/Server/sqlite3/storage.ide
+Catbert4/connectionStrings.config

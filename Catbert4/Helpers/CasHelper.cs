@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Configuration;
 using System.IO;
 using System.Net;
+using System.Runtime.CompilerServices;
+using System.Runtime.Remoting.Contexts;
 using System.Web;
 using System.Web.Security;
+using NHibernate.Hql.Ast.ANTLR;
 
 namespace Catbert4.Helpers
 {
@@ -16,9 +20,50 @@ namespace Catbert4.Helpers
         private const string StrTicket = "ticket";
         private const string StrReturnUrl = "ReturnURL";
 
-        public static string GetReturnUrl()
-        {
-            return HttpContext.Current.Request.QueryString[StrReturnUrl];
+        /// <summary>
+        /// This logic removes any lingering "ticket=..." text from the return URL.
+        /// </summary>
+        /// <param name="ticket"></param>
+        /// <returns>return URL less any instances of "ticket=..."</returns>
+        public static string GetReturnUrl(string ticket)
+        { 
+           var strReturnUrl = HttpContext.Current.Request.QueryString[StrReturnUrl];
+           string retval = strReturnUrl;
+
+            // remove any lingering ticket portions from the URL:
+
+            if (!string.IsNullOrEmpty(ticket))
+            {
+                var ticketKeyLength = "ticket=".Length;
+                var startIndex = strReturnUrl.IndexOf("ticket=");
+
+                if (startIndex > -1)
+                {
+                    var endIndex = ticket.Length;
+
+                    retval = strReturnUrl.Remove(startIndex, ticketKeyLength + endIndex);
+
+                    startIndex = retval.IndexOf("?");
+                    if (startIndex == retval.Length - 1 //remove "?"
+                       )
+                    {
+                        retval = retval.Remove(startIndex, 1);
+                    }
+                    else
+                    {
+                        // There may have been additional parameters on the end of the query string,
+                        // so remove any trailing "&"
+                        // 
+                        endIndex = retval.LastIndexOf(("&"));
+                        if (endIndex == retval.Length - 1)
+                        {
+                            retval = retval.Remove(endIndex, 1);
+                        }
+                    }
+                }
+            }
+
+            return retval;
         }
 
         /// <summary>
@@ -32,6 +77,7 @@ namespace Catbert4.Helpers
             if (returnUrl != null) HttpContext.Current.Response.Redirect(returnUrl);
         }
 
+
         /// <summary>
         /// Login to the campus DistAuth system using CAS        
         /// </summary>
@@ -39,6 +85,8 @@ namespace Catbert4.Helpers
         {
             // get the context from the source
             var context = HttpContext.Current;
+
+            // This should always just get back the original host.
 
             // try to load a valid ticket
             HttpCookie validCookie = context.Request.Cookies[FormsAuthentication.FormsCookieName];
@@ -61,30 +109,63 @@ namespace Catbert4.Helpers
             //if (context.Response.StatusCode == 0x191 && (validTicket == null || validTicket.Expired))
             if (validTicket == null || validTicket.Expired)
             {
-                // build query string but strip out ticket if it is defined
-                string query = "";
-                foreach (string key in context.Request.QueryString.AllKeys)
-                {
-                    if (string.Compare(key, StrTicket, true) != 0)
-                    {
-                        query += "&" + key + "=" + context.Request.QueryString[key];
-                    }
-                }
-
-                // replace 1st character with ? if query is not empty
-                if (!string.IsNullOrEmpty(query))
-                {
-                    query = "?" + query.Substring(1);
-                }
-
                 // get ticket & service
                 string ticket = context.Request.QueryString[StrTicket];
-                string service = context.Server.UrlEncode(context.Request.Url.GetLeftPart(UriPartial.Path) + query);
+
+                var query = "";
+
+                string service;
+
+                if (!string.IsNullOrEmpty(ConfigurationManager.AppSettings["UseOption2ToBuildCasServiceString"]) &&
+                    Convert.ToBoolean(ConfigurationManager.AppSettings["UseOption2ToBuildCasServiceString"].Equals("true")))
+                {
+                    // Remove ticket=xxx from the querystring and from returnUrl:
+                    query = GetReturnUrl(ticket);
+                    
+                    // Although a bit clumsy, this is the best technique to build
+                    // the actual CAS service string.
+                    // The service should be something simple like the URL present in the original request, 
+                    // "http(s)://host(:port)/<queryStringWithoutAnyReferenceToTicket>, i.e.,
+                    // "https://catbert4.ucdavis.edu", "https://catbert4.ucdavis.edu/UserManagement/Manage/EligibilityList" or
+                    // "https://catbert4.ucdavis.edu/Home/UserManagementPortal?application=EligibilityList&DisplayHeader=Off", etc.
+                    // Using logic similar to
+                    // context.Server.UrlEncode(context.Request.Url.GetLeftPart(UriPartial.Path) + query), resulted 
+                    // in multiple service strings and multiple redirects to CAS when each view, page segment or
+                    // include link was called when building the various sections of the page.
+                    //
+                    service = context.Server.UrlEncode(
+                        context.Request.Url.Scheme
+                        + "://"
+                        + context.Request.Url.Authority
+                        + query
+                    );
+                }
+                else
+                {
+                    // build query string but strip out ticket if it is defined
+
+                    foreach (string key in context.Request.QueryString.AllKeys)
+                    {
+                        if (string.Compare(key, StrTicket, true) != 0)
+                        {
+                            query += "&" + key + "=" + context.Request.QueryString[key];
+                        }
+                    }
+
+                    // replace 1st character with ? if query is not empty
+                    if (!string.IsNullOrEmpty(query))
+                    {
+                        query = "?" + query.Substring(1);
+                    }
+                    
+                    service = context.Server.UrlEncode(context.Request.Url.GetLeftPart(UriPartial.Path) + query);
+                }
 
                 // if ticket is defined then we assume they are coming from CAS
                 if (!string.IsNullOrEmpty(ticket))
                 {
                     // validate ticket against cas
+
                     StreamReader sr = new StreamReader(new WebClient().OpenRead(StrCasUrl + "validate?ticket=" + ticket + "&service=" + service));
 
                     // parse text file
@@ -96,7 +177,8 @@ namespace Catbert4.Helpers
                         // set forms authentication ticket
                         FormsAuthentication.SetAuthCookie(kerberos, false);
 
-                        string returnUrl = GetReturnUrl();
+                        //strip out any lingering "ticket=..." in the returnUrl:
+                        string returnUrl = GetReturnUrl(ticket);
 
                         return !string.IsNullOrEmpty(returnUrl) ? returnUrl : FormsAuthentication.DefaultUrl;
                     }

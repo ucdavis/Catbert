@@ -10,7 +10,7 @@ namespace Catbert4.Services
     public interface IDirectorySearchService
     {
         /// <summary>
-        /// Searches for users across many different critera
+        /// Searches for users across many different criteria
         /// </summary>
         /// <param name="searchTerm">
         /// Login, email or lastName
@@ -37,19 +37,17 @@ namespace Catbert4.Services
         private const string STR_UID = "uid";
         private const string STR_PIDM = "ucdPersonPIDM";
         private const string STR_StudentId = "ucdStudentSID";
-        private static readonly string LDAPPassword = WebConfigurationManager.AppSettings["LDAPPassword"];
-        private static readonly string LDAPUser = WebConfigurationManager.AppSettings["LDAPUser"];
-        private static readonly int STR_LDAPPort = 636;
-        private static readonly string STR_LDAPURL = "ldap.ucdavis.edu";
-        //private static readonly string STR_LDAPOLD = "ldap-old.ucdavis.edu"; //via T.Poage: fast-delete setting in the load balancer entry
+        private static readonly string STR_LDAPPassword = WebConfigurationManager.AppSettings["LDAPPassword"];
+        private static readonly string STR_LDAPUser = WebConfigurationManager.AppSettings["LDAPUser"];
+        private static readonly int STR_LDAPPort = int.Parse(WebConfigurationManager.AppSettings["LDAPPort"]);
+        private static readonly string STR_LDAPURL = WebConfigurationManager.AppSettings["LDAPURL"];
 
         public static SearchResponse GetSearchResponse(string searchFilter, string searchBase, int sizeLimit = 500)
         {
             //Establishing a Connection to the LDAP Server
             var ldapident = new LdapDirectoryIdentifier(STR_LDAPURL, STR_LDAPPort);
-            //var ldapident = new LdapDirectoryIdentifier(STR_LDAPOLD, STR_LDAPPort);
             //LdapConnection lc = new LdapConnection(ldapident, null, AuthType.Basic);
-            using (var lc = new LdapConnection(ldapident, new NetworkCredential(LDAPUser, LDAPPassword), AuthType.Basic))
+            using (var lc = new LdapConnection(ldapident, new NetworkCredential(STR_LDAPUser, STR_LDAPPassword), AuthType.Basic))
             {
                 lc.SessionOptions.ProtocolVersion = 3;
                 lc.SessionOptions.SecureSocketLayer = true;
