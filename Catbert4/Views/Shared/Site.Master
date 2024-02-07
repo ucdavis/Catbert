@@ -90,7 +90,7 @@
             
             </div>
             <% } else { %> 
-                <% if ((Request.UrlReferrer)!= null) { %> <a href="<%= Request.UrlReferrer.AbsoluteUri%>">Back to Previous</a> <% } %>
+                <% if ((Request.UrlReferrer)!= null) { %> <a href="<%= Request.UrlReferrer.AbsoluteUri%>">Back to Previous</a> class="link" <% } %>
             <%}
             %>
         </div>
