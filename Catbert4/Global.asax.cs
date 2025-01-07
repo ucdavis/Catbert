@@ -9,6 +9,7 @@ using UCDArch.Data.NHibernate;
 using UCDArch.Web.IoC;
 using UCDArch.Web.ModelBinder;
 using UCDArch.Web.Validator;
+using System.Net;
 
 namespace Catbert4
 {
@@ -19,6 +20,8 @@ namespace Catbert4
     {
         protected void Application_Start()
         {
+            // specify to use TLS 1.2 as default connection
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 #if DEBUG
             HibernatingRhinos.Profiler.Appender.NHibernate.NHibernateProfiler.Initialize();
 #endif
